@@ -117,6 +117,22 @@ def create_csv(key, value, df_male, df_female, merged):
     selected = ['name','id']
     return drop_unwanted_columns(selected, merged)
 
+def generate_new_ids(final):
+    final=final.reset_index(drop=True)
+    # extract labels of dataframe
+    labels=list(final.id.unique())
+    # Assign a new label to each old label
+    dic ={}
+    for i in range (len(labels)):
+        dic[labels[i]]=i
+    # Change labels
+    final['new_id']=-1
+    # Assign new labels to ids
+    for i in range (len(final)):
+        final.loc[i,'new_id']=dic[final.loc[i,'id']]
+    selected = ['name','new_id']
+    return drop_unwanted_columns(selected, final)
+
 if __name__ == '__main__':
     dir_path = "/home/hamza97/projects/def-kjerbi/hamza97/MFRS/files/"
 
@@ -141,4 +157,5 @@ if __name__ == '__main__':
     # run through the dic
     for key in dic:
         final=create_csv(key, dic[key], df_male, df_female, merged)
-        final.to_csv(dir_path+"id_%s_PicPerId_%s.csv"%(dic[key]*2, key))
+        final=generate_new_ids(final)
+        final.to_csv(dir_path+"csv_files/"+"id_%s_PicPerId_%s.csv"%(dic[key]*2, key))
