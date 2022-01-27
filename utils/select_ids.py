@@ -36,7 +36,7 @@ def correct_gender(merged):
                 merged.loc[ids,'Male']=1
             else:
                 merged.loc[ids,'Male']=-1
-        return merged
+    return merged
 
 def drop_unwanted_columns(selected, df):
     # Generate list of columns in attribue file:
@@ -83,34 +83,40 @@ def clean_csv(identity_file, list_attr_celeba):
 
     # Merge the id_occurence dataframe and merged dataframe
     merged = pd.merge(merged, id_occurence, on="id")
+
     # Corret some mistakes in gender attribue
     merged=correct_gender(merged)
+
+    df_male=merged[merged['Male']==1]
+    df_female=merged[merged['Male']==-1]
 
     # return two dataframes: male and female
     return merged[merged['Male']==1], merged[merged['Male']==-1], merged
 
 def drop_unwanted_rows(key, selected, df):
     # for earch id we select the desired number of pictures(key) and drop the rest
+    df['drop']=1
     for i in selected:
         ids=list(df[df['id']==i].index)
         df.loc[ids[:key],'drop']=-1
-        if len(ids)==key:
-            continue
-        else:
-            df.loc[ids[key:],'drop']=1
+
     return df[df['drop']==-1]
 
 
 def create_csv(key, value, df_male, df_female, merged):
     # select VALUE male ids with occurence > key
+
     labels_male=df_male[df_male['values']>=key]['id'].unique()[:value]
+
     # select VALUE female ids with occurence > key
     labels_female=df_female[df_female['values']>=key]['id'].unique()[:value]
+
     # regroup male and female id list
     selected= list(labels_female)+list(labels_male)
+
     # Select only desired ids pictures
     merged=merged.loc[merged['id'].isin(selected)]
-    merged['drop']=0
+
     merged=merged.reset_index(drop=True)
     # drop rows for ids with occurence > key
     merged=drop_unwanted_rows(key, selected, merged)
