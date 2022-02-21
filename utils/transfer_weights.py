@@ -24,6 +24,7 @@ model_urls = {
     "resnet101": "https://download.pytorch.org/models/resnet101-63fe2227.pth",
     "resnet152": "https://download.pytorch.org/models/resnet152-394f9c45.pth",
 
+    "mobilenet_v2": "https://download.pytorch.org/models/mobilenet_v2-b0353104.pth",
 
 }
 
