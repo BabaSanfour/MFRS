@@ -12,6 +12,12 @@ from torch.utils.model_zoo import load_url
 
 model_urls = {
     'alexnet': 'https://download.pytorch.org/models/alexnet-owt-7be5be79.pth',
+
+    'vgg16': 'https://download.pytorch.org/models/vgg16-397923af.pth',
+    'vgg19': 'https://download.pytorch.org/models/vgg19-dcbb9e9d.pth',
+    'vgg16_bn': 'https://download.pytorch.org/models/vgg16_bn-6c64b313.pth',
+    'vgg19_bn': 'https://download.pytorch.org/models/vgg19_bn-c79401a0.pth',
+
 }
 
 def state_dict_layer_names(state_dict):
