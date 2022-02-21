@@ -4,7 +4,7 @@ import torch.nn as nn
 import math
 from collections import OrderedDict
 from typing import Type, Any, Callable, Union, List, Optional, Dict, cast
-from transfer_weights import transfer
+from MFRS.utils.transfer_weights import transfer
 
 
 path='/home/hamza97/scratch/net_weights/'
