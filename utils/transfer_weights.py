@@ -26,6 +26,8 @@ model_urls = {
 
     "mobilenet_v2": "https://download.pytorch.org/models/mobilenet_v2-b0353104.pth",
 
+    'cornet_s': 'https://s3.amazonaws.com/cornet-models/cornet_s-1d3f7974.pth',
+
 }
 
 def state_dict_layer_names(state_dict):
@@ -41,18 +43,24 @@ def transfer(
     weights: str
     ) -> OrderedDict:
 
-    # original model weights
-    original_state_dict = load_url(model_urls[name])
     # created model weights (vide)
     output_state_dict = model.state_dict()
     # get created model layer names
     pytorch_layer_names_out = state_dict_layer_names(output_state_dict)
-    # get original model layer names
-    pytorch_layer_names_original = state_dict_layer_names(original_state_dict)
+    # original model weights + get original model layer names
+    if name == 'cornet_s' :
+        original_state_dict = load_url(model_urls[name], map_location=torch.device('cpu') )
+        pytorch_layer_names_original = state_dict_layer_names(original_state_dict['state_dict'])
+        pytorch_layer_names_original.pop(0)
+
+    else:
+        original_state_dict = load_url(model_urls[name])
+        pytorch_layer_names_original = state_dict_layer_names(original_state_dict)
 
     # Drop first and last layers name from original model
     pytorch_layer_names_original.pop()
     pytorch_layer_names_original.pop(0)
+
 
     # match layer names: created and original model
     dictest = {}
