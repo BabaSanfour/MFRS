@@ -28,6 +28,9 @@ model_urls = {
 
     'cornet_s': 'https://s3.amazonaws.com/cornet-models/cornet_s-1d3f7974.pth',
 
+    "inception_v3_google": "https://download.pytorch.org/models/inception_v3_google-0cc3c7bd.pth",
+
+
 }
 
 def state_dict_layer_names(state_dict):
@@ -60,6 +63,10 @@ def transfer(
     # Drop first and last layers name from original model
     pytorch_layer_names_original.pop()
     pytorch_layer_names_original.pop(0)
+    if name == 'inception_v3_google' :
+        pytorch_layer_names_original.pop(0)
+
+
 
 
     # match layer names: created and original model
