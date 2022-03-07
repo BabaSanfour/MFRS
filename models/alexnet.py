@@ -1,4 +1,5 @@
 import os
+import sys
 import torch
 from torch import Tensor
 import torch.nn as nn
@@ -6,7 +7,8 @@ import math
 from collections import OrderedDict
 # from utils import load_state_dict_from_url
 from typing import Type, Any, Callable, Union, List, Optional
-from MFRS.utils.transfer_weights import transfer
+sys.path.append('/home/hamza97/MFRS/utils')
+from transfer_weights import transfer
 
 
 
@@ -17,7 +19,7 @@ class AlexNet(nn.Module):
     def __init__(self, num_classes: int = 1000) -> None:
         super(AlexNet, self).__init__()
         self.model = nn.Sequential(
-            nn.Conv2d(3, 64, kernel_size=11, stride=4, padding=2),
+            nn.Conv2d(1, 64, kernel_size=11, stride=4, padding=2),
             nn.ReLU(inplace=True),
             nn.MaxPool2d(kernel_size=3, stride=2),
             nn.Conv2d(64, 192, kernel_size=5, padding=2),

@@ -2,13 +2,15 @@
 `"Deep Residual Learning for Image Recognition" <https://arxiv.org/pdf/1512.03385.pdf>`_.
 """
 import os
+import sys
 import torch
 from torch import Tensor
 import torch.nn as nn
 import math
 from collections import OrderedDict
 from typing import Type, Any, Callable, Union, List, Optional
-from MFRS.utils.transfer_weights import transfer
+sys.path.append('/home/hamza97/MFRS/utils')
+from transfer_weights import transfer
 
 # path to weights folder
 path='/home/hamza97/scratch/net_weights/'
@@ -151,8 +153,7 @@ class ResNet(nn.Module):
         replace_stride_with_dilation: Optional[List[bool]] = None,
         norm_layer: Optional[Callable[..., nn.Module]] = None,
     ) -> None:
-        super().__init__()
-        _log_api_usage_once(self)
+        super(ResNet, self).__init__()
         if norm_layer is None:
             norm_layer = nn.BatchNorm2d
         self._norm_layer = norm_layer

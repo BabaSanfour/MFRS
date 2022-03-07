@@ -5,10 +5,12 @@ HASH = '1d3f7974'
 path='/home/hamza97/scratch/net_weights/'
 import torch
 import os
+import sys
 import math
 from collections import OrderedDict
 from torch import nn
-from MFRS.utils.transfer_weights import transfer
+sys.path.append('/home/hamza97/MFRS/utils')
+from transfer_weights import transfer
 
 class Flatten(nn.Module):
 
@@ -95,7 +97,7 @@ class CORblock_S(nn.Module):
 
 class CORnet_S(nn.Module):
 
-    def __init__(self):
+    def __init__(self, num_classes: int = 1000) -> None:
         super(CORnet_S ,self).__init__()
 
         self.model = nn.Sequential(OrderedDict([
@@ -111,16 +113,16 @@ class CORnet_S(nn.Module):
                 ('nonlin2', nn.ReLU(inplace=True)),
                 ('output', Identity())
             ]))),
-            ('V2', CORblock_S(64, 128, times=3)),
+            ('V2', CORblock_S(64, 128, times=2)),
             ('V4', CORblock_S(128, 256, times=4)),
-            ('IT', CORblock_S(256, 512, times=3)),
+            ('IT', CORblock_S(256, 512, times=2)),
             ]))
 
 
         self.avgpool = nn.AdaptiveAvgPool2d(1)
         self.classifier = nn.Sequential(OrderedDict([
                 ('flatten', Flatten()),
-                ('linear', nn.Linear(512, 1000)), #change the last layer size : 10177 instead of 1000, adaptated for celebA
+                ('linear', nn.Linear(512, num_classes)), #change the last layer size : 10177 instead of 1000, adaptated for celebA
         ]))
 
         self._initialize_weights()
@@ -144,10 +146,10 @@ class CORnet_S(nn.Module):
         return output
 
 
-def get_model(arch, pretrained=False, map_location=None, **kwargs):
-    model = CORnet_S()
+def get_model(arch, pretrained=False,num_classes=1000, map_location=None, **kwargs):
+    model = CORnet_S(num_classes)
     if pretrained:
-        weights=path+'cornet_s_weights_3'
+        weights=path+'cornet_s_weights'
         if os.path.isfile(weights):
             model.load_state_dict(torch.load(weights))
         else:
@@ -155,5 +157,5 @@ def get_model(arch, pretrained=False, map_location=None, **kwargs):
             model.load_state_dict(state_dict)
     return model
 
-def cornet_s(pretrained=False, map_location=None):
-    return get_model('cornet_s', pretrained=pretrained, map_location=map_location)
+def cornet_s(pretrained=False,num_classes=1000, map_location=None ):
+    return get_model('cornet_s', pretrained=pretrained, num_classes=num_classes, map_location=map_location)

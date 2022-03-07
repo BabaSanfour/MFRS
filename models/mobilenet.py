@@ -1,5 +1,6 @@
 
 import os
+import sys
 import torch
 from torch import Tensor
 import torch.nn as nn
@@ -7,7 +8,8 @@ import math
 from collections import OrderedDict
 # from utils import load_state_dict_from_url
 from typing import Type, Any, Callable, Union, List, Optional
-from MFRS.utils.transfer_weights import transfer
+sys.path.append('/home/hamza97/MFRS/utils')
+from transfer_weights import transfer
 
 # path to weights folder
 path='/home/hamza97/scratch/net_weights/'
@@ -65,8 +67,7 @@ class ConvNormActivation(torch.nn.Sequential):
         if activation_layer is not None:
             params = {} if inplace is None else {"inplace": inplace}
             layers.append(activation_layer(**params))
-        super().__init__(*layers)
-        _log_api_usage_once(self)
+        super(ConvNormActivation, self).__init__(*layers)
         self.out_channels = out_channels
 
 
@@ -205,7 +206,7 @@ class MobileNetV2(nn.Module):
         input_channel = _make_divisible(input_channel * width_mult, round_nearest)
         self.last_channel = _make_divisible(last_channel * max(1.0, width_mult), round_nearest)
         features: List[nn.Module] = [
-            ConvNormActivation(3, input_channel, stride=2, norm_layer=norm_layer, activation_layer=nn.ReLU6)
+            ConvNormActivation(1, input_channel, stride=2, norm_layer=norm_layer, activation_layer=nn.ReLU6)
         ]
         # building inverted residual blocks
         for t, c, n, s in inverted_residual_setting:

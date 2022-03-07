@@ -1,10 +1,12 @@
 import os
+import sys
 import torch
 import torch.nn as nn
 import math
 from collections import OrderedDict
 from typing import Type, Any, Callable, Union, List, Optional, Dict, cast
-from MFRS.utils.transfer_weights import transfer
+sys.path.append('/home/hamza97/MFRS/utils')
+from transfer_weights import transfer
 
 
 path='/home/hamza97/scratch/net_weights/'
@@ -12,10 +14,9 @@ path='/home/hamza97/scratch/net_weights/'
 
 class VGG(nn.Module):
     def __init__(
-        self, features: nn.Module, num_classes: int = 1000, init_weights: bool = True, dropout: float = 0.5
+        self, model: nn.Module, num_classes: int = 1000, init_weights: bool = True, dropout: float = 0.5
     ) -> None:
-        super().__init__()
-        _log_api_usage_once(self)
+        super(VGG, self).__init__()
         self.model = model
         self.avgpool = nn.AdaptiveAvgPool2d((7, 7))
         self.classifier = nn.Sequential(
@@ -50,7 +51,7 @@ class VGG(nn.Module):
 
 def make_layers(cfg: List[Union[str, int]], batch_norm: bool = False) -> nn.Sequential:
     layers: List[nn.Module] = []
-    in_channels = 3
+    in_channels = 1
     for v in cfg:
         if v == "M":
             layers += [nn.MaxPool2d(kernel_size=2, stride=2)]

@@ -6,7 +6,9 @@ from collections import OrderedDict
 from torch import nn, Tensor
 import torch.nn.functional as F
 from typing import Callable, Any, Optional, Tuple, List
-from MFRS.utils.transfer_weights import transfer
+import sys
+sys.path.append('/home/hamza97/MFRS/utils')
+from transfer_weights import transfer
 
 
 path='/home/hamza97/scratch/net_weights/'
@@ -63,8 +65,7 @@ class Inception3(nn.Module):
         init_weights: Optional[bool] = None,
         dropout: float = 0.5,
     ) -> None:
-        super().__init__()
-        _log_api_usage_once(self)
+        super(Inception3, self).__init__()
         if inception_blocks is None:
             inception_blocks = [BasicConv2d, InceptionA, InceptionB, InceptionC, InceptionD, InceptionE, InceptionAux]
         if init_weights is None:
