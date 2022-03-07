@@ -51,10 +51,12 @@ def transfer(
     # get created model layer names
     pytorch_layer_names_out = state_dict_layer_names(output_state_dict)
     # original model weights + get original model layer names
+    i=0
     if name == 'cornet_s' :
         original_state_dict = load_url(model_urls[name], map_location=torch.device('cpu') )
         pytorch_layer_names_original = state_dict_layer_names(original_state_dict['state_dict'])
         pytorch_layer_names_original.pop(0)
+        i=1
 
     else:
         original_state_dict = load_url(model_urls[name])
@@ -65,13 +67,13 @@ def transfer(
     pytorch_layer_names_original.pop(0)
     if name == 'inception_v3_google' :
         pytorch_layer_names_original.pop(0)
+        i=1
 
 
 
 
     # match layer names: created and original model
     dictest = {}
-    i=0
     for layer in pytorch_layer_names_original:
         dictest[layer] = pytorch_layer_names_out[i+1]
         i+=1
@@ -86,14 +88,17 @@ def transfer(
         bias_key_out = layer_out + '.bias'
         running_mean_key_out = layer_out + '.running_mean'
         running_var_key_out = layer_out + '.running_var'
-
-        output_state_dict[weight_key_out]=original_state_dict[weight_key_in]
+        if name == 'cornet_s' :
+            output_state_dict[weight_key_out]=original_state_dict['state_dict'][weight_key_in]
+        else:
+            output_state_dict[weight_key_out]=original_state_dict[weight_key_in]
         if bias_key_out in original_state_dict:
             output_state_dict[bias_key_out]=original_state_dict[bias_key_in]
         if running_mean_key_out in original_state_dict:
-            output_state_dict[running_mean_key_out]=stateoriginal_state_dict_dict[running_mean_key_in]
+            output_state_dict[running_mean_key_out]=original_state_dict[running_mean_key_in]
         if running_var_key_out in original_state_dict:
             output_state_dict[running_var_key_out]=original_state_dict[running_var_key_in]
+
 
     # load weights into created model dict
     model.load_state_dict(output_state_dict)
