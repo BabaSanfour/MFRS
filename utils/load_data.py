@@ -1,10 +1,6 @@
-import os
-import time
-import glob
-import copy
-from array import array
 import torch
 import torchvision
+from celebA_align_hdf5 import celebA_align_Dataset_h5
 
 path_data='/home/hamza97/scratch/data/MFRS_data/hdf5/'
 
