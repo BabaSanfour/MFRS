@@ -9,8 +9,8 @@ import shutil
 import random
 import numpy as np
 
-fold = "/home/hamza97/projects/def-kjerbi/hamza97/data/data_MFRS/VGGFace/"
-new_fold = "/home/hamza97/projects/def-kjerbi/hamza97/data/data_MFRS/VGGFace2/"
+fold = "/home/hamza97/scratch/data/MFRS_data/VGGface2_HQ_cropped/VGGface2_HQ_cropped/*"
+new_fold = "/home/hamza97/scratch/data/MFRS_data/VGGface2/"
 
 def split(a,b,c):
     """
@@ -37,7 +37,7 @@ def split(a,b,c):
         return random.randrange(3)
 
 
-def assign_class(list, number_files):
+def assign_class(list):
     number_files = len(list)
     # get the list with number of occurence for a picture in each class
     train_count = int(np.around(number_files*0.7))
@@ -49,7 +49,7 @@ def assign_class(list, number_files):
     for picture in list:
         picture_class=split(counts[0],counts[1],counts[2])
         counts[picture_class]=counts[picture_class]-1
-        class_dic[list]=picture_class
+        class_dic[picture]=picture_class
     return class_dic
 
 def create_repartitions(folder, new_folder, class_dic):
@@ -59,24 +59,27 @@ def create_repartitions(folder, new_folder, class_dic):
     test_folder=new_fold + 'test/%s/'%(new_folder)
     valid_folder=new_fold + 'valid/%s/'%(new_folder)
 
-    os.makedirs(train_folder)
-    os.makedirs(test_folder)
-    os.makedirs(valid_folder)
+    if not os.path.exists(train_folder):
+        os.makedirs(train_folder)
+    if not os.path.exists(test_folder):
+        os.makedirs(test_folder)
+    if not os.path.exists(valid_folder):    
+        os.makedirs(valid_folder)
+    for picture, cl in class_dic.items():
 
-    for picture, class in class_dic.items():
-        im=os.path.join(fold+folder+'/', picture)
-        if class == 0:
-            shutil.copy(im, train_folder)
-        elif class == 1:
-            shutil.copy(im, valid_folder)
+        im=os.path.join(folder, picture)
+        if cl == 0:
+            shutil.move(im, train_folder)
+        elif cl == 1:
+            shutil.move(im, valid_folder)
         else :
-            shutil.copy(im, test_folder)
+            shutil.move(im, test_folder)
 
 
 if __name__ == '__main__':
     # run through all the csv files in files/csv_files
     i=0
-    for folder in glob.glob(dir_path):
+    for folder in glob.glob(fold):
         list = os.listdir(folder) # list of pictures in an id folder
         # Assign a class to each picture
         class_dic=assign_class(list)

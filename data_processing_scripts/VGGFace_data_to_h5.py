@@ -21,7 +21,7 @@ from tqdm import tqdm
 import torchvision
 from PIL import Image
 
-data_path =  "/home/hamza97/scratch/data/MFRS_data/VGGFace2/"
+data_path =  "/home/hamza97/scratch/data/MFRS_data/VGGface2/"
 
 def store_many_hdf5(images, labels, folder):
     """ Stores an array of images to HDF5.
@@ -72,9 +72,11 @@ def make_array(data_folder):
         # get pictures id ( all pictures in the same folder has the same id)
         pic_id=os.path.basename(id)
         # run through the pictures list
-        pictures_loop_generator = tqdm(samples_pathes)
+        pictures_loop_generator = tqdm(pictures_pathes)
         for  picture in pictures_loop_generator:
             img_sample = cv2.imread(picture) # read picture
+            if img_sample is None:
+                continue
             img_sample = img_sample[:,:,::-1] # transform from BGR 2 RGB
             # transform the image
             PIL_image = Image.fromarray(img_sample.astype('uint8'), 'RGB')
