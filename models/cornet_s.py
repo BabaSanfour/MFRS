@@ -7,6 +7,7 @@ import torch
 import os
 import sys
 import math
+import torch.nn.functional as F
 from collections import OrderedDict
 from torch import nn
 sys.path.append('/home/hamza97/MFRS/utils')

@@ -3,6 +3,7 @@ import sys
 import torch
 from torch import Tensor
 import torch.nn as nn
+import torch.nn.functional as F
 import math
 from collections import OrderedDict
 # from utils import load_state_dict_from_url
@@ -41,7 +42,7 @@ class AlexNet(nn.Module):
             nn.Dropout(),
             nn.Linear(4096, 4096),
             nn.ReLU(inplace=True),
-            nn.Linear(4096, num_classes),
+            nn.Linear(4096, num_classes)
         )
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:

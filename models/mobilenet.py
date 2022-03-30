@@ -4,6 +4,7 @@ import sys
 import torch
 from torch import Tensor
 import torch.nn as nn
+import torch.nn.functional as F
 import math
 from collections import OrderedDict
 # from utils import load_state_dict_from_url
@@ -251,6 +252,7 @@ class MobileNetV2(nn.Module):
         x = nn.functional.adaptive_avg_pool2d(x, (1, 1))
         x = torch.flatten(x, 1)
         x = self.classifier(x)
+
         return x
 
     def forward(self, x: Tensor) -> Tensor:

@@ -39,7 +39,12 @@ def inception_v3(pretrained: bool = False, progress: bool = True, **kwargs: Any)
         kwargs['transform_input'] = False
         kwargs['aux_logits'] = False
         original_aux_logits = False
+
         model = Inception3(**kwargs)
+
+        model.aux_logits = False
+        model.AuxLogits = None
+
         weights=path+'inception_weights'
         if os.path.isfile(weights):
             model.load_state_dict(torch.load(weights))
@@ -47,9 +52,6 @@ def inception_v3(pretrained: bool = False, progress: bool = True, **kwargs: Any)
             state_dict = transfer('inception_v3_google', model, weights)
             model.load_state_dict(state_dict)
 
-        if not original_aux_logits:
-            model.aux_logits = False
-            model.AuxLogits = None
         return model
 
     return Inception3(**kwargs)
@@ -59,7 +61,7 @@ class Inception3(nn.Module):
     def __init__(
         self,
         num_classes: int = 1000,
-        aux_logits: bool = True,
+        aux_logits: bool = False,
         transform_input: bool = False,
         inception_blocks: Optional[List[Callable[..., nn.Module]]] = None,
         init_weights: Optional[bool] = None,
@@ -87,7 +89,7 @@ class Inception3(nn.Module):
 
         self.aux_logits = aux_logits
         self.transform_input = transform_input
-        self.Conv2d_1a_3x3 = conv_block(3, 32, kernel_size=3, stride=2)
+        self.Conv2d_1a_3x3 = conv_block(1, 32, kernel_size=3, stride=2)
         self.Conv2d_2a_3x3 = conv_block(32, 32, kernel_size=3)
         self.Conv2d_2b_3x3 = conv_block(32, 64, kernel_size=3, padding=1)
         self.maxpool1 = nn.MaxPool2d(kernel_size=3, stride=2)
@@ -180,6 +182,7 @@ class Inception3(nn.Module):
         # N x 2048
         x = self.fc(x)
         # N x 1000 (num_classes)
+
         return x, aux
 
     @torch.jit.unused
@@ -420,6 +423,7 @@ class InceptionAux(nn.Module):
         # N x 768
         x = self.fc(x)
         # N x 1000
+
         return x
 
 

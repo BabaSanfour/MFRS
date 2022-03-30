@@ -6,6 +6,7 @@ import sys
 import torch
 from torch import Tensor
 import torch.nn as nn
+import torch.nn.functional as F
 import math
 from collections import OrderedDict
 from typing import Type, Any, Callable, Union, List, Optional
@@ -252,11 +253,9 @@ class ResNet(nn.Module):
     def _forward_impl(self, x: Tensor) -> Tensor:
         # See note [TorchScript super()]
         x = self.model(x)
-
         x = self.avgpool(x)
         x = torch.flatten(x, 1)
         x = self.classifier(x)
-
         return x
 
     def forward(self, x: Tensor) -> Tensor:
