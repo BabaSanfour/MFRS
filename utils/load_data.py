@@ -4,18 +4,13 @@ from celebA_align_hdf5 import celebA_align_Dataset_h5
 
 path_data='/home/hamza97/scratch/data/MFRS_data/hdf5/'
 
-def dataloader_test(batch_n, num_classes, num_pictures):
-    # ##Test dataset
-    test_path=path_data+"test_%s_%s.h5"%(num_classes, num_pictures)
-    test_dataset = celebA_align_Dataset_h5(test_path,
-                                        torchvision.transforms.Compose([torchvision.transforms.ToTensor(),
-                                        torchvision.transforms.Normalize(mean=[0.485], std=[0.229])]))
-
-    dataset_loader = {'test': torch.utils.data.DataLoader(test_dataset, batch_size=batch_n,shuffle=True)}
-
-    dataset_sizes = {'test' : len(test_dataset)}
-
-    return dataset_loader,dataset_sizes
+mean_std = { '1000_30': [0.3612, 0.3056],
+              '1000_25': [0.3736, 0.3082],
+              '1000_12': [0.3642, 0.3047],
+              '500_27': [0.3780, 0.3090],
+              '500_14': [0.3620, 0.3041],
+              '300_28': [0.3779, 0.3085],
+              '300_14': [0.3614, 0.3045] }
 
 
 def dataloader(batch_n , num_classes, num_pictures):
@@ -26,23 +21,29 @@ def dataloader(batch_n , num_classes, num_pictures):
     # Num pictures : pictures
     train_path=path_data+"train_%s_%s.h5"%(num_classes, num_pictures)
     valid_path=path_data+"valid_%s_%s.h5"%(num_classes, num_pictures)
+    test_path=path_data+"test_%s_%s.h5"%(num_classes, num_pictures)
+
+    # extract mean and std:
+    list_mean_std = mean_std[str(num_classes)+'_'+str(num_pictures)]
+    mean, std = list_mean_std[0], list_mean_std[1]
 
     # ##Training dataset
     train_dataset = celebA_align_Dataset_h5(train_path,
                                         torchvision.transforms.Compose([torchvision.transforms.ToTensor(),
-                                        torchvision.transforms.Normalize(mean=[0.485], std=[0.229])]))
+                                        torchvision.transforms.Normalize(mean=[mean], std=[std])]))
 
     # ##Validation dataset
     valid_dataset = celebA_align_Dataset_h5(valid_path,
                                         torchvision.transforms.Compose([torchvision.transforms.ToTensor(),
-                                        torchvision.transforms.Normalize(mean=[0.485], std=[0.229])]))
+                                        torchvision.transforms.Normalize(mean=[mean], std=[std])]))
 
+    test_dataset = celebA_align_Dataset_h5(test_path,
+                                        torchvision.transforms.Compose([torchvision.transforms.ToTensor(),
+                                        torchvision.transforms.Normalize(mean=[mean], std=[std])]))
 
-
+    # ##Test dataset
     dataset_loader = {'train': torch.utils.data.DataLoader(train_dataset, batch_size=batch_n,shuffle=True),
-                      'valid': torch.utils.data.DataLoader(valid_dataset, batch_size=batch_n,shuffle=True)
-                      }
+                      'valid': torch.utils.data.DataLoader(valid_dataset, batch_size=batch_n,shuffle=True),
+                      'test': torch.utils.data.DataLoader(test_dataset, batch_size=batch_n,shuffle=True)}
 
-    dataset_sizes = {'train': len(train_dataset), 'valid' : len(valid_dataset)}
-
-    return dataset_loader,dataset_sizes
+    dataset_sizes = {'train': len(train_dataset), 'valid' : len(valid_dataset), 'test' : len(test_dataset)}
