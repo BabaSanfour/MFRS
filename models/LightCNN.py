@@ -54,7 +54,7 @@ class network(nn.Module):
         self.block4 = self._make_layer(block, layers[3], 128, 128)
         self.conv5  = mfm(128, 128, 3, 1, 1)
 
-        self.fc = nn.Linear(8*8*128, 256)
+        self.fc = nn.Linear(25088, 256)
         self.fc2 = nn.Linear(256, num_classes)
 
         nn.init.normal_(self.fc.weight, std=0.001)
@@ -85,9 +85,9 @@ class network(nn.Module):
         x = F.max_pool2d(x, 2) + F.avg_pool2d(x, 2)
 
         x = torch.flatten(x, 1)
-        fc = self.fc(x)
-        out = self.fc2(fc)
-        return out
+        x = self.fc(x)
+        x = self.fc2(x)
+        return x
 
 def LightCNN_V4(pretrained: bool = False, num_classes: int =1000):
     model = network(resblock_v1, [1, 2, 3, 4], num_classes)
