@@ -55,14 +55,17 @@ def transfer(
     # original model weights + get original model layer names
     i=0
     if name == "SphereFace":
-            original_state_dict= torch.load(path+'sphere20a_20171020.pth')
-            pytorch_layer_names_original = state_dict_layer_names(original_state_dict)
-            pytorch_layer_names_original.pop(0)
+        original_state_dict= torch.load(path+'sphere20a_20171020.pth')
+        pytorch_layer_names_original = state_dict_layer_names(original_state_dict)
+        pytorch_layer_names_original.pop(0)
+        pytorch_layer_names_original.pop()
+        pytorch_layer_names_original.pop()
 
     elif name == "LightCNN_V4":
         original_state_dict= torch.load(path+'LightCNN-V4_checkpoint.pth.tar')['state_dict']
         pytorch_layer_names_original = state_dict_layer_names(original_state_dict)
         pytorch_layer_names_original.pop(0)
+        pytorch_layer_names_original.pop()
     elif name == 'cornet_s' :
         original_state_dict = load_url(model_urls[name], map_location=torch.device('cpu') )
         pytorch_layer_names_original = state_dict_layer_names(original_state_dict['state_dict'])
