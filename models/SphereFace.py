@@ -85,15 +85,16 @@ class AngleLoss(nn.Module):
 
         index = cos_theta.data * 0.0 #size=(B,Classnum)
         index.scatter_(1,target.data.view(-1,1),1)
-        index = index.byte()
-        index = Variable(index)
-
+        index = index.bool()
+        #index = Variable(index)
+# Warning: indexing with dtype torch.uint8 is now deprecated, please use a dtype torch.bool instead. (function expandTensors)
         self.lamb = max(self.LambdaMin,self.LambdaMax/(1+0.1*self.it ))
         output = cos_theta * 1.0 #size=(B,Classnum)
         output[index] -= cos_theta[index]*(1.0+0)/(1+self.lamb)
         output[index] += phi_theta[index]*(1.0+0)/(1+self.lamb)
+#/home/hamza97/MFRS/models/SphereFace.py:97: UserWarning: Implicit dimension choice for log_softmax has been deprecated. Change the call to include dim=X as an argument.
 
-        logpt = F.log_softmax(output)
+        logpt = F.log_softmax(output, -1)
         logpt = logpt.gather(1,target)
         logpt = logpt.view(-1)
         pt = Variable(logpt.data.exp())
@@ -159,7 +160,7 @@ class sphere20a(nn.Module):
         self.conv4_3 = nn.Conv2d(512,512,3,1,1)
         self.relu4_3 = nn.PReLU(512)
 
-        self.fc5 = nn.Linear(512*7*6,512)
+        self.fc5 = nn.Linear(100352,512)
         self.fc6 = AngleLinear(512,self.classnum)
 
 
