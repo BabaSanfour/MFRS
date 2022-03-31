@@ -30,7 +30,7 @@ def store_many_hdf5(images, labels, folder):
         images       images array, (N, 224, 224, 1) to be stored
         labels       labels array, (N, ) to be stored
     """
-    hdf5_dir = root_dir+"scratch/data/MFRS_data/hdf5/"
+    hdf5_dir = "/home/hamza97/scratch/data/MFRS_data/hdf5/"
     if not os.path.exists(hdf5_dir):
         os.makedirs(hdf5_dir)
     # Create a new HDF5 file
