@@ -83,7 +83,7 @@ def make_array(data_folder):
             sample = np.asarray(resize(PIL_image), dtype=np.uint8)
             # append image and label to image and labels list
             img_array.append(sample)
-            label_array.append(pic_id)
+            label_array.append(int(pic_id))
 
     # print label and image array shapes
     print(np.asarray(label_array).shape)
@@ -93,7 +93,7 @@ def make_array(data_folder):
 
 if __name__ == '__main__':
     begin_time = datetime.datetime.now()
-    for folder in ["train","test","valid"] :
+    for folder in ["valid","test","train"] :
         img_array, label_array = make_array(folder)
         store_many_hdf5(img_array,label_array, folder)
     print(datetime.datetime.now()-begin_time)
