@@ -6,6 +6,7 @@ import sys
 import torch
 from torch import Tensor
 import torch.nn as nn
+from typing import Callable, Any, Optional, Tuple, List
 sys.path.append('/home/hamza97/MFRS/utils')
 from transfer_weights import transfer
 
@@ -57,7 +58,7 @@ def alexnet(pretrained: bool = False, num_classes: int = 1000, n_input_channels:
         pretrained (bool): If True, returns a model pre-trained on ImageNet
         progress (bool): If True, displays a progress bar of the download to stderr
     """
-    model = AlexNet(n_input_channels, **kwargs)
+    model = AlexNet(num_classes, n_input_channels, **kwargs)
     if pretrained:
         if weights == None:
             weights=os.path.join(path, 'AlexNet_weights_%sD_input'%n_input_channels)
