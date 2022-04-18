@@ -1,3 +1,7 @@
+"""
+Inception network
+"""
+
 import os
 from collections import namedtuple
 import warnings
@@ -10,7 +14,6 @@ import sys
 sys.path.append('/home/hamza97/MFRS/utils')
 from transfer_weights import transfer
 
-
 path='/home/hamza97/scratch/net_weights/'
 
 InceptionOutputs = namedtuple('InceptionOutputs', ['logits', 'aux_logits'])
@@ -20,13 +23,10 @@ InceptionOutputs.__annotations__ = {'logits': Tensor, 'aux_logits': Optional[Ten
 # _InceptionOutputs set here for backwards compat
 _InceptionOutputs = InceptionOutputs
 
-def inception_v3(pretrained: bool = False, progress: bool = True, **kwargs: Any) -> "Inception3":
+def inception_v3(pretrained: bool = False, num_classes: int = 1000, n_input_channels: int = 3, weights: str = None, progress: bool = True, **kwargs: Any) -> "Inception3":
     r"""Inception v3 model architecture from
     `"Rethinking the Inception Architecture for Computer Vision" <http://arxiv.org/abs/1512.00567>`_.
     The required minimum input size of the model is 75x75.
-    .. note::
-        **Important**: In contrast to the other models the inception_v3 expects tensors with a size of
-        N x 3 x 299 x 299, so ensure your images are sized accordingly.
     Args:
         pretrained (bool): If True, returns a model pre-trained on ImageNet
         progress (bool): If True, displays a progress bar of the download to stderr
@@ -40,27 +40,29 @@ def inception_v3(pretrained: bool = False, progress: bool = True, **kwargs: Any)
         kwargs['aux_logits'] = False
         original_aux_logits = False
 
-        model = Inception3(**kwargs)
+        model = Inception3(num_classes, n_input_channels, **kwargs)
 
         model.aux_logits = False
         model.AuxLogits = None
 
-        weights=path+'inception_weights'
+        if weights == None:
+            weights=os.path.join(path, 'inception_weights_%sD_input'%n_input_channels)
         if os.path.isfile(weights):
             model.load_state_dict(torch.load(weights))
         else:
-            state_dict = transfer('inception_v3_google', model, weights)
+            state_dict = transfer('inception_v3_google', model, n_input_channels, weights)
             model.load_state_dict(state_dict)
 
         return model
 
-    return Inception3(**kwargs)
+    return Inception3(num_classes, n_input_channels, **kwargs)
 
 
 class Inception3(nn.Module):
     def __init__(
         self,
         num_classes: int = 1000,
+        n_input_channels: int = 3,
         aux_logits: bool = False,
         transform_input: bool = False,
         inception_blocks: Optional[List[Callable[..., nn.Module]]] = None,
@@ -71,12 +73,6 @@ class Inception3(nn.Module):
         if inception_blocks is None:
             inception_blocks = [BasicConv2d, InceptionA, InceptionB, InceptionC, InceptionD, InceptionE, InceptionAux]
         if init_weights is None:
-            warnings.warn(
-                "The default weight initialization of inception_v3 will be changed in future releases of "
-                "torchvision. If you wish to keep the old behavior (which leads to long initialization times"
-                " due to scipy/scipy#11299), please set init_weights=True.",
-                FutureWarning,
-            )
             init_weights = True
         assert len(inception_blocks) == 7
         conv_block = inception_blocks[0]
@@ -89,7 +85,7 @@ class Inception3(nn.Module):
 
         self.aux_logits = aux_logits
         self.transform_input = transform_input
-        self.Conv2d_1a_3x3 = conv_block(1, 32, kernel_size=3, stride=2)
+        self.Conv2d_1a_3x3 = conv_block(n_input_channels, 32, kernel_size=3, stride=2)
         self.Conv2d_2a_3x3 = conv_block(32, 32, kernel_size=3)
         self.Conv2d_2b_3x3 = conv_block(32, 64, kernel_size=3, padding=1)
         self.maxpool1 = nn.MaxPool2d(kernel_size=3, stride=2)

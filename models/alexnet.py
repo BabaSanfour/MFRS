@@ -1,26 +1,22 @@
+"""
+AlexNet network
+"""
 import os
 import sys
 import torch
 from torch import Tensor
 import torch.nn as nn
-import torch.nn.functional as F
-import math
-from collections import OrderedDict
-# from utils import load_state_dict_from_url
-from typing import Type, Any, Callable, Union, List, Optional
 sys.path.append('/home/hamza97/MFRS/utils')
 from transfer_weights import transfer
-
-
 
 path='/home/hamza97/scratch/net_weights/'
 
 class AlexNet(nn.Module):
 
-    def __init__(self, num_classes: int = 1000) -> None:
+    def __init__(self, num_classes: int = 1000, n_input_channels: int = 3) -> None:
         super(AlexNet, self).__init__()
         self.model = nn.Sequential(
-            nn.Conv2d(1, 64, kernel_size=11, stride=4, padding=2),
+            nn.Conv2d(n_input_channels, 64, kernel_size=11, stride=4, padding=2),
             nn.ReLU(inplace=True),
             nn.MaxPool2d(kernel_size=3, stride=2),
             nn.Conv2d(64, 192, kernel_size=5, padding=2),
@@ -52,7 +48,8 @@ class AlexNet(nn.Module):
         x = self.classifier(x)
         return x
 
-def alexnet(pretrained: bool = False, progress: bool = True, **kwargs: Any) -> AlexNet:
+
+def alexnet(pretrained: bool = False, num_classes: int = 1000, n_input_channels: int = 3,  weights: str = None, progress: bool = True, **kwargs: Any) -> AlexNet:
     r"""AlexNet model architecture from the
     `"One weird trick..." <https://arxiv.org/abs/1404.5997>`_ paper.
     The required minimum input size of the model is 63x63.
@@ -60,13 +57,13 @@ def alexnet(pretrained: bool = False, progress: bool = True, **kwargs: Any) -> A
         pretrained (bool): If True, returns a model pre-trained on ImageNet
         progress (bool): If True, displays a progress bar of the download to stderr
     """
-    model = AlexNet(**kwargs)
-    if pretrained== True:
-        weights=path+'AlexNet_weights'
+    model = AlexNet(n_input_channels, **kwargs)
+    if pretrained:
+        if weights == None:
+            weights=os.path.join(path, 'AlexNet_weights_%sD_input'%n_input_channels)
         if os.path.isfile(weights):
             model.load_state_dict(torch.load(weights))
         else:
-            state_dict = transfer('alexnet', model, weights)
+            state_dict = transfer('alexnet', model, n_input_channels, weights)
             model.load_state_dict(state_dict)
-
     return model

@@ -1,13 +1,11 @@
-"""ResNet model implementation from
-`"Deep Residual Learning for Image Recognition" <https://arxiv.org/pdf/1512.03385.pdf>`_.
+"""
+ResNet networks
 """
 import os
 import sys
 import torch
 from torch import Tensor
 import torch.nn as nn
-import torch.nn.functional as F
-import math
 from collections import OrderedDict
 from typing import Type, Any, Callable, Union, List, Optional
 sys.path.append('/home/hamza97/MFRS/utils')
@@ -148,6 +146,7 @@ class ResNet(nn.Module):
         block: Type[Union[BasicBlock, Bottleneck]],
         layers: List[int],
         num_classes: int = 1000,
+        n_input_channels: int = 3,
         zero_init_residual: bool = False,
         groups: int = 1,
         width_per_group: int = 64,
@@ -161,6 +160,7 @@ class ResNet(nn.Module):
 
         self.inplanes = 64
         self.dilation = 1
+        self.n_input_channels = n_input_channels
         if replace_stride_with_dilation is None:
             # each element in the tuple indicates if we should replace
             # the 2x2 stride with a dilated convolution instead
@@ -174,7 +174,7 @@ class ResNet(nn.Module):
         self.base_width = width_per_group
 
         self.model = nn.Sequential(OrderedDict([
-                        ('conv1',  nn.Conv2d(1, self.inplanes, kernel_size=7, stride=2, padding=3, bias=False)),
+                        ('conv1',  nn.Conv2d(n_input_channels, self.inplanes, kernel_size=7, stride=2, padding=3, bias=False)),
                         ('bn1', norm_layer(self.inplanes)),
                         ('relu', nn.ReLU(inplace=True)),
                         ('maxpool', nn.MaxPool2d(kernel_size=3, stride=2, padding=1)),
@@ -262,88 +262,97 @@ class ResNet(nn.Module):
         return self._forward_impl(x)
 
 
-
 def resnet18(
     num_classes: int = 1000,
+    n_input_channels: int = 3,
     pretrained: bool = False,
-    path: str = path,
+    weights: str = None,
     **kwargs: Any
 ) -> ResNet:
-    model = ResNet(BasicBlock, [2, 2, 2, 2], num_classes, **kwargs)
+    model = ResNet(BasicBlock, [2, 2, 2, 2], num_classes, n_input_channels, **kwargs)
     if pretrained== True:
-        weights=path+'resnet_18_weights'
+        if weights == None:
+            weights=os.path.join(path, 'resnet18_weights_%sD_input'%n_input_channels)
         if os.path.isfile(weights):
             model.load_state_dict(torch.load(weights))
         else:
-            state_dict = transfer('resnet18', model, weights)
+            state_dict = transfer('resnet18', model, n_input_channels, weights)
             model.load_state_dict(state_dict)
 
     return model
 
 def resnet34(
     num_classes: int = 1000,
+    n_input_channels: int = 3,
     pretrained: bool = False,
-    path: str = path,
+    weights: str = None,
     **kwargs: Any
 ) -> ResNet:
-    model = ResNet(BasicBlock, [3, 4, 6, 3], num_classes, **kwargs)
+    model = ResNet(BasicBlock, [3, 4, 6, 3], num_classes, n_input_channels, **kwargs)
     if pretrained== True:
-        weights=path+'resnet_34_weights'
+        if weights == None:
+            weights=os.path.join(path, 'resnet34_weights_%sD_input'%n_input_channels)
         if os.path.isfile(weights):
             model.load_state_dict(torch.load(weights))
         else:
-            state_dict = transfer('resnet34', model, weights)
+            state_dict = transfer('resnet34', model, n_input_channels, weights)
             model.load_state_dict(state_dict)
 
     return model
 
 def resnet50(
     num_classes: int = 1000,
+    n_input_channels: int = 3,
     pretrained: bool = False,
-    path: str = path,
+    weights: str = None,
     **kwargs: Any
 ) -> ResNet:
-    model = ResNet(Bottleneck, [3, 4, 6, 3], num_classes, **kwargs)
+    model = ResNet(Bottleneck, [3, 4, 6, 3], num_classes, n_input_channels, **kwargs)
     if pretrained== True:
-        weights=path+'resnet_50_weights'
+        if weights == None:
+            weights=os.path.join(path, 'resnet50_weights_%sD_input'%n_input_channels)
         if os.path.isfile(weights):
             model.load_state_dict(torch.load(weights))
         else:
-            state_dict = transfer('resnet50', model, weights)
+            state_dict = transfer('resnet50', model, n_input_channels, weights)
             model.load_state_dict(state_dict)
 
     return model
 
 def resnet101(
     num_classes: int = 1000,
+    n_input_channels: int = 3,
     pretrained: bool = False,
-    path: str = path,
+    weights: str = None,
     **kwargs: Any
 ) -> ResNet:
-    model = ResNet(Bottleneck, [3, 4, 23, 3], num_classes, **kwargs)
+    model = ResNet(Bottleneck, [3, 4, 23, 3], num_classes, n_input_channels, **kwargs)
     if pretrained== True:
-        weights=path+'resnet_101_weights'
+        if weights == None:
+            weights=os.path.join(path, 'resnet101_weights_%sD_input'%n_input_channels)
         if os.path.isfile(weights):
             model.load_state_dict(torch.load(weights))
         else:
-            state_dict = transfer('resnet101', model, weights)
+            state_dict = transfer('resnet101', model, n_input_channels, weights)
             model.load_state_dict(state_dict)
 
     return model
 
 def resnet152(
     num_classes: int = 1000,
+    n_input_channels: int = 3,
     pretrained: bool = False,
-    path: str = path,
+    weights: str = None,
     **kwargs: Any
 ) -> ResNet:
-    model = ResNet(Bottleneck, [3, 8, 36, 3], num_classes, **kwargs)
+    model = ResNet(Bottleneck, [3, 8, 36, 3], num_classes, n_input_channels, **kwargs)
     if pretrained== True:
-        weights=path+'resnet_152_weights'
+        if weights == None:
+            weights=os.path.join(path, 'resnet152_weights_%sD_input'%n_input_channels)
         if os.path.isfile(weights):
             model.load_state_dict(torch.load(weights))
         else:
-            state_dict = transfer('resnet152', model, weights)
+            state_dict = transfer('resnet152', model, n_input_channels, weights)
             model.load_state_dict(state_dict)
 
     return model

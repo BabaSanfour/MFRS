@@ -1,8 +1,10 @@
+"""
+FaceNet network
+"""
 import os
 import sys
 import torch
 from torch import nn
-from torch.nn import functional as F
 sys.path.append('/home/hamza97/MFRS/utils')
 from transfer_weights import transfer
 
@@ -182,28 +184,22 @@ class Mixed_7a(nn.Module):
 
 class InceptionResnetV1(nn.Module):
     """Inception Resnet V1 model with optional loading of pretrained weights.
-    Model parameters can be loaded based on pretraining on the VGGFace2 or CASIA-Webface
-    datasets. Pretrained state_dicts are automatically downloaded on model instantiation if
+    Model parameters can be loaded based on pretraining on the VGGFace2 datasets.
+    Pretrained state_dicts are automatically downloaded on model instantiation if
     requested and cached in the torch cache. Subsequent instantiations use the cache rather than
     redownloading.
     Keyword Arguments:
-        pretrained {str} -- Optional pretraining dataset. Either 'vggface2' or 'casia-webface'.
-            (default: {None})
-        classify {bool} -- Whether the model should output classification probabilities or feature
-            embeddings. (default: {False})
         num_classes {int} -- Number of output classes. If 'pretrained' is set and num_classes not
             equal to that used for the pretrained model, the final linear layer will be randomly
-            initialized. (default: {None})
+            initialized. (default: {1000})
+        n_input_channels {int} -- Number of input channels of the first layer.
         dropout_prob {float} -- Dropout probability. (default: {0.6})
     """
-    def __init__(self, num_classes=None, dropout_prob=0.6):
+    def __init__(self, num_classes: int = 1000, n_input_channels: int = 3, dropout_prob: int = 0.6) -> None:
         super().__init__()
 
-        # Set simple attributes
-        self.num_classes = num_classes
-
         # Define layers
-        self.conv2d_1a = BasicConv2d(1, 32, kernel_size=3, stride=2)
+        self.conv2d_1a = BasicConv2d(n_input_channels, 32, kernel_size=3, stride=2)
         self.conv2d_2a = BasicConv2d(32, 32, kernel_size=3, stride=1)
         self.conv2d_2b = BasicConv2d(32, 64, kernel_size=3, stride=1, padding=1)
         self.maxpool_3a = nn.MaxPool2d(3, stride=2)
@@ -244,7 +240,7 @@ class InceptionResnetV1(nn.Module):
         self.last_linear = nn.Linear(1792, 512, bias=False)
         self.last_bn = nn.BatchNorm1d(512, eps=0.001, momentum=0.1, affine=True)
 
-        self.logits = nn.Linear(512, self.num_classes)
+        self.logits = nn.Linear(512, num_classes)
 
     def forward(self, x):
         """Calculate embeddings or logits given a batch of input image tensors.
@@ -273,17 +269,14 @@ class InceptionResnetV1(nn.Module):
         x = self.logits(x)
         return x
 
-def FaceNet(
-    pretrained: bool = False,
-    num_classes: int = 1000,
-) -> InceptionResnetV1:
-    model = InceptionResnetV1(num_classes)
-    if pretrained== True:
-        weights=path+'FaceNet_weights'
+def FaceNet(pretrained: bool = False, num_classes: int = 1000, n_input_channels: int = 3, weights: str = None) -> InceptionResnetV1:
+    model = InceptionResnetV1(num_classes, n_input_channels)
+    if pretrained:
+        if weights == None:
+            weights=os.path.join(path, 'FaceNet_weights_%sD_input'%n_input_channels)
         if os.path.isfile(weights):
             model.load_state_dict(torch.load(weights))
         else:
             state_dict = transfer('FaceNet', model, weights)
             model.load_state_dict(state_dict)
-
     return model

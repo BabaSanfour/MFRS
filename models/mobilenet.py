@@ -1,12 +1,11 @@
-
+"""
+MobileNet network
+"""
 import os
 import sys
 import torch
 from torch import Tensor
 import torch.nn as nn
-import torch.nn.functional as F
-import math
-from collections import OrderedDict
 # from utils import load_state_dict_from_url
 from typing import Type, Any, Callable, Union, List, Optional
 sys.path.append('/home/hamza97/MFRS/utils')
@@ -156,6 +155,7 @@ class MobileNetV2(nn.Module):
     def __init__(
         self,
         num_classes: int = 1000,
+        n_input_channels: int = 3,
         width_mult: float = 1.0,
         inverted_residual_setting: Optional[List[List[int]]] = None,
         round_nearest: int = 8,
@@ -207,7 +207,7 @@ class MobileNetV2(nn.Module):
         input_channel = _make_divisible(input_channel * width_mult, round_nearest)
         self.last_channel = _make_divisible(last_channel * max(1.0, width_mult), round_nearest)
         features: List[nn.Module] = [
-            ConvNormActivation(1, input_channel, stride=2, norm_layer=norm_layer, activation_layer=nn.ReLU6)
+            ConvNormActivation(n_input_channels, input_channel, stride=2, norm_layer=norm_layer, activation_layer=nn.ReLU6)
         ]
         # building inverted residual blocks
         for t, c, n, s in inverted_residual_setting:
@@ -259,20 +259,19 @@ class MobileNetV2(nn.Module):
         return self._forward_impl(x)
 
 
-def mobilenet_v2(pretrained: bool = False, progress: bool = True, **kwargs: Any) -> MobileNetV2:
+def mobilenet_v2(pretrained: bool = False, num_classes: int = 1000, n_input_channels: int = 3,  weights: str = None, progress: bool = True, **kwargs: Any) -> MobileNetV2:
     """
     Constructs a MobileNetV2 architecture from
     `"MobileNetV2: Inverted Residuals and Linear Bottlenecks" <https://arxiv.org/abs/1801.04381>`_.
-    Args:
-        pretrained (bool): If True, returns a model pre-trained on ImageNet
-        progress (bool): If True, displays a progress bar of the download to stderr
     """
-    model = MobileNetV2(**kwargs)
-    if pretrained== True:
-        weights=path+'mobilenet_v2_weights'
+    model = MobileNetV2(num_classes, n_input_channels, **kwargs)
+    if pretrained:
+        if weights == None:
+            weights=os.path.join(path, 'mobilenet_weights_%sD_input'%n_input_channels)
         if os.path.isfile(weights):
             model.load_state_dict(torch.load(weights))
         else:
-            state_dict = transfer('mobilenet_v2', model, weights)
+            state_dict = transfer('mobilenet_v2', model, n_input_channels, weights)
             model.load_state_dict(state_dict)
+
     return model
