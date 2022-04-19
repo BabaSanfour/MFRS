@@ -5,7 +5,7 @@ import os
 import sys
 import torch
 import torch.nn as nn
-from typing import Callable, Any, Optional, Tuple, List
+from typing import Callable, Any, Optional, Union, Tuple, List
 sys.path.append('/home/hamza97/MFRS/utils')
 from transfer_weights import transfer
 
@@ -80,7 +80,7 @@ def _vgg(arch: str, cfg: str, batch_norm: bool, pretrained: bool, num_classes: i
             if batch_norm==True:
                 weights=weights+'_bn'
         else:
-            weights=os.path.join(path, weights)                        
+            weights=os.path.join(path, weights)
         if os.path.isfile(weights):
             model.load_state_dict(torch.load(weights))
         else:
