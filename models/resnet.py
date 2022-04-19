@@ -273,6 +273,8 @@ def resnet18(
     if pretrained== True:
         if weights == None:
             weights=os.path.join(path, 'resnet18_weights_%sD_input'%n_input_channels)
+        else:
+            weights=os.path.join(path, weights)                        
         if os.path.isfile(weights):
             model.load_state_dict(torch.load(weights))
         else:
@@ -292,6 +294,8 @@ def resnet34(
     if pretrained== True:
         if weights == None:
             weights=os.path.join(path, 'resnet34_weights_%sD_input'%n_input_channels)
+        else:
+            weights=os.path.join(path, weights)
         if os.path.isfile(weights):
             model.load_state_dict(torch.load(weights))
         else:
@@ -311,6 +315,8 @@ def resnet50(
     if pretrained== True:
         if weights == None:
             weights=os.path.join(path, 'resnet50_weights_%sD_input'%n_input_channels)
+        else:
+            weights=os.path.join(path, weights)
         if os.path.isfile(weights):
             model.load_state_dict(torch.load(weights))
         else:
@@ -330,6 +336,8 @@ def resnet101(
     if pretrained== True:
         if weights == None:
             weights=os.path.join(path, 'resnet101_weights_%sD_input'%n_input_channels)
+        else:
+            weights=os.path.join(path, weights)
         if os.path.isfile(weights):
             model.load_state_dict(torch.load(weights))
         else:
@@ -349,6 +357,8 @@ def resnet152(
     if pretrained== True:
         if weights == None:
             weights=os.path.join(path, 'resnet152_weights_%sD_input'%n_input_channels)
+        else:
+            weights=os.path.join(path, weights)
         if os.path.isfile(weights):
             model.load_state_dict(torch.load(weights))
         else:

@@ -79,6 +79,8 @@ def _vgg(arch: str, cfg: str, batch_norm: bool, pretrained: bool, num_classes: i
             weights=os.path.join(path, arch,'_weights_%sD_input'%n_input_channels)
             if batch_norm==True:
                 weights=weights+'_bn'
+        else:
+            weights=os.path.join(path, weights)                        
         if os.path.isfile(weights):
             model.load_state_dict(torch.load(weights))
         else:

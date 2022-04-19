@@ -151,6 +151,8 @@ def cornet_s(pretrained: bool = False, num_classes: int = 1000, n_input_channels
     if pretrained:
         if weights == None:
             weights=os.path.join(path, 'cornet_s_weights_%sD_input'%n_input_channels)
+        else:
+            weights=os.path.join(path, weights)                            
         if os.path.isfile(weights):
             model.load_state_dict(torch.load(weights))
         else:
