@@ -137,3 +137,8 @@ def test_network(model_ft, dataset_loader, dataset_sizes):
     print('Test Accuracy (Overall): %.2f%%' % (avg_test_acc))
 
     return avg_test_acc
+
+def save_network_weights(model_ft,  file) :
+    """Save the network after training"""
+    state = model_ft.state_dict()
+    torch.save(state,path_weights+file)

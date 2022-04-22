@@ -45,7 +45,6 @@ def state_dict_layer_names(state_dict):
 def transfer(
     name: str,
     model: nn.Module,
-    n: int,     
     weights: str
     ) -> OrderedDict:
 
@@ -55,33 +54,20 @@ def transfer(
     pytorch_layer_names_out = state_dict_layer_names(output_state_dict)
     # original model weights + get original model layer names
     i=0
-    if name == "SphereFace":
-        original_state_dict= torch.load(path+'sphere20a_20171020.pth')
-        pytorch_layer_names_original = state_dict_layer_names(original_state_dict)
-        pytorch_layer_names_original.pop(0)
-        pytorch_layer_names_original.pop()
+    original_state_dict = load_url(model_urls[name])
+    pytorch_layer_names_original = state_dict_layer_names(original_state_dict)
+    # resnet
+    if name == 'resnet':
+        layer_name = 'conv1.weight'
+    elif name == "FaceNet":
+        layer_name= 'conv2d_1a.conv.weight'
         pytorch_layer_names_original.pop()
 
-    elif name == "LightCNN_V4":
-        original_state_dict= torch.load(path+'LightCNN-V4_checkpoint.pth.tar')['state_dict']
-        pytorch_layer_names_original = state_dict_layer_names(original_state_dict)
-        pytorch_layer_names_original.pop(0)
-        pytorch_layer_names_original.pop()
-    elif name == 'cornet_s' :
-        original_state_dict = load_url(model_urls[name], map_location=torch.device('cpu') )
-        pytorch_layer_names_original = state_dict_layer_names(original_state_dict['state_dict'])
+        
+    conv1_weight = original_state_dict[layer_name]
+    original_state_dict[layer_name] = conv1_weight.sum(dim=1, keepdim=True)
 
-    else:
-        original_state_dict = load_url(model_urls[name])
-        pytorch_layer_names_original = state_dict_layer_names(original_state_dict)
 
-    # Drop first and last layers name from original model
-    if name != "LightCNN_V4":
-        pytorch_layer_names_original.pop()
-        pytorch_layer_names_original.pop(0)
-    if name == 'inception_v3_google' :
-        pytorch_layer_names_original.pop(0)
-        i=1
 
 
 

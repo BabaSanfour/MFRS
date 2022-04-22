@@ -9,7 +9,7 @@ import h5py
 import numpy as np
 
 
-class celebA_align_Dataset_h5(Dataset):
+class generate_Dataset_h5(Dataset):
     """CelebA Dataset stored in hdf5 file"""
     def __init__(self, dir_path, transform=False):
         #read the hdf5 file
