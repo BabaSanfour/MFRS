@@ -9,9 +9,7 @@ from typing import Callable, Any, Optional, Tuple, List
 from collections import OrderedDict
 from torch import nn
 sys.path.append('/home/hamza97/MFRS/utils')
-from transfer_weights import transfer
-
-path='/home/hamza97/scratch/net_weights/'
+from load_weights import load_weights
 
 class Flatten(nn.Module):
 
@@ -149,13 +147,5 @@ class CORnet_S(nn.Module):
 def cornet_s(pretrained: bool = False, num_classes: int = 1000, n_input_channels: int = 3,  map_location=None, weights: str = None,**kwargs: Any) -> CORnet_S:
     model = CORnet_S(num_classes, n_input_channels)
     if pretrained:
-        if weights == None:
-            weights=os.path.join(path, 'cornet_s_weights_%sD_input'%n_input_channels)
-        else:
-            weights=os.path.join(path, weights)                            
-        if os.path.isfile(weights):
-            model.load_state_dict(torch.load(weights))
-        else:
-            state_dict = transfer(arch, model, n_input_channels, weights)
-            model.load_state_dict(state_dict)
+        return load_weights('cornet_s', model, n_input_channels, weights)
     return model

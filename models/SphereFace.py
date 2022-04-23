@@ -8,14 +8,9 @@ from torch.autograd import Variable
 from torch.nn import Parameter
 import math
 from collections import OrderedDict
-# from utils import load_state_dict_from_url
 from typing import Type, Any, Callable, Union, List, Optional
 sys.path.append('/home/hamza97/MFRS/utils')
-from transfer_weights import transfer
-
-
-
-path='/home/hamza97/scratch/net_weights/'
+from load_weights import load_weights
 
 def myphi(x,m):
     x = x * m
@@ -106,12 +101,14 @@ class AngleLoss(nn.Module):
 
 
 class sphere20a(nn.Module):
-    def __init__(self,classnum=1000,feature=False):
+    def __init__(self, classnum: int = 1000, n_input_channels: int = 3, feature: bool = False):
         super(sphere20a, self).__init__()
         self.classnum = classnum
+        self.n_input_channels = n_input_channels
         self.feature = feature
+
         #input = B*3*112*96
-        self.conv1_1 = nn.Conv2d(1,64,3,2,1) #=>B*64*56*48
+        self.conv1_1 = nn.Conv2d(n_input_channels,64,3,2,1) #=>B*64*56*48
         self.relu1_1 = nn.PReLU(64)
         self.conv1_2 = nn.Conv2d(64,64,3,1,1)
         self.relu1_2 = nn.PReLU(64)
@@ -161,7 +158,10 @@ class sphere20a(nn.Module):
         self.relu4_3 = nn.PReLU(512)
 
         self.fc5 = nn.Linear(100352,512)
-        self.fc6 = AngleLinear(512,self.classnum)
+        self.bn = nn.BatchNorm1d(512, eps=0.001, momentum=0.1, affine=True)
+        self.fc6 = nn.Linear(512,classnum)
+
+#        self.fc6 = AngleLinear(512,self.classnum)
 
 
     def forward(self, x):
@@ -183,21 +183,22 @@ class sphere20a(nn.Module):
 
         x = x.view(x.size(0),-1)
         x = self.fc5(x)
+        x = self.bn(x)
+        x = self.fc6(x)
+
         if self.feature: return x
 
-        x = self.fc6(x)
+#        x = self.fc6(x)
         return x
+
+
 def SphereFace(
     pretrained: bool = False,
     num_classes: int = 1000,
+    n_input_channels: int = 3,
+    weights: str = None
 ) -> sphere20a:
-    model = sphere20a(num_classes)
-    if pretrained== True:
-        weights=path+'SphereFace_weights'
-        if os.path.isfile(weights):
-            model.load_state_dict(torch.load(weights))
-        else:
-            state_dict = transfer('SphereFace', model, weights)
-            model.load_state_dict(state_dict)
-
+    model = sphere20a(num_classes, n_input_channels)
+    if pretrained:
+        return load_weights('SphereFace', model, n_input_channels, weights)
     return model

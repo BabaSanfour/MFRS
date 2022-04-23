@@ -9,10 +9,7 @@ import torch.nn as nn
 # from utils import load_state_dict_from_url
 from typing import Type, Any, Callable, Union, List, Optional
 sys.path.append('/home/hamza97/MFRS/utils')
-from transfer_weights import transfer
-
-# path to weights folder
-path='/home/hamza97/scratch/net_weights/'
+from load_weights import load_weights
 
 
 class ConvNormActivation(torch.nn.Sequential):
@@ -266,14 +263,5 @@ def mobilenet_v2(pretrained: bool = False, num_classes: int = 1000, n_input_chan
     """
     model = MobileNetV2(num_classes, n_input_channels, **kwargs)
     if pretrained:
-        if weights == None:
-            weights=os.path.join(path, 'mobilenet_weights_%sD_input'%n_input_channels)
-        else:
-            weights=os.path.join(path, weights)                    
-        if os.path.isfile(weights):
-            model.load_state_dict(torch.load(weights))
-        else:
-            state_dict = transfer('mobilenet_v2', model, n_input_channels, weights)
-            model.load_state_dict(state_dict)
-
+        return load_weights('mobilenet', model, n_input_channels, weights)
     return model

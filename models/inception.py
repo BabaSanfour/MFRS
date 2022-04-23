@@ -12,9 +12,7 @@ import torch.nn.functional as F
 from typing import Callable, Any, Optional, Tuple, List
 import sys
 sys.path.append('/home/hamza97/MFRS/utils')
-from transfer_weights import transfer
-
-path='/home/hamza97/scratch/net_weights/'
+from load_weights import load_weights
 
 InceptionOutputs = namedtuple('InceptionOutputs', ['logits', 'aux_logits'])
 InceptionOutputs.__annotations__ = {'logits': Tensor, 'aux_logits': Optional[Tensor]}
@@ -45,17 +43,8 @@ def inception_v3(pretrained: bool = False, num_classes: int = 1000, n_input_chan
         model.aux_logits = False
         model.AuxLogits = None
 
-        if weights == None:
-            weights=os.path.join(path, 'inception_weights_%sD_input'%n_input_channels)
-        else:
-            weights=os.path.join(path, weights)                
-        if os.path.isfile(weights):
-            model.load_state_dict(torch.load(weights))
-        else:
-            state_dict = transfer('inception_v3_google', model, n_input_channels, weights)
-            model.load_state_dict(state_dict)
+        return load_weights('inception', model, n_input_channels, weights)
 
-        return model
 
     return Inception3(num_classes, n_input_channels, **kwargs)
 

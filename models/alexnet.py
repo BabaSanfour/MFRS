@@ -8,9 +8,7 @@ from torch import Tensor
 import torch.nn as nn
 from typing import Callable, Any, Optional, Tuple, List
 sys.path.append('/home/hamza97/MFRS/utils')
-from transfer_weights import transfer
-
-path='/home/hamza97/scratch/net_weights/'
+from load_weights import load_weights
 
 class AlexNet(nn.Module):
 
@@ -50,7 +48,7 @@ class AlexNet(nn.Module):
         return x
 
 
-def alexnet(pretrained: bool = False, num_classes: int = 1000, n_input_channels: int = 3,  weights: str = None, progress: bool = True, **kwargs: Any) -> AlexNet:
+def alexnet(pretrained: bool = False, num_classes: int = 1000, n_input_channels: int = 3,  weights: str = None, progress: bool = False, **kwargs: Any) -> AlexNet:
     r"""AlexNet model architecture from the
     `"One weird trick..." <https://arxiv.org/abs/1404.5997>`_ paper.
     The required minimum input size of the model is 63x63.
@@ -60,13 +58,5 @@ def alexnet(pretrained: bool = False, num_classes: int = 1000, n_input_channels:
     """
     model = AlexNet(num_classes, n_input_channels, **kwargs)
     if pretrained:
-        if weights == None:
-            weights=os.path.join(path, 'AlexNet_weights_%sD_input'%n_input_channels)
-        else:
-            weights=os.path.join(path, weights)                
-        if os.path.isfile(weights):
-            model.load_state_dict(torch.load(weights))
-        else:
-            state_dict = transfer('alexnet', model, n_input_channels, weights)
-            model.load_state_dict(state_dict)
+        return load_weights('alexnet', model, n_input_channels, weights)
     return model

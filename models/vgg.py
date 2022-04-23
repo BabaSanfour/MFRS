@@ -5,11 +5,9 @@ import os
 import sys
 import torch
 import torch.nn as nn
-from typing import Callable, Any, Optional, Union, Tuple, List
+from typing import Callable, Any, Optional, Union, Tuple, List, Dict, cast
 sys.path.append('/home/hamza97/MFRS/utils')
-from transfer_weights import transfer
-
-path='/home/hamza97/scratch/net_weights/'
+from load_weights import load_weights
 
 
 class VGG(nn.Module):
@@ -74,19 +72,8 @@ cfgs: Dict[str, List[Union[str, int]]] = {
 
 def _vgg(arch: str, cfg: str, batch_norm: bool, pretrained: bool, num_classes: int, n_input_channels: int, weights: str, progress: bool, **kwargs: Any) -> VGG:
     model = VGG(make_layers(cfgs[cfg], batch_norm=batch_norm, n_input_channels=n_input_channels), num_classes, **kwargs)
-    if pretrained== True:
-        if weights == None:
-            weights=os.path.join(path, arch,'_weights_%sD_input'%n_input_channels)
-            if batch_norm==True:
-                weights=weights+'_bn'
-        else:
-            weights=os.path.join(path, weights)
-        if os.path.isfile(weights):
-            model.load_state_dict(torch.load(weights))
-        else:
-            state_dict = transfer(arch, model, n_input_channels, weights)
-            model.load_state_dict(state_dict)
-
+    if pretrained:
+        return load_weights(arch, model, n_input_channels, weights)
     return model
 
 

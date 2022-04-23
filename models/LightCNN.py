@@ -5,10 +5,9 @@ import torch.nn as nn
 import torch.nn.functional as F
 import numpy as np
 import sys
+from typing import Type, Any, Callable, Union, List, Optional
 sys.path.append('/home/hamza97/MFRS/utils')
-from transfer_weights import transfer
-
-path='/home/hamza97/scratch/net_weights/'
+from load_weights import load_weights
 
 
 class mfm(nn.Module):
@@ -40,10 +39,10 @@ class resblock_v1(nn.Module):
 
 
 class network(nn.Module):
-    def __init__(self, block, layers, num_classes):
+    def __init__(self, block: Type[resblock_v1], layers: List[int], num_classes: int = 1000, n_input_channels: int = 3):
         super(network, self).__init__()
 
-        self.conv1 = mfm(1, 48, 3, 1, 1)
+        self.conv1 = mfm(n_input_channels, 48, 3, 1, 1)
 
         self.block1 = self._make_layer(block, layers[0], 48, 48)
         self.conv2  = mfm(48, 96, 3, 1, 1)
@@ -65,6 +64,7 @@ class network(nn.Module):
         for i in range(0, num_blocks):
             layers.append(block(in_channels, out_channels))
         return nn.Sequential(*layers)
+
 
     def forward(self, x, label=None):
         x = self.conv1(x)
@@ -89,13 +89,9 @@ class network(nn.Module):
         x = self.fc2(x)
         return x
 
-def LightCNN_V4(pretrained: bool = False, num_classes: int =1000):
-    model = network(resblock_v1, [1, 2, 3, 4], num_classes)
-    if pretrained== True:
-        weights=path+'LightCNN_V4'
-        if os.path.isfile(weights):
-            model.load_state_dict(torch.load(weights))
-        else:
-            state_dict = transfer('LightCNN_V4', model, weights)
-            model.load_state_dict(state_dict)
+
+def LightCNN_V4(pretrained: bool = False, num_classes: int = 1000, n_input_channels: int = 3, weights: str = None) -> network:
+    model = network(resblock_v1, [1, 2, 3, 4], num_classes, n_input_channels)
+    if pretrained:
+        return load_weights('LightCNN', model, n_input_channels, weights)
     return model
