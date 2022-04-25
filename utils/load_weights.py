@@ -31,7 +31,6 @@ import os
 import torch
 import torch.nn as nn
 from collections import OrderedDict
-from transfer_weights_new import transfer
 from torch.utils.model_zoo import load_url
 
 path='/home/hamza97/scratch/net_weights/'
@@ -78,17 +77,25 @@ def transfer(
     output_state_dict = model.state_dict()
     # get created model layer names
     pytorch_layer_names_out = state_dict_layer_names(output_state_dict)
-
     # original model weights + get original model layer names
-    if name == "SphereFace":
-        original_state_dict= torch.load(path+'sphere20a_20171020.pth')
-    elif name == "LightCNN":
-        original_state_dict= torch.load(path+'LightCNN-V4_checkpoint.pth.tar')['state_dict']
-    elif name == "cornet_s" :
-        original_state_dict = load_url(model_urls[name], map_location=torch.device('cpu') )
-        original_state_dict = original_state_dict['state_dict']
+
+    # if the weights file exists then it should be the one after training on VGGFace because for
+    # the othe conditions the weight file name doesnt exist. So to avoid erasing the existing file
+    # and to create transfer weights and save the file with the correct name we change weights to
+    # "architecture"_weights_"n_input"_VGGFace
+    if os.path.isfile(weights):
+        original_state_dict= torch.load(weights)
+        weights=os.path.join(path, '%s_weights_%sD_input_VGGFace'%(name, n_input_channels))
     else:
-        original_state_dict = load_url(model_urls[name])
+        if name == "SphereFace":
+            original_state_dict= torch.load(path+'sphere20a_20171020.pth')
+        elif name == "LightCNN":
+            original_state_dict= torch.load(path+'LightCNN-V4_checkpoint.pth.tar')['state_dict']
+        elif name == "cornet_s" :
+            original_state_dict = load_url(model_urls[name], map_location=torch.device('cpu') )
+            original_state_dict = original_state_dict['state_dict']
+        else:
+            original_state_dict = load_url(model_urls[name])
     pytorch_layer_names_original = state_dict_layer_names(original_state_dict)
 
     # to avoid losing the weights of the pretrained first layer when using transfer learning,
@@ -102,7 +109,7 @@ def transfer(
     # models trained on ImageNet have 1000 class in the last layer, so when training on celebA we have no need to change the last layer,
     # however when training these models on VGGFace with using pretrained-ImageNet weights we need to drop the last layer weights.
     # In the case of models pretrained on VGGFace and then we need to finetunned on celebA, we drop the last layer weights.
-    if n_input_channels==3 or weights[-7:] == 'VGGFace'or weights[-8:] == 'VGGFace' or name in ["LightCNN", "SphereFace"]:
+    if n_input_channels==3 or weights[-7:] == 'VGGFace' or weights[-8:] == 'VGGFace' or name in ["LightCNN", "SphereFace"]:
         pytorch_layer_names_original.pop()
         # in the case of SphereFace we drop the two last layers ( changes made to the model to fit our project )
         if name == "SphereFace":
@@ -153,12 +160,12 @@ def transfer(
 def load_weights(name: str, model: nn.Module, n_input_channels: int, weights: str):
     if weights == None:
         weights=os.path.join(path, '%s_weights_%sD_input'%(name, n_input_channels))
-        if name in ['LightCNN','SphereFace', 'FaceNet']:
+        if name in ['LightCNN','SphereFace', 'FaceNet'] :
             weights=weights+ '_VGGFace'
     else:
         weights=os.path.join(path, weights)
-    # Similar to explanation in line 102 
-    if ((weights[-7:] == 'VGGFace' or weights[-8:-1] == 'VGGFace') and name not in ['LightCNN','SphereFace', 'FaceNet']) or not os.path.isfile(weights):
+    # Similar to explanation in line 102
+    if (weights[-7:] == 'VGGFace' or weights[-8:-1] == 'VGGFace') or not os.path.isfile(weights):
         transfer(name, model, n_input_channels, weights)
     model.load_state_dict(torch.load(weights))
     return model
