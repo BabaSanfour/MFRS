@@ -72,7 +72,6 @@ def transfer(
     n_input_channels: int,
     weights: str
     ) -> OrderedDict:
-
     # created model weights (vide)
     output_state_dict = model.state_dict()
     # get created model layer names
@@ -86,6 +85,8 @@ def transfer(
     if os.path.isfile(weights):
         original_state_dict= torch.load(weights)
         weights=os.path.join(path, '%s_weights_%sD_input_VGGFace'%(name, n_input_channels))
+        if os.path.isfile(weights):
+            return weights
     else:
         if name == "SphereFace":
             original_state_dict= torch.load(path+'sphere20a_20171020.pth')
@@ -105,7 +106,7 @@ def transfer(
     if n_input_channels == 1:
         conv1_weight = original_state_dict[pytorch_layer_names_original[0]+'.weight']
         original_state_dict[pytorch_layer_names_original[0]+'.weight'] = conv1_weight.sum(dim=1, keepdim=True)
-
+    print(original_state_dict[pytorch_layer_names_original[0]+'.weight'].shape)
     # models trained on ImageNet have 1000 class in the last layer, so when training on celebA we have no need to change the last layer,
     # however when training these models on VGGFace with using pretrained-ImageNet weights we need to drop the last layer weights.
     # In the case of models pretrained on VGGFace and then we need to finetunned on celebA, we drop the last layer weights.
@@ -114,7 +115,6 @@ def transfer(
         # in the case of SphereFace we drop the two last layers ( changes made to the model to fit our project )
         if name == "SphereFace":
             pytorch_layer_names_original.pop()
-
     # match the original layer names with their counterparts from our output model (desired model)
     i=0
     dictest = {}
@@ -147,14 +147,12 @@ def transfer(
         if running_var_key_out in original_state_dict:
             output_state_dict[running_var_key_out]=original_state_dict[running_var_key_in]
 
-
     # load weights into created model dict
     model.load_state_dict(output_state_dict)
     # save weights
     torch.save(model.state_dict(), weights)
-    print("weights transfered and saved")
     # return weights
-    return output_state_dict
+    return weights
 
 
 def load_weights(name: str, model: nn.Module, n_input_channels: int, weights: str):
@@ -166,6 +164,6 @@ def load_weights(name: str, model: nn.Module, n_input_channels: int, weights: st
         weights=os.path.join(path, weights)
     # Similar to explanation in line 102
     if (weights[-7:] == 'VGGFace' or weights[-8:-1] == 'VGGFace') or not os.path.isfile(weights):
-        transfer(name, model, n_input_channels, weights)
+        weights=transfer(name, model, n_input_channels, weights)
     model.load_state_dict(torch.load(weights))
     return model
