@@ -12,16 +12,24 @@ mean_std = { '1000_30': [0.3612, 0.3056],
               '300_28': [0.3779, 0.3085],
               '300_14': [0.3614, 0.3045] }
 
-
 def dataloader(batch_n , num_classes, num_pictures):
     """Return datasets train and valid"""
     # Argument :
     # batch_n : batch_size
     # Num classes : classes
     # Num pictures : pictures
-    train_path=path_data+"train_%s_%s.h5"%(num_classes, num_pictures)
-    valid_path=path_data+"valid_%s_%s.h5"%(num_classes, num_pictures)
-    test_path=path_data+"test_%s_%s.h5"%(num_classes, num_pictures)
+    if n_input_channels == 1:
+        train_path=path_data+"train_%s_%s.h5"%(num_classes, num_pictures)
+        valid_path=path_data+"valid_%s_%s.h5"%(num_classes, num_pictures)
+        test_path=path_data+"test_%s_%s.h5"%(num_classes, num_pictures)
+        mean, std =[0.3612], [0.3056]
+    elif n_input_channels == 3:
+        train_path=path_data+"train.h5"
+        valid_path=path_data+"valid.h5"
+        test_path=path_data+"test.h5"
+        mean, std= [0.485, 0.456, 0.406], [0.229, 0.224, 0.225]
+    else :
+        print('Error loading data')
 
     # extract mean and std:
     list_mean_std = mean_std[str(num_classes)+'_'+str(num_pictures)]
