@@ -3,7 +3,7 @@ import torch
 import torch.nn as nn
 import matplotlib.pyplot as plt
 
-def train_model(name, model, criterion, optimizer, scheduler, num_epochs, dataset_loader, dataset_sizes):
+def train_network(name, model, criterion, optimizer, scheduler, num_epochs, dataset_loader, dataset_sizes):
     """Train the model using the train and validation datasets"""
 
     best_acc = -1.0
@@ -14,9 +14,8 @@ def train_model(name, model, criterion, optimizer, scheduler, num_epochs, datase
 
     since = time.time()
     for epoch in range(num_epochs):
-        if epoch % 10 == 0:
-            print('Epoch %s/%s' % (epoch + 1, num_epochs))
-            print('-' * 10)
+        print('Epoch %s/%s' % (epoch + 1, num_epochs))
+        print('-' * 10)
 
         #initialization
         n_correct = 0 #correct predictions train
@@ -54,8 +53,7 @@ def train_model(name, model, criterion, optimizer, scheduler, num_epochs, datase
             # epoch loss and acc
             train_acc = 100. * n_correct/dataset_sizes["train"]
             train_loss = running_loss / dataset_sizes["train"]
-            if epoch % 10 == 0:
-                print('%s Loss: %.2f Acc: %.2f%%' % ("Train", train_loss, train_acc))
+            print('%s Loss: %.2f Acc: %.2f%%' % ("Train", train_loss, train_acc))
             list_trainLoss.append(train_loss)
             list_trainAcc.append(train_acc)
 
@@ -84,8 +82,7 @@ def train_model(name, model, criterion, optimizer, scheduler, num_epochs, datase
 
             list_valLoss.append(valid_loss)
             list_valAcc.append(valid_acc)
-            if epoch % 10 == 0:
-                print('%s Loss: %.2f Acc: %.2f%%' % ("Valid", valid_loss, valid_acc))
+            print('%s Loss: %.2f Acc: %.2f%%' % ("Valid", valid_loss, valid_acc))
             if valid_acc> best_acc:
                 best_acc= valid_acc
                 best_model = model
@@ -116,6 +113,7 @@ def test_network(model_ft, dataset_loader, dataset_sizes):
     model_ft.eval()
 
     n_dev_correct=0
+    tot_correct_topk=0
     test_loss = 0.0
     # The loss function
     criterion = nn.CrossEntropyLoss()
@@ -125,6 +123,15 @@ def test_network(model_ft, dataset_loader, dataset_sizes):
         inputs = inputs_.to(device)
         labels = labels_.to(device)
         outputs = model(inputs)
+        # top 5 accuracy
+        topk = 5
+        _, y_pred = outputs.topk(k=5, dim=1)
+        y_pred = y_pred.t()
+        labels_reshaped = labels.view(1, -1).expand_as(y_pred)
+        correct = (y_pred == labels_reshaped)
+        flattened_indicator_which_topk_matched_truth = correct.reshape(-1).float()
+        tot_correct_topk += flattened_indicator_which_topk_matched_truth.float().sum(dim=0, keepdim=True)
+
         n_dev_correct += (torch.max(outputs, 1)[1].view(labels.data.size()) == labels.data).sum().item()
 
         loss = criterion(outputs, labels)
@@ -135,6 +142,8 @@ def test_network(model_ft, dataset_loader, dataset_sizes):
 
     print('Test Loss: %.2f' % (avg_test_loss))
     print('Test Accuracy (Overall): %.2f%%' % (avg_test_acc))
+    print('Test Accuracy (Top5): %.2f%%' % (avg_test_acc5))
+
 
     return avg_test_acc
 

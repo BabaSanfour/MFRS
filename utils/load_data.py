@@ -1,6 +1,6 @@
-import torch
+cd import torch
 import torchvision
-from celebA_align_hdf5 import celebA_align_Dataset_h5
+from generate_data_from_hdf5 import generate_Dataset_h5
 
 path_data='/home/hamza97/scratch/data/MFRS_data/hdf5/'
 
@@ -12,7 +12,7 @@ mean_std = { '1000_30': [0.3612, 0.3056],
               '300_28': [0.3779, 0.3085],
               '300_14': [0.3614, 0.3045] }
 
-def dataloader(batch_n , num_classes, num_pictures):
+def dataloader(batch_n, n_input_channels, num_classes=1000, num_pictures=30):
     """Return datasets train and valid"""
     # Argument :
     # batch_n : batch_size
@@ -36,16 +36,16 @@ def dataloader(batch_n , num_classes, num_pictures):
     mean, std = list_mean_std[0], list_mean_std[1]
 
     # ##Training dataset
-    train_dataset = celebA_align_Dataset_h5(train_path,
+    train_dataset = generate_Dataset_h5(train_path,
                                         torchvision.transforms.Compose([torchvision.transforms.ToTensor(),
                                         torchvision.transforms.Normalize(mean=[mean], std=[std])]))
 
     # ##Validation dataset
-    valid_dataset = celebA_align_Dataset_h5(valid_path,
+    valid_dataset = generate_Dataset_h5(valid_path,
                                         torchvision.transforms.Compose([torchvision.transforms.ToTensor(),
                                         torchvision.transforms.Normalize(mean=[mean], std=[std])]))
 
-    test_dataset = celebA_align_Dataset_h5(test_path,
+    test_dataset = generate_Dataset_h5(test_path,
                                         torchvision.transforms.Compose([torchvision.transforms.ToTensor(),
                                         torchvision.transforms.Normalize(mean=[mean], std=[std])]))
 
@@ -55,3 +55,5 @@ def dataloader(batch_n , num_classes, num_pictures):
                       'test': torch.utils.data.DataLoader(test_dataset, batch_size=batch_n,shuffle=True)}
 
     dataset_sizes = {'train': len(train_dataset), 'valid' : len(valid_dataset), 'test' : len(test_dataset)}
+
+    return dataset_loader
