@@ -1,6 +1,6 @@
-cd import torch
+import torch
 import torchvision
-from generate_data_from_hdf5 import generate_Dataset_h5
+from utils.generate_data_from_hdf5 import generate_Dataset_h5
 
 path_data='/home/hamza97/scratch/data/MFRS_data/hdf5/'
 
@@ -56,4 +56,20 @@ def dataloader(batch_n, n_input_channels, num_classes=1000, num_pictures=30):
 
     dataset_sizes = {'train': len(train_dataset), 'valid' : len(valid_dataset), 'test' : len(test_dataset)}
 
-    return dataset_loader
+    return dataset_loader, dataset_sizes
+
+
+def Stimuliloader(batch_n, file_name):
+    """Return datasets train and valid"""
+    # Argument :
+    # batch_n : batch_size
+    # file_name : file_name
+    data=path_data+"%s.h5"%file_name
+    mean, std =[0.3612], [0.3056]
+
+    # ##Stimuli dataset
+    stimuli_dataset = generate_Dataset_h5(data,
+                                        torchvision.transforms.Compose([torchvision.transforms.ToTensor(),
+                                        torchvision.transforms.Normalize(mean=[mean], std=[std])]))
+
+    return torch.utils.data.DataLoader(stimuli_dataset, batch_size=batch_n,shuffle=False)
