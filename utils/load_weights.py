@@ -53,6 +53,8 @@ model_urls = {
     "mobilenet": "https://download.pytorch.org/models/mobilenet_v2-b0353104.pth",
 
     'cornet_s': 'https://s3.amazonaws.com/cornet-models/cornet_s-1d3f7974.pth',
+    'cornet_z': 'https://s3.amazonaws.com/cornet-models/cornet_z-5c427c9c.pth',
+
 
     "inception": "https://download.pytorch.org/models/inception_v3_google-0cc3c7bd.pth",
 

@@ -10,6 +10,7 @@ import torch.optim as optim
 from models.alexnet import alexnet
 from models.inception import inception_v3
 from models.mobilenet import mobilenet_v2
+from models.cornet_z import cornet_z
 from models.cornet_s import cornet_s
 from models.vgg import vgg16, vgg19, vgg16_bn, vgg19_bn
 from models.resnet import resnet18, resnet34, resnet50, resnet101, resnet152
@@ -41,14 +42,14 @@ if __name__ == '__main__':
     step_size=10
     gamma=0.1
     pretrained=True
-    n_input_channels=1 
+    n_input_channels=1
     num_classes_list=[1000, 500, 300] # 1000 Gave the best performance across all HP and models
     # we also tested with 4000 and 10000 but no promising results.
     print('hamza')
     #model
     model_name="alexnet"
     # select batch sizes: we some of the models couldn't work with big batch sizes because of our gpu
-    if model_name in ["alexnet", "resnet18" "resnet34", "deepID_1", "LightCNN"]:
+    if model_name in ["alexnet", "resnet18" "resnet34", "deepID_1", "LightCNN", "cornet_z"]:
         batch_sizes = [8, 16, 32, 64, 128, 256, 512]
     elif model_name in ["cornet_s", "resnet50", "mobilenet"]:
         batch_sizes = [8, 16, 32, 64, 128, 256]
@@ -75,6 +76,8 @@ if __name__ == '__main__':
                         model = alexnet(pretrained, num_classes, n_input_channels)
                     elif model_name ==  "cornet_s":
                         model = cornet_s(pretrained, num_classes, n_input_channels)
+                    elif model_name ==  "cornet_z":
+                        model = cornet_z(pretrained, num_classes, n_input_channels)
                     elif model_name == "mobilenet":
                         model = mobilenet_v2(pretrained, num_classes, n_input_channels)
                     elif model_name == "resnet18":
