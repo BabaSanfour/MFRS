@@ -1,8 +1,9 @@
 import torch
 import torchvision
-from utils.generate_data_from_hdf5 import generate_Dataset_h5
+from utils.generate_data_from_hdf5 import generate_Dataset_h5, generate_stimuli_h5
 
-path_data='/home/hamza97/scratch/data/MFRS_data/hdf5/'
+path_data='../work/'
+stimuli_path_data='/home/hamza97/scratch/data/MFRS_data/hdf5/'
 
 mean_std = { '1000_30': [0.3612, 0.3056],
               '1000_25': [0.3736, 0.3082],
@@ -50,9 +51,9 @@ def dataloader(batch_n, n_input_channels, num_classes=1000, num_pictures=30):
                                         torchvision.transforms.Normalize(mean=[mean], std=[std])]))
 
     # ##Test dataset
-    dataset_loader = {'train': torch.utils.data.DataLoader(train_dataset, batch_size=batch_n,shuffle=True),
-                      'valid': torch.utils.data.DataLoader(valid_dataset, batch_size=batch_n,shuffle=True),
-                      'test': torch.utils.data.DataLoader(test_dataset, batch_size=batch_n,shuffle=True)}
+    dataset_loader = {'train': torch.utils.data.DataLoader(train_dataset, batch_size=batch_n, num_workers=2, shuffle=True),
+                      'valid': torch.utils.data.DataLoader(valid_dataset, batch_size=batch_n, num_workers=2, shuffle=True),
+                      'test': torch.utils.data.DataLoader(test_dataset, batch_size=batch_n, num_workers=2, shuffle=True)}
 
     dataset_sizes = {'train': len(train_dataset), 'valid' : len(valid_dataset), 'test' : len(test_dataset)}
 
@@ -64,11 +65,11 @@ def Stimuliloader(batch_n, file_name):
     # Argument :
     # batch_n : batch_size
     # file_name : file_name
-    data=path_data+"%s.h5"%file_name
+    data=stimuli_path_data+"%s.h5"%file_name
     mean, std =[0.3612], [0.3056]
 
     # ##Stimuli dataset
-    stimuli_dataset = generate_Dataset_h5(data,
+    stimuli_dataset = generate_stimuli_h5(data,
                                         torchvision.transforms.Compose([torchvision.transforms.ToTensor(),
                                         torchvision.transforms.Normalize(mean=[mean], std=[std])]))
 

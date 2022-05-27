@@ -270,5 +270,6 @@ class InceptionResnetV1(nn.Module):
 def FaceNet(pretrained: bool = False, num_classes: int = 1000, n_input_channels: int = 3, weights: str = None) -> InceptionResnetV1:
     model = InceptionResnetV1(num_classes, n_input_channels)
     if pretrained:
+        print("wrong")
         return load_weights('FaceNet', model, n_input_channels, weights)
     return model

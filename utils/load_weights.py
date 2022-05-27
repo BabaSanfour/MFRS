@@ -86,10 +86,13 @@ def transfer(
     # "architecture"_weights_"n_input"_VGGFace
     if os.path.isfile(weights):
         original_state_dict= torch.load(weights)
-        weights=os.path.join(path, '%s_weights_%sD_input_VGGFace'%(name, n_input_channels))
+        print('old weights file loaded')
+        weights=os.path.join(path, '%s_weights_%sD_input_VGGFace3'%(name, n_input_channels))
         if os.path.isfile(weights):
+            print('old weights file loaded')
             return weights
     else:
+        print(' pretrained old weights file loaded ( mostlikely image net or VGGFace)')
         if name == "SphereFace":
             original_state_dict= torch.load(path+'sphere20a_20171020.pth')
         elif name == "LightCNN":
@@ -108,15 +111,16 @@ def transfer(
     if n_input_channels == 1:
         conv1_weight = original_state_dict[pytorch_layer_names_original[0]+'.weight']
         original_state_dict[pytorch_layer_names_original[0]+'.weight'] = conv1_weight.sum(dim=1, keepdim=True)
-    print(original_state_dict[pytorch_layer_names_original[0]+'.weight'].shape)
+        print('first layer sum computed')
     # models trained on ImageNet have 1000 class in the last layer, so when training on celebA we have no need to change the last layer,
     # however when training these models on VGGFace with using pretrained-ImageNet weights we need to drop the last layer weights.
     # In the case of models pretrained on VGGFace and then we need to finetunned on celebA, we drop the last layer weights.
-    if n_input_channels==3 or weights[-7:] == 'VGGFace' or weights[-8:] == 'VGGFace' or name in ["LightCNN", "SphereFace"]:
+    if n_input_channels==3 or weights[-7:] == 'VGGFace' or weights[-8:-1] == 'VGGFace' or name in ["LightCNN", "SphereFace"]:
         pytorch_layer_names_original.pop()
+        print('last layer popped')
         # in the case of SphereFace we drop the two last layers ( changes made to the model to fit our project )
-        if name == "SphereFace":
-            pytorch_layer_names_original.pop()
+        # if name == "SphereFace":
+        #     pytorch_layer_names_original.pop()
     # match the original layer names with their counterparts from our output model (desired model)
     i=0
     dictest = {}
@@ -153,6 +157,7 @@ def transfer(
     model.load_state_dict(output_state_dict)
     # save weights
     torch.save(model.state_dict(), weights)
+    print('new weights saved')
     # return weights
     return weights
 

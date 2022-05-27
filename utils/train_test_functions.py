@@ -2,10 +2,12 @@ import time
 import torch
 import torch.nn as nn
 import matplotlib.pyplot as plt
+path_weights = "/home/hamza97/scratch/net_weights/"
 
 def train_network(name, model, criterion, optimizer, scheduler, num_epochs, dataset_loader, dataset_sizes):
-    """Train the model using the train and validation datasets"""
 
+    """Train the model using the train and validation datasets"""
+    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     best_acc = -1.0
     list_trainLoss = []
     list_trainAcc = []
@@ -107,11 +109,11 @@ def train_network(name, model, criterion, optimizer, scheduler, num_epochs, data
 
     return best_model
 
-def test_network(model_ft, dataset_loader, dataset_sizes):
+def test_network(model, dataset_loader, dataset_sizes):
 
     # torch works with gpu
-    model_ft.eval()
-
+    model.eval()
+    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     n_dev_correct=0
     tot_correct_topk=0
     test_loss = 0.0
@@ -139,9 +141,10 @@ def test_network(model_ft, dataset_loader, dataset_sizes):
 
     avg_test_acc = 100. * n_dev_correct/dataset_sizes["test"]
     avg_test_loss = test_loss / dataset_sizes["test"]
+    avg_test_acc5 = 100. * tot_correct_topk/dataset_sizes["test"]
 
     print('Test Loss: %.2f' % (avg_test_loss))
-    print('Test Accuracy (Overall): %.2f%%' % (avg_test_acc))
+    print('Test Accuracy (Top1): %.2f%%' % (avg_test_acc))
     print('Test Accuracy (Top5): %.2f%%' % (avg_test_acc5))
 
 
