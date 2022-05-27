@@ -6,14 +6,14 @@ import mne
 import numpy as np
 import os.path as op
 from neurora.rdm_cal import eegRDM
-
+sys.path.append('/home/hamza97/MFRS/brain_data_preprocessing')
 from library.config_bids import meg_dir
 
-def transform_data(sub_id, tsss=10):
+def transform_data(sub_id, n_cons, n_chls, n_time_points, tsss=10):
     """
     This function read epoched MEG data and saves it a matrix with the shape [n_sub, n_conditions, n_channels, n_time_points]
     """
-    megdata = np.zeros([len(sub_id), 300, 306, 881], dtype=np.float32)
+    megdata = np.zeros([len(sub_id), n_cons, n_chls, n_time_points], dtype=np.float32)
     subindex = 0
     for subject_id in sub_id:
         subject = "sub-%02d"%subject_id
@@ -21,15 +21,15 @@ def transform_data(sub_id, tsss=10):
         file = op.join(data_path, '%s-tsss_%d_new-epo.fif' % (subject, tsss))
         epochs = mne.read_epochs(file)
 #       print(epochs.events)
-        subdata = np.zeros([300, 306, 881], dtype=np.float32)
-        for j  in range(300):
+        subdata = np.zeros([n_cons, n_chls, n_time_points], dtype=np.float32)
+        for j  in range(n_cons):
             epoch = epochs[list_names[j]]
-            subdata[j] = np.array(epoch) # Can we do this ?!!!!
+            subdata[j] = np.array(epoch) # Can we do this ?!!!! epoch.get_data()
         megdata[subindex] = subdata
         subindex = subindex + 1
     return megdata
 
-def compute_RDMs(megdata, n_subj, sub_opt=1, chl_opt=1):
+def compute_RDMs(megdata, n_cons, n_subj, n_trials, n_chls, n_time_points, sub_opt=1, chl_opt=1):
     """
     This function computes the RDMs for MEG data and saves them in a numpy file.
     The shape depends on the input parameters
@@ -63,8 +63,8 @@ def compute_RDMs(megdata, n_subj, sub_opt=1, chl_opt=1):
     If sub_opt=1 & chl_opt=1, return n_subs*n_chls RDM.
         The shape is [n_subs, n_chls, n_cons, n_cons].
     """
-    megdata = np.transpose(megdata, (1, 0, 2, 3))
-    megdata = np.reshape(megdata, [300, n_subj, 1, 306, 881])
+    megdata = np.transpose(megdata, (1, 0, 2, 3)) # test reshape ///// rdms for theta, gamma...
+    megdata = np.reshape(megdata, [n_cons, n_subj, n_trials, n_chls, n_time_points])
     # Calculate the RDM based on the data during
     rdm = eegRDM(megdata, sub_opt, chl_opt)
 
@@ -83,5 +83,5 @@ if __name__ == '__main__':
         list_names.append("meg/u%03d.bmp"% i)
 
     sub_id = [i for i in range(1,17)]
-    megdata = transform_data(sub_id)
-    compute_RDMs(megdata, len(sub_id))
+    megdata = transform_data(sub_id, 300, 306, 881)
+    compute_RDMs(megdata, 300, len(sub_id), 1, 306, 881)
