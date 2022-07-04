@@ -6,6 +6,7 @@ import mne
 import numpy as np
 import os.path as op
 from neurora.rdm_cal import eegRDM
+import sys
 sys.path.append('/home/hamza97/MFRS/brain_data_preprocessing')
 from library.config_bids import meg_dir
 
@@ -18,13 +19,13 @@ def transform_data(sub_id, n_cons, n_chls, n_time_points, tsss=10):
     for subject_id in sub_id:
         subject = "sub-%02d"%subject_id
         data_path = op.join(meg_dir, subject)
-        file = op.join(data_path, '%s-tsss_%d_new-epo.fif' % (subject, tsss))
+        file = op.join(data_path, '%s-tsss_%d_new-epo_scrambled.fif' % (subject, tsss))
         epochs = mne.read_epochs(file)
 #       print(epochs.events)
         subdata = np.zeros([n_cons, n_chls, n_time_points], dtype=np.float32)
         for j  in range(n_cons):
             epoch = epochs[list_names[j]]
-            subdata[j] = np.array(epoch) # Can we do this ?!!!! epoch.get_data()
+            subdata[j] = epoch.get_data()
         megdata[subindex] = subdata
         subindex = subindex + 1
     return megdata
@@ -63,12 +64,12 @@ def compute_RDMs(megdata, n_cons, n_subj, n_trials, n_chls, n_time_points, sub_o
     If sub_opt=1 & chl_opt=1, return n_subs*n_chls RDM.
         The shape is [n_subs, n_chls, n_cons, n_cons].
     """
-    megdata = np.transpose(megdata, (1, 0, 2, 3)) # test reshape ///// rdms for theta, gamma...
+    megdata = np.transpose(megdata, (1, 0, 2, 3))
     megdata = np.reshape(megdata, [n_cons, n_subj, n_trials, n_chls, n_time_points])
     # Calculate the RDM based on the data during
     rdm = eegRDM(megdata, sub_opt, chl_opt)
 
-    out_file = op.join(meg_dir, 'RDMs_%d-subject_%d-sub_opt%d-chl_opt.npy' % (n_subj, sub_opt, chl_opt))
+    out_file = op.join(meg_dir, 'RDMs_%d-subject_%d-sub_opt%d-chl_opt_scrambled.npy' % (n_subj, sub_opt, chl_opt))
     np.save(out_file, rdm)
     print('File saved successfully')
 
@@ -76,12 +77,12 @@ def compute_RDMs(megdata, n_cons, n_subj, n_trials, n_chls, n_time_points, sub_o
 if __name__ == '__main__':
 
     #  list of pictures names (stimuli: used as trigger)
-    list_names = []
-    for i in range(1,151):
-        list_names.append("meg/f%03d.bmp"% i)
-    for i in range(1,151):
-        list_names.append("meg/u%03d.bmp"% i)
-
+    # list_names = []
+    # for i in range(301,451):
+    #     list_names.append("meg/s%03d.bmp"% i)
+    # for i in range(1,151):
+    #     list_names.append("meg/u%03d.bmp"% i)
+    list_names = [str(i) for i in range(301,451)]
     sub_id = [i for i in range(1,17)]
-    megdata = transform_data(sub_id, 300, 306, 881)
-    compute_RDMs(megdata, 300, len(sub_id), 1, 306, 881)
+    megdata = transform_data(sub_id, 150, 306, 881)
+    compute_RDMs(megdata, 150, len(sub_id), 1, 306, 881)
