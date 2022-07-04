@@ -3,10 +3,15 @@ import pickle
 import torch
 import torchvision
 import torch.nn as nn
+import sys
+import numpy as np
+sys.path.append('/home/hamza97/MFRS/utils')
+from general import save_pickle, load_pickle, save_npy
+from config_sim_analysis import activations_folder
 
-activations_folder = '/home/hamza97/scratch/data/MFRS_data/activations'
 activations={}
-def get_activation(name: str, batch_size: int = 150):
+
+def get_activation(name: str):
     """ Get the activation of the network without changing the Parameters"""
     def hook(model, input, output):
         # detach() is used to detach a tensor from the current computational graph. It returns a new tensor
@@ -15,11 +20,11 @@ def get_activation(name: str, batch_size: int = 150):
         # transform the tensor to numpy (needed type for rdm)
         # reshape to the proper shape we need to compute rdm
         # Function from https://discuss.pytorch.org/t/how-can-l-load-my-best-model-as-a-feature-extractor-evaluator/17254/24
-        activations[name] = output.detach().cpu().numpy().reshape(batch_size, -1) # change to output.shape
+        activations[name] = output.detach().cpu().numpy().reshape(output.shape[0], -1) # output.shape[0] is batch batch_size which should be equal to N_conditions
     return hook
 
 def model_activations(model: nn.Module, data: torch.Tensor, weights: str, method: str = 'all', list_layers: list = [],
-                        save: bool = False, model_name: str = None, data_name: str = None):
+                        save: bool = False, file_name: str = None):
     """
         Get a dict with layers names and their activations for your input data
 
@@ -37,8 +42,6 @@ def model_activations(model: nn.Module, data: torch.Tensor, weights: str, method
                             - for 'method'=type:  list of layers types
                             - for 'method'=all:   nothing, return all layers.
         save            save computed similarity scores stats, default: False
-        model_name      network name, required if save=True. Default: None
-        data_name       data name, required if save=True. Default: None
 
         returns:
         ---------------
@@ -66,9 +69,6 @@ def model_activations(model: nn.Module, data: torch.Tensor, weights: str, method
     if method ==  "type" and not all(elem in [item[1] for item in list(model.named_modules())] for elem in list_layers):
         print("\nProvided layers types don't match network layers types.\n")
         return "Invalid input!"
-    if save:
-        assert model_name != None, "\nmodel_name not specified.\n Invalid input!"
-        assert data_name != None, "\ndata_name not specified.\n Invalid input!"
 
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     if weights!= 'None':
@@ -81,36 +81,48 @@ def model_activations(model: nn.Module, data: torch.Tensor, weights: str, method
     if method == "index":
         for idx, layer in enumeate(model.named_modules()):
             if idx in list_layers:
-                layer.register_forward_hook(get_activation(name, len(data)))
+                layer.register_forward_hook(get_activation(name))
     elif method=="list":
         for name, layer in model.named_modules():
             if name in list_layers:
-                layer.register_forward_hook(get_activation(name, len(data)))
+                layer.register_forward_hook(get_activation(name))
     elif method=="type":
         for name, layer in model.named_modules():
             if type(layer) in list_layers:
-                layer.register_forward_hook(get_activation(name, len(data)))
+                layer.register_forward_hook(get_activation(name))
     else:
         for name, layer in model.named_modules():
-            layer.register_forward_hook(get_activation(name, len(data)))
+            layer.register_forward_hook(get_activation(name))
 
     output = model(data)
     if save:
-        file=os.path.join(activations_folder, "%s_%s_activations.pkl"%(model_name, data_name))
-        save_activations(activations, file)
+        save_pickle(activations, file_name)
 
     return activations
 
-def save_activations(activations, file):
-    """ Save activations in pickle files """
-    with open(file, 'wb') as f:
-        pickle.dump(activations, f)
-    print('File saved successfully')
 
+def get_main_network_activations(name: str, layers: list, save: bool = True):
+    """Get the activations of the main layers of a network"""
+    if os.path.exists(os.path.join(activations_folder, '%s_main.pkl'%name)):
+        main_activ=load_pickle(os.path.join(activations_folder, '%s_main.pkl'%name))
+        return main_activ
+    else:
+        activations=load_pickle(os.path.join(activations_folder, '%s.pkl'%name))
+        main_activ={}
+        for layer in layers:
+            main_activ[layer] = activations[layer]
+        if save:
+            save_pickle(main_activ, os.path.join(activations_folder, '%s_main.pkl'%name))
+        return main_activ
 
-def load_activations(file):
-    """ Load activations from pickle files """
-    with open(file, 'rb') as f:
-        activations = pickle.load(f)
-    print('File loaded successfully')
-    return activations
+def get_whole_network_activations(name: str, save: bool = True):
+    """Concatinate the main activations of a network into 1 array"""
+    if os.path.exists(os.path.join(activations_folder, '%s_model.npy'%name)):
+        whole=load_npy(os.path.join(activations_folder, '%s_model.npy'%name))
+        return whole
+    else:
+        activations_main=load_pickle(os.path.join(activations_folder, '%s_main.pkl'%name))
+        whole = np.concatenate([activ for activ in activations_main.values()], axis=1)
+        if save:
+            save_npy(whole, os.path.join(activations_folder, '%s_model.npy'%name))
+        return whole

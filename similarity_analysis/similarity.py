@@ -1,9 +1,11 @@
 import os
+import sys
 import pickle
 import numpy as np
 from neurora.rdm_corr import rdm_similarity, rdm_distance, rdm_correlation_kendall, rdm_correlation_spearman, rdm_correlation_pearson
-
-similarity_folder = '/home/hamza97/scratch/data/MFRS_data/similarity_scores'
+sys.path.append('/home/hamza97/MFRS/utils')
+from general import save_pickle, load_pickle
+from config_sim_analysis import similarity_folder
 
 def stats(list):
     return [np.mean(np.array(list)), np.std(np.array(list)), max(list), min(list)]
@@ -16,18 +18,16 @@ def get_stats(measures_list):
     else:
         return stats([item for item in measures_list])
 
-
-
-def stats_subjects_similarity_score(subjects_sim_dict: dict, save: bool = False, model_name: str = None, data_name: str = None):
+def stats_subjects_similarity_score(subjects_sim_dict: dict, save: bool = False, file_name: str = None):
     """
         Get a dict with stats for each combination of similarity measures (layer x sensor) across subjects
 
         Parameters:
         ---------------
         subjects_sim_dict   a dict with subject_ids as keys and mappings dict of similarity scores between layers and channels as values.
-        save                save computed similarity scores stats, default: False
-        model_name          network name, required if save=True. Default: None
-        data_name           data name, required if save=True. Default: None
+        save                save computed similarity scores stats, default: False.
+        file_name:          The name of the file in which the computed similarity scores stats for over all the subjects will be saved.
+
 
         returns:
         ---------------
@@ -73,34 +73,33 @@ def stats_subjects_similarity_score(subjects_sim_dict: dict, save: bool = False,
 
         combinations_stats[name] = stats_across_subjects
     if save:
-        file=os.path.join(similarity_folder, "%s_%s_data_stats.pkl"%(model_name, data_name))
-        save_similarity_score(combinations_stats, file)
+        save_pickle(combinations_stats, file_name)
 
     return combinations_stats
 
 
-def subjects_similarity_score(meg_rdms: np.array, meg_sensors: list, network_rdms: np.array, network_layers: list, save_subjects: bool = False,
-                save_subject: bool = False, single_subj: bool = True, model_name: str = None, data_name: str = None ):
+def subjects_similarity_score(meg_rdms: np.array, meg_sensors: list, network_rdms: np.array, network_layers: list, save_all: bool = False, file_name: str = None,
+                save_subject: bool = False, model_name: str = None, data_name: str = None ):
     """
         Get a dict with subjects mappings of similarity scores
 
         Parameters:
         ---------------
         meg_rdm             MEG RDMs, size: [n_chls, n_cons, n_cons]
-        meg_sensors         list of meg sensors names
-        network_rdms        network RDMs, size: [n_layers, n_cons, n_cons]
-        network_layers      list of meg layers names.
-        save_subject       save computed similarity scores for all subjects in one file, default: False
-        save_subjects       save computed similarity scores for each subjects in different files, default: False
-        single_subj         meg rdms are for a single subject (True) or averaed over subjects (False), required if save=True. Default: True
-        model_name          network name, required if save=True. Default: None
-        data_name           data name, required if save=True. Default: None
+        meg_sensors         List of meg sensors names
+        network_rdms        Network RDMs, size: [n_layers, n_cons, n_cons]
+        network_layers      List of meg layers names.
+        save_all            Save computed similarity scores for all subjects in one file, default: False
+        file_name:          The name of the file in which the computed similarity scores for all the subjects will be saved.
+        save_subject        Save computed similarity scores for each subjects in different files, default: False
+        model_name          Network name, required if save=True. Default: None
+        data_name           Data name, required if save=True. Default: None
 
         returns:
         ---------------
         subjects_sim_dict   a dict with subject_ids as keys and mappings dict of similarity scores between layers and channels as values.
     """
-    if save_subjects:
+    if save_subject:
         assert model_name != None, "\nmodel_name not specified.\n Invalid input!"
         assert data_name != None, "\ndata_name not specified.\n Invalid input!"
 
@@ -108,33 +107,28 @@ def subjects_similarity_score(meg_rdms: np.array, meg_sensors: list, network_rdm
     for subject_id in range(len(meg_rdms)):
         subj_sim_file=os.path.join(similarity_folder, "%s_subject_%02d_%s_data_sim_scores.pkl"%(model_name, subject_id+1, data_name))
         if os.path.isfile(subj_sim_file):
-            subjects_sim_dict["subject %02d"%(subject_id+1)]=load_similarity_score(subj_sim_file)
+            subjects_sim_dict["subject %02d"%(subject_id+1)]=load_pickle(subj_sim_file)
         else:
             meg_rdm=meg_rdms[subject_id]
             subjects_sim_dict["subject %02d"%(subject_id+1)]= similarity_score(meg_rdm, meg_sensors,
-                    network_rdms, network_layers, save_subject, single_subj, subject_id+1, model_name, data_name)
-    if save_subjects:
-        file=os.path.join(similarity_folder, "%s_%s_data_sim_scores.pkl"%(model_name, data_name))
-        save_similarity_score(subjects_sim_dict, file)
+                    network_rdms, network_layers, save_subject, subj_sim_file)
+    if save_all:
+        save_pickle(subjects_sim_dict, file_name)
     return subjects_sim_dict
 
 
-def similarity_score(meg_rdm: np.array, meg_sensors: list, network_rdms: np.array, network_layers: list, save: bool= False,
-                        single_subj: bool = True, subject_id: int = None, model_name: str = None, data_name: str = None):
+def similarity_score(meg_rdm: np.array, meg_sensors: list, network_rdms: np.array, network_layers: list, save: bool= False, file_name: str = None):
     """
         Get a dict with a mapping of similarity scores: all channels to all layers
 
         Parameters:
         ---------------
         meg_rdm         MEG RDMs, size: [n_chls, n_cons, n_cons]
-        meg_sensors     list of meg sensors names
-        network_rdms    network RDMs, size: [n_layers, n_cons, n_cons]
-        network_layers  list of meg layers names.
-        save            save computed similarity scores or no, default: False
-        single_subj     meg rdms are for a single subject (True) or averaed over subjects (False), required if save=True. Default: True
-        model_name      network name, required if save=True. Default: None
-        data_name       data name, required if save=True. Default: None
-        subject_id      subject id, required if save=True. Default: None
+        meg_sensors     List of meg sensors names
+        network_rdms    Network RDMs, size: [n_layers, n_cons, n_cons]
+        network_layers  List of meg layers names.
+        save            Save computed similarity scores or no, default: False.
+        file_name:      The name of the file in which the computed similarity scores will be saved.
 
         returns:
         ---------------
@@ -142,28 +136,18 @@ def similarity_score(meg_rdm: np.array, meg_sensors: list, network_rdms: np.arra
                             length: n_chls * n_layers
     """
 
-    if save:
-        assert model_name != None, "\nmodel_name not specified.\n Invalid input!"
-        assert data_name != None, "\ndata_name not specified.\n Invalid input!"
-        if single_subj:
-            assert subject_id != None, "\nsubject_id not specified.\n Invalid input!"
     # To do : all channels vs a single layer
     sim_dict={}
     for i in range(len(meg_rdm)):
         chl_rdm = meg_rdm[i]
         sensor_name = meg_sensors[i]
         for j in range(len(network_rdms)):
-            layer_rdm=network_rdms[j]
-            layer_name= network_layers[j]
+            layer_rdm = network_rdms[j]
+            layer_name = network_layers[j]
             similarity = score(chl_rdm, layer_rdm)
             sim_dict["%s %s"%(layer_name, sensor_name)]=similarity
     if save:
-        if single_subj:
-            file=os.path.join(similarity_folder, "%s_subject_%02d_%s_data_sim_scores.pkl"%(model_name, subject_id, data_name))
-        else :
-            # if we have brain rdms computed by avreging over subjects
-            file=os.path.join(similarity_folder, "%s_avg_rdm_subjects_%s_data_sim_scores.pkl"%(model_name, data_name))
-        save_similarity_score(sim_dict, file)
+        save_pickle(sim_dict, file_name)
     return sim_dict
 
 
@@ -217,15 +201,19 @@ def score(chl_rdm: np.array, layer_rdm: np.array, method: str = "all"):
         return {"spearman": rsa_spearman, "pearson": rsa_pearson,
                 "kendall": rsa_kendall, "cosine_sim": rsa_sim, "euclidian": rsa_spearman}
 
-def save_similarity_score(sim_dict, file):
-    """ Save similarity score in pickle files """
-    with open(file, 'wb') as f:
-        pickle.dump(sim_dict, f)
-    print('File saved successfully')
-
-def load_similarity_score(file):
-    """ Load similarity score from pickle files """
-    with open(file, 'rb') as f:
-        sim_dict = pickle.load(f)
-    print('File loaded successfully')
-    return sim_dict
+def whole_network_similarity_scores(name: str, meg_rdm: np.array, meg_sensors: list):
+    """Get the model similarity results"""
+    if os.path.exists(os.path.join(similarity_folder, '%s_sim_model.pkl'%name)):
+        sim_dict=load_pickle(os.path.join(similarity_folder, '%s_sim_model.pkl'%name))
+        return sim_dict
+    else:
+        network_rdm=load_npy(os.path.join(rdms_folder, '%s_model_rdm.npy'%name))
+        sim_dict={}
+        for i in range(len(meg_rdm)):
+            chl_rdm = meg_rdm[i]
+            sensor_name = meg_sensors[i]
+            similarity = score(chl_rdm, network_rdm)
+            sim_dict["%s %s"%(layer_name, sensor_name)]=similarity
+        if save:
+            save_pickle(sim_dict, os.path.join(similarity_folder, '%s_sim_model.pkl'%name))
+        return sim_dict
