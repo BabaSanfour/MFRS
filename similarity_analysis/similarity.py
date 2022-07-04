@@ -201,6 +201,21 @@ def score(chl_rdm: np.array, layer_rdm: np.array, method: str = "all"):
         return {"spearman": rsa_spearman, "pearson": rsa_pearson,
                 "kendall": rsa_kendall, "cosine_sim": rsa_sim, "euclidian": rsa_spearman}
 
+def get_main_network_similarity_scores(name: str, layers: list, save: bool = True):
+    """Get the main layers similarity results"""
+    if os.path.exists(os.path.join(similarity_folder, '%s_main.pkl'%name)):
+        main_similarity_scores=load_pickle(os.path.join(similarity_folder, '%s_main.pkl'%name))
+        return main_similarity_scores
+    else:
+        similarity_scores=load_pickle(os.path.join(similarity_folder, '%s_avg.pkl'%name))
+        main_similarity_scores={}
+        for key in similarity_scores.keys():
+            if key[:-8] in layers:
+                main_similarity_scores[key] = similarity_scores[key]
+        if save:
+            save_pickle(main_similarity_scores, os.path.join(similarity_folder, '%s_main.pkl'%name))
+        return main_similarity_scores
+
 def whole_network_similarity_scores(name: str, meg_rdm: np.array, meg_sensors: list):
     """Get the model similarity results"""
     if os.path.exists(os.path.join(similarity_folder, '%s_sim_model.pkl'%name)):
