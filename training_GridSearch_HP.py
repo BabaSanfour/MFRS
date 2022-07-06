@@ -45,7 +45,6 @@ if __name__ == '__main__':
     n_input_channels=1
     num_classes_list=[1000, 500, 300] # 1000 Gave the best performance across all HP and models
     # we also tested with 4000 and 10000 but no promising results.
-    print('hamza')
     #model
     model_name="alexnet"
     # select batch sizes: we some of the models couldn't work with big batch sizes because of our gpu

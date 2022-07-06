@@ -8,7 +8,7 @@ from extract_activations import model_activations
 from networks_rdm import groupRDMs
 from similarity import similarity_score
 sys.path.append('/home/hamza97/MFRS/')
-from models.cornet_s import cornet_s
+from models.inception import inception_v3
 from utils.load_data import Stimuliloader
 from utils.general import load_pickle, load_npy
 
@@ -21,7 +21,7 @@ if __name__ == '__main__':
     #         "FamUnfamScram1": 300, "FamUnfamScram2": 300, "FamUnfamScram0": 450}
     stimuli_hdf5_list = {"FamUnfam": 300}
 
-    networks_list = {"cornet_s": [cornet_s, "cornet_s_0.01LR_32Batch_1000_final"]}
+    networks_list = {"inception_v3": [inception_v3, "inception_v3_0.01LR_32Batch_1000_final2"]}
     for model_name, model_param in networks_list.items():
         model = model_param[0](False, 1000, 1)
         weights = os.path.join(weights_path, model_param[1])
