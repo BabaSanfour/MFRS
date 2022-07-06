@@ -4,8 +4,8 @@ import pickle
 import numpy as np
 from neurora.rdm_corr import rdm_similarity, rdm_distance, rdm_correlation_kendall, rdm_correlation_spearman, rdm_correlation_pearson
 sys.path.append('/home/hamza97/MFRS/utils')
-from general import save_pickle, load_pickle
-from config_sim_analysis import similarity_folder
+from general import save_pickle, load_pickle, load_npy
+from config_sim_analysis import similarity_folder, rdms_folder
 
 def stats(list):
     return [np.mean(np.array(list)), np.std(np.array(list)), max(list), min(list)]
@@ -216,19 +216,19 @@ def get_main_network_similarity_scores(name: str, layers: list, save: bool = Tru
             save_pickle(main_similarity_scores, os.path.join(similarity_folder, '%s_main.pkl'%name))
         return main_similarity_scores
 
-def whole_network_similarity_scores(name: str, meg_rdm: np.array, meg_sensors: list):
+def whole_network_similarity_scores(name: str, suffix: str, meg_rdm: np.array, meg_sensors: list, save: bool = True):
     """Get the model similarity results"""
-    if os.path.exists(os.path.join(similarity_folder, '%s_sim_model.pkl'%name)):
-        sim_dict=load_pickle(os.path.join(similarity_folder, '%s_sim_model.pkl'%name))
+    if os.path.exists(os.path.join(similarity_folder, '%s_%s_sim_model.pkl'%(name, suffix))):
+        sim_dict=load_pickle(os.path.join(similarity_folder, '%s_%s_sim_model.pkl'%(name, suffix)))
         return sim_dict
     else:
-        network_rdm=load_npy(os.path.join(rdms_folder, '%s_model_rdm.npy'%name))
+        network_rdm=load_npy(os.path.join(rdms_folder, '%s_%s_model_rdm.npy'%(name, suffix)))
         sim_dict={}
         for i in range(len(meg_rdm)):
             chl_rdm = meg_rdm[i]
             sensor_name = meg_sensors[i]
             similarity = score(chl_rdm, network_rdm)
-            sim_dict["%s %s"%(layer_name, sensor_name)]=similarity
+            sim_dict["%s %s"%(name, sensor_name)]=similarity
         if save:
-            save_pickle(sim_dict, os.path.join(similarity_folder, '%s_sim_model.pkl'%name))
+            save_pickle(sim_dict, os.path.join(similarity_folder, '%s_%s_sim_model.pkl'%(name, suffix)))
         return sim_dict
