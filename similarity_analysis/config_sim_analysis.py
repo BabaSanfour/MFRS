@@ -36,6 +36,11 @@ sensors_position=raw.copy().pick_types(meg='mag').info
 out_file = os.path.join(meg_dir, "RDMs_16-subject_0-sub_opt1-chl_opt.npy")
 meg_rdm = np.load(out_file)
 
+# for plotting
+mask_params=dict(marker='*', markerfacecolor='w', markeredgecolor='k',
+        linewidth=0, markersize=15)
+
+
 # Main layers for networks // extracted manually
 resnet_layers= [
  'model.relu',  'model.block1.0.bn1', 'model.block1.0.bn2', 'model.block1.0.relu', 'model.block1.1.bn1', 'model.block1.1.bn2', 'model.block1.1.relu', 'model.block1.2.bn1',
@@ -111,4 +116,4 @@ inception_layers=['Conv2d_1a_3x3.bn', 'Conv2d_2a_3x3.bn', 'Conv2d_2b_3x3.bn', 'C
  'Mixed_7c.branch3x3dbl_3b.bn', 'Mixed_7c.branch_pool.bn']
 
 # Network name : main layers
-networks= {"resnet50": resnet_layers, "cornet_s": cornet_s_layers, "facenet": facenet_layers, "vgg16_bn": vgg_layers, "inception_v3": inception_layers, "mobilenet": mobilenet_layers, "SphereFace": SphereFace_layers}
+networks= {"inception_v3": inception_layers, "mobilenet": mobilenet_layers, "SphereFace": SphereFace_layers, "resnet50": resnet_layers, "cornet_s": cornet_s_layers, "FaceNet": facenet_layers, "vgg16_bn": vgg_layers, }
