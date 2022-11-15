@@ -18,7 +18,11 @@ def get_stats(measures_list):
     else:
         return stats([item for item in measures_list])
 
-def stats_subjects_similarity_score(subjects_sim_dict: dict, save: bool = False, file_name: str = None):
+def stats_subjects_similarity_score(
+            subjects_sim_dict: dict,
+            save: bool = False,
+            file_name: str = None
+        ):
     """
         Get a dict with stats for each combination of similarity measures (layer x sensor) across subjects
 
@@ -78,8 +82,22 @@ def stats_subjects_similarity_score(subjects_sim_dict: dict, save: bool = False,
     return combinations_stats
 
 
-def subjects_similarity_score(meg_rdms: np.array, meg_sensors: list, network_rdms: np.array, network_layers: list, save_all: bool = False, file_name: str = None,
-                save_subject: bool = False, model_name: str = None, data_name: str = None ):
+def subjects_similarity_score(
+            meg_rdms: np.array,
+            meg_sensors: list,
+            network_rdms: np.array,
+            network_layers: list,
+            selected_layers: list = [],
+            save_all: bool = False,
+            file_name: str = None,
+            save_subject: bool = False,
+            model_name: str = None,
+            data_name: str = None,
+            method: str = "spearman",
+            permutation: bool = False,
+            iter: int = 1000
+
+        ):
     """
         Get a dict with subjects mappings of similarity scores
 
@@ -88,12 +106,15 @@ def subjects_similarity_score(meg_rdms: np.array, meg_sensors: list, network_rdm
         meg_rdm             MEG RDMs, size: [n_chls, n_cons, n_cons]
         meg_sensors         List of meg sensors names
         network_rdms        Network RDMs, size: [n_layers, n_cons, n_cons]
-        network_layers      List of meg layers names.
+        network_layers      List of names of the model layers.
+        selected_layers     List of names of the layers we want to compute similarity for.
         save_all            Save computed similarity scores for all subjects in one file, default: False
         file_name:          The name of the file in which the computed similarity scores for all the subjects will be saved.
         save_subject        Save computed similarity scores for each subjects in different files, default: False
         model_name          Network name, required if save=True. Default: None
         data_name           Data name, required if save=True. Default: None
+        permutation         Perform permutation tests.
+        iter                Nbre of iteration for permutation tests
 
         returns:
         ---------------
@@ -111,24 +132,40 @@ def subjects_similarity_score(meg_rdms: np.array, meg_sensors: list, network_rdm
         else:
             meg_rdm=meg_rdms[subject_id]
             subjects_sim_dict["subject %02d"%(subject_id+1)]= similarity_score(meg_rdm, meg_sensors,
-                    network_rdms, network_layers, save_subject, subj_sim_file)
+                    network_rdms, network_layers, selected_layers, save_subject, subj_sim_file, method, permutation, iter)
     if save_all:
         save_pickle(subjects_sim_dict, file_name)
     return subjects_sim_dict
 
 
-def similarity_score(meg_rdm: np.array, meg_sensors: list, network_rdms: np.array, network_layers: list, save: bool= False, file_name: str = None):
+def similarity_score(
+            meg_rdm: np.array,
+            meg_sensors: list,
+            network_rdms: np.array,
+            network_layers: list,
+            selected_layers: list = [],
+            save: bool = False,
+            file_name: str = None,
+            method: str = "pearson",
+            permutation: bool = False,
+            iter: int = 1000
+
+        ):
     """
         Get a dict with a mapping of similarity scores: all channels to all layers
 
         Parameters:
         ---------------
-        meg_rdm         MEG RDMs, size: [n_chls, n_cons, n_cons]
-        meg_sensors     List of meg sensors names
-        network_rdms    Network RDMs, size: [n_layers, n_cons, n_cons]
-        network_layers  List of meg layers names.
-        save            Save computed similarity scores or no, default: False.
-        file_name:      The name of the file in which the computed similarity scores will be saved.
+        meg_rdm          MEG RDMs, size: [n_chls, n_cons, n_cons]
+        meg_sensors      List of meg sensors names
+        network_rdms     Network RDMs, size: [n_layers, n_cons, n_cons]
+        network_layers   List of names of the model layers.
+        selected_layers  List of names of the layers we want to compute similarity for.
+        save             Save computed similarity scores or no, default: False.
+        file_name:       The name of the file in which the computed similarity scores will be saved.
+        method           Method to compute the correlation between the RDMs.
+        permutation      Perform permutation tests.
+        iter             Nbre of iteration for permutation tests
 
         returns:
         ---------------
@@ -141,17 +178,43 @@ def similarity_score(meg_rdm: np.array, meg_sensors: list, network_rdms: np.arra
     for i in range(len(meg_rdm)):
         chl_rdm = meg_rdm[i]
         sensor_name = meg_sensors[i]
-        for j in range(len(network_rdms)):
-            layer_rdm = network_rdms[j]
-            layer_name = network_layers[j]
-            similarity = score(chl_rdm, layer_rdm)
-            sim_dict["%s %s"%(layer_name, sensor_name)]=similarity
+        #This condition where we have RDMs for all layers and we want similarity only for all of them ones
+        if len(network_rdms)==len(network_layers):
+            for j in range(len(network_rdms)):
+                layer_rdm = network_rdms[j]
+                layer_name = network_layers[j]
+                similarity = score(chl_rdm, layer_rdm, method, permutation, iter)
+                sim_dict["%s %s"%(layer_name, sensor_name)]=similarity
+        #This condition where we have RDMs only for the specific layers we want
+        elif len(network_rdms)==len(selected_layers):
+            for j in range(len(network_rdms)):
+                layer_rdm = network_rdms[j]
+                layer_name = selected_layers[j]
+                similarity = score(chl_rdm, layer_rdm, method, permutation, iter)
+                sim_dict["%s %s"%(layer_name, sensor_name)]=similarity
+        #This condition where we have RDMs for all layers and we want similarity only for all of them ones
+        else:
+            for j in range(len(network_rdms)):
+                layer_rdm = network_rdms[j]
+                layer_name = network_layers[j]
+                if layer_name not in selected_layers:
+                    continue
+                similarity = score(chl_rdm, layer_rdm, method, permutation, iter)
+                sim_dict["%s %s"%(layer_name, sensor_name)]=similarity
+
+
     if save:
         save_pickle(sim_dict, file_name)
     return sim_dict
 
 
-def score(chl_rdm: np.array, layer_rdm: np.array, method: str = "all"):
+def score(
+            chl_rdm: np.array,
+            layer_rdm: np.array,
+            method: str = "pearson",
+            permutation: bool = False,
+            iter: int = 1000
+        ):
     """
         Get a dict with similarity scores of two RDMs
 
@@ -159,13 +222,15 @@ def score(chl_rdm: np.array, layer_rdm: np.array, method: str = "all"):
         ---------------
         chl_rdm         MEG channel RDM, size: [n_cons, n_cons]
         layer_rdm       layer RDM, size: [n_cons, n_cons]
-        method          method to compute the correlation between the RDMs : expecting:
+        method          Method to compute the correlation between the RDMs : expecting:
                             - spearman:     compute spearman correlation
                             - pearson:      compute pearson correlation
                             - kendall:      compute kendall correlation
                             - cosine_sim:   compute cosine similarity
                             - euclidian:    compute euclidian distance
                             - all, default  compute all measures
+        permutation    Use permutation tests
+        iter           Nbre of iteration for permutation tests
 
         returns:
         ---------------
@@ -178,30 +243,34 @@ def score(chl_rdm: np.array, layer_rdm: np.array, method: str = "all"):
     assert chl_rdm.shape == layer_rdm.shape, "\nRDM shapes don't match.\n Invalid input!"
 
     if method == "spearman":
-        rsa_spearman=rdm_correlation_spearman(chl_rdm, layer_rdm)
+        rsa_spearman=rdm_correlation_spearman(chl_rdm, layer_rdm, permutation=permutation, iter=iter)
         return {"spearman": rsa_spearman}
     elif method == "pearson":
-        rsa_pearson=rdm_correlation_pearson(chl_rdm, layer_rdm)
+        rsa_pearson=rdm_correlation_pearson(chl_rdm, layer_rdm, permutation=permutation, iter=iter)
         return {"pearson": rsa_pearson}
     elif method == "kendall":
-        rsa_kendall=rdm_correlation_kendall(chl_rdm, layer_rdm)
+        rsa_kendall=rdm_correlation_kendall(chl_rdm, layer_rdm, permutation=permutation, iter=iter)
         return {"kendall": rsa_kendall}
     elif method == "cosine_sim":
-        rsa_sim=rdm_similarity(chl_rdm, layer_rdm)
+        rsa_sim=rdm_similarity(chl_rdm, layer_rdm, permutation=permutation, iter=iter)
         return {"cosine_sim": rsa_sim}
     elif method == "euclidian":
-        rsa_euc=rdm_distance(chl_rdm, layer_rdm)
+        rsa_euc=rdm_distance(chl_rdm, layer_rdm, permutation=permutation, iter=iter)
         return {"euclidian": rsa_spearman}
     else:
-        rsa_spearman=rdm_correlation_spearman(chl_rdm, layer_rdm)
-        rsa_pearson=rdm_correlation_pearson(chl_rdm, layer_rdm)
-        rsa_kendall=rdm_correlation_kendall(chl_rdm, layer_rdm)
-        rsa_sim=rdm_similarity(chl_rdm, layer_rdm)
-        rsa_euc=rdm_distance(chl_rdm, layer_rdm)
+        rsa_spearman=rdm_correlation_spearman(chl_rdm, layer_rdm, permutation=permutation, iter=iter)
+        rsa_pearson=rdm_correlation_pearson(chl_rdm, layer_rdm, permutation=permutation, iter=iter)
+        rsa_kendall=rdm_correlation_kendall(chl_rdm, layer_rdm, permutation=permutation, iter=iter)
+        rsa_sim=rdm_similarity(chl_rdm, layer_rdm, permutation=permutation)
+        rsa_euc=rdm_distance(chl_rdm, layer_rdm, permutation=permutation, iter=iter)
         return {"spearman": rsa_spearman, "pearson": rsa_pearson,
                 "kendall": rsa_kendall, "cosine_sim": rsa_sim, "euclidian": rsa_spearman}
 
-def get_main_network_similarity_scores(name: str, layers: list, save: bool = True):
+def get_main_network_similarity_scores(
+            name: str,
+            layers: list,
+            save: bool = True
+        ):
     """Get the main layers similarity results"""
     if os.path.exists(os.path.join(similarity_folder, '%s_main.pkl'%name)):
         main_similarity_scores=load_pickle(os.path.join(similarity_folder, '%s_main.pkl'%name))
@@ -216,7 +285,13 @@ def get_main_network_similarity_scores(name: str, layers: list, save: bool = Tru
             save_pickle(main_similarity_scores, os.path.join(similarity_folder, '%s_main.pkl'%name))
         return main_similarity_scores
 
-def whole_network_similarity_scores(name: str, suffix: str, meg_rdm: np.array, meg_sensors: list, save: bool = True):
+def whole_network_similarity_scores(
+            name: str,
+            suffix: str,
+            meg_rdm: np.array,
+            meg_sensors: list,
+            save: bool = True
+        ):
     """Get the model similarity results"""
     if os.path.exists(os.path.join(similarity_folder, '%s_%s_sim_model.pkl'%(name, suffix))):
         sim_dict=load_pickle(os.path.join(similarity_folder, '%s_%s_sim_model.pkl'%(name, suffix)))
