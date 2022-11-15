@@ -5,10 +5,11 @@ from similarity import whole_network_similarity_scores
 
 if __name__ == '__main__':
     """ This function for generating results for the whole network results (activations of all layers concatinated) """
+    networks={"SphereFace":SphereFace_layers, "mobilenet": mobilenet_layers}
     for network, layers in networks.items():
         print("\nNetwork %s started\n"%network)
         main=get_main_network_activations('%s_FamUnfam_activations'%network, layers)
         whole=get_whole_network_activations('%s_FamUnfam_activations'%network)
         rdm=get_network_rdm('%s_FamUnfam'%network)
-        sim=whole_network_similarity_scores('%s_FamUnfam'%network, meg_rdm, meg_sensors)
+        sim=whole_network_similarity_scores(network, 'FamUnfam', meg_rdm, meg_sensors)
         print('\n%s done\n'%network)

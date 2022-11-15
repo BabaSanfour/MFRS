@@ -6,7 +6,7 @@ import torch.nn as nn
 import sys
 import numpy as np
 sys.path.append('/home/hamza97/MFRS/utils')
-from general import save_pickle, load_pickle, load_npy
+from general import save_pickle, load_pickle, load_npy, save_npy
 from config_sim_analysis import activations_folder
 
 activations={}
@@ -124,5 +124,5 @@ def get_whole_network_activations(name: str, save: bool = True):
         activations_main=load_pickle(os.path.join(activations_folder, '%s_main.pkl'%name))
         whole = np.concatenate([activ for activ in activations_main.values()], axis=1)
         if save:
-            save_npy(whole, os.path.join(activations_folder, name))
+            save_npy(whole, os.path.join(activations_folder, '%s_model.npy'%name))
         return whole

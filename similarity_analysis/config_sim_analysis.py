@@ -117,3 +117,4 @@ inception_layers=['Conv2d_1a_3x3.bn', 'Conv2d_2a_3x3.bn', 'Conv2d_2b_3x3.bn', 'C
 
 # Network name : main layers
 networks= {"inception_v3": inception_layers, "mobilenet": mobilenet_layers, "SphereFace": SphereFace_layers, "resnet50": resnet_layers, "cornet_s": cornet_s_layers, "FaceNet": facenet_layers, "vgg16_bn": vgg_layers, }
+# networks= { "FaceNet": facenet_layers, "resnet50": resnet_layers, "cornet_s": cornet_s_layers,   }

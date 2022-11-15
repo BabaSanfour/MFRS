@@ -55,7 +55,7 @@ if __name__ == '__main__':
                     meg_rdms = load_npy(out_file)
                     network_layers = [item[0] for item in list(model.named_modules())]
                     meg_sensors=get_sensor("meg")
-                    subjects_sim_dict = subjects_similarity_score(meg_rdms, meg_sensors, network_rdms, facenet_layers, save_all = save,
+                    subjects_sim_dict = subjects_similarity_score(meg_rdms, meg_sensors, network_rdms, network_layers, facenet_layers, save_all = save,
                                     file_name=subjects_sim_dict_file, save_subject = save, model_name = model_name, data_name = stimuli_file_name)
                 combinations_stats=stats_subjects_similarity_score(subjects_sim_dict, save = save, file_name = combinations_stats_file)
     time_sim = time.time() - start
