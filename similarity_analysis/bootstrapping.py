@@ -62,21 +62,28 @@ def eval_bootstrap_pearson(
     for boot in range(N_bootstrap):
         sensors_rdm, rdm_idx=bootstrap_sample_pattern(RDM1)
         nan_idx = ~np.isnan(sensors_rdm.dissimilarities[0])
-        print(nan_idx.shape)
+        # print(nan_idx.shape)
         r_list=[[] for i in range(len(model_layers))]
         RDM2_copy=copy.deepcopy(RDM2)
         RDM2=RDM2.subsample_pattern("index", rdm_idx)
 
         for i in range(RDM1.dissimilarities.shape[0]):
             sensor_rdm = sensors_rdm.dissimilarities[i][nan_idx]
-            print(RDM2.dissimilarities.shape)
             k=0
+            test = len(network_layers) == RDM2.dissimilarities.shape[0]
             for j in range(RDM2.dissimilarities.shape[0]):
-                if network_layers[j] not in model_layers:
-                    continue
-                layer_rdm=RDM2.dissimilarities[j][nan_idx]
-                r_list[k].append(np.array(pearsonr(sensor_rdm, layer_rdm))[0])
-                k+=1
-        sensor_r_list.append(np.array(r_list))
+                if test:
+                    if network_layers[j] not in model_layers:
+                        continue
+                    layer_rdm=RDM2.dissimilarities[j][nan_idx]
+                    r_list[k].append(np.array(pearsonr(sensor_rdm, layer_rdm))[0])
+                    k+=1
+                else:
+                    layer_rdm=RDM2.dissimilarities[j][nan_idx]
+                    r_list[k].append(np.array(pearsonr(sensor_rdm, layer_rdm))[0])
+                    k+=1
+
+        sensor_r_list.append(r_list)
         RDM2=copy.deepcopy(RDM2_copy)
+
     return np.transpose(np.array(sensor_r_list), (1, 2, 0))

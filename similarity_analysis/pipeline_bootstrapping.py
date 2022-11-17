@@ -22,18 +22,17 @@ from utils.general import load_pickle, load_npy, save_npy, save_pickle
 if __name__ == '__main__':
     start = time.time()
 
-    N_bootstrap=100
+    N_bootstrap=10
     save = True
 
     meg_rdm=get_rdms_vectors(meg_rdm)
-    #"inception_v3": inception_v3, "mobilenet": mobilenet_v2, "SphereFace": SphereFace, "resnet50": resnet50,
-    networks_list = {
-                "cornet_s": cornet_s, "FaceNet": FaceNet, "vgg16_bn": vgg16_bn}
+    networks_list = {"inception_v3": inception_v3,      "mobilenet": mobilenet_v2, "SphereFace": SphereFace,
+                            "resnet50": resnet50, "cornet_s": cornet_s, "FaceNet": FaceNet, "vgg16_bn": vgg16_bn}
     for model_name, model in networks_list.items():
-        model_layers=networks[model_name]
+        model_layers=networks[model_name] # essential model layers
         model_rdm = load_npy(os.path.join(rdms_folder, "%s_FamUnfam_data_rdm.npy"%model_name))
         model_rdm=get_rdms_vectors(model_rdm)
-        network_layers = [item[0] for item in list(model(False, 1000, 1).named_modules())]
+        network_layers = [item[0] for item in list(model(False, 1000, 1).named_modules())] # useless layes
         sensor_r_list=eval_bootstrap_pearson(meg_rdm, model_rdm, network_layers, model_layers)
         if save:
             save_npy(sensor_r_list, os.path.join(similarity_folder, "%s_FamUnfam_bootstrap.npy"%model_name))
