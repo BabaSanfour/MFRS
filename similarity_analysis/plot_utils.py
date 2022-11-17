@@ -4,10 +4,13 @@ Utils file for plotting results
 ===============================
 Util functions for selecting the results that we will plot.
 """
-
+import os
+import sys
 import numpy as np
-from config_sim_analysis import channels_mag, channels_grad1, channels_grad2, meg_rdm, meg_sensors
+from config_sim_analysis import channels_mag, channels_grad1, channels_grad2, meg_rdm, meg_sensors, similarity_folder
 from similarity import whole_network_similarity_scores
+sys.path.append('/home/hamza97/MFRS/')
+from utils.general import load_npy
 
 def get_chls_similarity(layer: str, sim_dict: dict, channels_list: list, correlation_measure: str = "pearson"):
     """Get specific sensor type similarity results + extremum sim for colorbar"""
@@ -66,3 +69,14 @@ def get_networks_results(networks, meg_rdm=meg_rdm, meg_sensors=meg_sensors):
             model_results.append(sil_chls)
         models[network]=model_results
     return models, extremum_3, max_sim
+
+def get_bootstrap_values(network, sensors_list, percentile: int = 5):
+    boot_all=load_npy(os.path.join(similarity_folder, "%s_FamUnfam_bootstrap.npy"%network))
+    higher_percentile, lower_percentile = [], []
+    for layer_idx in range(boot_all.shape[0]):
+        sensor_idx=meg_sensors.index(sensors_list[layer_idx]) # get sensor idx that got highest correlation
+        # with layer
+        boot_sensor=boot_all[layer_idx][sensor_idx] # get layer and sensor bootstraps
+        higher_percentile.append(np.percentile(boot_sensor, 100-percentile))
+        lower_percentile.append(np.percentile(boot_sensor, percentile))
+    return [lower_percentile, higher_percentile]

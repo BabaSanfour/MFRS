@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 from config_sim_analysis import sensors_position, plot_folder, mask_params
-from plot_utils import match_layers_sensor, get_network_layers_info
+from plot_utils import match_layers_sensor, get_network_layers_info, get_bootstrap_values
 from similarity import get_main_network_similarity_scores
 from matplotlib.lines import Line2D
 
@@ -40,7 +40,8 @@ def plot_similarity(similarity_scores, extremum, save=False, network_name=None, 
         fig.show()
         fig.savefig(os.path.join(plot_folder, '%s_%s_all_layers_similiarity_topomaps.png'%(network_name, correlation)))
 
-def plot_layers_similarity_bars(networks, channels_list, sensor_type, correlation_measure="pearson", mask_params=mask_params,  save=True):
+def plot_layers_similarity_bars(networks, channels_list, sensor_type, correlation_measure="pearson",
+                                show_bootstrap_bars=False, percentile=5, mask_params=mask_params,  save=True):
     """Plot the bars of the maximum similarity values for each layer for the provided networks + the topomap of the layer with highest similarity value."""
     fig, axes = plt.subplots(len(networks), 2, figsize=(12, len(networks)*3), gridspec_kw={'width_ratios': [2, 1]})
     for i, network in enumerate(networks.keys()):
@@ -50,8 +51,12 @@ def plot_layers_similarity_bars(networks, channels_list, sensor_type, correlatio
         correlations_list, sensors_list = match_layers_sensor(main_similarity_scores, network_layers, channels_list, correlation_measure)
         idx, best_layer, sim_chls, extremum, mask = get_network_layers_info(correlations_list,
                                                                        network_layers, main_similarity_scores, sensors_list, channels_list)
-
-        barlist=axes[i][0].bar(networks[network], correlations_list, width=0.4, color=(0.2, 0.4, 0.8, 0.9))
+        if show_bootstrap_bars:
+            bootstrap_error_values=get_bootstrap_values(network, sensors_list, percentile)
+            axes[i][0].errorbar(x=networks[network], y=correlations_list,  yerr=bootstrap_error_values, elinewidth=0.25)
+        else:
+            barlist=axes[i][0].bar(networks[network], correlations_list,
+                                    width=0.4, color=(0.2, 0.4, 0.8, 0.9))
         axes[i][0].tick_params(axis='x', which='both', bottom=False, top=False, labelbottom=False)
         axes[i][0].text(x=0.1 , y =-0.03 , s="Input", fontdict=dict(fontsize=10))
         axes[i][0].text(x=len(network_layers)-3, y =-0.03 , s="Output", fontdict=dict(fontsize=10))
