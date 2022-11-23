@@ -113,7 +113,7 @@ def run_maxwell_filter(subject_id):
 
 if __name__ == "__main__":
 
-    subjects_ids=[i for i in range(1,11)]
+    subjects_ids=[i for i in range(1,17)]
     # preprocessing for the 17 subjects
     for subject_id in subjects_ids:
         run_maxwell_filter(subject_id)

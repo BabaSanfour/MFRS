@@ -1,9 +1,10 @@
+
 """
 ===========
 Config file
 ===========
 Configuration parameters for the study. This should be in a folder called
-``library/`` inside the ``processing/`` directory.
+``library/`` inside the ``brain_data_processing/`` directory.
 """
 
 from distutils.version import LooseVersion
@@ -99,3 +100,4 @@ random_state = 42
 smooth = 10
 
 fsaverage_vertices = [np.arange(10242), np.arange(10242)]
+# To do : clean file while fixing the preprocessing pipeline

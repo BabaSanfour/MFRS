@@ -28,7 +28,7 @@ def run_events(subject_id, selected, name, conditions_mapping):
         events = mne.find_events(raw, stim_channel='STI101',
                                  consecutive='increasing', mask=mask,
                                  mask_type='not_and', min_duration=0.003)
-
+        print(events.shape)
         print("  S %s - R %s" % (subject, run))
         csv_path = op.join(in_path, 'sub-%02d_ses-meg_task-facerecognition_run-%02d_events.tsv' % (
             subject_id,run,))
@@ -135,7 +135,7 @@ def run_epochs(subject_id, name, tsss=False):
 
     # Epoch the data
     print('  Epoching')
-    events_id=[events[i][2] for i in range(150)]
+    events_id=[events[i][2] for i in range(len(events))]
     epochs = mne.Epochs(raw, events, events_id, 0, 0.8, proj=True,
                         picks=picks, baseline=None, preload=False,
                         reject=None, reject_tmax=reject_tmax, on_missing='warn')
@@ -144,7 +144,7 @@ def run_epochs(subject_id, name, tsss=False):
     if tsss:
         epochs.save(op.join(data_path, '%s-tsss_%d_%s-epo.fif' % (subject, tsss, name)), overwrite=True)
     else:
-        epochs.save(op.join(data_path, '%s_highpass-%sHz-epo_scrambled.fif'
+        epochs.save(op.join(data_path, '%s_highpass-%sHz-epo.fif'
                     % (subject, l_freq)), overwrite=True)
 
 
@@ -158,10 +158,9 @@ if __name__ == '__main__':
 
     # Get events
     parallel, run_func, _ = parallel_func(run_events, n_jobs=N_JOBS)
-    parallel(run_func(subject_id, [['Scrambled'], [17,18,19]], 'scrambled', conditions_mapping) for subject_id in range(1, 17))
-
+    parallel(run_func(subject_id, [['Famous', 'Unfamiliar'], [5,6,7, 13,14,15,]], 'FamUnfam', conditions_mapping) for subject_id in range(1, 17))
+    print("FamUnfam")
 
     # Create epochs
     parallel, run_func, _ = parallel_func(run_epochs, n_jobs=max(N_JOBS // 4, 1))
-    parallel(run_func(subject_id, 'scrambled', 10) for subject_id in range(1, 17))
-# To do : clean, comment then push
+    parallel(run_func(subject_id, 'FamUnfam', 10) for subject_id in range(1, 17))
