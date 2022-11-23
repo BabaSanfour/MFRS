@@ -33,7 +33,7 @@ channels_mag=raw.copy().pick_types(meg='mag').info.ch_names
 channels_grad1=raw.copy().pick_types(meg='planar1').info.ch_names
 channels_grad2=raw.copy().pick_types(meg='planar2').info.ch_names
 sensors_position=raw.copy().pick_types(meg='mag').info
-out_file = os.path.join(meg_dir, "RDMs_16-subject_0-sub_opt1-chl_opt.npy")
+out_file = os.path.join(meg_dir, "RDMs_16-subject_1-sub_opt1-chl_opt.npy")
 meg_rdm = np.load(out_file)
 
 # for plotting

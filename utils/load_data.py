@@ -1,6 +1,6 @@
 import torch
 import torchvision
-from utils.generate_data_from_hdf5 import generate_Dataset_h5, generate_stimuli_h5
+from generate_data_from_hdf5 import generate_Dataset_h5, generate_stimuli_h5
 
 path_data='../work/'
 stimuli_path_data='/home/hamza97/scratch/data/MFRS_data/hdf5/'
