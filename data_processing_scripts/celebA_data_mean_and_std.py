@@ -1,13 +1,12 @@
+import os
 import sys
 import torch
 import torchvision
-from torch.utils.data import DataLoader
-import torchvision.datasets as datasets
 
-sys.path.append('/home/hamza97/MFRS/utils')
-from celebA_align_hdf5 import celebA_align_Dataset_h5
-
-path_data='/home/hamza97/scratch/data/MFRS_data/hdf5/'
+sys.path.append('MFRS/')
+from utils.generate_data_from_hdf5 import generate_Dataset_h5
+from utils.config import data_path
+data_path = os.path.join(data_path, "hdf5/")
 
 dic = {1000: [30, 25, 12],
         500: [27, 13],
@@ -20,19 +19,19 @@ def dataloader(batch_n , num_classes, num_pictures):
     # batch_n : batch_size
     # Num classes : classes
     # Num pictures : pictures
-    train_path=path_data+"train_%s_%s.h5"%(num_classes, num_pictures)
-    valid_path=path_data+"valid_%s_%s.h5"%(num_classes, num_pictures)
-    test_path=path_data+"test_%s_%s.h5"%(num_classes, num_pictures)
+    train_path=data_path+"train_%s_%s.h5"%(num_classes, num_pictures)
+    valid_path=data_path+"valid_%s_%s.h5"%(num_classes, num_pictures)
+    test_path=data_path+"test_%s_%s.h5"%(num_classes, num_pictures)
 
     # ##Training dataset
-    train_dataset = celebA_align_Dataset_h5(train_path,
+    train_dataset = generate_Dataset_h5(train_path,
                                         torchvision.transforms.Compose([torchvision.transforms.ToTensor()]))
 
     # ##Validation dataset
-    valid_dataset = celebA_align_Dataset_h5(valid_path,
+    valid_dataset = generate_Dataset_h5(valid_path,
                                         torchvision.transforms.Compose([torchvision.transforms.ToTensor()]))
 
-    test_dataset = celebA_align_Dataset_h5(test_path,
+    test_dataset = generate_Dataset_h5(test_path,
                                         torchvision.transforms.Compose([torchvision.transforms.ToTensor()]))
 
     # ##Test dataset

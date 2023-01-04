@@ -12,6 +12,7 @@
 """
 
 import os
+import sys
 import cv2
 import h5py
 
@@ -20,8 +21,9 @@ import numpy as np
 from tqdm import tqdm
 import torchvision
 from PIL import Image
-
-data_path =  "/home/hamza97/scratch/data/MFRS_data/VGGface2/"
+sys.path.append("MFRS/")
+from utils.config import data_path
+data_path =  os.path.join(data_path, "VGGface2/")
 
 def store_many_hdf5(images, labels, folder):
     """ Stores an array of images to HDF5.

@@ -3,11 +3,14 @@
 """
 
 import os
+import sys
 import pandas as pd
+sys.path.append("MFRS/")
+from utils.config import proj_path
 
-path= "/home/hamza97/projects/def-kjerbi/hamza97/MFRS/files/"
-file=path+"list_attr_celeba.txt"
-new_file= path+"list_attr_celeba.csv"
+path= os.path.join(proj_path, "files/")
+file= os.path.join(path+"list_attr_celeba.txt")
+new_file= os.path.join(path+"list_attr_celeba.csv")
 df = pd.read_csv(file)
 names=df.columns[0]
 columns_1= names.split(' ')

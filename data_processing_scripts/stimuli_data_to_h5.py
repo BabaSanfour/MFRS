@@ -2,15 +2,9 @@
     `A script to save stimuli pictures (used in recording the MEG data) in H5 files `_.
     `We defined 9 files that we will use:
         Fam.h5:             (150, 224, 224, 1), 150 Famous Face Pictures.
-        Unfam.h5:           (150, 224, 224, 1), 150 Unfamiliar Face Pictures.
         Scram.h5:           (150, 224, 224, 1), 150 Scrambled Face Pictures.
         FamUnfam.h5:        (300, 224, 224, 1), 150 Famous then Unfamiliar Face Pictures.
         FamScram.h5:        (300, 224, 224, 1), 150 Famous then Scrambled Face Pictures.
-        UnfamScram.h5:      (300, 224, 224, 1), 150 Unfamiliar then Scrambled Face Pictures.
-        FamUnfamScram1.h5   (300, 224, 224, 1), 75 Famous then 75 Unfamiliar then 150 Scrambled Face Pictures,
-                                                Famous and Unfamiliar Faces are selected randomly.
-        FamUnfamScram2.h5   (300, 224, 224, 1), same as FamUnfamScram1.h5 but with another distribution of Famous and Unfamiliar pictures.
-        FamUnfamScram0.h5   (450, 224, 224, 1), 150 Famous then 150 Unfamiliar then 150 Scrambled Face Pictures.
     `_.
 
     For each file:
@@ -25,9 +19,8 @@
 """
 
 import os
-import cv2
+import sys
 import h5py
-import random
 import datetime
 
 import numpy as np
@@ -35,8 +28,9 @@ from tqdm import tqdm
 from PIL import Image
 
 import torchvision
-
-data_path =  "/home/hamza97/scratch/data/MFRS_data/reproducible_data/ds117/ds117/stimuli/meg"
+sys.path.append("MFRS/")
+from utils.config import data_path
+data_path =  os.path.join(data_path, "ds000117/stimuli/meg/")
 
 def store_many_hdf5(images, name):
     """ Stores an array of images to HDF5.
@@ -98,29 +92,10 @@ if __name__ == '__main__':
         Scram.append('s%03d.bmp'%i)
     FamUnfam = Fam + Unfam
     FamScram = Fam + Scram
-    UnfamScram = Unfam + Scram
-    FamUnfamScram0 = FamUnfam + Scram
-    FamRandom1 = random.sample(Fam, k=75)
-    UnFamRandom1 = random.sample(Unfam, k=75)
-    print('FamRandom1: ', FamRandom1)
-    print('UnFamRandom1: ', UnFamRandom1)
-    FamUnfamScram1 = FamRandom1 + UnFamRandom1
-    FamUnfamScram1.sort()
-    FamRandom2 = random.sample(Fam, k=75)
-    UnFamRandom2 = random.sample(Unfam, k=75)
-    print('FamRandom2: ', FamRandom2)
-    print('UnFamRandom2: ', UnFamRandom2)
-    FamUnfamScram2 = FamRandom2 + UnFamRandom2
-    FamUnfamScram2.sort()
     all = {'Fam': Fam,
-            'Unfam': Unfam,
             'Scram': Scram,
             'FamUnfam': FamUnfam,
             'FamScram': FamScram,
-            'UnfamScram': UnfamScram,
-            'FamUnfamScram1': FamUnfamScram1,
-            'FamUnfamScram2': FamUnfamScram2,
-            'FamUnfamScram0': FamUnfamScram0,
             }
     for item in all.items() :
         img_array = make_array(item)

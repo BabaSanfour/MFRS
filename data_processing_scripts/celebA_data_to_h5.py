@@ -20,6 +20,7 @@
 
 import os
 import cv2
+import sys
 import h5py
 import datetime
 import numpy as np
@@ -29,8 +30,8 @@ from PIL import Image, ImageOps
 
 dic = {30:1000
 }
-
-root_dir = "/home/hamza97/"
+sys.path.append("MFRS/")
+from utils.config import proj_path, data_path
 
 
 def get_box_by_facial_landmarks(
@@ -129,7 +130,7 @@ def store_many_hdf5(images, labels, folder):
         images       images array, (N, 224, 224, 1) to be stored
         labels       labels array, (N, ) to be stored
     """
-    hdf5_dir = root_dir+"scratch/data/MFRS_data/hdf5/"
+    hdf5_dir = os.path.join(data_path, "hdf5/")
     if not os.path.exists(hdf5_dir):
         os.makedirs(hdf5_dir)
     # Create a new HDF5 file
@@ -163,8 +164,8 @@ def transform_picture(img_sample, landmarks, resize):
     return sample
 
 
-def make_array(data_folder, identity_file):
-    pictures_dir = root_dir+"scratch/data/MFRS_data/"+data_folder+"/"
+def make_array(folder, identity_file):
+    pictures_dir = os.path.join(data_path, folder)
 
 
     # Concatenate array of images
@@ -204,7 +205,7 @@ if __name__ == '__main__':
     begin_time = datetime.datetime.now()
     for key, length in dic.items():
         for folder in ["train_%s_%s"%(length, key),"test_%s_%s"%(length, key),"valid_%s_%s"%(length, key)] :
-            dir_txt = root_dir + "MFRS/files/txt_files/identity_CelebA_%s.txt"%folder
+            dir_txt = os.path.join(proj_path, "files/txt_files/identity_CelebA_%s.txt"%folder)
             identity_file = open(dir_txt, "r")
             img_array, label_array = make_array(folder, identity_file)
             store_many_hdf5(img_array,label_array, folder)

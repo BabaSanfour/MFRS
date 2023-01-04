@@ -4,13 +4,15 @@
     - Create data repartitions folders and copy pictures into train/id_picture valid/id_picture test/id_picture (generate new ids)
 """
 import os
+import sys
 import glob
 import shutil
 import random
 import numpy as np
-
-fold = "/home/hamza97/scratch/data/MFRS_data/VGGface2_HQ_cropped/VGGface2_HQ_cropped/*"
-new_fold = "/home/hamza97/scratch/data/MFRS_data/VGGface2/"
+sys.path.append("MFRS/")
+from utils.config import data_path
+fold = os.path.join(data_path, "VGGface2_HQ_cropped/VGGface2_HQ_cropped/*")
+new_fold = os.path.join(data_path, "VGGface2/")
 
 def split(a,b,c):
     """

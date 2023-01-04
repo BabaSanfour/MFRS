@@ -14,16 +14,19 @@
     (To divide data into 3 folders for each csv file)
 """
 import os
+import sys
 import glob
 import shutil
 import random
 import pandas as pd
 
-dir_path = "/home/hamza97/projects/def-kjerbi/hamza97/MFRS/files/csv_files/*.csv"
-train_dir = "/project/6005253/hamza97/MFRS/files/txt_files/identity_CelebA_train_%s_%s.txt"
-test_dir = "/project/6005253/hamza97/MFRS/files/txt_files/identity_CelebA_test_%s_%s.txt"
-valid_dir = "/project/6005253/hamza97/MFRS/files/txt_files/identity_CelebA_valid_%s_%s.txt"
-fold = "/home/hamza97/projects/def-kjerbi/hamza97/data/data_MFRS/"
+sys.path.append("MFRS/")
+from utils.config import proj_path, data_path
+dir_path = os.path.join(proj_path, "files/csv_files/*.csv")
+train_dir = os.path.join(proj_path, "files/txt_files/identity_CelebA_train_%s_%s.txt")
+test_dir = os.path.join(proj_path, "files/txt_files/identity_CelebA_test_%s_%s.txt")
+valid_dir = os.path.join(proj_path, "files/txt_files/identity_CelebA_valid_%s_%s.txt")
+fold = data_path
 
 dic = {25:[15,5,5], 12:[6,3,3],
         27:[17,5,5], 13:[7,3,3],

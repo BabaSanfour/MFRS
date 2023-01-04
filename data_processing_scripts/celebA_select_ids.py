@@ -11,8 +11,11 @@
     ---------------
     8 CSV files with different number of ids and pictures per id.
 """
-
+import os
+import sys
 import pandas as pd
+sys.path.append("MFRS/")
+from utils.config import proj_path
 
 def correct_gender(merged):
     """
@@ -140,7 +143,7 @@ def generate_new_ids(final):
     return drop_unwanted_columns(selected, final)
 
 if __name__ == '__main__':
-    dir_path = "/home/hamza97/projects/def-kjerbi/hamza97/MFRS/files/"
+    dir_path = os.path.join(proj_path, "MFRS/files/")
 
     # read identity_CelebA.txt
     dir_txt = dir_path + 'identity_CelebA.txt'
