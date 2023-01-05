@@ -22,21 +22,22 @@ import os
 import cv2
 import sys
 import h5py
+import torch
 import datetime
 import numpy as np
 import torchvision
 import face_alignment
 from PIL import Image, ImageOps
 
-dic = {30:1000
-}
-sys.path.append("MFRS/")
+dic = {30:1000}
+
+sys.path.append("../../MFRS")
 from utils.config import proj_path, data_path
 
 
 def get_box_by_facial_landmarks(
         landmarks: np.ndarray,
-        additive_coefficient: float = 0.2) -> list:
+        additive_coefficient: float = 0.1) -> list:
     """
     Configure face bounding box by landmarks points
     Args:
@@ -56,8 +57,8 @@ def get_box_by_facial_landmarks(
     dy = int((y1 - y0) * additive_coefficient * 2)
 
     return [
-        x0 - dx // 2, int(y0 - dy * 3),
-        x1 + dx // 2, y1 + dy // 2]
+        x0 - dx // 2, y0 - dy  ,
+        x1 + dx // 2, y1 + dy // 3]
 
 def create_square_crop_by_detection(frame: np.ndarray, box: list) -> np.ndarray:
     """
@@ -164,7 +165,7 @@ def transform_picture(img_sample, landmarks, resize):
     return sample
 
 
-def make_array(folder, identity_file):
+def make_array(folder, identity_file, device):
     pictures_dir = os.path.join(data_path, folder)
 
 
@@ -174,7 +175,7 @@ def make_array(folder, identity_file):
     # initilize FaceAlignment
     fa = face_alignment.FaceAlignment(
         face_alignment.LandmarksType._2D,
-        device='cpu'
+        device=device
         )
 
     # resize images to 224 224
@@ -182,8 +183,12 @@ def make_array(folder, identity_file):
 
     for  line in identity_file.readlines():
         # read the image        print(img_sample)
+        im_path = os.path.join(pictures_dir, line[0:10])
 
-        img_sample = cv2.imread(os.path.join(pictures_dir, line[0:10]), cv2.COLOR_BGR2RGB)
+        if os.path.isfile(im_path)==False:
+            print(im_path)
+
+        img_sample = cv2.imread(im_path, cv2.COLOR_BGR2RGB)
         # Get facial landmarks
         landmarks = fa.get_landmarks_from_image(img_sample)
         # transform the image
@@ -203,10 +208,14 @@ def make_array(folder, identity_file):
 
 if __name__ == '__main__':
     begin_time = datetime.datetime.now()
+    if torch.cuda.is_available():
+        device = "cuda:0"
+    else :
+        device = "cpu"
     for key, length in dic.items():
         for folder in ["train_%s_%s"%(length, key),"test_%s_%s"%(length, key),"valid_%s_%s"%(length, key)] :
             dir_txt = os.path.join(proj_path, "files/txt_files/identity_CelebA_%s.txt"%folder)
             identity_file = open(dir_txt, "r")
-            img_array, label_array = make_array(folder, identity_file)
+            img_array, label_array = make_array(folder, identity_file, device)
             store_many_hdf5(img_array,label_array, folder)
     print(datetime.datetime.now()-begin_time)
