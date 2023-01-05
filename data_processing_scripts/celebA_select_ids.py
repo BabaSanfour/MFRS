@@ -14,7 +14,7 @@
 import os
 import sys
 import pandas as pd
-sys.path.append("MFRS/")
+sys.path.append("../../MFRS")
 from utils.config import proj_path
 
 def correct_gender(merged):

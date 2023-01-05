@@ -21,7 +21,7 @@ import numpy as np
 from tqdm import tqdm
 import torchvision
 from PIL import Image
-sys.path.append("MFRS/")
+sys.path.append("../../MFRS")
 from utils.config import data_path
 data_path =  os.path.join(data_path, "VGGface2/")
 

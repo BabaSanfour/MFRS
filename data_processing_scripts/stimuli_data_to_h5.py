@@ -28,7 +28,7 @@ from tqdm import tqdm
 from PIL import Image
 
 import torchvision
-sys.path.append("MFRS/")
+sys.path.append("../../MFRS")
 from utils.config import data_path
 data_path =  os.path.join(data_path, "ds000117/stimuli/meg/")
 

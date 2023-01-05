@@ -3,7 +3,7 @@ import sys
 import torch
 import torchvision
 
-sys.path.append('MFRS/')
+sys.path.append("../../MFRS")
 from utils.generate_data_from_hdf5 import generate_Dataset_h5
 from utils.config import data_path
 data_path = os.path.join(data_path, "hdf5/")

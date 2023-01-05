@@ -9,7 +9,7 @@ import glob
 import shutil
 import random
 import numpy as np
-sys.path.append("MFRS/")
+sys.path.append("../../MFRS")
 from utils.config import data_path
 fold = os.path.join(data_path, "VGGface2_HQ_cropped/VGGface2_HQ_cropped/*")
 new_fold = os.path.join(data_path, "VGGface2/")
@@ -65,7 +65,7 @@ def create_repartitions(folder, new_folder, class_dic):
         os.makedirs(train_folder)
     if not os.path.exists(test_folder):
         os.makedirs(test_folder)
-    if not os.path.exists(valid_folder):    
+    if not os.path.exists(valid_folder):
         os.makedirs(valid_folder)
     for picture, cl in class_dic.items():
 

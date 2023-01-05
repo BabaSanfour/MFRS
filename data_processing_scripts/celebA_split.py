@@ -20,7 +20,7 @@ import shutil
 import random
 import pandas as pd
 
-sys.path.append("MFRS/")
+sys.path.append("../../MFRS")
 from utils.config import proj_path, data_path
 dir_path = os.path.join(proj_path, "files/csv_files/*.csv")
 train_dir = os.path.join(proj_path, "files/txt_files/identity_CelebA_train_%s_%s.txt")
@@ -117,7 +117,7 @@ def create_repartitions(file_csv, length, key):
     os.makedirs(valid_folder)
 
     for i in range(length*key):
-        im=os.path.join(fold+"img_align_celeba/", file_csv.loc[i,'name'])
+        im=os.path.join(fold+"img_align_celeba/img_align_celeba", file_csv.loc[i,'name'])
         if file_csv.loc[i,'class'] == 0:
             shutil.copy(im, train_folder)
         elif file_csv.loc[i,'class'] == 1:
