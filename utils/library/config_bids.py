@@ -1,22 +1,22 @@
 
 """
-===========
-Config file
-===========
+=====================================
+Config file for brain data processing
+=====================================
 Configuration parameters for the study. This should be in a folder called
-``library/`` inside the ``brain_data_processing/`` directory.
+``library/`` inside the ``utils/`` directory.
 """
 
 from distutils.version import LooseVersion
 import os
 import numpy as np
-
+from config import user_name, data_path
 ###############################################################################
 # Let's set the path where the data is downloaded and stored.
 
 user = os.environ['USER']
-if user == 'hamza97':
-    study_path = '/home/hamza97/scratch/data/MFRS_data/'
+if user == user_name:
+    study_path = data_path
     N_JOBS = 1
 else:
     study_path = os.path.join(os.path.dirname(__file__), '..', '..', '..')

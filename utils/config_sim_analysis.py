@@ -11,14 +11,11 @@ import mne
 import numpy as np
 
 # Paths
-weights_path = '/home/hamza97/scratch/net_weights/'
-import sys
-sys.path.append('/home/hamza97/MFRS/brain_data_preprocessing')
+from config import weights_path, plot_folder
 from library.config_bids import study_path, meg_dir
 similarity_folder = os.path.join(study_path, 'similarity_scores')
 activations_folder = os.path.join(study_path, 'activations')
 rdms_folder = os.path.join(study_path, 'networks_rdms')
-plot_folder = '/home/hamza97/MFRS/plots'
 
 # Get whole sensors list + sensors lists per type + sesnsor positions for topomaps + meg file
 subject_id, run=1, 1
@@ -33,7 +30,7 @@ channels_mag=raw.copy().pick_types(meg='mag').info.ch_names
 channels_grad1=raw.copy().pick_types(meg='planar1').info.ch_names
 channels_grad2=raw.copy().pick_types(meg='planar2').info.ch_names
 sensors_position=raw.copy().pick_types(meg='mag').info
-out_file = os.path.join(meg_dir, "RDMs_16-subject_1-sub_opt1-chl_opt.npy")
+out_file = os.path.join(meg_dir, "RDMs_FamUnfam_16-subject_1-sub_opt1-chl_opt.npy")
 meg_rdm = np.load(out_file)
 
 # for plotting
@@ -117,4 +114,3 @@ inception_layers=['Conv2d_1a_3x3.bn', 'Conv2d_2a_3x3.bn', 'Conv2d_2b_3x3.bn', 'C
 
 # Network name : main layers
 networks= {"inception_v3": inception_layers, "mobilenet": mobilenet_layers, "SphereFace": SphereFace_layers, "resnet50": resnet_layers, "cornet_s": cornet_s_layers, "FaceNet": facenet_layers, "vgg16_bn": vgg_layers, }
-# networks= { "FaceNet": facenet_layers, "resnet50": resnet_layers, "cornet_s": cornet_s_layers,   }
