@@ -1,9 +1,13 @@
+import os
 import torch
 import torchvision
-from generate_data_from_hdf5 import generate_Dataset_h5, generate_stimuli_h5
+import sys
+sys.path.append('home/hamza97/MFRS')
+from utils.generate_data_from_hdf5 import generate_Dataset_h5, generate_stimuli_h5
+from utils.config import data_path
 
-path_data='../work/'
-stimuli_path_data='/home/hamza97/scratch/data/MFRS_data/hdf5/'
+
+data_path= os.path.join(data_path, 'hdf5/')
 
 mean_std = { '1000_30': [0.3612, 0.3056],
               '1000_25': [0.3736, 0.3082],
@@ -20,15 +24,15 @@ def dataloader(batch_n, n_input_channels, num_classes=1000, num_pictures=30):
     # Num classes : classes
     # Num pictures : pictures
     if n_input_channels == 1:
-        train_path=path_data+"train_%s_%s.h5"%(num_classes, num_pictures)
-        valid_path=path_data+"valid_%s_%s.h5"%(num_classes, num_pictures)
-        test_path=path_data+"test_%s_%s.h5"%(num_classes, num_pictures)
-        mean, std =[0.3612], [0.3056]
+        train_path = os.path.join(data_path, "train_%s_%s.h5"%(num_classes, num_pictures))
+        valid_path = os.path.join(data_path, "valid_%s_%s.h5"%(num_classes, num_pictures))
+        test_path = os.path.join(data_path, "test_%s_%s.h5"%(num_classes, num_pictures))
+        mean, std = [0.3612], [0.3056]
     elif n_input_channels == 3:
-        train_path=path_data+"train.h5"
-        valid_path=path_data+"valid.h5"
-        test_path=path_data+"test.h5"
-        mean, std= [0.485, 0.456, 0.406], [0.229, 0.224, 0.225]
+        train_path = os.path.join(data_path,"train.h5")
+        valid_path = os.path.join(data_path,"valid.h5")
+        test_path = os.path.join(data_path,"test.h5")
+        mean, std = [0.485, 0.456, 0.406], [0.229, 0.224, 0.225]
     else :
         print('Error loading data')
 
@@ -65,7 +69,7 @@ def Stimuliloader(batch_n, file_name):
     # Argument :
     # batch_n : batch_size
     # file_name : file_name
-    data=stimuli_path_data+"%s.h5"%file_name
+    data=os.path.join(data_path, "%s.h5"%file_name)
     mean, std =[0.3612], [0.3056]
 
     # ##Stimuli dataset

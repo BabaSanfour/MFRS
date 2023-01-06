@@ -1,8 +1,9 @@
+import os
 import time
 import torch
 import torch.nn as nn
-import matplotlib.pyplot as plt
-path_weights = "/home/hamza97/scratch/net_weights/"
+from config import weights_path, results_path
+from general import save_pickle
 
 def train_network(name, model, criterion, optimizer, scheduler, num_epochs, dataset_loader, dataset_sizes):
 
@@ -26,7 +27,7 @@ def train_network(name, model, criterion, optimizer, scheduler, num_epochs, data
         # track history in train
         with torch.set_grad_enabled(True):
             # switch model to training mode,
-            model.train();
+            model.train()
             # batches_count_train = len(dataset_loader["train"])
             for inputs_, labels_ in dataset_loader["train"]:
 
@@ -44,7 +45,7 @@ def train_network(name, model, criterion, optimizer, scheduler, num_epochs, data
                 loss = criterion(outputs, labels)
 
                 # backpropagate and update optimizer learning rate
-                loss.backward();
+                loss.backward()
                 optimizer.step()
 
                 #statictis
@@ -62,7 +63,7 @@ def train_network(name, model, criterion, optimizer, scheduler, num_epochs, data
         # evaluate performance on validation set
         with torch.no_grad():
             # switch model to evaluation mode
-            model.eval();
+            model.eval()
 
             # calculate accuracy on validation set
             n_dev_correct=0
@@ -88,7 +89,9 @@ def train_network(name, model, criterion, optimizer, scheduler, num_epochs, data
             if valid_acc> best_acc:
                 best_acc= valid_acc
                 best_model = model
-
+    results = {"Val_Loss": list_valLoss, "Val_Acc":list_valAcc, 
+                   "Train_Loss": list_trainLoss, "Train_Acc": list_trainAcc }
+    save_pickle(results, os.path.join(results_path,name+'.pkl'))
 #    fig_path = path_plot+'%s.png'%(name)
 #    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(20,7))
 
@@ -153,4 +156,4 @@ def test_network(model, dataset_loader, dataset_sizes):
 def save_network_weights(model_ft,  file) :
     """Save the network after training"""
     state = model_ft.state_dict()
-    torch.save(state,path_weights+file)
+    torch.save(state, weights_path+file)

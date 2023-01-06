@@ -32,8 +32,7 @@ import torch
 import torch.nn as nn
 from collections import OrderedDict
 from torch.utils.model_zoo import load_url
-
-path='/home/hamza97/scratch/net_weights/'
+from load_weights import weights_path
 
 # Original weights trained on ImageNet (vgg, alexnet, resnet mobilenet, cornet_s and inception) or VGGFace2 (FaceNet)
 model_urls = {
@@ -87,16 +86,16 @@ def transfer(
     if os.path.isfile(weights):
         original_state_dict= torch.load(weights)
         print('old weights file loaded')
-        weights=os.path.join(path, '%s_weights_%sD_input_VGGFace3'%(name, n_input_channels))
+        weights=os.path.join(weights_path, '%s_weights_%sD_input_VGGFace3'%(name, n_input_channels))
         if os.path.isfile(weights):
             print('old weights file loaded')
             return weights
     else:
         print(' pretrained old weights file loaded ( mostlikely image net or VGGFace)')
         if name == "SphereFace":
-            original_state_dict= torch.load(path+'sphere20a_20171020.pth')
+            original_state_dict= torch.load(os.path.join(weights_path, 'sphere20a_20171020.pth'))
         elif name == "LightCNN":
-            original_state_dict= torch.load(path+'LightCNN-V4_checkpoint.pth.tar')['state_dict']
+            original_state_dict= torch.load(os.path.join(weights_path, 'LightCNN-V4_checkpoint.pth.tar'))['state_dict']
         elif name == "cornet_s" :
             original_state_dict = load_url(model_urls[name], map_location=torch.device('cpu') )
             original_state_dict = original_state_dict['state_dict']
@@ -164,11 +163,11 @@ def transfer(
 
 def load_weights(name: str, model: nn.Module, n_input_channels: int, weights: str):
     if weights == None:
-        weights=os.path.join(path, '%s_weights_%sD_input'%(name, n_input_channels))
+        weights=os.path.join(weights_path, '%s_weights_%sD_input'%(name, n_input_channels))
         if name in ['LightCNN','SphereFace', 'FaceNet'] :
             weights=weights+ '_VGGFace'
     else:
-        weights=os.path.join(path, weights)
+        weights=os.path.join(weights_path, weights)
     # Similar to explanation in line 102
     if (weights[-7:] == 'VGGFace' or weights[-8:-1] == 'VGGFace') or not os.path.isfile(weights):
         weights=transfer(name, model, n_input_channels, weights)
