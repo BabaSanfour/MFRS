@@ -1,15 +1,13 @@
 """
 Cornet-S network
 """
-import torch
-import os
 import sys
 import math
-from typing import Callable, Any, Optional, Tuple, List
+from typing import Any
 from collections import OrderedDict
 from torch import nn
-sys.path.append('/home/hamza97/MFRS/utils')
-from load_weights import load_weights
+sys.path.append('../../MFRS/')
+from utils.load_weights import load_weights
 
 class Flatten(nn.Module):
 

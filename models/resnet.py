@@ -1,15 +1,14 @@
 """
 ResNet networks
 """
-import os
 import sys
 import torch
 from torch import Tensor
 import torch.nn as nn
 from collections import OrderedDict
 from typing import Type, Any, Callable, Union, List, Optional
-sys.path.append('/home/hamza97/MFRS/utils')
-from load_weights import load_weights
+sys.path.append('../../MFRS/')
+from utils.load_weights import load_weights
 
 def conv3x3(in_planes: int, out_planes: int, stride: int = 1, groups: int = 1, dilation: int = 1) -> nn.Conv2d:
     """3x3 convolution with padding"""

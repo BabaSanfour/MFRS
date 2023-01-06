@@ -1,13 +1,12 @@
 """
 VGG networks
 """
-import os
 import sys
 import torch
 import torch.nn as nn
-from typing import Callable, Any, Optional, Union, Tuple, List, Dict, cast
-sys.path.append('/home/hamza97/MFRS/utils')
-from load_weights import load_weights
+from typing import  Any, Union, List, Dict, cast
+sys.path.append('../../MFRS/')
+from utils.load_weights import load_weights
 
 
 class VGG(nn.Module):

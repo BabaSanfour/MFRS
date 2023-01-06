@@ -1,14 +1,12 @@
 """
 AlexNet network
 """
-import os
 import sys
 import torch
-from torch import Tensor
 import torch.nn as nn
-from typing import Callable, Any, Optional, Tuple, List
-sys.path.append('/home/hamza97/MFRS/utils')
-from load_weights import load_weights
+from typing import Any
+sys.path.append('../../MFRS/')
+from utils.load_weights import load_weights
 
 class AlexNet(nn.Module):
 

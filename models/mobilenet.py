@@ -1,15 +1,15 @@
 """
 MobileNet network
 """
-import os
 import sys
+import warnings
 import torch
 from torch import Tensor
 import torch.nn as nn
 # from utils import load_state_dict_from_url
-from typing import Type, Any, Callable, Union, List, Optional
-sys.path.append('/home/hamza97/MFRS/utils')
-from load_weights import load_weights
+from typing import Any, Callable, List, Optional
+sys.path.append('../../MFRS/')
+from utils.load_weights import load_weights
 
 
 class ConvNormActivation(torch.nn.Sequential):

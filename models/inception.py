@@ -1,18 +1,16 @@
 """
 Inception network
 """
-
-import os
-from collections import namedtuple
-import warnings
 import torch
-from collections import OrderedDict
 from torch import nn, Tensor
 import torch.nn.functional as F
+
+import warnings
+from collections import namedtuple
 from typing import Callable, Any, Optional, Tuple, List
 import sys
-sys.path.append('/home/hamza97/MFRS/utils')
-from load_weights import load_weights
+sys.path.append('../../MFRS/')
+from utils.load_weights import load_weights
 
 InceptionOutputs = namedtuple('InceptionOutputs', ['logits', 'aux_logits'])
 InceptionOutputs.__annotations__ = {'logits': Tensor, 'aux_logits': Optional[Tensor]}

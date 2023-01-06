@@ -1,8 +1,6 @@
-import os
 import tensorflow as tf
-from tensorflow import keras
-from tensorflow.keras.models import Model, Sequential
-from tensorflow.keras.layers import Input, Convolution2D, ZeroPadding2D, MaxPooling2D, Flatten, Dense, Dropout, Activation
+from tensorflow.keras.models import Sequential
+from tensorflow.keras.layers import Convolution2D, ZeroPadding2D, MaxPooling2D, Flatten, Dropout, Activation
 
 
 def vggface_architecture(num_classes: int =1000, in_shape=(224,224,3)):
@@ -57,7 +55,7 @@ def VGGFace(pretrained: bool = False, num_classes: int =1000):
 
     model = vggface_architecture(2622, (224,224,3))
     if pretrained:
-        model.load_weights('/home/hamza97/scratch/net_weights/vgg_face_weights.h5')
+        model.load_weights('../../net_weights/vgg_face_weights.h5')
     vggface_model = vggface_architecture( num_classes, (224,224,1))
     for i in range(2,35):
         vggface_model.layers[i].set_weights(model.layers[i].get_weights())

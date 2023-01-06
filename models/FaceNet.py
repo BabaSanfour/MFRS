@@ -1,12 +1,11 @@
 """
 FaceNet network
 """
-import os
 import sys
 import torch
 from torch import nn
-sys.path.append('/home/hamza97/MFRS/utils')
-from load_weights import load_weights
+sys.path.append('../../MFRS/')
+from utils.load_weights import load_weights
 
 class BasicConv2d(nn.Module):
 
@@ -270,6 +269,5 @@ class InceptionResnetV1(nn.Module):
 def FaceNet(pretrained: bool = False, num_classes: int = 1000, n_input_channels: int = 3, weights: str = None) -> InceptionResnetV1:
     model = InceptionResnetV1(num_classes, n_input_channels)
     if pretrained:
-        print("wrong")
         return load_weights('FaceNet', model, n_input_channels, weights)
     return model

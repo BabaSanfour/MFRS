@@ -1,3 +1,6 @@
+"""
+DeepID network
+"""
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
@@ -23,7 +26,6 @@ class deepID_1(nn.Module):
         self.dense_layer1 = nn.Sequential(nn.Linear(in_features=512, out_features=4605),
                 								)
 
-
     def forward(self, x):
         x = self.block1(x)
         x = self.block2(x)
@@ -37,10 +39,9 @@ class deepID_1(nn.Module):
         out = F.log_softmax(out, dim=1)
         return out
 
-
     def num_flat_features(self, x):
-    	size = x.size()[1:]
-    	num_features = 1
-    	for s in size:
-    		num_features *= s
-    	return num_features
+        size = x.size()[1:]
+        num_features = 1
+        for s in size:
+            num_features *= s
+        return num_features

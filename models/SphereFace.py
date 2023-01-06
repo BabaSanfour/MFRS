@@ -1,16 +1,14 @@
-import os
+"""
+SphereFace network
+"""
 import sys
+import math
 import torch
-from torch import Tensor
 import torch.nn as nn
-import torch.nn.functional as F
 from torch.autograd import Variable
 from torch.nn import Parameter
-import math
-from collections import OrderedDict
-from typing import Type, Any, Callable, Union, List, Optional
-sys.path.append('/home/hamza97/MFRS/utils')
-from load_weights import load_weights
+sys.path.append('../../MFRS/')
+from utils.load_weights import load_weights
 
 def myphi(x,m):
     x = x * m
@@ -89,7 +87,7 @@ class AngleLoss(nn.Module):
         output[index] += phi_theta[index]*(1.0+0)/(1+self.lamb)
 #/home/hamza97/MFRS/models/SphereFace.py:97: UserWarning: Implicit dimension choice for log_softmax has been deprecated. Change the call to include dim=X as an argument.
 
-        logpt = F.log_softmax(output, -1)
+        logpt = nn.functional.log_softmax(output, -1)
         logpt = logpt.gather(1,target)
         logpt = logpt.view(-1)
         pt = Variable(logpt.data.exp())

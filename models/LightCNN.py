@@ -1,13 +1,13 @@
-import os
-import math
+"""
+LightCNN network
+"""
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-import numpy as np
+from typing import Type, List
 import sys
-from typing import Type, Any, Callable, Union, List, Optional
-sys.path.append('/home/hamza97/MFRS/utils')
-from load_weights import load_weights
+sys.path.append('../../MFRS/')
+from utils.load_weights import load_weights
 
 
 class mfm(nn.Module):
