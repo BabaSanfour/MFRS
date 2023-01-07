@@ -15,30 +15,22 @@ Original scripts are available on MNE documentation and Github.
 """
 
 import os
+import sys
 import mne
 import numpy as np
-import os.path as op
 from warnings import warn
-
-import mne
-import pickle
-from mne import Epochs
-from mne.preprocessing import ICA
-from mne.parallel import parallel_func
-from mne.io import read_raw_fif, concatenate_raws
-
-from library.config_bids import study_path, meg_dir, N_JOBS, l_freq, random_state, tmin, tmax, reject_tmax, map_subjects, cal, ctc
-
+sys.path.append('../../MFRS/')
+from utils.library.config_bids import study_path, meg_dir, cal, ctc
 
 def run_maxwell_filter(subject_id):
     subject = "sub-%02d" % subject_id
     print("processing subject: %s" % subject)
-    sss_fname_out = op.join(meg_dir, subject, 'run_%02d_filt_tsss_%d_raw.fif')
+    sss_fname_out = os.path.join(meg_dir, subject, 'run_%02d_filt_tsss_%d_raw.fif')
 
-    raw_fname_in = op.join(study_path, 'ds000117', subject, 'ses-meg/meg',
+    raw_fname_in = os.path.join(study_path, 'ds000117', subject, 'ses-meg/meg',
                            'sub-%02d_ses-meg_task-facerecognition_run-%02d_meg.fif')
 
-    sss_fname_in = op.join(study_path, 'ds000117/derivatives/meg_derivatives', subject, 'ses-meg/meg',
+    sss_fname_in = os.path.join(study_path, 'ds000117/derivatives/meg_derivatives', subject, 'ses-meg/meg',
                            'sub-%02d_ses-meg_task-facerecognition_run-%02d_proc-sss_meg.fif')
     st_duration=10
     # To match the processing, transform to the head position of the 4th run
@@ -49,7 +41,7 @@ def run_maxwell_filter(subject_id):
 
     for run in range(1, 7):
         raw_out = sss_fname_out % (run, st_duration)
-        if op.isfile(raw_out):
+        if os.path.isfile(raw_out):
             continue
         raw_in = raw_fname_in % (subject_id, run)
         try:
@@ -65,7 +57,7 @@ def run_maxwell_filter(subject_id):
 
         # Read bad channels from the MaxFilter log.
         bads =[]
-        with open( op.join(study_path, 'ds000117/derivatives/meg_derivatives', subject, 'ses-meg/meg',
+        with open( os.path.join(study_path, 'ds000117/derivatives/meg_derivatives', subject, 'ses-meg/meg',
                'sub-%02d_ses-meg_task-facerecognition_run-%02d_proc-sss_log.txt' %(subject_id, run))) as fid:
             for line in fid:
                 if line.startswith('Static bad channels'):
@@ -100,15 +92,15 @@ def run_maxwell_filter(subject_id):
             raw, calibration=cal, cross_talk=ctc, st_duration=st_duration,
             origin=origin, destination=destination, head_pos=head_pos)
 
-        #The data are bandpass filtered (1 - 40 Hz) using linear-phase fir filter
+        #The data are bandpass filtered (1 - 70 Hz) using linear-phase fir filter
         #with delay compensation
         # Here we only low-pass MEG (assuming MaxFilter has high-passed
         # the data already)
         picks_meg = mne.pick_types(raw.info, meg=True, exclude=())
         raw_sss.filter(
-            None, 40, l_trans_bandwidth='auto', h_trans_bandwidth='auto',
+            None, 70, l_trans_bandwidth='auto', h_trans_bandwidth='auto',
             filter_length='auto', phase='zero', fir_window='hamming',
-            fir_design='firwin', n_jobs=N_JOBS, picks=picks_meg)
+            fir_design='firwin', n_jobs=-1, picks=picks_meg)
         raw_sss.save(raw_out, overwrite=True)
 
 if __name__ == "__main__":

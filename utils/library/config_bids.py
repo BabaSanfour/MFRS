@@ -10,7 +10,7 @@ Configuration parameters for the study. This should be in a folder called
 from distutils.version import LooseVersion
 import os
 import numpy as np
-from config import user_name, data_path
+from utils.config import user_name, data_path
 ###############################################################################
 # Let's set the path where the data is downloaded and stored.
 
