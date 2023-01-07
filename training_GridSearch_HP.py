@@ -4,6 +4,7 @@ Perform Grid Search on Training Hyper Parameters for each architecture
 
 import time
 import torch
+import wandb
 
 from utils.load_data import dataloader
 from utils.train_test_functions import train_network, test_network, save_network_weights
@@ -54,6 +55,25 @@ if __name__ == '__main__':
             for batch_size in batch_sizes:
                 dataset_loader, dataset_sizes = dataloader(batch_size, n_input_channels)
                 for lr in learning_rate:
+                    wandb.init(
+                            # set the wandb project where this run will be logged
+                            project="Modeling the Face Recognition System in the Brain",
+                            
+                            # track hyperparameters and run metadata
+                            config={
+                            "learning_rate": lr,
+                            "architecture": model_name,
+                            "dataset": "celebA-1000",
+                            "epochs": num_epochs,
+                            "batch_size": batch_size,
+                            "num_classes": num_classes,
+                            "momentum": momentum, 
+                            "step_size": step_size,
+                            "gamma": gamma,
+                            "pretrained": pretrained,
+                            }
+                        )
+
                     if model_name == "inception_v3":
                         from models.inception import inception_v3
                         model = inception_v3(pretrained, num_classes, n_input_channels)
@@ -122,9 +142,10 @@ if __name__ == '__main__':
                     print(name)
 
                     ###Training & Validation###
-                    model_ft = train_network(name, model, criterion, optimizer_ft, exp_lr_scheduler, num_epochs, dataset_loader, dataset_sizes)
+                    model_ft, wandb = train_network(name, model, criterion, optimizer_ft, exp_lr_scheduler, num_epochs, dataset_loader, dataset_sizes, wandb)
                     ###Testing###
                     acc=test_network(model_ft, dataset_loader, dataset_sizes)
+                    wandb.log ({"Test Acc": acc})
 
                     if acc>best_acc:
                         best_model=model_ft

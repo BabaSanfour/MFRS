@@ -1,11 +1,9 @@
-import os
 import time
 import torch
 import torch.nn as nn
-from config import weights_path, results_path
-from general import save_pickle
+from config import weights_path
 
-def train_network(name, model, criterion, optimizer, scheduler, num_epochs, dataset_loader, dataset_sizes):
+def train_network(name, model, criterion, optimizer, scheduler, num_epochs, dataset_loader, dataset_sizes, wandb):
 
     """Train the model using the train and validation datasets"""
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -89,9 +87,9 @@ def train_network(name, model, criterion, optimizer, scheduler, num_epochs, data
             if valid_acc> best_acc:
                 best_acc= valid_acc
                 best_model = model
-    results = {"Val_Loss": list_valLoss, "Val_Acc":list_valAcc, 
-                   "Train_Loss": list_trainLoss, "Train_Acc": list_trainAcc }
-    save_pickle(results, os.path.join(results_path,name+'.pkl'))
+        wandb.log({"Val Loss": valid_loss, "Val Acc": valid_acc, 
+                   "Train Loss": train_loss, "Train Acc": train_acc})
+
 #    fig_path = path_plot+'%s.png'%(name)
 #    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(20,7))
 
@@ -104,13 +102,12 @@ def train_network(name, model, criterion, optimizer, scheduler, num_epochs, data
 #    fig.savefig(fig_path)
 #    fig.show()
 
-
     print()
     time_elapsed = time.time() - since
     print('Training complete in %s h %s m %s s' % (time_elapsed // 3600, (time_elapsed % 3600) // 60, time_elapsed % 60))
     print('Best val Acc: %.2f%%' % (best_acc))
 
-    return best_model
+    return best_model, wandb
 
 def test_network(model, dataset_loader, dataset_sizes):
 
