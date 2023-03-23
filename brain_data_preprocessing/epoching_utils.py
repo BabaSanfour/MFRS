@@ -20,12 +20,10 @@ def run_events(subject_id, selected, name, conditions_mapping):
         events = mne.find_events(raw, stim_channel='STI101',
                                  consecutive='increasing', mask=mask,
                                  mask_type='not_and', min_duration=0.003)
-        print(events.shape)
         print("  S %s - R %s" % (subject, run))
         csv_path = os.path.join(in_path, 'sub-%02d_ses-meg_task-facerecognition_run-%02d_events.tsv' % (
             subject_id,run,))
         event_csv = read_csv(csv_path, sep='\t')
-
         # select epochs depending on stimuli type in csv file
         not_selected=[stim_type for stim_type in ['Famous', 'Unfamiliar', 'Scrambled'] if stim_type not in selected[0]]
         for stim_type in not_selected:
