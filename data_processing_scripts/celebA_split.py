@@ -51,6 +51,7 @@ def split(a,b,c):
     """
     if (a<0 or b<0 or c<0):
         print('We have a problem: code 1 ')
+        return -1
     elif(a==0 and b==0 and c==0):
         print('We have a problem: code 2 ')
         return -1
@@ -96,7 +97,7 @@ def create_txt(file_csv, length, key, train_dir=train_dir, test_dir=test_dir, va
     valid= open(valid_dir_i,"w+")
 
     # add each picture to the class it belongs to
-    for i in range(length*key):
+    for i in range(len(file_csv)):
         name=file_csv.loc[i,'name']+' '+str(int(file_csv.loc[i,'new_id']))+'\n'
         if file_csv.loc[i,'class'] == 0:
             train.write(name)
@@ -116,7 +117,7 @@ def create_repartitions(file_csv, length, key):
     os.makedirs(test_folder)
     os.makedirs(valid_folder)
 
-    for i in range(length*key):
+    for i in range(len(file_csv)):
         im=os.path.join(fold+"img_align_celeba/img_align_celeba", file_csv.loc[i,'name'])
         if file_csv.loc[i,'class'] == 0:
             shutil.copy(im, train_folder)

@@ -31,7 +31,7 @@ from PIL import Image, ImageOps
 
 dic = {30:1000}
 
-sys.path.append("../../MFRS")
+sys.path.append("/home/hamza97/MFRS")
 from utils.config import proj_path, data_path
 
 
@@ -135,7 +135,7 @@ def store_many_hdf5(images, labels, folder):
     if not os.path.exists(hdf5_dir):
         os.makedirs(hdf5_dir)
     # Create a new HDF5 file
-    file = h5py.File("%s%s_128.h5"%(hdf5_dir,folder), "w")
+    file = h5py.File("%s%s.h5"%(hdf5_dir,"new_"+folder), "w")
     print("{} h5 file created".format(folder))
 
     # Create a dataset in the file
@@ -145,7 +145,7 @@ def store_many_hdf5(images, labels, folder):
     print("{} h5 is ready".format(folder))
 
 
-def transform_picture(img_sample, landmarks, resize):
+def transform_picture(img_sample, landmarks, resize, greyscale=True):
     """ Crop an image and transform it into grayscale.
         Parameters:
         ---------------
@@ -160,14 +160,15 @@ def transform_picture(img_sample, landmarks, resize):
 
     # Otherwise we transform it directly to greyscale
     PIL_image = Image.fromarray(img_sample.astype('uint8'), 'RGB')
-    PIL_image = ImageOps.grayscale(PIL_image)
+    if greyscale:
+        PIL_image = ImageOps.grayscale(PIL_image)
     sample = np.asarray(resize(PIL_image), dtype=np.uint8)
     return sample
 
 
-def make_array(folder, identity_file, device):
-    pictures_dir = os.path.join(data_path, folder)
-
+def make_array(folder, identity_file, device, size=(224,224)):
+    # pictures_dir = os.path.join(data_path, folder)
+    pictures_dir = "new_" + folder
 
     # Concatenate array of images
     img_array = []
@@ -179,7 +180,7 @@ def make_array(folder, identity_file, device):
         )
 
     # resize images to 224 224
-    resize = torchvision.transforms.Resize((224, 224))
+    resize = torchvision.transforms.Resize(size)
 
     for  line in identity_file.readlines():
         # read the image        print(img_sample)
@@ -214,7 +215,7 @@ if __name__ == '__main__':
         device = "cpu"
     for key, length in dic.items():
         for folder in ["train_%s_%s"%(length, key),"test_%s_%s"%(length, key),"valid_%s_%s"%(length, key)] :
-            dir_txt = os.path.join(proj_path, "files/txt_files/identity_CelebA_%s.txt"%folder)
+            dir_txt = os.path.join(proj_path, "files/txt_files/new_identity_CelebA_%s.txt"%folder)
             identity_file = open(dir_txt, "r")
             img_array, label_array = make_array(folder, identity_file, device)
             store_many_hdf5(img_array,label_array, folder)
