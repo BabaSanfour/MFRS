@@ -31,7 +31,7 @@ from PIL import Image, ImageOps
 
 dic = {30:1000}
 
-sys.path.append("/home/hamza97/MFRS")
+sys.path.append("../../MFRS")
 from utils.config import proj_path, data_path
 
 
