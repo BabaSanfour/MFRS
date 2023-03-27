@@ -28,11 +28,13 @@
 
 """
 import os
+import sys
 import torch
 import torch.nn as nn
 from collections import OrderedDict
 from torch.utils.model_zoo import load_url
-from load_weights import weights_path
+sys.path.append('../../MFRS')
+from utils.config import weights_path
 
 # Original weights trained on ImageNet (vgg, alexnet, resnet mobilenet, cornet_s and inception) or VGGFace2 (FaceNet)
 model_urls = {

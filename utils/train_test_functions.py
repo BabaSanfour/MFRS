@@ -151,6 +151,7 @@ def test_network(model, dataset_loader, dataset_sizes):
     return avg_test_acc
 
 def save_network_weights(model_ft,  file) :
+    import os
     """Save the network after training"""
     state = model_ft.state_dict()
-    torch.save(state, weights_path+file)
+    torch.save(state, os.path.join(weights_path, file))

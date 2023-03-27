@@ -2,7 +2,7 @@ import os
 import torch
 import torchvision
 import sys
-sys.path.append('home/hamza97/MFRS')
+sys.path.append('../../MFRS')
 from utils.generate_data_from_hdf5 import generate_Dataset_h5, generate_stimuli_h5
 from utils.config import data_path
 
@@ -17,18 +17,18 @@ mean_std = { '1000_30': [0.3612, 0.3056],
               '300_28': [0.3779, 0.3085],
               '300_14': [0.3614, 0.3045] }
 
-def dataloader(batch_n, n_input_channels, num_classes=1000, num_pictures=30):
+def dataloader(batch_n, dataset, num_classes=1000, num_pictures=30):
     """Return datasets train and valid"""
     # Argument :
     # batch_n : batch_size
     # Num classes : classes
     # Num pictures : pictures
-    if n_input_channels == 1:
-        train_path = os.path.join(data_path, "train_%s_%s.h5"%(num_classes, num_pictures))
-        valid_path = os.path.join(data_path, "valid_%s_%s.h5"%(num_classes, num_pictures))
-        test_path = os.path.join(data_path, "test_%s_%s.h5"%(num_classes, num_pictures))
+    if dataset == "celebA":
+        train_path = os.path.join(data_path, "new_train_%s_%s.h5"%(num_classes, num_pictures))
+        valid_path = os.path.join(data_path, "new_valid_%s_%s.h5"%(num_classes, num_pictures))
+        test_path = os.path.join(data_path, "new_test_%s_%s.h5"%(num_classes, num_pictures))
         mean, std = [0.3612], [0.3056]
-    elif n_input_channels == 3:
+    elif dataset == "VGGFace":
         train_path = os.path.join(data_path,"train.h5")
         valid_path = os.path.join(data_path,"valid.h5")
         test_path = os.path.join(data_path,"test.h5")
