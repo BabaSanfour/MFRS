@@ -7,10 +7,10 @@ import numpy as np
 import os.path as op
 from neurora.rdm_cal import eegRDM
 import sys
-sys.path.append('/home/hamza97/MFRS/brain_data_preprocessing')
-from library.config_bids import meg_dir
+sys.path.append('../../MFRS/')
+from utils.library.config_bids import meg_dir
 
-def transform_data(sub_id, n_cons, n_chls, n_time_points, name="FamUnfam", tsss=10):
+def transform_data(sub_id, n_cons, n_chls, n_time_points, list_names, name="FamUnfam", tsss=10):
     """
     This function read epoched MEG data and saves it a matrix with the shape [n_sub, n_conditions, n_channels, n_time_points]
     """
@@ -77,10 +77,10 @@ def compute_RDMs(megdata, n_cons, n_subj, n_trials, n_chls, n_time_points, name=
 if __name__ == '__main__':
 
     #  list of pictures names (stimuli: used as trigger)
-    # list_names = []
+    list_names = []
     list_names = [str(i) for i in range(1,301)]
-    # for i in range(301,451):
-    #     list_names.append(str(i))
+   # for i in range(301,451):
+  #      list_names.append(str(i))
     sub_id = [i for i in range(1,17)]
-    megdata = transform_data(sub_id, 300, 306, 881, "FamUnfam")
+    megdata = transform_data(sub_id, 300, 306, 881, list_names, "FamUnfam", )
     compute_RDMs(megdata, 300, len(sub_id), 1, 306, 881, "FamUnfam")
