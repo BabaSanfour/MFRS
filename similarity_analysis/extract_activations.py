@@ -5,7 +5,7 @@ import sys
 import numpy as np
 from typing import Union, List, Dict
 sys.path.append('../../MFRS')
-from utils.general import save_pickle, load_pickle, load_npy, save_npy
+from utils.general import save_pickle, load_pickle
 from utils.config_sim_analysis import activations_folder, networks
 from utils.load_data import Stimuliloader
 from models.inception import inception_v3
@@ -118,68 +118,8 @@ def model_activations(model: nn.Module, data: torch.Tensor, weights: Union[str, 
 
     return activations #activation is defined above
 
-def get_main_network_activations(name: str, layers: list, save: bool = True) -> dict:
-    """
-    Retrieves the activations of the main layers of a network by filtering out any layer that is a replica of a previous
-    layer. This helps in obtaining only the activations of the layers that we are interested in.
-    
-    Parameters:
-    -----------
-    name : str
-        The name of the network whose activations are to be obtained.
-    layers : list
-        A list of layer names whose activations are to be obtained.
-    save : bool, optional
-        If True, saves the obtained activations as a pickle file.
-    
-    Returns:
-    --------
-    main_activ : dict
-        A dictionary containing the activations of the main layers of the network. The keys are layer names and values
-        are corresponding activation tensors.
-    """
-    main_activ_path = os.path.join(activations_folder, f'{name}_main.pkl')
-    if os.path.exists(main_activ_path):
-        main_activ = load_pickle(main_activ_path)
-        return main_activ
-    else:
-        activations_path = os.path.join(activations_folder, f'{name}.pkl')
-        activ = load_pickle(activations_path)
-        main_activ = {layer: activ[layer] for layer in layers if 'layer' in layer}
-        if save:
-            save_pickle(main_activ, main_activ_path)
-        return main_activ
-
-def get_whole_network_activations(name: str, save: bool = True) -> np.ndarray:
-    """
-    Concatenate the main activations of a network into a single array.
-
-    Parameters:
-    -----------
-    name : str
-        Name of the network to retrieve activations for.
-    save : bool, optional
-        If True, save the concatenated activations as an NPY file. Default is True.
-
-    Returns:
-    --------
-    whole : np.ndarray
-        A 2D array containing the concatenated activations of all main layers of the network.
-    """
-    activations_file = os.path.join(activations_folder, f'{name}_main.pkl')
-    whole_file = os.path.join(activations_folder, f'{name}_model.npy')
-
-    if os.path.exists(whole_file):
-        whole = load_npy(whole_file)
-    else:
-        activations_main = load_pickle(activations_file)
-        whole = np.concatenate(list(activations_main.values()), axis=1)
-        if save:
-            save_npy(whole, whole_file)
-    return whole
-
 def extract_activations(num_images: int, stimuli_file: str, model_name: str, model: nn.Module, 
-        layers: List[str], weights: str, method: str, save: bool, activ_type: str = "main") -> Dict[str, np.ndarray]:
+        layers: List[str], weights: str, method: str, save: bool, activ_type: str = "trained") -> Dict[str, np.ndarray]:
     """
     Extracts the activations of the specified layers for the given stimuli using the specified model.
     
@@ -209,13 +149,22 @@ def extract_activations(num_images: int, stimuli_file: str, model_name: str, mod
     """
     images = Stimuliloader(num_images, stimuli_file)
     images = next(iter(images))
-    activations_file = os.path.join(activations_folder, f"{model_name}_{stimuli_file}_activations_{activ_type}.pkl")
+    activations_file = os.path.join(activations_folder, f"{model_name}_{stimuli_file}_activations_main_{activ_type}.pkl")
     if os.path.isfile(activations_file):
-        print(f"Activations file (data: {model_name}) for {stimuli_file} already exists!!!")
+        print(f"Main activations file (data: {model_name}) for {stimuli_file} already exists!!!")
         activ = load_pickle(activations_file)
     else:
         activ = model_activations(model, images, weights, method, layers, save, file_name=activations_file)
-    return activ
+    activations_file = os.path.join(activations_folder, f"{model_name}_{stimuli_file}_activations_model_{activ_type}.pkl")
+    if os.path.isfile(activations_file):
+        print(f"Model activations file (data: {model_name}) for {stimuli_file} already exists!!!")
+        model_activ = load_pickle(activations_file)
+    else:
+        model_activ = {}
+        model_activ["model"] = np.concatenate(list(activ.values()), axis=1)
+        if save:
+            save_pickle(model_activ, activations_file)
+    return activ, model_activ
 
 if __name__ == '__main__':
     parser = get_similarity_parser()
@@ -226,6 +175,5 @@ if __name__ == '__main__':
     model = model_cls(False, 1000, 1)
     list_layers = networks[args.model_name]
     # Call extract_activations
-    activs = extract_activations(args.cons, args.stimuli_file_name, args.model_name, model, list_layers, args.weights, args.method, args.save, "main")
-    activs = extract_activations(args.cons, args.stimuli_file_name, args.model_name, model, list_layers, args.weights, args.method, args.save, "model")
+    activs = extract_activations(args.cons, args.stimuli_file_name, args.model_name, model, list_layers, args.weights, args.method, args.save, "trained")
     activs = extract_activations(args.cons, args.stimuli_file_name, args.model_name, model, list_layers, "None", args.method, args.save, "untrained")
