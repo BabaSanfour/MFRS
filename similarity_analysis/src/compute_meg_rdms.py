@@ -7,7 +7,7 @@ import numpy as np
 import os.path as op
 from neurora.rdm_cal import eegRDM
 import sys
-sys.path.append('../../MFRS/')
+sys.path.append('../../../MFRS/')
 from utils.library.config_bids import meg_dir
 
 def transform_data(sub_id, n_cons, n_chls, n_time_points, list_names, name="FamUnfam", tsss=10):
