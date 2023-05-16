@@ -4,7 +4,7 @@ import torch.nn as nn
 import sys
 import numpy as np
 from typing import Union, List, Dict
-sys.path.append('../../MFRS')
+sys.path.append('../../../MFRS')
 from utils.general import save_pickle, load_pickle
 from utils.config_sim_analysis import activations_folder, networks
 from utils.load_data import Stimuliloader
