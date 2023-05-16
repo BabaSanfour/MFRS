@@ -1,56 +1,41 @@
-import os
-import sys
 import time
 import numpy as np
-
-from config_sim_analysis import facenet_layers, cornet_s_layers, activations_folder, rdms_folder, weights_path, similarity_folder, meg_rdm, meg_sensors
-from similarity import similarity_score, get_main_network_similarity_scores
-from plot_utils import match_layers_sensor, get_network_layers_info
-from similarity import similarity_score
-sys.path.append('/home/hamza97/MFRS/')
+from models.inception import inception_v3
 from models.cornet_s import cornet_s
+from models.mobilenet import mobilenet_v2
+from models.resnet import resnet50
+from models.vgg import vgg16_bn
 from models.FaceNet import FaceNet
-from utils.load_data import Stimuliloader
-from utils.general import load_pickle, load_npy
+from models.SphereFace import SphereFace
+from utils.config import get_similarity_parser
+from utils.config_sim_analysis import networks, meg_sensors
+from utils.general import load_meg_rdm
+from src.extract_activations import extract_activations
+from src.compute_models_rdms import extract_network_rdms
+from src.similarity import average_similarity_score
 
 if __name__ == '__main__':
     start = time.time()
+    parser = get_similarity_parser()
+    args = parser.parse_args()
+    model_cls = { "cornet_s": cornet_s, "resnet50": resnet50, "mobilenet": mobilenet_v2,  "vgg16_bn": vgg16_bn, 
+                 "inception_v3": inception_v3, "FaceNet": FaceNet, "SphereFace": SphereFace}[args.model_name]
+    model = model_cls(False, 1000, 1)
+    list_layers = networks[args.model_name]
+    
+    activs = extract_activations(args.cons, args.stimuli_file_name, args.model_name, model, list_layers, args.weights, args.method, args.save, "trained")
+    activs = extract_activations(args.cons, args.stimuli_file_name, args.model_name, model, list_layers, "None", args.method, args.save, "untrained")
 
-    save = True
-    # stimuli_hdf5_list = {"Fam": 150, "Unfam": 150, "Scram": 150,
-    #         "FamUnfam": 300, "FamScram": 300, "UnfamScram": 300,
-    #         "FamUnfamScram1": 300, "FamUnfamScram2": 300, "FamUnfamScram0": 450}
-    stimuli_hdf5_list = {"FamUnfam": 300}
-    correlation_measure="pearson"
-    networks_list = {"FaceNet": [FaceNet, "FaceNet_0.01LR_32Batch_1000_30_final", facenet_layers],
-                    "cornet_s": [cornet_s, "cornet_s_0.01LR_32Batch_1000_final", cornet_s_layers]
-    }
-    for model_name, model_param in networks_list.items():
-        model = model_param[0](False, 1000, 1)
-        weights = os.path.join(weights_path, model_param[1])
-        for stimuli_file_name, cons in stimuli_hdf5_list.items():
-            sim_dict_file = os.path.join(similarity_folder, "%s_%s_data_sim_scores_avg.pkl"%(model_name, stimuli_file_name))
-            if os.path.isfile(sim_dict_file):
-                print("Sim file (data: %s) for %s already exists!!!"%(stimuli_file_name, model_name))
-            else:
-                rdms_file = os.path.join(rdms_folder, "%s_%s_data_rdm.npy"%(model_name, stimuli_file_name))
-                if os.path.isfile(rdms_file):
-                    print("RDMs file (data: %s) for %s already exists!!!"%(stimuli_file_name, model_name))
-                    network_rdms = load_npy(rdms_file)
-                else:
-                    images=Stimuliloader(cons, stimuli_file_name)
-                    images = next(iter(images))
-                    activations_file = os.path.join(activations_folder, "%s_%s_activations.pkl"%(stimuli_file_name, model_name))
-                    if os.path.isfile(activations_file):
-                        print("activations file (data: %s) for %s already exists!!!"%(stimuli_file_name, model_name))
-                        activations = load_pickle(activations_file)
-                    else:
-                        activations=model_activations(model, images, weights, method= "list", list_layers = facenet_layers, save = save, file_name = activations_file)
+    meg_rdm = load_meg_rdm(args.stimuli_file_name, args.power)
+    meg_rdm = np.mean(meg_rdm, axis=0)
 
-                    network_rdms=groupRDMs(activations, cons, save = save, file_name = rdms_file)
+    layers_rdms, network_rdm = extract_network_rdms(args.cons, args.stimuli_file_name, args.model_name, args.save, "trained")
+    avg_sim_scores, avg_high_sim_scores, avg_model_sim_scores, avg_model_high_sim_scores = average_similarity_score(meg_rdm, meg_sensors, 
+                layers_rdms, network_rdm, list_layers, args.save, model_name = args.model_name, stimuli_file= args.stimuli_file_name, method = ["pearson"], activ_type = args.activ_type)
 
-                network_layers = [item[0] for item in list(model.named_modules())]
-                subjects_sim_dict = similarity_score(meg_rdm, meg_sensors, network_rdms, network_layers, model_param[2], save = save,
-                                file_name=sim_dict_file, method=correlation_measure)
+    layers_rdms, network_rdm = extract_network_rdms(args.cons, args.stimuli_file_name, args.model_name, args.save, "untrained")
+    avg_sim_scores, avg_high_sim_scores, avg_model_sim_scores, avg_model_high_sim_scores = average_similarity_score(meg_rdm, meg_sensors, 
+                layers_rdms, network_rdm, list_layers, args.save, model_name = args.model_name, stimuli_file= args.stimuli_file_name, method = ["pearson"], activ_type = "untrained")
+
     time_sim = time.time() - start
-    print('Computations ended in %s h %s m %s s' % (time_sim // 3600, (time_sim % 3600) // 60, time_sim % 60))
+    print(f'Computations ended in {time_sim // 3600} h {(time_sim % 3600) // 60} m { time_sim % 60} s')
