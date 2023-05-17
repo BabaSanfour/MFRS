@@ -6,6 +6,7 @@ import mne
 import numpy as np
 import os.path as op
 from neurora.rdm_cal import eegRDM
+from utils.config import get_similarity_parser
 import sys
 sys.path.append('../../../MFRS/')
 from utils.library.config_bids import meg_dir
@@ -17,9 +18,9 @@ def transform_data(sub_id, n_cons, n_chls, n_time_points, list_names, name="FamU
     megdata = np.zeros([len(sub_id), n_cons, n_chls, n_time_points], dtype=np.float32)
     subindex = 0
     for subject_id in sub_id:
-        subject = "sub-%02d"%subject_id
+        subject = f"sub-{subject_id :02d}"
         data_path = op.join(meg_dir, subject)
-        file = op.join(data_path, '%s-tsss_%d_%s-epo.fif' % (subject, tsss, name))
+        file = op.join(data_path, f'{subject}-tsss_{tsss}_{name}-epo.fif')
         epochs = mne.read_epochs(file)
         subdata = np.zeros([n_cons, n_chls, n_time_points], dtype=np.float32)
 
@@ -66,21 +67,37 @@ def compute_RDMs(megdata, n_cons, n_subj, n_trials, n_chls, n_time_points, name=
     """
     megdata = np.transpose(megdata, (1, 0, 2, 3))
     megdata = np.reshape(megdata, [n_cons, n_subj, n_trials, n_chls, n_time_points])
-    # Calculate the RDM based on the data during
     rdm = eegRDM(megdata, sub_opt, chl_opt)
 
-    out_file = op.join(meg_dir, 'RDMs_%s_%d-subject_%d-sub_opt%d-chl_opt.npy' % (name, n_subj, sub_opt, chl_opt))
+    out_file = op.join(meg_dir, 'RDMs_{name}_{n_subj}-subject_{sub_opt}-sub_opt{ch_opt}-chl_opt.npy')
     np.save(out_file, rdm)
     print('File saved successfully')
 
+def compute_across_time_RDMs(megdata, n_cons, n_subj, n_trials, n_chls, n_time_points, name="FamUnfam", sub_opt=1, chl_opt=1):
+    #TODO
+    pass
+
+def get_list_names(stimuli_file_name):
+    list_names = []
+    if stimuli_file_name == "FamUnfam":
+        return [str(i) for i in range(1,301)]
+    if stimuli_file_name == "Fam":
+        return [str(i) for i in range(1,151)]
+    if stimuli_file_name == "Unfam":
+        return [str(i) for i in range(151,301)]
+    if stimuli_file_name == "Scram":
+        return [str(i) for i in range(301,451)]
+    if stimuli_file_name == "FamScram":
+        list_names = [str(i) for i in range(1,151)]
+        list_names.append([str(i) for i in range(301,451)])
+        return list_names
 
 if __name__ == '__main__':
+    parser = get_similarity_parser()
+    args = parser.parse_args()
 
-    #  list of pictures names (stimuli: used as trigger)
-    list_names = []
-    list_names = [str(i) for i in range(1,301)]
-   # for i in range(301,451):
-  #      list_names.append(str(i))
+
+    list_names = get_list_names(args.stimuli_file_name)
     sub_id = [i for i in range(1,17)]
-    megdata = transform_data(sub_id, 300, 306, 881, list_names, "FamUnfam", )
-    compute_RDMs(megdata, 300, len(sub_id), 1, 306, 881, "FamUnfam")
+    megdata = transform_data(sub_id, args.cons, 306, 881, list_names, args.stimuli_file_name)
+    compute_RDMs(megdata, args.cons, len(sub_id), 1, 306, 881, args.stimuli_file_name)
