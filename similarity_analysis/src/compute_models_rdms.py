@@ -131,14 +131,14 @@ def get_network_rdm(model_activations: np.array, model_name: str, stimuli_file: 
         The computed model RDM. The shape is [cons, cons].
     """
 
-    rdm_path = os.path.join(rdms_folder, f"{model_name}_{stimuli_file}_rdm__model_{activ_type}.npy")
+    rdm_path = os.path.join(rdms_folder, f"{model_name}_{stimuli_file}_rdm_model_{activ_type}.npy")
 
     if os.path.exists(rdm_path):
         print(f"Loading pre-computed RDM for model activations: {model_name}, {stimuli_file}, {activ_type}...")
         rdm = load_npy(rdm_path)
     else:
         print(f"Computing RDM for model {model_name}, {stimuli_file}, {activ_type}...")
-        rdm = oneRDM(model_activations, cons, save=save)
+        rdm = oneRDM(model_activations, cons)
         save_npy(rdm, rdm_path)
 
     return rdm
