@@ -8,6 +8,8 @@ import numpy as np
 import os.path as op
 from neurora.rdm_cal import eegRDM
 from tqdm import tqdm
+from multiprocessing import Pool, cpu_count
+
 import sys
 sys.path.append('../../../MFRS/')
 from utils.config import get_similarity_parser
@@ -56,6 +58,7 @@ def transform_data(sub_id: list, n_cons: int, n_chls: int, n_time_points: int, l
         megdata[subindex] = subdata
         subindex += 1
     return megdata
+
 def compute_RDMs(megdata: np.array, n_cons: int, n_subj: int, n_trials: int, n_chls: int, n_time_points: int,
                  name: str = "FamUnfam", sub_opt: int = 1, chl_opt: int = 1, save: bool = True) -> np.array:
     """
@@ -112,10 +115,19 @@ def compute_RDMs(megdata: np.array, n_cons: int, n_subj: int, n_trials: int, n_c
         save_npy(out_file, rdm)
     return rdm
 
-def compute_across_time_RDMs(megdata: np.array, n_cons: int, n_subj: int, n_trials: int, n_chls: int, n_time_points: int, 
+
+def process_rdm(args):
+    i, megdata, n_cons, n_subj, n_trials, n_chls, time_window, name, sub_opt, chl_opt, across_time_dir = args
+    sub_megdata = megdata[..., i*time_window:i*time_window+time_window]
+    out_file = op.join(across_time_dir, f'RDMs_{i}_{name}_{n_subj}-subject_{sub_opt}-sub_opt_{chl_opt}-chl_opt.npy')
+    if not op.isfile(out_file):
+        rdm = compute_RDMs(sub_megdata, n_cons, n_subj, n_trials, n_chls, time_window, name, sub_opt, chl_opt, False)
+        np.save(out_file, rdm)
+
+def compute_across_time_RDMs_parallel(megdata: np.array, n_cons: int, n_subj: int, n_trials: int, n_chls: int, n_time_points: int,
             time_window: int, name: str = "FamUnfam", sub_opt: int = 1, chl_opt: int = 1, save: bool = True) -> np.array:
     """
-    Computes MEG RDMs across time.
+    Computes MEG RDMs across time using parallel processing.
 
     Parameters:
     -----------
@@ -152,12 +164,15 @@ def compute_across_time_RDMs(megdata: np.array, n_cons: int, n_subj: int, n_tria
     across_time_dir = op.join(meg_dir, "across_time", name)
     if not op.isdir(across_time_dir):
         os.makedirs(across_time_dir)
-    for i in tqdm(range(n_rdms), desc="Calculating across time RDMs"):
-        sub_megdata = megdata[..., i*time_window:i*time_window+time_window]
-        out_file = op.join(across_time_dir, f'RDMs_{i}_{name}_{n_subj}-subject_{sub_opt}-sub_opt_{chl_opt}-chl_opt.npy')
-        if not op.isfile(out_file):
-            rdm = compute_RDMs(sub_megdata, n_cons, n_subj, n_trials, n_chls, time_window, name, sub_opt, chl_opt, False)
-            np.save(out_file, rdm)
+    
+    batch_size = cpu_count()
+    pool = Pool(batch_size)
+    for i in tqdm(range(0, n_rdms, batch_size), desc="Calculating across time RDMs"):
+        batch_args =[(j, megdata, n_cons, n_subj, n_trials, n_chls, time_window, name, sub_opt, chl_opt, across_time_dir)
+                 for j in range(i, min(i+batch_size, n_rdms))]
+        list(tqdm(pool.imap(process_rdm, batch_args), total=len(batch_args), desc="Calculating across time RDMs (Batch)"))
+    pool.close()
+    pool.join()
 
 def get_list_names(stimuli_file_name: str) -> list:
     """
@@ -205,5 +220,5 @@ if __name__ == '__main__':
     if args.type_meg_rdm == "basic":
         rdm = compute_RDMs(megdata, args.cons, len(sub_id), 1, 306, 881, name)
     if args.type_meg_rdm == "across_time":
-        compute_across_time_RDMs(megdata, args.cons, len(sub_id), 1, 306, 881, args.time_window, name)
+        compute_across_time_RDMs_parallel(megdata, args.cons, len(sub_id), 1, 306, 881, args.time_window, name)
 
