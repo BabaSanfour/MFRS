@@ -112,7 +112,7 @@ def compute_RDMs(megdata: np.array, n_cons: int, n_subj: int, n_trials: int, n_c
 
     if save:
         out_file = op.join(meg_dir, f'RDMs_{name}_{n_subj}-subject_{sub_opt}-sub_opt{chl_opt}-chl_opt.npy')
-        save_npy(out_file, rdm)
+        save_npy(rdm, out_file)
     return rdm
 
 
@@ -122,7 +122,7 @@ def process_rdm(args):
     out_file = op.join(across_time_dir, f'RDMs_{i}_{name}_{n_subj}-subject_{sub_opt}-sub_opt_{chl_opt}-chl_opt.npy')
     if not op.isfile(out_file):
         rdm = compute_RDMs(sub_megdata, n_cons, n_subj, n_trials, n_chls, time_window, name, sub_opt, chl_opt, False)
-        np.save(out_file, rdm)
+        save_npy(rdm, out_file)
 
 def compute_across_time_RDMs_parallel(megdata: np.array, n_cons: int, n_subj: int, n_trials: int, n_chls: int, n_time_points: int,
             time_window: int, name: str = "FamUnfam", sub_opt: int = 1, chl_opt: int = 1, save: bool = True) -> np.array:
@@ -166,13 +166,11 @@ def compute_across_time_RDMs_parallel(megdata: np.array, n_cons: int, n_subj: in
         os.makedirs(across_time_dir)
     
     batch_size = cpu_count()
-    pool = Pool(batch_size)
-    for i in tqdm(range(0, n_rdms, batch_size), desc="Calculating across time RDMs"):
-        batch_args =[(j, megdata, n_cons, n_subj, n_trials, n_chls, time_window, name, sub_opt, chl_opt, across_time_dir)
-                 for j in range(i, min(i+batch_size, n_rdms))]
-        list(tqdm(pool.imap(process_rdm, batch_args), total=len(batch_args), desc="Calculating across time RDMs (Batch)"))
-    pool.close()
-    pool.join()
+    with Pool(batch_size) as pool, tqdm(total=n_rdms) as pbar:
+        batch_args = [(j, megdata, n_cons, n_subj, n_trials, n_chls, time_window, name, sub_opt, chl_opt, across_time_dir)
+                      for j in range(0, n_rdms, batch_size)]
+        for _ in pool.imap_unordered(process_rdm, batch_args):
+            pbar.update(batch_size)
 
 def get_list_names(stimuli_file_name: str) -> list:
     """
