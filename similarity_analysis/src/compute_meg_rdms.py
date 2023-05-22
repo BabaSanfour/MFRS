@@ -164,13 +164,17 @@ def compute_across_time_RDMs_parallel(megdata: np.array, n_cons: int, n_subj: in
     across_time_dir = op.join(meg_dir, "across_time", name)
     if not op.isdir(across_time_dir):
         os.makedirs(across_time_dir)
-    
+
     batch_size = cpu_count()
-    with Pool(batch_size) as pool, tqdm(total=n_rdms) as pbar:
-        batch_args = [(j, megdata, n_cons, n_subj, n_trials, n_chls, time_window, name, sub_opt, chl_opt, across_time_dir)
-                      for j in range(0, n_rdms, batch_size)]
-        for _ in pool.imap_unordered(process_rdm, batch_args):
-            pbar.update(batch_size)
+    with Pool(batch_size) as pool:
+        results = []
+        for j in range(0, n_rdms, batch_size):
+            batch_args = [(i, megdata, n_cons, n_subj, n_trials, n_chls, time_window, name, sub_opt, chl_opt, across_time_dir)
+                        for i in range(j, min(j + batch_size, n_rdms))]
+        results.extend(pool.apply_async(process_rdm, args=(args,)) for args in batch_args)
+
+        for result in results:
+            result.get()
 
 def get_list_names(stimuli_file_name: str) -> list:
     """
