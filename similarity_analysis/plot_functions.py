@@ -6,9 +6,10 @@ import numpy as np
 from utils.config_sim_analysis import sensors_position, plot_folder, mask_params
 from plot_utils import match_layers_sensor, get_network_layers_info, get_bootstrap_values
 from matplotlib.lines import Line2D
+import matplotlib.gridspec as gridspec
 
 
-def plot_MEG_topomaps(similarity_values: dict, extremum_values: list, axes: plt, i: int, ylabel: str, min_fig: plt.Figure, last: bool = False, sensors_position: mne.info = sensors_position):
+def plot_MEG_topomaps(similarity_values: dict, extremum_values: list, axes: plt, i: int, ylabel: str, min_fig: plt.Figure, last: bool = False, sensors_position: mne.Info = sensors_position):
     """
     Plot the three topomaps (MAG, Grad1, Grad2) for a single layer or whole network similarity scores.
     
@@ -28,16 +29,16 @@ def plot_MEG_topomaps(similarity_values: dict, extremum_values: list, axes: plt,
 
     # Plot MAG topomap
     im, _ = mne.viz.plot_topomap(similarity_values[0], sensors_position, show=False, vmax=extremum_values[0],
-                                 vmin=-extremum_values[0], outlines='skirt', sphere=0.19, axes=axes[i][0], extrapolate='head')
+                                 vmin=-extremum_values[0],  sphere=0.18, axes=axes[i][0], extrapolate='head')
     axes[i][0].set_ylabel(ylabel, fontweight='bold', fontsize=10)
 
     # Plot Grad1 topomap
     im1, _ = mne.viz.plot_topomap(similarity_values[1], sensors_position, show=False, vmax=extremum_values[1],
-                                  vmin=-extremum_values[1], outlines='skirt', sphere=0.19, axes=axes[i][1], extrapolate='head')
+                                  vmin=-extremum_values[1], sphere=0.18, axes=axes[i][1], extrapolate='head')
 
     # Plot Grad2 topomap
     im2, _ = mne.viz.plot_topomap(similarity_values[2], sensors_position, show=False, vmax=extremum_values[2],
-                                  vmin=-extremum_values[2], outlines='skirt', sphere=0.19, axes=axes[i][2], extrapolate='head')
+                                  vmin=-extremum_values[2], sphere=0.18, axes=axes[i][2], extrapolate='head')
 
     if last:
         # Add colorbar for MAG topomap
@@ -52,19 +53,35 @@ def plot_MEG_topomaps(similarity_values: dict, extremum_values: list, axes: plt,
         min_fig.colorbar(im2, ax=axes[i][2], orientation='horizontal')
         axes[i][2].set_xlabel("Grad2", fontweight='bold', fontsize=10)
 
-def plot_similarity(similarity_scores, extremum, save=False, network_name=None, correlation='spearman'):
-    """Plot the 3 topomaps (MAG, Grad1, Grad2) for a single layer/whole network similarity scores."""
-    length = len(similarity_scores)
-    fig, axes = plt.subplots(length, 3, figsize=(10, length*3))
-    i, last = 0, False
-    for name, similarity_values in similarity_scores.items():
-        if i == length-1:
-            last = True
-        plot_MEG_topomaps(similarity_values, extremum, axes, i, name, fig, last)
-        i+=1
+
+def plot_similarity(similarity_scores: dict, extremum_values: list, network_name: str, stimuli_file_name: str, save: bool = False, correlation: str = 'pearson'):
+    """
+    Plot the three topomaps (MAG, Grad1, Grad2) for each layer or the whole network similarity scores.
+
+    Args:
+    - similarity_scores (dict): Dictionary containing the similarity scores for each layer.
+    - extremum_values (list): List containing the maximum absolute value for each sensor type.
+    - save (bool): Flag indicating whether to save the figure. Default is False.
+    - network_name (str): Name of the network. Default is None.
+    - correlation (str): Type of correlation measure used. Default is 'spearman'.
+
+    Returns:
+    - None
+    """
+
+    fig, axes = plt.subplots(len(similarity_scores), 3, figsize=(10, len(similarity_scores) * 3))
+
+    for i, (name, similarity_values) in enumerate(similarity_scores.items()):
+        last = i == len(similarity_scores) - 1
+
+        plot_MEG_topomaps(similarity_values, extremum_values, axes, i, name, fig, last)
+
     if save:
-        fig.show()
-        fig.savefig(os.path.join(plot_folder, '%s_%s_all_layers_similiarity_topomaps.png'%(network_name, correlation)))
+        plt.show()
+        file_name = f"{network_name}_{stimuli_file_name}_{correlation}_all_layers_similarity_topomaps.png"
+        file_path = os.path.join(plot_folder, file_name)
+        fig.savefig(file_path)
+
 
 def plot_layers_similarity_bars(networks, channels_list, sensor_type, file="FamUnfam",correlation_measure="spearman", avg=False,
                                 show_bootstrap_bars=False, percentile=5, mask_params=mask_params,  save=True):
