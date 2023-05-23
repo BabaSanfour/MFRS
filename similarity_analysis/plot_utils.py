@@ -9,8 +9,7 @@ import sys
 import numpy as np
 from scipy.stats import sem
 
-from config_sim_analysis import channels_mag, channels_grad1, channels_grad2, meg_rdm, meg_sensors, similarity_folder
-from similarity import whole_network_similarity_scores
+from utils.config_sim_analysis import channels_mag, channels_grad1, channels_grad2, meg_rdm, meg_sensors, similarity_folder
 sys.path.append('/home/hamza97/MFRS/')
 from utils.general import load_npy
 
@@ -35,7 +34,7 @@ def get_filtered_measures(sim_dict: dict, layer: str, channels_list: list, measu
     for channel_name in channels_list:
         key = f"{layer} {channel_name}"
         value = sim_dict.get(key, {}).get(measure, [])
-        if value[1] > epsilon:
+        if value[1] < epsilon:
             filtered_values.append(value[0])
         else:
             filtered_values.append(0)
@@ -73,19 +72,21 @@ def get_layers_similarity(sim_dict, layer_list, correlation_measure="pearson", e
     
     return layer_similarities, extremum_values
 
-def match_layers_sensor(sim_dict: dict, list_layers: list, channels_list: list, correlation_measure: str = "spearman"):
-    """Get a list of the maximum value of similarity for each layer and the sensor that gave the value"""
-    correlations_list, sensors_list= [], []
-    for layer in list_layers:
-        best_corr = 0
-        for sensor in channels_list:
-            name = layer + ' ' + sensor
-            if sim_dict[name][correlation_measure][0]>best_corr:
-                best_corr=sim_dict[name][correlation_measure][0]
-                best_sensor=sensor
-        correlations_list.append(best_corr)
-        sensors_list.append(best_sensor)
-    return correlations_list, sensors_list
+
+def extract_sensor_values(sim_dict: dict, sensor_type: str):
+    """
+    Extracts a list of values for a given sensor type from the dictionary.
+    
+    Args:
+    - sim_dict (dict): Dictionary containing the similarity values for each layer and sensor type.
+    - sensor_type (str): The sensor type to extract values for (e.g., 'grad1', 'grad2', 'mag').
+
+    Returns:
+    - values_list (list): List of values corresponding to the given sensor type.
+    """
+    return [values.get(sensor_type, [])[0] for values in sim_dict.values()]
+
+
 
 def get_network_layers_info(correlations_list: list, layers: list, similarity_scores: dict,
                                     sensors_list: list, channels_list: list, correlation_measure:str = 'spearman'):
