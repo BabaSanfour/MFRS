@@ -115,7 +115,6 @@ def compute_RDMs(megdata: np.array, n_cons: int, n_subj: int, n_trials: int, n_c
         save_npy(rdm, out_file)
     return rdm
 
-
 def process_rdm(args):
     i, megdata, n_cons, n_subj, n_trials, n_chls, time_window, name, sub_opt, chl_opt, across_time_dir = args
     sub_megdata = megdata[..., i*time_window:i*time_window+time_window]
@@ -160,6 +159,7 @@ def compute_across_time_RDMs_parallel(megdata: np.array, n_cons: int, n_subj: in
         The MEG RDM(s) movie based on the specified options.
             Shape: [n_rdms, n_cons, n_cons].
     """
+
     n_rdms = n_time_points // time_window
     across_time_dir = op.join(meg_dir, "across_time", name)
     if not op.isdir(across_time_dir):
@@ -171,7 +171,10 @@ def compute_across_time_RDMs_parallel(megdata: np.array, n_cons: int, n_subj: in
         for j in range(0, n_rdms, batch_size):
             batch_args = [(i, megdata, n_cons, n_subj, n_trials, n_chls, time_window, name, sub_opt, chl_opt, across_time_dir)
                         for i in range(j, min(j + batch_size, n_rdms))]
-        results.extend(pool.apply_async(process_rdm, args=(args,)) for args in batch_args)
+            results.extend(pool.apply_async(process_rdm, args=(args,)) for args in batch_args)
+
+        pool.close()
+        pool.join()
 
         for result in results:
             result.get()
