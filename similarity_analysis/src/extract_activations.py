@@ -176,4 +176,5 @@ if __name__ == '__main__':
     list_layers = networks[args.model_name]
     # Call extract_activations
     activs = extract_activations(args.cons, args.stimuli_file_name, args.model_name, model, list_layers, args.weights, args.method, args.save, "trained")
+    model = model_cls(False, 1000, 1)
     activs = extract_activations(args.cons, args.stimuli_file_name, args.model_name, model, list_layers, "None", args.method, args.save, "untrained")
