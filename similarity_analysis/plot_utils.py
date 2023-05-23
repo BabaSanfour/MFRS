@@ -73,9 +73,9 @@ def get_layers_similarity(sim_dict, layer_list, correlation_measure="pearson", e
     return layer_similarities, extremum_values
 
 
-def extract_sensor_values(sim_dict: dict, sensor_type: str):
+def extract_layers_max_sim_values(sim_dict: dict, sensor_type: str):
     """
-    Extracts a list of values for a given sensor type from the dictionary.
+    Extracts a list of values for a given sensor type from the dictionary and returns the name of the layer with the highest similarity.
     
     Args:
     - sim_dict (dict): Dictionary containing the similarity values for each layer and sensor type.
@@ -83,8 +83,14 @@ def extract_sensor_values(sim_dict: dict, sensor_type: str):
 
     Returns:
     - values_list (list): List of values corresponding to the given sensor type.
+    - max_layer_name (str): Name of the layer that gave the highest similarity.
     """
-    return [values.get(sensor_type, [])[0] for values in sim_dict.values()]
+
+    values_list = [values.get(sensor_type, [])[0] for values in sim_dict.values()]
+    max_value = max(values_list)
+    max_layer_name = next((key for key, value in sim_dict.items() if value.get(sensor_type, [])[0] == max_value), None)
+
+    return values_list, max_layer_name
 
 
 
