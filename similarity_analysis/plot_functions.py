@@ -3,30 +3,56 @@ import mne
 import matplotlib.pyplot as plt
 import numpy as np
 
-from config_sim_analysis import sensors_position, plot_folder, mask_params
+from utils.config_sim_analysis import sensors_position, plot_folder, mask_params
 from plot_utils import match_layers_sensor, get_network_layers_info, get_bootstrap_values
-from similarity import get_main_network_similarity_scores
 from matplotlib.lines import Line2D
 
 
-def plot_MEG_topomaps(similarity_values: dict, extremum: int, axes, i: int, ylabel: str, min_fig: plt.Figure, last: bool = False, sensors_position: mne.Info = sensors_position):
-    """Plot the 3 topomaps (MAG, Grad1, Grad2) for a single layer/whole network similarity scores."""
-    im, _ = mne.viz.plot_topomap(similarity_values[0], sensors_position, show=False, vmax=extremum[0],
-                                 vmin=-extremum[0], axes=axes[i][0], extrapolate='head')
-    axes[i][0].set_ylabel(ylabel, fontweight ='bold', fontsize = 10)
-    im1, _ = mne.viz.plot_topomap(similarity_values[1], sensors_position, show=False, vmax=extremum[1],
-                                  vmin=-extremum[1], axes=axes[i][1], extrapolate='head')
-    im2, _ = mne.viz.plot_topomap(similarity_values[2], sensors_position, show=False, vmax=extremum[2],
-                                  vmin=-extremum[2], axes=axes[i][2], extrapolate='head')
-    if last:
-        min_fig.colorbar(im, ax=axes[i][0], orientation='horizontal')
-        axes[i][0].set_xlabel("MAG", fontweight ='bold', fontsize = 10)
-        min_fig.colorbar(im1, ax=axes[i][1], orientation='horizontal')
-        axes[i][1].set_xlabel("Grad1", fontweight ='bold', fontsize = 10)
-        min_fig.colorbar(im2, ax=axes[i][2], orientation='horizontal')
-        axes[i][2].set_xlabel("Grad2", fontweight ='bold', fontsize = 10)
+def plot_MEG_topomaps(similarity_values: dict, extremum_values: list, axes: plt, i: int, ylabel: str, min_fig: plt.Figure, last: bool = False, sensors_position: mne.info = sensors_position):
+    """
+    Plot the three topomaps (MAG, Grad1, Grad2) for a single layer or whole network similarity scores.
+    
+    Args:
+    - similarity_values (dict): Dictionary containing the similarity values for each sensor type.
+    - extremum_values (list): List containing the maximum absolute value for each sensor type.
+    - axes: The axes object for the subplot grid.
+    - i (int): The index of the current subplot.
+    - ylabel (str): The label for the y-axis.
+    - min_fig: The parent figure object.
+    - last (bool): Flag indicating if it is the last subplot. Default is False.
+    - sensors_position: The position information of the sensors. Default is sensors_position.
 
-def plot_similarity(similarity_scores, extremum, save=False, network_name=None, correlation='pearson'):
+    Returns:
+    - None
+    """
+
+    # Plot MAG topomap
+    im, _ = mne.viz.plot_topomap(similarity_values[0], sensors_position, show=False, vmax=extremum_values[0],
+                                 vmin=-extremum_values[0], outlines='skirt', sphere=0.19, axes=axes[i][0], extrapolate='head')
+    axes[i][0].set_ylabel(ylabel, fontweight='bold', fontsize=10)
+
+    # Plot Grad1 topomap
+    im1, _ = mne.viz.plot_topomap(similarity_values[1], sensors_position, show=False, vmax=extremum_values[1],
+                                  vmin=-extremum_values[1], outlines='skirt', sphere=0.19, axes=axes[i][1], extrapolate='head')
+
+    # Plot Grad2 topomap
+    im2, _ = mne.viz.plot_topomap(similarity_values[2], sensors_position, show=False, vmax=extremum_values[2],
+                                  vmin=-extremum_values[2], outlines='skirt', sphere=0.19, axes=axes[i][2], extrapolate='head')
+
+    if last:
+        # Add colorbar for MAG topomap
+        min_fig.colorbar(im, ax=axes[i][0], orientation='horizontal')
+        axes[i][0].set_xlabel("MAG", fontweight='bold', fontsize=10)
+
+        # Add colorbar for Grad1 topomap
+        min_fig.colorbar(im1, ax=axes[i][1], orientation='horizontal')
+        axes[i][1].set_xlabel("Grad1", fontweight='bold', fontsize=10)
+
+        # Add colorbar for Grad2 topomap
+        min_fig.colorbar(im2, ax=axes[i][2], orientation='horizontal')
+        axes[i][2].set_xlabel("Grad2", fontweight='bold', fontsize=10)
+
+def plot_similarity(similarity_scores, extremum, save=False, network_name=None, correlation='spearman'):
     """Plot the 3 topomaps (MAG, Grad1, Grad2) for a single layer/whole network similarity scores."""
     length = len(similarity_scores)
     fig, axes = plt.subplots(length, 3, figsize=(10, length*3))
@@ -40,31 +66,37 @@ def plot_similarity(similarity_scores, extremum, save=False, network_name=None, 
         fig.show()
         fig.savefig(os.path.join(plot_folder, '%s_%s_all_layers_similiarity_topomaps.png'%(network_name, correlation)))
 
-def plot_layers_similarity_bars(networks, channels_list, sensor_type, correlation_measure="pearson",
+def plot_layers_similarity_bars(networks, channels_list, sensor_type, file="FamUnfam",correlation_measure="spearman", avg=False,
                                 show_bootstrap_bars=False, percentile=5, mask_params=mask_params,  save=True):
     """Plot the bars of the maximum similarity values for each layer for the provided networks + the topomap of the layer with highest similarity value."""
     fig, axes = plt.subplots(len(networks), 2, figsize=(12, len(networks)*3), gridspec_kw={'width_ratios': [2, 1]})
     for i, network in enumerate(networks.keys()):
         network_layers=networks[network]
+        if avg:
+            main_similarity_scores=get_main_network_similarity_scores('%s_%s_data_sim_scores_avg'%(network, file), network_layers)
+        else:
+            main_similarity_scores=get_main_network_similarity_scores('%s_%s_data_sim_scores'%(network, file), network_layers)
 
-        main_similarity_scores=get_main_network_similarity_scores('%s_FamUnfam_data_sim_scores'%network, network_layers)
         correlations_list, sensors_list = match_layers_sensor(main_similarity_scores, network_layers, channels_list, correlation_measure)
         idx, best_layer, sim_chls, extremum, mask = get_network_layers_info(correlations_list,
                                                                        network_layers, main_similarity_scores, sensors_list, channels_list)
         if show_bootstrap_bars:
             bootstrap_error_values=get_bootstrap_values(network, sensors_list, percentile)
-            axes[i][0].errorbar(x=networks[network], y=correlations_list,  yerr=bootstrap_error_values, elinewidth=0.25)
+            # axes[i][0].errorbar(x=networks[network], y=correlations_list,  yerr=bootstrap_error_values, elinewidth=0.8)
+            barlist=axes[i][0].bar(networks[network], correlations_list, yerr=bootstrap_error_values,
+                                    width=0.4, color=(0.2, 0.4, 0.8, 0.9))
+
         else:
             barlist=axes[i][0].bar(networks[network], correlations_list,
                                     width=0.4, color=(0.2, 0.4, 0.8, 0.9))
         axes[i][0].tick_params(axis='x', which='both', bottom=False, top=False, labelbottom=False)
         axes[i][0].text(x=0.1 , y =-0.03 , s="Input", fontdict=dict(fontsize=10))
         axes[i][0].text(x=len(network_layers)-3, y =-0.03 , s="Output", fontdict=dict(fontsize=10))
-        if sensor_type=="MAG":
-            axes[i][0].set_ylim([0, 0.27])
-        else:
-            axes[i][0].set_ylim([0, 0.27])
-        axes[i][0].axhline(y=0.2586,linewidth=2, color='#873e23')
+        # if sensor_type=="MAG":
+        #     axes[i][0].set_ylim([0, 0.27])
+        # else:
+        #     axes[i][0].set_ylim([0, 0.27])
+        # axes[i][0].axhline(y=0.2586,linewidth=2, color='#873e23')
         axes[i][0].axhline(y=0.0176,linewidth=2, color='#e0bb41')
 
         axes[i][0].set_xlabel('%s Layers'%network, fontweight ='bold', fontsize = 10)
@@ -81,7 +113,7 @@ def plot_layers_similarity_bars(networks, channels_list, sensor_type, correlatio
         fig.colorbar(im, ax=axes[i][1])
         axes[i][1].set_xlabel("%s %sth Layer"%(network, str(idx+1)), fontweight ='bold', fontsize = 10)
         if int(len(networks)/2)==i:
-            axes[i][0].set_ylabel('Pearson correlation values', fontweight ='bold', fontsize = 10)
+            axes[i][0].set_ylabel('Spearman correlation values', fontweight ='bold', fontsize = 10)
 
         axes[i][0].spines['right'].set_visible(False)
         axes[i][0].spines['top'].set_visible(False)
@@ -93,7 +125,7 @@ def plot_layers_similarity_bars(networks, channels_list, sensor_type, correlatio
         fig.show()
         fig.savefig(os.path.join(plot_folder, '%s_layers_similiarity_bar.png'%(sensor_type)))
 
-def plot_networks_results(models, extremum_3, max_sim, accuracy, params, name="Networks", save=True, correlation_measure="Pearson"):
+def plot_networks_results(models, extremum_3, max_sim, accuracy, params, name="Networks", save=True, correlation_measure="spearman"):
     """plot the networks highest similarity value for each sensor type,
         the decoding top5 accuracy, and the 3 topomaps for the networks similarity results. ."""
     fig = plt.figure(constrained_layout=True, figsize=(len(models)*2.6, len(models)*3.3))
