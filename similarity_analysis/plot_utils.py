@@ -44,17 +44,34 @@ def get_filtered_measures(sim_dict: dict, layer: str, channels_list: list, measu
     return filtered_values, extremum
 
 
-def get_layers_similarity(sim_dict: dict, list_layers: list, correlation_measure: str = "spearman"):
-    """Divide each layer sim results into 3 lists corresponding to sensor types + Get extremum values"""
-    layer_res, extremum_3 ={}, [0,0,0]
-    for layer in list_layers:
-        sim_chls_3 = []
+def get_layers_similarity(sim_dict, layer_list, correlation_measure="pearson", epsilon=0.05):
+    """
+    Divide each layer similarity results into 3 lists corresponding to sensor types + get extremum values.
+    
+    Args:
+    - sim_dict (dict): Dictionary with keys as "layer_name channel_name" and values as {"measure": [r, p]}.
+    - layer_list (list): List of layer names to iterate over.
+    - correlation_measure (str): Name of the correlation measure to use. Default is "spearman".
+    - epsilon (float): Threshold value for the condition p > epsilon. Default is 0.05.
+    
+    Returns:
+    - layer_similarities (dict): Dictionary with layer names as keys and corresponding similarity lists for each sensor type as values.
+    - extremum_values (list): List containing the maximum absolute value for each sensor type.
+    """
+    layer_similarities = {}
+    extremum_values = [0, 0, 0]
+    
+    for layer in layer_list:
+        sensor_type_similarities = []
+        
         for i, channels_list in enumerate([channels_mag, channels_grad1, channels_grad2]):
-            sim_chls, extremum = get_chls_similarity(layer, sim_dict,channels_list, correlation_measure)
-            sim_chls_3.append(sim_chls)
-            extremum_3[i]=max(extremum_3[i], extremum)
-        layer_res[layer]= sim_chls_3
-    return layer_res, extremum_3
+            filtered_values, extremum = get_filtered_measures(sim_dict, layer, channels_list, measure=correlation_measure, epsilon=epsilon)
+            sensor_type_similarities.append(filtered_values)
+            extremum_values[i] = max(extremum_values[i], extremum)
+        
+        layer_similarities[layer] = sensor_type_similarities
+    
+    return layer_similarities, extremum_values
 
 def match_layers_sensor(sim_dict: dict, list_layers: list, channels_list: list, correlation_measure: str = "spearman"):
     """Get a list of the maximum value of similarity for each layer and the sensor that gave the value"""
