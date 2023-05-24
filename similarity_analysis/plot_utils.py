@@ -73,35 +73,30 @@ def get_layers_similarity(sim_dict, layer_list, correlation_measure="pearson", e
     return layer_similarities, extremum_values
 
 
-def extract_layers_max_sim_values(sim_dict: dict, sensor_type: str):
+def extract_layers_max_sim_values(sim_dict: dict, sensor_type: str, channels_list: list):
     """
     Extracts a list of values for a given sensor type from the dictionary and returns the name of the layer with the highest similarity.
-    
+
     Args:
     - sim_dict (dict): Dictionary containing the similarity values for each layer and sensor type.
     - sensor_type (str): The sensor type to extract values for (e.g., 'grad1', 'grad2', 'mag').
+    - channels_list (list): List of all sensor names.
 
     Returns:
     - values_list (list): List of values corresponding to the given sensor type.
+    - max_index (int): Index of the function with the highest similarity.
     - max_layer_name (str): Name of the layer that gave the highest similarity.
+    - mask (list): Mask indicating the sensor that gave the highest similarity (1 for the sensor, 0 for others).
     """
 
     values_list = [values.get(sensor_type, [])[0] for values in sim_dict.values()]
     max_value = max(values_list)
+    max_index = values_list.index(max_value)
     max_layer_name = next((key for key, value in sim_dict.items() if value.get(sensor_type, [])[0] == max_value), None)
+    mask = [sensor == channels_list[max_index] for sensor in channels_list]
 
-    return values_list, max_layer_name
+    return values_list, max_index, max_layer_name, mask
 
-
-
-def get_network_layers_info(correlations_list: list, layers: list, similarity_scores: dict,
-                                    sensors_list: list, channels_list: list, correlation_measure:str = 'spearman'):
-    """Get a list of the maximum value of similarity for each layer and the sensor that gave the value"""
-    idx=correlations_list.index(max(correlations_list))
-    best_layer=layers[idx]
-    sim_chls, extremum = get_chls_similarity(best_layer, similarity_scores, channels_list, correlation_measure)
-    mask=np.array([sensor==sensors_list[idx] for sensor in channels_list])
-    return idx, best_layer, sim_chls, extremum, mask
 
 def get_networks_results(networks, meg_rdm=meg_rdm, meg_sensors=meg_sensors):
     """Get a list of each network maximum similarity value and the similarity values needed
