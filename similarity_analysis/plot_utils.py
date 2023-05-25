@@ -93,7 +93,9 @@ def extract_layers_max_sim_values(sim_dict: dict, sensor_type: str, channels_lis
     max_value = max(values_list)
     max_index = values_list.index(max_value)
     max_layer_name = next((key for key, value in sim_dict.items() if value.get(sensor_type, [])[0] == max_value), None)
-    mask = [sensor == channels_list[max_index] for sensor in channels_list]
+    max_sensor_name = next((key for key, value in sim_dict.items() if value.get(sensor_type, [])[0] == max_value), None)
+
+    mask = [sensor == max_sensor_name for sensor in channels_list]
 
     return values_list, max_index, max_layer_name, mask
 
@@ -113,7 +115,7 @@ def get_networks_results(networks, meg_rdm=meg_rdm, meg_sensors=meg_sensors):
         models[network]=model_results
     return models, extremum_3, max_sim
 
-def get_bootstrap_values(network, sensors_list, percentile: int = 5):
+def get_bootstrap_values(bootstrap_values, network, sensors_list, percentile: int = 5):
     boot_all=load_npy(os.path.join(similarity_folder, "%s_FamUnfam_bootstrap.npy"%network))
     # higher_percentile, lower_percentile = [], []
     boot_sem
