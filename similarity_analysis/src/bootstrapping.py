@@ -81,7 +81,7 @@ def eval_bootstrap_pearson(highest_similarity: dict, meg_rdms, model_rdms, N_boo
                 sensor_meg_idx=meg_sensors.index(sensor_name)
                 sensor_rdm = sensors_rdm.dissimilarities[sensor_meg_idx][nan_idx]
                 boot_sim = np.array(pearsonr(sensor_rdm, layer_rdm))[0]
-                bootsrapped_similarity[layer_name][sensor_type] = (boot_sim, sensor_name)
+                bootsrapped_similarity[layer_name][sensor_type].append(boot_sim)
 
         model_rdms=copy.deepcopy(model_rdms_copy)
 
