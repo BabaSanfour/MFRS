@@ -4,9 +4,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 from utils.config_sim_analysis import sensors_position, plot_folder, mask_params
-from plot_utils import match_layers_sensor, get_network_layers_info, get_bootstrap_values
 from matplotlib.lines import Line2D
-import matplotlib.gridspec as gridspec
 
 
 def plot_MEG_topomaps(similarity_values: dict, extremum_values: list, axes: plt, i: int, ylabel: str, min_fig: plt.Figure, last: bool = False, sensors_position: mne.Info = sensors_position):
@@ -83,64 +81,82 @@ def plot_similarity(similarity_scores: dict, extremum_values: list, network_name
         fig.savefig(file_path)
 
 
-def plot_layers_similarity_bars(networks, channels_list, sensor_type, file="FamUnfam",correlation_measure="spearman", avg=False,
-                                show_bootstrap_bars=False, percentile=5, mask_params=mask_params,  save=True):
-    """Plot the bars of the maximum similarity values for each layer for the provided networks + the topomap of the layer with highest similarity value."""
-    fig, axes = plt.subplots(len(networks), 2, figsize=(12, len(networks)*3), gridspec_kw={'width_ratios': [2, 1]})
-    for i, network in enumerate(networks.keys()):
-        network_layers=networks[network]
-        if avg:
-            main_similarity_scores=get_main_network_similarity_scores('%s_%s_data_sim_scores_avg'%(network, file), network_layers)
-        else:
-            main_similarity_scores=get_main_network_similarity_scores('%s_%s_data_sim_scores'%(network, file), network_layers)
+def plot_single_network(ax, network_layers, values_dict, max_index_list, network, errors, upper_errors_list, lower_errors_list, colors_list, linestyle_list, noise_ceiling, noise_ceiling_values: list = [0.0176, 0.2586]):
+    """
+    Plot the bars of the maximum similarity values for a single network.
 
-        correlations_list, sensors_list = match_layers_sensor(main_similarity_scores, network_layers, channels_list, correlation_measure)
-        idx, best_layer, sim_chls, extremum, mask = get_network_layers_info(correlations_list,
-                                                                       network_layers, main_similarity_scores, sensors_list, channels_list)
-        if show_bootstrap_bars:
-            bootstrap_error_values=get_bootstrap_values(network, sensors_list, percentile)
-            # axes[i][0].errorbar(x=networks[network], y=correlations_list,  yerr=bootstrap_error_values, elinewidth=0.8)
-            barlist=axes[i][0].bar(networks[network], correlations_list, yerr=bootstrap_error_values,
-                                    width=0.4, color=(0.2, 0.4, 0.8, 0.9))
+    Args:
+    - ax: The axes object for the subplot.
+    - network_layers (list): List of network layers.
+    - values_dict (dict): Dictionary mapping stimuli file names to similarity values.
+    - max_index_list (list): List of indices of the layers with the highest similarity for each stimuli file.
+    - network (str): The name of the network.
+    - errors (bool): Flag indicating whether to show error bars.
+    - upper_errors_list (list): List of upper error values for each stimuli file.
+    - lower_errors_list (list): List of lower error values for each stimuli file.
+    - colors_list (list): List of colors for each stimuli file.
+    - linestyle_list (list): List of line styles for each stimuli file.
+    - noise_ceiling (bool): Flag indicating whether to show the noise ceiling.
+    - noise_ceiling_values (list, optional): List of lower and upper noise ceiling values. Default is [0.0176, 0.2586].
 
-        else:
-            barlist=axes[i][0].bar(networks[network], correlations_list,
-                                    width=0.4, color=(0.2, 0.4, 0.8, 0.9))
-        axes[i][0].tick_params(axis='x', which='both', bottom=False, top=False, labelbottom=False)
-        axes[i][0].text(x=0.1 , y =-0.03 , s="Input", fontdict=dict(fontsize=10))
-        axes[i][0].text(x=len(network_layers)-3, y =-0.03 , s="Output", fontdict=dict(fontsize=10))
-        # if sensor_type=="MAG":
-        #     axes[i][0].set_ylim([0, 0.27])
-        # else:
-        #     axes[i][0].set_ylim([0, 0.27])
-        # axes[i][0].axhline(y=0.2586,linewidth=2, color='#873e23')
-        axes[i][0].axhline(y=0.0176,linewidth=2, color='#e0bb41')
+    Returns:
+    - None
+    """
+    x = np.arange(len(network_layers))
+    smooth_x = np.linspace(x.min(), x.max(), 300)  # Smooth x-values for interpolation
+    custom_lines = []
+    legend = []
+    for i, (Stimuli_file_name, values_list) in enumerate(values_dict.items()):
+        smooth_values = np.interp(smooth_x, x, values_list)  # Smoothed values using cubic interpolation
+        ax.plot(smooth_x, smooth_values, color=colors_list[i])
+        ax.scatter(max_index_list[i], max(values_list) + 0.002, marker="*", c="white", edgecolors="r")
+        if errors:
+            ax.fill_between(x, values_list - lower_errors_list[i], values_list + upper_errors_list, alpha=0.2, color=colors_list[i])
+        custom_lines.append(Line2D([0], [0], color=colors_list[i], linestyle=linestyle_list[i]))
+        legend.append(Stimuli_file_name)
+    
+    ax.tick_params(axis='x', which='both', bottom=False, top=False, labelbottom=True, labelrotation=45)
+    ax.set_xticks(x[::5])
+    ax.text(x=0.1, y=0, s="Input", fontdict=dict(fontsize=10))
+    ax.text(x=len(network_layers)-3, y=0, s="Output", fontdict=dict(fontsize=10))
+    if noise_ceiling:
+        ax.axhline(y=noise_ceiling_values[0], linewidth=2, color='#e0bb41')
+        custom_lines.append(Line2D([0], [0], color='#e0bb41', lw=2))
+        legend.append('Lower Noise Ceiling')
+        ax.axhline(y=noise_ceiling_values[1], linewidth=2, color='#873e23')
+        custom_lines.append(Line2D([0], [0], color='#873e23', lw=2))
+        legend.append('Upper Noise Ceiling')
+        max_value = np.max([np.max(values) for values in values_dict.values()]) + 0.03
+        plt.ylim(0, max_value)  # Set the lower limit to 0 and upper limit to max_value
+        plt.ylim(noise_ceiling_values[1]-0.01, noise_ceiling_values[1]+0.01, ymin=0)
 
-        axes[i][0].set_xlabel('%s Layers'%network, fontweight ='bold', fontsize = 10)
-        axes[i][0].scatter(idx,max(correlations_list)+0.002, marker="*", c="white", edgecolors="r")
-        custom_lines = [Line2D([0], [0], color='#873e23', lw=2),
-                Line2D([0], [0], color='#e0bb41', lw=2)]
-        axes[i][0].legend(custom_lines, ['Upper Noise Ceiling', 'Lower Noise Ceiling'])
+    ax.set_xlabel(f'{network} Layers', fontweight='bold', fontsize=10)
+    ax.legend(custom_lines, legend)
+    ax.spines['right'].set_visible(False)
+    ax.spines['top'].set_visible(False)
 
 
-        im,cm=mne.viz.plot_topomap(sim_chls, sensors_position, show=False, vmax=extremum,
-                                   vmin=-extremum, axes=axes[i][1], mask=mask, mask_params=mask_params,
-                                   extrapolate='head')
+def plot_single_network_topomap(ax, fig, filtered_values: dict, extremum: int, max_layer_name: str, network: str, mask, mask_params):
+    """
+    Plot the topomap for a single network.
+    Args:
+    - ax: The axes object for the subplot.
+    - fig: The figure object for color bars.
+    - filtered_values (dict): Dictionary containing the similarity values for each sensor type.
+    - extremum (int): Maximum absolute value for this sensor type.
+    - max_layer_name (str): Name of the layer with the highest similarity.
+    - network: Name of network.
+    - mask: The sensor mask.
+    - mask_params: Parameters for creating the sensor mask.
 
-        fig.colorbar(im, ax=axes[i][1])
-        axes[i][1].set_xlabel("%s %sth Layer"%(network, str(idx+1)), fontweight ='bold', fontsize = 10)
-        if int(len(networks)/2)==i:
-            axes[i][0].set_ylabel('Spearman correlation values', fontweight ='bold', fontsize = 10)
-
-        axes[i][0].spines['right'].set_visible(False)
-        axes[i][0].spines['top'].set_visible(False)
-
-    fig.text(x=0.09 , y =0.97 , s="A", fontdict=dict(fontsize=15, fontweight ='bold'))
-    fig.text(x=0.62 , y =0.97 , s="B", fontdict=dict(fontsize=15, fontweight ='bold'))
-
-    if save:
-        fig.show()
-        fig.savefig(os.path.join(plot_folder, '%s_layers_similiarity_bar.png'%(sensor_type)))
+    Returns:
+    - None
+    """
+    im, cm = mne.viz.plot_topomap(filtered_values, sensors_position, show=False, vmax=extremum,
+                                vmin=-extremum, axes=ax, sphere=0.18, mask=mask, mask_params=mask_params,
+                                extrapolate='head')
+    fig.colorbar(im, ax=ax)
+    ax.set_xlabel(f"{network} {max_layer_name} Layer", fontweight='bold', fontsize=10)
 
 def plot_networks_results(models, extremum_3, max_sim, accuracy, params, name="Networks", save=True, correlation_measure="spearman"):
     """plot the networks highest similarity value for each sensor type,
