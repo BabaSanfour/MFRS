@@ -4,7 +4,7 @@ from typing import Dict
 import numpy as np
 from tqdm import tqdm
 from neurora.rdm_corr import rdm_similarity, rdm_distance, rdm_correlation_kendall, rdm_correlation_spearman, rdm_correlation_pearson
-sys.path.append('../../MFRS')
+sys.path.append('../../../MFRS')
 from bootstrapping import eval_bootstrap_pearson
 from utils.general import save_pickle, load_pickle, load_meg_rdm, load_model_rdm
 from utils.config_sim_analysis import similarity_folder, meg_sensors, meg_rdm, networks, channels_grad1, channels_grad2, channels_mag
@@ -486,4 +486,4 @@ if __name__ == '__main__':
     layers_rdms = load_model_rdm(args.stimuli_file_name, args.model_name, args.activ_type, type = "main")
     network_rdm = load_model_rdm(args.stimuli_file_name, args.model_name, args.activ_type, type = "model")
     avg_sim_scores, avg_high_sim_scores, avg_model_sim_scores, avg_model_high_sim_scores = average_similarity_score(meg_rdm, meg_sensors, 
-                layers_rdms, network_rdm, list_layers, args.save, model_name = args.model_name, stimuli_file= args.stimuli_file_name, band = args.band, method = ["pearson"], activ_type = args.activ_type)
+            layers_rdms, network_rdm, list_layers, args.save, model_name = args.model_name, stimuli_file= args.stimuli_file_name, band = args.band, method = ["pearson"], activ_type = args.activ_type)
