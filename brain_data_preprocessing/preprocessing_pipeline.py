@@ -23,46 +23,41 @@ sys.path.append('../../MFRS/')
 from utils.library.config_bids import study_path, meg_dir, cal, ctc
 
 def run_maxwell_filter(subject_id):
-    subject = "sub-%02d" % subject_id
-    print("processing subject: %s" % subject)
-    sss_fname_out = os.path.join(meg_dir, subject, 'run_%02d_filt_tsss_%d_raw.fif')
+    subject = f"sub-{subject_id: 02d}"
+    print(f"processing subject: {subject}")
 
-    raw_fname_in = os.path.join(study_path, 'ds000117', subject, 'ses-meg/meg',
-                           'sub-%02d_ses-meg_task-facerecognition_run-%02d_meg.fif')
-
-    sss_fname_in = os.path.join(study_path, 'ds000117/derivatives/meg_derivatives', subject, 'ses-meg/meg',
-                           'sub-%02d_ses-meg_task-facerecognition_run-%02d_proc-sss_meg.fif')
     st_duration=10
-    # To match the processing, transform to the head position of the 4th run
-    info = mne.io.read_info(sss_fname_in % (subject_id, 4))
+    #transform to the head position of the 4th run
+    info = mne.io.read_info(os.path.join(meg_dir, subject, f'run_{subject_id :02d}_filt_tsss_4_raw.fif'))
     destination = info['dev_head_t']
-    # Get the origin they used
+    # Get the origin
     origin = info['proc_history'][0]['max_info']['sss_info']['origin']
 
     for run in range(1, 7):
-        raw_out = sss_fname_out % (run, st_duration)
+        raw_out = os.path.join(meg_dir, subject, f'run_{run :02d}_filt_tsss_{st_duration :02d}_raw.fif')
         if os.path.isfile(raw_out):
+            print(f"The file {os.path.baseline(raw_out)} already exists!")
             continue
-        raw_in = raw_fname_in % (subject_id, run)
+        raw_in = os.path.join(study_path, 'ds000117', subject, 'ses-meg/meg', f'sub-{subject_id :02d}_ses-meg_task-facerecognition_run-{run :02d}_meg.fif')
         try:
             raw = mne.io.read_raw_fif(raw_in)
         except AttributeError:
             # Some files on openfmri are corrupted and cannot be read.
-            warn('Could not read file %s. '
-                 'Skipping run %s from subject %s.' % (raw_in, run, subject))
+            warn(f'Could not read file {raw_in}.'
+                 f'Skipping run {run} from subject {subject}.')
             continue
-        print('  Run %s' % (run,))
+        print(f'Run {run}')
 
         raw.fix_mag_coil_types()
 
         # Read bad channels from the MaxFilter log.
         bads =[]
         with open( os.path.join(study_path, 'ds000117/derivatives/meg_derivatives', subject, 'ses-meg/meg',
-               'sub-%02d_ses-meg_task-facerecognition_run-%02d_proc-sss_log.txt' %(subject_id, run))) as fid:
+               f'sub-{subject_id :02d}_ses-meg_task-facerecognition_run-{run :02d}_proc-sss_log.txt')) as fid:
             for line in fid:
                 if line.startswith('Static bad channels'):
                     chs = line.split(':')[-1].split()
-                    bads = ['MEG%04d' % int(ch) for ch in chs]
+                    bads = [f'MEG{int(ch) :04d}' for ch in chs]
                     break
 
         raw.info['bads'] += bads
@@ -70,7 +65,8 @@ def run_maxwell_filter(subject_id):
         # Get the head positions from the existing SSS file.
         # Usually this can be done by saving to a text file with MaxFilter
         # instead, and reading with :func:`mne.chpi.read_head_pos`.
-        raw_sss = mne.io.read_raw_fif(sss_fname_in % (subject_id, run), verbose='error')
+        raw_sss = mne.io.read_raw_fif(os.path.join(study_path, 'ds000117/derivatives/meg_derivatives', subject, 'ses-meg/meg',
+                           f'sub-{subject_id :02d}_ses-meg_task-facerecognition_run-{run :02d}_proc-sss_meg.fif'), verbose='error')
         chpi_picks = mne.pick_types(raw_sss.info, meg=False, chpi=True)
         assert len(chpi_picks) == 9
         head_pos, t = raw_sss[chpi_picks]
@@ -81,21 +77,18 @@ def run_maxwell_filter(subject_id):
         mask = (head_pos != 0).any(axis=0)
         head_pos = np.concatenate((t[np.newaxis], head_pos)).T[mask]
         # In this dataset due to old MaxFilter (2.2.10), data are uniformly
-        # sampled at 1 Hz, so we save some processing time in
-        # maxwell_filter by downsampling.
+        # sampled at 1 Hz, so we save some processing time in maxwell_filter by downsampling.
         skip = int(round(raw_sss.info['sfreq']))
         head_pos = head_pos[::skip]
         del raw_sss
 
-        print('    st_duration=%d' % (st_duration,))
+        print(f'st_duration={st_duration}')
         raw_sss = mne.preprocessing.maxwell_filter(
             raw, calibration=cal, cross_talk=ctc, st_duration=st_duration,
             origin=origin, destination=destination, head_pos=head_pos)
 
-        #The data are bandpass filtered (1 - 70 Hz) using linear-phase fir filter
-        #with delay compensation
-        # Here we only low-pass MEG (assuming MaxFilter has high-passed
-        # the data already)
+        #The data are bandpass filtered (1 - 70 Hz) using linear-phase fir filter with delay compensation
+        # Here we only low-pass MEG (assuming MaxFilter has high-passed the data already)
         picks_meg = mne.pick_types(raw.info, meg=True, exclude=())
         raw_sss.filter(
             None, 70, l_trans_bandwidth='auto', h_trans_bandwidth='auto',
