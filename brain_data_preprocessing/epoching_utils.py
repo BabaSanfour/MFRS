@@ -3,8 +3,11 @@ import sys
 import mne
 import numpy as np
 from pandas import read_csv
+from mne.parallel import parallel_func
+
 sys.path.append('../../MFRS/')
-from utils.library.config_bids import study_path, meg_dir, reject_tmax, map_subjects
+from utils.library.config_bids import study_path, meg_dir, reject_tmax, map_subjects, N_JOBS
+from utils.config import get_similarity_parser
 
 def run_events(subject_id, selected, name, conditions_mapping):
     subject = f"sub-{subject_id :02d}" 
@@ -105,3 +108,44 @@ def run_epochs(subject_id, name, tsss, fmin=0.5, fmax=4, frequency_band=None):
         epochs.save(os.path.join(data_path, f'{subject}-tsss_{tsss}_{name}_{frequency_band}-epo.fif'), overwrite=True)
     else:
         epochs.save(os.path.join(data_path, f'{subject}-tsss_{tsss}_{name}-epo.fif'), overwrite=True)
+
+
+if __name__ == '__main__':
+    parser = get_similarity_parser()
+    args = parser.parse_args()
+
+    conditions_mapping ={}
+    for i in range (1,151):
+        conditions_mapping["meg/f%03d.bmp"%i]=i
+        conditions_mapping["meg/u%03d.bmp"%i]=i+150
+        conditions_mapping["meg/s%03d.bmp"%i]=i+300
+    if args.stimuli_file_name == "FamUnfam":
+        list_events = [5,6,7, 13,14,15,]
+    elif args.stimuli_file_name == "FamScram":
+        list_events = [5,6,7, 17,18,19]
+    elif args.stimuli_file_name == "Fam":
+        list_events = [5,6,7, ]
+    elif args.stimuli_file_name == "Unfam":
+        list_events = [13,14,15,]
+    else:
+        list_events = [17,18,19]
+
+    # Get events
+    parallel, run_func, _ = parallel_func(run_events, n_jobs=N_JOBS)
+    parallel(run_func(subject_id, [[ args.stimuli_file_name], list_events], args.stimuli_file_name, conditions_mapping) for subject_id in range(1, 17))
+
+    # Create epochs
+    parallel, run_func, _ = parallel_func(run_epochs, n_jobs=max(N_JOBS // 4, 1))
+    parallel(run_func(subject_id, args.stimuli_file_name, 10) for subject_id in range(1, 17))
+
+    FREQ_BANDS = {"delta": [1.5, 4.5],
+              "theta": [4.5, 8.5],
+              "alpha": [8.5, 15.5],
+              "beta": [15.5, 30],
+              "Gamma": [30, 70]}
+
+    subjects_ids=[i for i in range(1,17)]
+    # Create epochs for power bands
+    for  frequency_band, f in FREQ_BANDS.items():
+        parallel, run_func, _ = parallel_func(run_epochs, n_jobs=max(N_JOBS // 4, 1))
+        parallel(run_func(subject_id, args.stimuli_file_name, 10, f[0], f[1], frequency_band) for subject_id in range(1, 17))
