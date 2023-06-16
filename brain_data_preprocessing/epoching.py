@@ -86,6 +86,11 @@ def run_epochs(subject_id, name, tsss, fmin=0.5, fmax=4, frequency_band=None):
         raw_list.append(raw)
 
     raw, events = mne.concatenate_raws(raw_list, events_list=events_list)
+    if frequency_band is not None:
+        print('  Applying hilbert transform')
+        # get analytic signal (envelope)
+        raw.apply_hilbert(envelope=True)
+
     del raw_list
 
     picks = mne.pick_types(raw.info, meg=True, eeg=False, stim=False, eog=False, exclude=())
@@ -96,11 +101,6 @@ def run_epochs(subject_id, name, tsss, fmin=0.5, fmax=4, frequency_band=None):
     epochs = mne.Epochs(raw, events, events_id, 0, 0.8, proj=True,
                         picks=picks, baseline=None, preload=True,
                         reject=None, reject_tmax=reject_tmax, on_missing='warn')
-    if frequency_band is not None:
-        print('  Applying hilbert transform')
-        epochs.subtract_evoked()
-        # get analytic signal (envelope)
-        epochs.apply_hilbert(envelope=True)
 
 
     print('  Writing to disk')
