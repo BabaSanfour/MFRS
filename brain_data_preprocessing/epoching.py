@@ -32,21 +32,18 @@ def run_events(subject_id, selected, name, conditions_mapping):
         # select epochs depending on stimuli number in events list
         not_selected=[event_numb for event_numb in [5,6,7,13,14,15,17,18,19] if event_numb not in selected[1]]
         events = np.array([event for event in events if event[2] not in not_selected])
-
         # fix mismatch between csv file and events from raw file.
         while len(event_csv) != len(events):
             assert len(events) >= len(event_csv), "The code removes items from events while this condition requires the opposite"
-            for i in range(len(events)-1, -1, -1):
+            for i in range(len(events)):
                 if i >= len(event_csv) or events[i][2] != event_csv.iloc[i, 4]:
                     events = np.delete(events, i, axis=0)
                     break
-
         #Select only one trial per condition
         events[:, 2] = [conditions_mapping[event_csv.iloc[i, 5]] for i in range(len(events))]
         unique = []
         events = np.array([events[i] for i in range(len(events)) if events[i][2] not in unique and not unique.append(events[i][2])])
-
-        fname_events = os.path.join(out_path, f'run_{run :02d}_{name}-eve.fif' % (run, name))
+        fname_events = os.path.join(out_path, f'run_{run :02d}_{name}-eve.fif')
         mne.write_events(fname_events, events, overwrite=True)
 
 def run_epochs(subject_id, name, tsss, fmin=0.5, fmax=4, frequency_band=None):
@@ -120,19 +117,19 @@ if __name__ == '__main__':
         conditions_mapping["meg/u%03d.bmp"%i]=i+150
         conditions_mapping["meg/s%03d.bmp"%i]=i+300
     if args.stimuli_file_name == "FamUnfam":
-        list_events = [5,6,7, 13,14,15,]
+        selected = [["Famous", "Unfamiliar"], [5,6,7, 13,14,15,]]
     elif args.stimuli_file_name == "FamScram":
-        list_events = [5,6,7, 17,18,19]
+        selected = [["Famous", "Scrambled"], [5,6,7, 17,18,19]]
     elif args.stimuli_file_name == "Fam":
-        list_events = [5,6,7, ]
+        selected = [["Famous"], [5,6,7, ]]
     elif args.stimuli_file_name == "Unfam":
-        list_events = [13,14,15,]
+        selected = [["Unfamiliar"],[13,14,15,] ]
     else:
-        list_events = [17,18,19]
+        selected = [["Scrambled"], [17,18,19]]
 
     # Get events
     parallel, run_func, _ = parallel_func(run_events, n_jobs=N_JOBS)
-    parallel(run_func(subject_id, [[ args.stimuli_file_name], list_events], args.stimuli_file_name, conditions_mapping) for subject_id in range(1, 17))
+    parallel(run_func(subject_id, selected, args.stimuli_file_name, conditions_mapping) for subject_id in range(1, 17))
 
     # Create epochs
     parallel, run_func, _ = parallel_func(run_epochs, n_jobs=max(N_JOBS // 4, 1))
