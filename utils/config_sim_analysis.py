@@ -7,12 +7,14 @@ as the as similarity analysis scripts in the main directory.
 """
 
 import os
+import sys
 import mne
 import numpy as np
 
 # Paths
-from config import weights_path, plot_folder
-from library.config_bids import study_path, meg_dir
+sys.path.append('../../MFRS')
+from utils.config import weights_path, plot_folder
+from utils.library.config_bids import study_path, meg_dir
 similarity_folder = os.path.join(study_path, 'similarity_scores')
 activations_folder = os.path.join(study_path, 'activations')
 rdms_folder = os.path.join(study_path, 'networks_rdms')
