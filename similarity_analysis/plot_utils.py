@@ -9,8 +9,8 @@ import sys
 import numpy as np
 from scipy.stats import sem
 
-from utils.config_sim_analysis import channels_mag, channels_grad1, channels_grad2, meg_rdm, meg_sensors, similarity_folder
-sys.path.append('/home/hamza97/MFRS/')
+from utils.config import channels_mag, channels_grad1, channels_grad2, meg_rdm, meg_sensors, similarity_folder
+sys.path.append('../../MFRS/')
 from utils.general import load_npy
 
 def get_filtered_measures(sim_dict: dict, layer: str, channels_list: list, measure: str = "pearson", epsilon: int = 0.05):

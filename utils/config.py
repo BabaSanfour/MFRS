@@ -21,6 +21,9 @@ if not os.path.isdir(scratch_folder):
     print("Creating Scratch folder.")
     os.makedirs(scratch_folder)
 
+proj_path = os.path.join(user, "/MFRS/")
+sys.path.append(proj_path)
+
 study_path = os.path.join(scratch_folder, "/data/MFRS_data/")
 if not os.path.isdir(study_path):
     print("Data folder does not exists!!!")

@@ -29,8 +29,8 @@ from PIL import Image
 
 import torchvision
 sys.path.append("../../MFRS")
-from utils.config import data_path
-data_path =  os.path.join(data_path, "ds000117/stimuli/meg/")
+from utils.config import study_path
+data_path =  os.path.join(study_path, "ds000117/stimuli/meg/")
 
 def store_many_hdf5(images, name):
     """ Stores an array of images to HDF5.

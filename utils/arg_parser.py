@@ -1,5 +1,3 @@
-# configuration file
-
 import argparse
 
 def get_config_parser():

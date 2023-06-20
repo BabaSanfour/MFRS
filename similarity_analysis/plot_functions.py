@@ -3,7 +3,7 @@ import mne
 import matplotlib.pyplot as plt
 import numpy as np
 
-from utils.config_sim_analysis import sensors_position, plot_folder, mask_params
+from utils.config import sensors_position, plot_folder, mask_params
 from matplotlib.lines import Line2D
 
 

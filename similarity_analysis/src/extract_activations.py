@@ -6,7 +6,7 @@ import numpy as np
 from typing import Union, List, Dict
 sys.path.append('../../../MFRS')
 from utils.general import save_pickle, load_pickle
-from utils.config_sim_analysis import activations_folder, networks
+from utils.config import activations_folder, networks
 from utils.load_data import Stimuliloader
 from models.inception import inception_v3
 from models.cornet_s import cornet_s
@@ -15,7 +15,7 @@ from models.resnet import resnet50
 from models.vgg import vgg16_bn
 from models.FaceNet import FaceNet
 from models.SphereFace import SphereFace
-from utils.config import get_similarity_parser
+from utils.arg_parser import get_similarity_parser
 
 activations={}
 
