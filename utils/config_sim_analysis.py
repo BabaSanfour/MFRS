@@ -1,28 +1,146 @@
 """
-===================================
-Config file for Similarity Analysis
-===================================
-Configuration parameters for the similarity analysis scripts. This should be in the same folder
-as the as similarity analysis scripts in the main directory.
+============================
+Config file the whole study
+============================
 """
 
 import os
 import sys
 import mne
 import numpy as np
+from distutils.version import LooseVersion
 
-# Paths
+
+###############################################################################
+# Let's set the path where the data is downloaded and stored.
 sys.path.append('../../MFRS')
-from utils.config import weights_path, plot_folder
-from utils.library.config_bids import study_path, meg_dir
+user = os.path.expanduser('~')
+scratch_folder = os.path.join(user, "/scratch")
+if not os.path.isdir(scratch_folder):
+    print("Scratch folder does not exists!!!")
+    print("Creating Scratch folder.")
+    os.makedirs(scratch_folder)
+
+study_path = os.path.join(scratch_folder, "/data/MFRS_data/")
+if not os.path.isdir(study_path):
+    print("Data folder does not exists!!!")
+    print("Creating Data folder.")
+    print("Please make sure to download the data before running any experiment.")
+    os.makedirs(study_path)
+
+weights_path = os.path.join(scratch_folder, "/net_weighst/")
+if not os.path.isdir(weights_path):
+    print("Weighst folder does not exists!!!")
+    print("Creating Weights folder.")
+    os.makedirs(weights_path)
+
+results_path = os.path.join(scratch_folder, "/results/")
+if not os.path.isdir(results_path):
+    print("Results folder does not exists!!!")
+    print("Creating Results folder.")
+    os.makedirs(results_path)
+
 similarity_folder = os.path.join(study_path, 'similarity_scores')
+if not os.path.isdir(similarity_folder):
+    os.makedirs(similarity_folder)
+
 activations_folder = os.path.join(study_path, 'activations')
+if not os.path.isdir(activations_folder):
+    os.makedirs(activations_folder)
+
 rdms_folder = os.path.join(study_path, 'networks_rdms')
+if not os.path.isdir(rdms_folder):
+    os.makedirs(rdms_folder)
+
+plots_path = os.path.join(scratch_folder, "/plots/")
+if not os.path.isdir(plots_path):
+    print("Plots folder does not exists!!!")
+    print("Creating Plots folder.")
+    os.makedirs(plots_path)
+
+subjects_dir = os.path.join(study_path, 'subjects')
+if not os.path.isdir(subjects_dir):
+    os.makedirs(subjects_dir)
+
+meg_dir = os.path.join(study_path, 'MEG')
+if not os.path.isdir(meg_dir):
+    os.makedirs(meg_dir)
+
+
+os.environ["SUBJECTS_DIR"] = subjects_dir
+
+spacing = 'oct6'
+mindist = 5
+N_JOBS = 1
+###############################################################################
+# Some mapping betwen filenames for bad sensors and subjects
+
+map_subjects = {1: 'subject_02', 2: 'subject_03', 3: 'subject_06',
+                4: 'subject_08', 5: 'subject_09', 6: 'subject_10',
+                7: 'subject_11', 8: 'subject_12', 9: 'subject_14',
+                10: 'subject_15', 11: 'subject_17', 12: 'subject_18',
+                13: 'subject_19', 14: 'subject_23', 15: 'subject_24',
+                16: 'subject_25'}
+
+
+###############################################################################
+# Subjects that are known to be bad from the publication
+
+exclude_subjects = [1, 5, 16]  # Excluded subjects
+
+###############################################################################
+# The `cross talk file <https://github.com/mne-tools/mne-biomag-group-demo/blob/master/scripts/results/library/ct_sparse.fif>`_
+# and `calibration file <https://github.com/mne-tools/mne-biomag-group-demo/blob/master/scripts/results/library/sss_cal.dat>`_
+# are placed in the same folder.
+
+ctc = os.path.join(os.path.dirname(__file__), 'ct_sparse.fif')
+cal = os.path.join(os.path.dirname(__file__), 'sss_cal.dat')
+
+ylim = {'eeg': [-10, 10], 'mag': [-300, 300], 'grad': [-80, 80]}
+
+
+def set_matplotlib_defaults():
+    import matplotlib.pyplot as plt
+    fontsize = 8
+    params = {'axes.labelsize': fontsize,
+              'legend.fontsize': fontsize,
+              'xtick.labelsize': fontsize,
+              'ytick.labelsize': fontsize,
+              'axes.titlesize': fontsize + 2,
+              'figure.max_open_warning': 200,
+              'axes.spines.top': False,
+              'axes.spines.right': False,
+              'axes.grid': True,
+              'lines.linewidth': 1,
+              }
+    import matplotlib
+    if LooseVersion(matplotlib.__version__) >= '2':
+        params['font.size'] = fontsize
+    else:
+        params['text.fontsize'] = fontsize
+    plt.rcParams.update(params)
+
+
+annot_kwargs = dict(fontsize=12, fontweight='bold',
+                    xycoords="axes fraction", ha='right', va='center')
+l_freq = None
+
+tmin = -0.2
+tmax = 2.9  # min duration between onsets: (400 fix + 800 stim + 1700 ISI) ms
+reject_tmax = 0.8  # duration we really care about
+random_state = 42
+
+smooth = 10
+
+fsaverage_vertices = [np.arange(10242), np.arange(10242)]
 
 # Get whole sensors list + sensors lists per type + sesnsor positions for topomaps + meg file
 subject_id, run=1, 1
 subject = "sub-%02d" % subject_id
 in_path = os.path.join(study_path, 'ds000117', subject, 'ses-meg/meg')
+if not os.path.isdir(in_path):
+    print("Please make sure to download the ds000117 dataset.")
+
 run_fname = os.path.join(in_path, 'sub-%02d_ses-meg_task-facerecognition_run-%02d_meg.fif' % (
             subject_id,run))
 raw = mne.io.read_raw_fif(run_fname)
