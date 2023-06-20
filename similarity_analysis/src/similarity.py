@@ -7,8 +7,8 @@ from neurora.rdm_corr import rdm_similarity, rdm_distance, rdm_correlation_kenda
 sys.path.append('../../../MFRS')
 from bootstrapping import eval_bootstrap_pearson
 from utils.general import save_pickle, load_pickle, load_meg_rdm, load_model_rdm
-from utils.config_sim_analysis import similarity_folder, meg_sensors, meg_rdm, networks, channels_grad1, channels_grad2, channels_mag
-from utils.config import get_similarity_parser
+from utils.config import similarity_folder, meg_sensors, meg_rdm, networks, channels_grad1, channels_grad2, channels_mag
+from utils.arg_parser import get_similarity_parser
 
 
 def score(chl_rdm: np.array, layer_rdm: np.array, method: list = ["spearman"], permutation: bool = False, iter: int = 1000) -> Dict[str, list]:

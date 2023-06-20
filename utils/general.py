@@ -1,8 +1,7 @@
 import pickle
 import numpy as np
 import os
-from utils.library.config_bids import meg_dir
-from utils.config_sim_analysis import rdms_folder
+from utils.config import meg_dir, rdms_folder
 
 def save_pickle(dictionary, file):
     """ Save dictionary in pickle files """

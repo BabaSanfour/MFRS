@@ -21,7 +21,7 @@ from models.SphereFace import SphereFace
 
 from utils.load_data import dataloader
 from utils.train_test_functions import train_network, test_network, save_network_weights
-from utils.config import get_config_parser
+from utils.arg_parser import get_config_parser
 
 
 if __name__ == '__main__':

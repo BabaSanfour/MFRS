@@ -22,8 +22,8 @@ from tqdm import tqdm
 import torchvision
 from PIL import Image
 sys.path.append("../../MFRS")
-from utils.config import data_path
-data_path =  os.path.join(data_path, "VGGface2/")
+from utils.config import study_path
+data_path =  os.path.join(study_path, "VGGface2/")
 
 def store_many_hdf5(images, labels, folder):
     """ Stores an array of images to HDF5.

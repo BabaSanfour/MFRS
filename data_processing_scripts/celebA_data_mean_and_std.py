@@ -5,8 +5,8 @@ import torchvision
 
 sys.path.append("../../MFRS")
 from utils.generate_data_from_hdf5 import generate_Dataset_h5
-from utils.config import data_path
-data_path = os.path.join(data_path, "hdf5/")
+from utils.config import study_path
+data_path = os.path.join(study_path, "hdf5/")
 
 dic = {1000: [30, 25, 12],
         500: [27, 13],

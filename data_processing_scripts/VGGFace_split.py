@@ -10,9 +10,9 @@ import shutil
 import random
 import numpy as np
 sys.path.append("../../MFRS")
-from utils.config import data_path
-fold = os.path.join(data_path, "VGGface2_HQ_cropped/VGGface2_HQ_cropped/*")
-new_fold = os.path.join(data_path, "VGGface2/")
+from utils.config import study_path
+fold = os.path.join(study_path, "VGGface2_HQ_cropped/VGGface2_HQ_cropped/*")
+new_fold = os.path.join(study_path, "VGGface2/")
 
 def split(a,b,c):
     """

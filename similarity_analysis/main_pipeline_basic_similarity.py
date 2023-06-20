@@ -7,8 +7,8 @@ from models.resnet import resnet50
 from models.vgg import vgg16_bn
 from models.FaceNet import FaceNet
 from models.SphereFace import SphereFace
-from utils.config import get_similarity_parser
-from utils.config_sim_analysis import networks, meg_sensors
+from utils.arg_parser import get_similarity_parser
+from utils.config import networks, meg_sensors
 from utils.general import load_meg_rdm
 from src.extract_activations import extract_activations
 from src.compute_models_rdms import extract_network_rdms

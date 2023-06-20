@@ -4,9 +4,9 @@ import numpy as np
 from tqdm import tqdm
 from scipy.stats import pearsonr
 sys.path.append('../../../MFRS/')
-from utils.config import get_similarity_parser
+from utils.arg_parser import get_similarity_parser
 from utils.general import save_npy, load_npy, load_pickle
-from utils.config_sim_analysis import rdms_folder, activations_folder
+from utils.config import rdms_folder, activations_folder
 
 def limtozero(value: float) -> float:
     """

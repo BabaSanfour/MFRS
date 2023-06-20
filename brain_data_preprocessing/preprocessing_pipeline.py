@@ -20,7 +20,7 @@ import mne
 import numpy as np
 from warnings import warn
 sys.path.append('../../MFRS/')
-from utils.library.config_bids import study_path, meg_dir, cal, ctc
+from utils.config import study_path, meg_dir, cal, ctc
 
 def run_maxwell_filter(subject_id):
     subject = f"sub-{subject_id: 02d}"

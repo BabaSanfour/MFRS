@@ -4,10 +4,10 @@ import torchvision
 import sys
 sys.path.append('../../MFRS')
 from utils.generate_data_from_hdf5 import generate_Dataset_h5, generate_stimuli_h5
-from utils.config import data_path
+from utils.config import study_path
 
 
-data_path= os.path.join(data_path, 'hdf5/')
+data_path= os.path.join(study_path, 'hdf5/')
 
 mean_std = { '1000_30': [0.3612, 0.3056],
               '1000_25': [0.3736, 0.3082],

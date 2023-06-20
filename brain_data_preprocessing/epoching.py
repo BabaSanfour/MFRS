@@ -6,8 +6,8 @@ from pandas import read_csv
 from mne.parallel import parallel_func
 
 sys.path.append('../../MFRS/')
-from utils.library.config_bids import study_path, meg_dir, reject_tmax, map_subjects, N_JOBS
-from utils.config import get_similarity_parser
+from utils.config import study_path, meg_dir, reject_tmax, map_subjects, N_JOBS
+from utils.arg_parser import get_similarity_parser
 
 def run_events(subject_id, selected, name, conditions_mapping):
     subject = f"sub-{subject_id :02d}" 

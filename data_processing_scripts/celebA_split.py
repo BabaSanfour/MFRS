@@ -21,12 +21,12 @@ import random
 import pandas as pd
 
 sys.path.append("../../MFRS")
-from utils.config import proj_path, data_path
+from utils.config import proj_path, study_path
 dir_path = os.path.join(proj_path, "files/csv_files/*.csv")
 train_dir = os.path.join(proj_path, "files/txt_files/identity_CelebA_train_%s_%s.txt")
 test_dir = os.path.join(proj_path, "files/txt_files/identity_CelebA_test_%s_%s.txt")
 valid_dir = os.path.join(proj_path, "files/txt_files/identity_CelebA_valid_%s_%s.txt")
-fold = data_path
+fold = study_path
 
 dic = {25:[15,5,5], 12:[6,3,3],
         27:[17,5,5], 13:[7,3,3],

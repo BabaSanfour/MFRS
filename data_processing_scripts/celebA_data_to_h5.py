@@ -32,7 +32,7 @@ from PIL import Image, ImageOps
 dic = {30:1000}
 
 sys.path.append("../../MFRS")
-from utils.config import proj_path, data_path
+from utils.config import proj_path, study_path
 
 
 def get_box_by_facial_landmarks(
@@ -131,7 +131,7 @@ def store_many_hdf5(images, labels, folder):
         images       images array, (N, 224, 224, 1) to be stored
         labels       labels array, (N, ) to be stored
     """
-    hdf5_dir = os.path.join(data_path, "hdf5/")
+    hdf5_dir = os.path.join(study_path, "hdf5/")
     if not os.path.exists(hdf5_dir):
         os.makedirs(hdf5_dir)
     # Create a new HDF5 file
@@ -167,7 +167,7 @@ def transform_picture(img_sample, landmarks, resize, greyscale=True):
 
 
 def make_array(folder, identity_file, device, size=(224,224)):
-    # pictures_dir = os.path.join(data_path, folder)
+    # pictures_dir = os.path.join(study_path, folder)
     pictures_dir = "new_" + folder
 
     # Concatenate array of images

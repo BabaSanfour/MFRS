@@ -12,8 +12,8 @@ from multiprocessing import Pool, cpu_count
 
 import sys
 sys.path.append('../../../MFRS/')
-from utils.config import get_similarity_parser
-from utils.library.config_bids import meg_dir
+from utils.arg_parser import get_similarity_parser
+from utils.config import meg_dir
 from utils.general import save_npy
 
 def transform_data(sub_id: list, n_cons: int, n_chls: int, n_time_points: int, list_names: list, name: str = "FamUnfam", tsss: int = 10):
