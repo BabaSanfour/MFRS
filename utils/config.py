@@ -15,29 +15,29 @@ from distutils.version import LooseVersion
 # Let's set the path where the data is downloaded and stored.
 sys.path.append('../../MFRS')
 user = os.path.expanduser('~')
-scratch_folder = os.path.join(user, "/scratch")
+scratch_folder = os.path.join(user, "scratch")
 if not os.path.isdir(scratch_folder):
     print("Scratch folder does not exists!!!")
     print("Creating Scratch folder.")
     os.makedirs(scratch_folder)
 
-proj_path = os.path.join(user, "/MFRS/")
+proj_path = os.path.join(user, "MFRS/")
 sys.path.append(proj_path)
 
-study_path = os.path.join(scratch_folder, "/data/MFRS_data/")
+study_path = os.path.join(scratch_folder, "data/MFRS_data")
 if not os.path.isdir(study_path):
     print("Data folder does not exists!!!")
     print("Creating Data folder.")
     print("Please make sure to download the data before running any experiment.")
     os.makedirs(study_path)
 
-weights_path = os.path.join(scratch_folder, "/net_weighst/")
+weights_path = os.path.join(scratch_folder, "net_weights")
 if not os.path.isdir(weights_path):
-    print("Weighst folder does not exists!!!")
+    print("Weights folder does not exists!!!")
     print("Creating Weights folder.")
     os.makedirs(weights_path)
 
-results_path = os.path.join(scratch_folder, "/results/")
+results_path = os.path.join(scratch_folder, "results")
 if not os.path.isdir(results_path):
     print("Results folder does not exists!!!")
     print("Creating Results folder.")
@@ -55,7 +55,7 @@ rdms_folder = os.path.join(study_path, 'networks_rdms')
 if not os.path.isdir(rdms_folder):
     os.makedirs(rdms_folder)
 
-plots_path = os.path.join(scratch_folder, "/plots/")
+plots_path = os.path.join(scratch_folder, "plots")
 if not os.path.isdir(plots_path):
     print("Plots folder does not exists!!!")
     print("Creating Plots folder.")
