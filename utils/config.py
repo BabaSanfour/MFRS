@@ -37,7 +37,7 @@ if not os.path.isdir(weights_path):
     print("Creating Weights folder.")
     os.makedirs(weights_path)
 
-results_path = os.path.join(scratch_folder, "results")
+results_path = os.path.join(study_path, "results")
 if not os.path.isdir(results_path):
     print("Results folder does not exists!!!")
     print("Creating Results folder.")

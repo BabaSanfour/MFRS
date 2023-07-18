@@ -200,5 +200,15 @@ def get_similarity_parser():
 
     return parser
 
+def source_rescontruction_parser():
+    parser = argparse.ArgumentParser(description="Source Reconstruction.")
+
+    data = parser.add_argument_group("SR")
+    data.add_argument(
+        "--subject", 
+        type=str, 
+        default="01", 
+        help="Subject id (default: %(default)s)."
+    )
 
 
