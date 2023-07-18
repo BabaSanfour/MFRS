@@ -15,7 +15,8 @@ from utils.arg_parser import source_rescontruction_parser
 
 def tee_output(command, log_file):
     to_print = " ".join(command)
-    print(f'Running :\n {to_print}')
+    print("Running :\n")
+    print(to_print)
     with open(log_file, 'wb') as fid:
         proc = subprocess.Popen(
             command, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
@@ -27,7 +28,7 @@ def tee_output(command, log_file):
 
 
 def process_subject_anat(subject_id, force_recon_all=False):
-    subject = f"sub-{subject_id: 02d}"
+    subject = f"sub-{subject_id:02d}"
     print(f"Processing {subject}")
 
     t1_fname = os.path.join(study_path, 'ds000117', subject, 'ses-mri/anat',
@@ -43,7 +44,7 @@ def process_subject_anat(subject_id, force_recon_all=False):
         tee_output(
             ['recon-all', '-all', '-s', subject, '-sd', subjects_dir,
              '-i', t1_fname], log_fname)
-        print(f'  Recon for {subject_id} complete in {(time.time() - t0) / 60. / 60. :0.1f} hours')
+        print(f'  Recon for {subject} complete in {((time.time() - t0) / 60. / 60.):0.1f} hours')
 
 
     #TODO: TEST THE REST AFTER RECON ALL FINISH RUNNING
@@ -124,7 +125,7 @@ if __name__=="__main__":
 
     parallel, run_func, _ = parallel_func(process_subject_anat, n_jobs=-1)
     parallel(run_func(args.subject))
-
+    
     # now we do something special for fsaverage
     fsaverage_src_dir = os.path.join(os.environ['FREESURFER_HOME'], 'subjects', 'fsaverage')
     fsaverage_dst_dir = os.path.join(subjects_dir, 'fsaverage')
