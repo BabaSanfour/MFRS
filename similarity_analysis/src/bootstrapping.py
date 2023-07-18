@@ -2,7 +2,7 @@ import copy
 from tqdm import tqdm
 import numpy as np
 from scipy.stats import pearsonr
-from utils.config_sim_analysis import meg_sensors
+from utils.config import meg_sensors
 from rsatoolbox.inference import bootstrap_sample_pattern
 import rsatoolbox.rdm as rsrdm
 
