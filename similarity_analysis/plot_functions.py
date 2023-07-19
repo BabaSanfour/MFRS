@@ -3,17 +3,17 @@ import mne
 import matplotlib.pyplot as plt
 import numpy as np
 
-from utils.config import sensors_position, plot_folder, mask_params
+from utils.config import sensors_position, plots_path
 from matplotlib.lines import Line2D
 
 
-def plot_MEG_topomaps(similarity_values: dict, extremum_values: list, axes: plt, i: int, ylabel: str, min_fig: plt.Figure, last: bool = False, sensors_position: mne.Info = sensors_position):
+def plot_MEG_topomaps(similarity_values: list, extremum_values: list, axes: plt, i: int, ylabel: str, min_fig: plt.Figure, last: bool = False, sensors_position: mne.Info = sensors_position):
     """
-    Plot the three topomaps (MAG, Grad1, Grad2) for a single layer or whole network similarity scores.
+    Plot the three topomaps (MAG, Grad1, Grad2) for a single layer.
     
     Args:
-    - similarity_values (dict): Dictionary containing the similarity values for each sensor type.
-    - extremum_values (list): List containing the maximum absolute value for each sensor type.
+    - similarity_values (list): List containing the similarity values for each sensor type.
+    - vlim (tuple): Colormap limits to use. If a tuple of floats, specifies the lower and upper bounds of the colormap (in that order).
     - axes: The axes object for the subplot grid.
     - i (int): The index of the current subplot.
     - ylabel (str): The label for the y-axis.
@@ -26,17 +26,17 @@ def plot_MEG_topomaps(similarity_values: dict, extremum_values: list, axes: plt,
     """
 
     # Plot MAG topomap
-    im, _ = mne.viz.plot_topomap(similarity_values[0], sensors_position, show=False, vmax=extremum_values[0],
-                                 vmin=-extremum_values[0],  sphere=0.18, axes=axes[i][0], extrapolate='head')
+    im, _ = mne.viz.plot_topomap(similarity_values[0], sensors_position, show=False, vlim=extremum_values,
+                                 sphere=0.18, axes=axes[i][0], extrapolate='head')
     axes[i][0].set_ylabel(ylabel, fontweight='bold', fontsize=10)
 
     # Plot Grad1 topomap
-    im1, _ = mne.viz.plot_topomap(similarity_values[1], sensors_position, show=False, vmax=extremum_values[1],
-                                  vmin=-extremum_values[1], sphere=0.18, axes=axes[i][1], extrapolate='head')
+    im1, _ = mne.viz.plot_topomap(similarity_values[1], sensors_position, show=False, vlim=extremum_values,
+                                   sphere=0.18, axes=axes[i][1], extrapolate='head')
 
     # Plot Grad2 topomap
-    im2, _ = mne.viz.plot_topomap(similarity_values[2], sensors_position, show=False, vmax=extremum_values[2],
-                                  vmin=-extremum_values[2], sphere=0.18, axes=axes[i][2], extrapolate='head')
+    im2, _ = mne.viz.plot_topomap(similarity_values[2], sensors_position, show=False, vlim=extremum_values,
+                                  sphere=0.18, axes=axes[i][2], extrapolate='head')
 
     if last:
         # Add colorbar for MAG topomap
@@ -77,7 +77,7 @@ def plot_similarity(similarity_scores: dict, extremum_values: list, network_name
     if save:
         plt.show()
         file_name = f"{network_name}_{stimuli_file_name}_{correlation}_all_layers_similarity_topomaps.png"
-        file_path = os.path.join(plot_folder, file_name)
+        file_path = os.path.join(plots_path, file_name)
         fig.savefig(file_path)
 
 
@@ -158,70 +158,3 @@ def plot_single_network_topomap(ax, fig, filtered_values: dict, extremum: int, m
     fig.colorbar(im, ax=ax)
     ax.set_xlabel(f"{network} {max_layer_name} Layer", fontweight='bold', fontsize=10)
 
-def plot_networks_results(models, extremum_3, max_sim, accuracy, params, name="Networks", save=True, correlation_measure="spearman"):
-    """plot the networks highest similarity value for each sensor type,
-        the decoding top5 accuracy, and the 3 topomaps for the networks similarity results. ."""
-    fig = plt.figure(constrained_layout=True, figsize=(len(models)*2.6, len(models)*3.3))
-    subfigs = fig.subfigures(nrows=2, ncols=1, height_ratios=params["height_ratios"],  wspace=0.07)
-    figtop = subfigs[0]
-    ax1, ax2 =figtop.subplots(1,2,gridspec_kw={'width_ratios': [3, 1]})
-    barWidth = 0.2
-    br1 = np.arange(len(models))
-    br2 = [x + barWidth  for x in range(len(models))]
-    br3 = [x + 2*barWidth  for x in range(len(models))]
-    # Make the plot
-    ax1.bar(br1, max_sim[0], color ='#a5d5d8', width = barWidth,
-            edgecolor ='grey', label ='MAG')
-    ax1.bar(br2, max_sim[1], color ='#73a2c6', width = barWidth,
-            edgecolor ='grey', label ='Grad1')
-    ax1.bar(br3, max_sim[2], color ='#00429d', width = barWidth,
-            edgecolor ='grey', label ='Grad2')
-    ax1.set_ylim([0, 0.27])
-    ax3 = ax1.twinx()
-
-    ax1.axhline(y=0.2586,linewidth=2, color='#873e23')
-    ax1.axhline(y=0.0176,linewidth=2, color='#e0bb41')
-    custom_lines = [Line2D([0], [0], color='#873e23', lw=2),
-            Line2D([0], [0], color='#e0bb41', lw=2)]
-
-    ax2.bar(br1, accuracy, color ='#ffffe0', width = 0.4,
-            edgecolor ='grey', label ='Accuracy')
-    ax2.tick_params(labelrotation=25)
-    ax1.tick_params(labelrotation=25)
-    ax2.set_ylim([50, 100])
-    # Adding Xticks
-    ax1.set_ylabel('%s correlations'%correlation_measure, fontweight ='bold', fontsize = 10)
-    ax1.set_xticks([r + barWidth for r in range(len(max_sim[0]))],
-            models.keys())
-
-    ax1.legend(loc='upper left', prop={'size': 8})
-    ax3.legend(custom_lines, ['Upper Noise Ceiling', 'Lower Noise Ceiling'])
-
-    ax2.legend(prop={'size': 8})
-    ax2.set_ylabel('Top5 Accuracy',fontweight ='bold', fontsize = 10)
-    ax2.set_xticks([r  for r in range(len(max_sim[0]))],
-           models.keys())
-    ax1.spines['right'].set_visible(False)
-    ax1.spines['top'].set_visible(False)
-
-    ax2.spines['right'].set_visible(False)
-    ax2.spines['top'].set_visible(False)
-
-    figDown = subfigs[1]
-
-    axes= figDown.subplots(len(models),3)
-    for i, network in enumerate(models.keys()):
-        last = i == len(models)-1
-        plot_MEG_topomaps(models[network], extremum_3, axes, i, network, figDown, last)
-        axes[i][0].set_ylabel(network, fontweight ='bold', fontsize = 10)
-
-
-    fig.text(x=0 , y = params["AB"], s="A", fontdict=dict(fontsize=15, fontweight ='bold'))
-    fig.text(x=0.7 , y = params["AB"] , s="B", fontdict=dict(fontsize=15, fontweight ='bold'))
-
-    fig.text(x=0 , y = params["C"] , s="C", fontdict=dict(fontsize=15, fontweight ='bold'))
-
-
-    if save:
-        fig.show()
-        fig.savefig(os.path.join(plot_folder, '%s_overall_results.png'%name))
