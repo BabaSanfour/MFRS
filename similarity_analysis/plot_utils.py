@@ -100,21 +100,6 @@ def extract_layers_max_sim_values(sim_dict: dict, sensor_type: str, channels_lis
     return values_list, max_index, max_layer_name, mask
 
 
-def get_networks_results(networks, meg_rdm=meg_rdm, meg_sensors=meg_sensors):
-    """Get a list of each network maximum similarity value and the similarity values needed
-                    to plot the 3 topomaps for each network + extremum values for color bar"""
-    models, max_sim, extremum_3 = {}, [[], [], []], [0, 0, 0]
-    for network, network_layers in networks.items():
-        sim_dict=whole_network_similarity_scores(network, 'FamUnfam', meg_rdm, meg_sensors)
-        model_results=[]
-        for i, channels_list in enumerate([channels_mag, channels_grad1, channels_grad2]):
-            sil_chls, extremum = get_chls_similarity(network, sim_dict, channels_list, 'spearman')
-            max_sim[i].append(max(sil_chls))
-            extremum_3[i]=max(extremum_3[i], extremum)
-            model_results.append(sil_chls)
-        models[network]=model_results
-    return models, extremum_3, max_sim
-
 def get_bootstrap_values(bootstrap_values, network, sensors_list, percentile: int = 5):
     boot_all=load_npy(os.path.join(similarity_folder, "%s_FamUnfam_bootstrap.npy"%network))
     # higher_percentile, lower_percentile = [], []
