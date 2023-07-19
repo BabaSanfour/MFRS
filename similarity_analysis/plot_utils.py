@@ -4,9 +4,8 @@ Utils file for plotting results
 ===============================
 Util functions for selecting the results that we will plot.
 """
-import os
+from typing import Dict
 import sys
-import numpy as np
 from scipy.stats import sem
 
 from utils.config import channels_mag, channels_grad1, channels_grad2, meg_rdm, meg_sensors, similarity_folder
@@ -100,17 +99,23 @@ def extract_layers_max_sim_values(sim_dict: dict, sensor_type: str, channels_lis
     return values_list, max_index, max_layer_name, mask
 
 
-def get_bootstrap_values(bootstrap_values, network, sensors_list, percentile: int = 5):
-    boot_all=load_npy(os.path.join(similarity_folder, "%s_FamUnfam_bootstrap.npy"%network))
-    # higher_percentile, lower_percentile = [], []
-    boot_sem
-    for layer_idx in range(boot_all.shape[0]):
-        sensor_idx=meg_sensors.index(sensors_list[layer_idx]) # get sensor idx that got highest correlation
-        # with layer
-        boot_sensor=boot_all[layer_idx][sensor_idx] # get layer and sensor bootstraps
-        boot = sem(boot_sensor)
-        boot_sem.append(boot)
-        # higher_percentile.append(np.percentile(boot_sensor, 100-percentile))
-        # lower_percentile.append(np.percentile(boot_sensor, percentile))
-    # return [lower_percentile, higher_percentile]
-    return boot_sem 
+def get_bootstrap_values(bootstrap_data: Dict[str, Dict[str, list]]) -> Dict[str, Dict[str, float]]:
+    """
+    Calculate the standard error of the mean (SEM) for each layer and sensor type from bootstrap data.
+
+    Args:
+    - bootstrap_data (dict): Dictionary containing the bootstrap values for each layer and sensor type.
+
+    Returns:
+    - boot_sem (dict): Dictionary containing the SEM for each layer and sensor type.
+                      The structure is boot_sem[layer][sensor_type] = SEM.
+    """
+
+    boot_sem = {}
+    for layer, values in bootstrap_data.items():
+        boot_layer = {}
+        for sensor_type, bootstrap_values in values.items():
+            boot_layer[sensor_type] = sem(bootstrap_values)
+        boot_sem[layer] = boot_layer
+
+    return boot_sem
