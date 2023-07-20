@@ -7,7 +7,7 @@ from utils.config import sensors_position, plots_path
 from matplotlib.lines import Line2D
 
 
-def plot_MEG_topomaps(similarity_values: list, extremum_values: list, axes: plt, i: int, ylabel: str, min_fig: plt.Figure, last: bool = False, sensors_position: mne.Info = sensors_position):
+def plot_MEG_topomaps(similarity_values: list, extremum_values: list, axes: plt, i: int, ylabel: str, min_fig: plt.Figure, first: bool = False, sensors_position: mne.Info = sensors_position):
     """
     Plot the three topomaps (MAG, Grad1, Grad2) for a single layer.
     
@@ -38,19 +38,12 @@ def plot_MEG_topomaps(similarity_values: list, extremum_values: list, axes: plt,
     im2, _ = mne.viz.plot_topomap(similarity_values[2], sensors_position, show=False, vlim=extremum_values,
                                   sphere=0.18, axes=axes[i][2], extrapolate='head')
 
-    if last:
-        # Add colorbar for MAG topomap
-        min_fig.colorbar(im, ax=axes[i][0], orientation='horizontal')
+    # Add colorbar 
+    min_fig.colorbar(im, ax=axes[i][2], orientation='vertical')
+    if first:
         axes[i][0].set_xlabel("MAG", fontweight='bold', fontsize=10)
-
-        # Add colorbar for Grad1 topomap
-        min_fig.colorbar(im1, ax=axes[i][1], orientation='horizontal')
         axes[i][1].set_xlabel("Grad1", fontweight='bold', fontsize=10)
-
-        # Add colorbar for Grad2 topomap
-        min_fig.colorbar(im2, ax=axes[i][2], orientation='horizontal')
         axes[i][2].set_xlabel("Grad2", fontweight='bold', fontsize=10)
-
 
 def plot_similarity(similarity_scores: dict, extremum_values: list, network_name: str, stimuli_file_name: str, save: bool = False, correlation: str = 'pearson'):
     """
