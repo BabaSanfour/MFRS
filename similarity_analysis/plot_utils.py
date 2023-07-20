@@ -87,15 +87,13 @@ def extract_layers_max_sim_values(sim_dict: dict, sensor_type: str, channels_lis
     - max_layer_name (str): Name of the layer that gave the highest similarity.
     - mask (list): Mask indicating the sensor that gave the highest similarity (1 for the sensor, 0 for others).
     """
-
-    values_list = [values.get(sensor_type, [])[0] for values in sim_dict.values()]
+    sensor_type_idx = {"mag":0, "grad1":1, "grad2":2}
+    values_list = [max(values[sensor_type_idx[sensor_type]]) for values in sim_dict.values()]
     max_value = max(values_list)
     max_index = values_list.index(max_value)
-    max_layer_name = next((key for key, value in sim_dict.items() if value.get(sensor_type, [])[0] == max_value), None)
-    max_sensor_name = next((key for key, value in sim_dict.items() if value.get(sensor_type, [])[0] == max_value), None)
-
-    mask = [sensor == max_sensor_name for sensor in channels_list]
-
+    max_layer_name = next((key for key, value in sim_dict.items() if max(value[sensor_type_idx[sensor_type]]) == max_value), None)
+    max_sensor_idx = sim_dict[max_layer_name][sensor_type_idx[sensor_type]].index(max_value)
+    mask = [channels_grad2[max_sensor_idx] == sensor for sensor in channels_grad2]
     return values_list, max_index, max_layer_name, mask
 
 
