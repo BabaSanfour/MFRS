@@ -1,3 +1,4 @@
+import re
 import os
 import sys
 from typing import Dict
@@ -7,7 +8,7 @@ from neurora.rdm_corr import rdm_similarity, rdm_distance, rdm_correlation_kenda
 sys.path.append('../../../MFRS')
 from bootstrapping import eval_bootstrap_pearson
 from utils.general import save_pickle, load_pickle, load_meg_rdm, load_model_rdm
-from utils.config import similarity_folder, meg_sensors, meg_rdm, networks, channels_grad1, channels_grad2, channels_mag
+from utils.config import meg_dir, similarity_folder, meg_sensors, meg_rdm, networks, channels_grad1, channels_grad2, channels_mag
 from utils.arg_parser import get_similarity_parser
 
 
@@ -476,14 +477,108 @@ def average_similarity_score(average_rdm: np.array, meg_sensors: list, layers_rd
 
     return avg_sim_scores, avg_high_sim_scores, avg_model_sim_scores, avg_model_high_sim_scores
 
+def list_files_in_folder(folder_path):
+    return [file for file in os.listdir(folder_path) if os.path.isfile(os.path.join(folder_path, file))]
+
+def average_similarity_scores_across_time(rdm_files: list, meg_sensors: list, network_rdm: np.array, 
+                                          save: bool = True, model_name: str = None, stimuli_file: str = None, 
+                                          method: list = ["pearson"], activ_type: str = "trained", permutation: bool = False, iter: int = 1000):
+    """
+    Compute similarity scores for an average RDM representing the average of multiple subjects' RDMs across time.
+
+    Parameters:
+    -----------
+    rdm_files : list
+        List of file names containing RDMs of multiple subjects across different time points.
+    meg_sensors : list
+        List of MEG sensor names.
+    network_rdm : np.array
+        Network RDM of shape [n_cons, n_cons].
+    save : bool, optional
+        Save computed similarity scores. Default is True.
+    model_name : str, optional
+        Network name, required if save is True.
+    stimuli_file : str, optional
+        Data name, required if save is True.
+    band : str, optional
+        Power band name, required if save is True.
+    method : list, optional
+        Method to compute the correlation between the RDMs. Default is ["pearson"].
+    activ_type : str, optional
+        Activation type. Default is "trained".
+    permutation : bool, optional
+        Perform permutation tests. Default is False.
+    iter : int, optional
+        Number of iterations for permutation tests. Default is 1000.
+
+    Returns:
+    --------
+    avg_model_sim_scores : dict
+        A dictionary containing similarity scores for each model across time.
+    avg_model_high_sim_scores : dict
+        A dictionary containing high similarity scores for each model across time.
+    """
+
+    assert len(rdm_files) > 0, "rdm_files list is empty. Please provide file names containing RDMs."
+
+    if save:
+        assert model_name is not None, "model_name not specified. Invalid input!"
+        assert stimuli_file is not None, "stimuli_file not specified. Invalid input!"
+
+    avg_model_sim_scores = {}
+    avg_model_high_sim_scores = {}
+
+    for file in rdm_files:
+        rdm = np.load(os.path.join(rdms_path, file))
+        average_rdm = np.mean(rdm, axis=0)
+        rdm_nbre = int(re.search(rf'RDMs_(\d+)_{stimuli_file}', file).group(1))
+        avg_model_sim_file = os.path.join(similarity_folder, f"across_time/{stimuli_file}", f"{model_name}_{rdm_nbre:03d}_{stimuli_file}_model_sim_scores_{activ_type}_avg.pkl")
+        if os.path.isfile(avg_model_sim_file):
+            print(f"Loading pre-computed Sim scores for model {model_name}, {stimuli_file}, {activ_type}...")
+            avg_model_sim_scores[rdm_nbre] = load_pickle(avg_model_sim_file)
+        else:
+            avg_model_sim_scores[rdm_nbre] = network_similarity_scores(
+                average_rdm, meg_sensors, network_rdm, save, avg_model_sim_file, method, permutation, iter
+            )
+
+        avg_model_high_sim_file = os.path.join(similarity_folder, f"across_time/{stimuli_file}", f"{model_name}_{rdm_nbre:03d}_{stimuli_file}_model_high_sim_scores_{activ_type}_avg.pkl")
+        if os.path.isfile(avg_model_high_sim_file):
+            print(f"Loading pre-computed Sim scores for model {model_name}, {stimuli_file}, {activ_type}...")
+            avg_model_high_sim_scores[rdm_nbre] = load_pickle(avg_model_high_sim_file)
+        else:
+            avg_model_high_sim_scores[rdm_nbre] = get_highest_similarity(avg_model_sim_scores[rdm_nbre], method[0])
+            if save:
+                save_pickle(avg_model_high_sim_scores[rdm_nbre], avg_model_high_sim_file)
+
+        avg_model_perm_tests_file = os.path.join(similarity_folder, f"across_time/{stimuli_file}", f"{model_name}_{rdm_nbre:03d}_{stimuli_file}_model_perm_tests_scores_{activ_type}_avg.pkl")
+        if os.path.isfile(avg_model_perm_tests_file):
+            print(f"Loading pre-computed perm tests for model {model_name}, {stimuli_file}, {activ_type}...")
+            avg_model_perm_tests_scores = load_pickle(avg_model_perm_tests_file)
+        else:
+            avg_model_perm_tests_scores = perumtation_tests(avg_model_high_sim_scores[rdm_nbre], average_rdm, np.reshape(network_rdm, (1, network_rdm.shape[0], network_rdm.shape[1])), method[0])
+            if save:
+                save_pickle(avg_model_perm_tests_scores, avg_model_perm_tests_file)
+
+    return avg_model_sim_scores, avg_model_high_sim_scores
+
 if __name__ == '__main__':
     
     parser = get_similarity_parser()
     args = parser.parse_args()
-    list_layers = networks[args.model_name]
-    meg_rdm = load_meg_rdm(args.stimuli_file_name, args.band)
-    meg_rdm = np.mean(meg_rdm, axis=0)
-    layers_rdms = load_model_rdm(args.stimuli_file_name, args.model_name, args.activ_type, type = "main")
-    network_rdm = load_model_rdm(args.stimuli_file_name, args.model_name, args.activ_type, type = "model")
-    avg_sim_scores, avg_high_sim_scores, avg_model_sim_scores, avg_model_high_sim_scores = average_similarity_score(meg_rdm, meg_sensors, 
-            layers_rdms, network_rdm, list_layers, args.save, model_name = args.model_name, stimuli_file= args.stimuli_file_name, band = args.band, method = ["pearson"], activ_type = args.activ_type)
+    if args.type_meg_rdm == "basic":
+        list_layers = networks[args.model_name]
+        meg_rdm = load_meg_rdm(args.stimuli_file_name, args.band)
+        meg_rdm = np.mean(meg_rdm, axis=0)
+        layers_rdms = load_model_rdm(args.stimuli_file_name, args.model_name, args.activ_type, type = "main")
+        network_rdm = load_model_rdm(args.stimuli_file_name, args.model_name, args.activ_type, type = "model")
+        avg_sim_scores, avg_high_sim_scores, avg_model_sim_scores, avg_model_high_sim_scores = average_similarity_score(meg_rdm, meg_sensors, 
+                layers_rdms, network_rdm, list_layers, args.save, model_name = args.model_name, stimuli_file= args.stimuli_file_name, band = args.band, method = ["pearson"], activ_type = args.activ_type)
+    if args.type_meg_rdm == "across_time":
+        rdms_path = os.path.join(meg_dir, f"across_time/{args.stimuli_file_name}")
+        files_in_folder = list_files_in_folder(rdms_path)
+        network_rdm = load_model_rdm(args.stimuli_file_name, args.model_name, "trained", type = "model")
+        avg_sim_scores, avg_high_sim_scores = average_similarity_scores_across_time(files_in_folder, meg_sensors, 
+            network_rdm, True, model_name = args.model_name, stimuli_file= args.stimuli_file_name, method = ["pearson"], activ_type = "trained")
+        network_rdm = load_model_rdm(args.stimuli_file_name, args.model_name, "untrained", type = "model")
+        avg_sim_scores, avg_high_sim_scores = average_similarity_scores_across_time(files_in_folder, meg_sensors, 
+            network_rdm, True, model_name = args.model_name, stimuli_file= args.stimuli_file_name, method = ["pearson"], activ_type = "untrained")
