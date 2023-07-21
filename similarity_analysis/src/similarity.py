@@ -565,7 +565,7 @@ if __name__ == '__main__':
     
     parser = get_similarity_parser()
     args = parser.parse_args()
-    if args.type_meg_rdm == "basic":
+    if args.analysis_type == "basic":
         list_layers = networks[args.model_name]
         meg_rdm = load_meg_rdm(args.stimuli_file_name, args.band)
         meg_rdm = np.mean(meg_rdm, axis=0)
@@ -573,7 +573,7 @@ if __name__ == '__main__':
         network_rdm = load_model_rdm(args.stimuli_file_name, args.model_name, args.activ_type, type = "model")
         avg_sim_scores, avg_high_sim_scores, avg_model_sim_scores, avg_model_high_sim_scores = average_similarity_score(meg_rdm, meg_sensors, 
                 layers_rdms, network_rdm, list_layers, args.save, model_name = args.model_name, stimuli_file= args.stimuli_file_name, band = args.band, method = ["pearson"], activ_type = args.activ_type)
-    if args.type_meg_rdm == "across_time":
+    if args.analysis_type == "across_time":
         rdms_path = os.path.join(meg_dir, f"across_time/{args.stimuli_file_name}")
         files_in_folder = list_files_in_folder(rdms_path)
         network_rdm = load_model_rdm(args.stimuli_file_name, args.model_name, "trained", type = "model")

@@ -222,8 +222,8 @@ if __name__ == '__main__':
 
     megdata = transform_data(sub_id, args.cons, 306, 881, list_names, name)
 
-    if args.type_meg_rdm == "basic":
+    if args.analysis_type == "basic":
         rdm = compute_RDMs(megdata, args.cons, len(sub_id), 1, 306, 881, name)
-    if args.type_meg_rdm == "across_time":
+    if args.analysis_type == "across_time":
         compute_across_time_RDMs_parallel(megdata, args.cons, len(sub_id), 1, 306, 881, args.time_window, name)
 

@@ -185,7 +185,7 @@ def get_similarity_parser():
         help='Activations type: trained, untrained...'
     )
     parser.add_argument(
-        '--type_meg_rdm', 
+        '--analysis_type', 
         type=str, 
         default= "basic",
         choices = ["basic", "across_time"],
