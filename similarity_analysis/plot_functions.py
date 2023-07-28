@@ -28,7 +28,7 @@ def plot_MEG_topomaps(similarity_values: list, extremum_values: list, axes: plt,
     # Plot MAG topomap
     im, _ = mne.viz.plot_topomap(similarity_values[0], sensors_position, show=False, vlim=extremum_values,
                                  sphere=0.18, axes=axes[i][0], extrapolate='head')
-    axes[i][0].set_ylabel(ylabel, fontweight='bold', fontsize=10)
+    axes[i][0].set_ylabel(ylabel, fontweight='bold', fontsize=14)
 
     # Plot Grad1 topomap
     im1, _ = mne.viz.plot_topomap(similarity_values[1], sensors_position, show=False, vlim=extremum_values,
@@ -41,9 +41,9 @@ def plot_MEG_topomaps(similarity_values: list, extremum_values: list, axes: plt,
     # Add colorbar 
     min_fig.colorbar(im, ax=axes[i][2], orientation='vertical')
     if first:
-        axes[i][0].set_xlabel("MAG", fontweight='bold', fontsize=10)
-        axes[i][1].set_xlabel("Grad1", fontweight='bold', fontsize=10)
-        axes[i][2].set_xlabel("Grad2", fontweight='bold', fontsize=10)
+        axes[i][0].set_xlabel("MAG", fontweight='bold', fontsize=16)
+        axes[i][1].set_xlabel("Grad1", fontweight='bold', fontsize=16)
+        axes[i][2].set_xlabel("Grad2", fontweight='bold', fontsize=16)
 
 def plot_similarity(similarity_scores: dict, extremum_values: list, network_name: str, stimuli_file_name: str, save: bool = False, correlation: str = 'pearson'):
     """
