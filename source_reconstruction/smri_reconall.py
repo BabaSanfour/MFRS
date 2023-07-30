@@ -145,7 +145,7 @@ if __name__=="__main__":
     args = parser.parse_args()
 
     parallel, run_func, _ = parallel_func(process_subject_anat, n_jobs=1)
-    parallel(run_func(args.subject))
+    # parallel(run_func(args.subject))
     #TODO: TEST THE REST AFTER RECON ALL FINISH RUNNING
  
     # now we do something special for fsaverage
