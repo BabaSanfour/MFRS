@@ -26,6 +26,18 @@ def tee_output(command, log_file):
     if proc.wait() != 0:
         raise RuntimeError('Command failed')
 
+def convert_to_mgz(input_file, output_file, fa, log_file=None):
+    """
+    Convert NIfTI file to MGZ format using mri_convert.
+
+    Parameters:
+        input_file (str): Path to the input NIfTI file.
+        output_file (str): Path to the output MGZ file.
+        log_file (str, optional): Path to the log file. If provided, the output will be logged to this file.
+    """
+    log_fname = os.path.join(study_path, 'ds000117', 'my-recon-all.txt')
+    cmd = ['mri_convert', input_file, output_file, "-flip_angle", fa]
+    tee_output(cmd, log_fname)
 
 def process_subject_anat(subject_id, force_recon_all=False):
     subject = f"sub-{subject_id:02d}"
@@ -47,19 +59,30 @@ def process_subject_anat(subject_id, force_recon_all=False):
         print(f'  Recon for {subject} complete in {((time.time() - t0) / 60. / 60.):0.1f} hours')
 
 
-    #TODO: TEST THE REST AFTER RECON ALL FINISH RUNNING
     # Move flash data
-    fnames = glob.glob(os.path.join(study_path, 'ds000117', subject, 'anat',
+    fnames = glob.glob(os.path.join(study_path, 'ds000117', subject, 'ses-mri/anat',
                                '*FLASH*'))
     dst_flash = os.path.join(subjects_dir, subject, 'mri', 'flash')
     if not os.path.isdir(dst_flash):
-        print('  Copying FLASH files')
+        print('  Converting FLASH files')
         os.makedirs(dst_flash)
         for f_src in fnames:
-            f_dst = os.path.join(dst_flash, os.path.basename(f_src))
-            shutil.copy(f_src, f_dst)
+            # Extract run number and echo number from the source file name
+            run_number = int(f_src.split('_run-')[1].split('_')[0])
+            echo_number = int(f_src.split('echo-')[1].split('_')[0])
 
-    # Fix the headers for subject 19
+            # Define a dictionary to map run numbers to prefixes
+            run_prefixes = {1: "mef05", 2: "mef30"}
+            fa = {1: "05", 2: "30"}
+            # Check if the run number is valid and construct the destination file name
+            if run_number in run_prefixes:
+                f_dst = os.path.join(dst_flash, f"{run_prefixes[run_number]}_{echo_number:03d}.mgz")
+            else:
+                raise ValueError("Invalid run number")
+
+            convert_to_mgz(f_src,  f_dst, fa[run_number])
+
+    # Fix the headers for subject 13
     if subject_id == 13:
         print('  Fixing FLASH files for %s' % (subject,))
         fnames = (['mef05_%d.mgz' % x for x in range(7)] +
@@ -76,16 +99,14 @@ def process_subject_anat(subject_id, force_recon_all=False):
             nib.save(fixed, dest_fname)
 
     # Make BEMs
-    if not os.path.isfile("%s/%s/mri/flash/parameter_maps/flash5.mgz"
-                     % (subjects_dir, subject)):
+    if not os.path.isfile(os.path.join(subject_dir, "mri/flash/parameter_maps/flash5.mgz")):
         print('  Converting flash MRIs')
         mne.bem.convert_flash_mris(subject,
-                                   subjects_dir=subjects_dir, verbose=False)
-    if not os.path.isfile("%s/%s/bem/flash/outer_skin.surf"
-                     % (subjects_dir, subject)):
+                                   subjects_dir=subjects_dir, verbose=True)
+    if not os.path.isfile(os.path.join(subject_dir, "bem/flash/outer_skin.surf")):
         print('  Making BEM')
         mne.bem.make_flash_bem(subject, subjects_dir=subjects_dir,
-                               show=False, verbose=False)
+                               show=False, verbose=True)
     for n_layers in (1, 3):
         extra = '-'.join(['5120'] * n_layers)
         fname_bem_surfaces = os.path.join(subjects_dir, subject, 'bem',
@@ -123,9 +144,10 @@ if __name__=="__main__":
     parser = source_rescontruction_parser()
     args = parser.parse_args()
 
-    parallel, run_func, _ = parallel_func(process_subject_anat, n_jobs=-1)
+    parallel, run_func, _ = parallel_func(process_subject_anat, n_jobs=1)
     parallel(run_func(args.subject))
-    
+    #TODO: TEST THE REST AFTER RECON ALL FINISH RUNNING
+ 
     # now we do something special for fsaverage
     fsaverage_src_dir = os.path.join(os.environ['FREESURFER_HOME'], 'subjects', 'fsaverage')
     fsaverage_dst_dir = os.path.join(subjects_dir, 'fsaverage')
