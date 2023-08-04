@@ -194,7 +194,7 @@ if __name__=="__main__":
     parser = source_rescontruction_parser()
     args = parser.parse_args()
 
-    parallel, run_func, _ = parallel_func(process_subject_anat, n_jobs=1)
+    parallel, run_func, _ = parallel_func(process_subject_anat(args.subject), n_jobs=1)
  
     # now we do something special for fsaverage
     fsaverage_src_dir = os.path.join(os.environ['FREESURFER_HOME'], 'subjects', 'fsaverage')
