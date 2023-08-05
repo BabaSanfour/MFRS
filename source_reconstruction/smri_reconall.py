@@ -5,6 +5,7 @@ import glob
 import shutil
 import subprocess
 import numpy as np
+import json
 
 import mne
 import nibabel as nib
@@ -50,7 +51,7 @@ def tee_output(command, log_file):
         raise RuntimeError('Command failed')
 
 
-def convert_to_mgz(input_file, output_file, fa=None):
+def convert_to_mgz(input_file, output_file, fa, tr, te):
     """
     Convert NIfTI file to MGZ format using mri_convert.
 
@@ -72,10 +73,8 @@ def convert_to_mgz(input_file, output_file, fa=None):
     # Define the log file path to store the conversion output
     log_fname = os.path.join(study_path, 'ds000117', 'log.txt')
 
-    # Prepare the mri_convert command with input_file, output_file, and optional flip angle (fa)
-    cmd = ['mri_convert', input_file, output_file]
-    if fa is not None:
-        cmd.extend(["-flip_angle", fa])
+    # Prepare the mri_convert command
+    cmd = ['mri_convert', input_file, output_file, "-flip_angle", fa, "-tr", tr, "-te", te]
 
     # Run the mri_convert command and log the output
     tee_output(cmd, log_fname)
@@ -115,8 +114,7 @@ def process_subject_anat(subject_id):
 
 
     # Move flash data
-    fnames = glob.glob(os.path.join(study_path, 'ds000117', subject, 'ses-mri/anat',
-                               '*FLASH*'))
+    fnames = glob.glob(os.path.join(study_path, 'ds000117', subject, 'ses-mri/anat', '*FLASH*'))
     dst_flash = os.path.join(subjects_dir, subject, 'mri', 'flash')
     if not os.path.isdir(dst_flash):
         print('  Converting FLASH files')
@@ -125,17 +123,13 @@ def process_subject_anat(subject_id):
             # Extract run number and echo number from the source file name
             run_number = int(f_src.split('_run-')[1].split('_')[0])
             echo_number = int(f_src.split('echo-')[1].split('_')[0])
+            run_json_file = os.path.join(study_path, 'ds000117', f'run-{run_number}_echo-{echo_number}_FLASH.json')
+            with open(run_json_file, 'r') as file:
+                run_json = json.load(file)
+            #  construct the destination file name based on run number assign flip angle
+            f_dst = os.path.join(dst_flash, f"mef{run_json['FlipAngle']:02d}_{echo_number:02d}.mgz")
 
-            # Define a dictionary to map run numbers to prefixes
-            run_prefixes = {1: "mef05", 2: "mef30"}
-            fa = {1: "05", 2: "30"}
-            # Check if the run number is valid and construct the destination file name
-            if run_number in run_prefixes:
-                f_dst = os.path.join(dst_flash, f"{run_prefixes[run_number]}_{echo_number:03d}.mgz")
-            else:
-                raise ValueError("Invalid run number")
-
-            convert_to_mgz(f_src,  f_dst, fa[run_number])
+            convert_to_mgz(f_src,  f_dst, run_json["FlipAngle"], run_json["RepetitionTime"], run_json["EchoTime"])
 
     # Fix the headers for subject 13
     if subject_id == 13:
@@ -193,8 +187,8 @@ def process_subject_anat(subject_id):
 if __name__=="__main__":
     parser = source_rescontruction_parser()
     args = parser.parse_args()
-
-    parallel, run_func, _ = parallel_func(process_subject_anat(args.subject), n_jobs=1)
+    
+    parallel, run_func, _ = parallel_func(process_subject_anat(args.subject), n_jobs=-1)
  
     # now we do something special for fsaverage
     fsaverage_src_dir = os.path.join(os.environ['FREESURFER_HOME'], 'subjects', 'fsaverage')
