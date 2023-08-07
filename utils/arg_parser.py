@@ -210,6 +210,34 @@ def source_rescontruction_parser():
         default=1, 
         help="Subject id (default: %(default)s)."
     )
+
+    source.add_argument(
+        "--method", 
+        type=str, 
+        default="MNE", 
+        help="Source Estimation method (default: %(default)s)."
+    )
+
+    source.add_argument(
+        "--overwrite",
+        dest="overwrite", 
+        action="store_true",
+        help="If we want to overwrite existing files.",
+    )
+
+    source.add_argument(
+        "--no-overwrite", 
+        dest="overwrite", 
+        action="store_false",
+        help="Without overwrite."
+    )
+    source.add_argument(
+        '--stimuli_file_name',
+        type=str, 
+        default="Fam",
+        help='File name for stimuli images'
+    )
+
     return parser
 
 
