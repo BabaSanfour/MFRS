@@ -101,29 +101,26 @@ def process_subject_anat(subject_id):
         print(f"\n*** inner skull {inner_skull_fname} surface exists!!!\n")
 
     # Create a BEM model for a subject        
-    for n_layers in (1, 3):
-        extra = '-'.join(['5120'] * n_layers)
-        fname_bem_surfaces = os.path.join(bem_dir, f'{subject}-{extra}-bem.fif')
-        if not os.path.isfile(fname_bem_surfaces):
-            print(f'  Setting up {n_layers}-layer BEM')
-            conductivity = (0.3, 0.006, 0.3)[:n_layers]
-            try:
-                bem_surfaces = mne.make_bem_model(
-                    subject, ico=4, conductivity=conductivity,
-                    subjects_dir=subjects_dir)
-            except RuntimeError as exp:
-                print(f'  FAILED to create {n_layers}-layer BEM for {subject}: {exp.args[0]}')
-                continue
-            # Write BEM surfaces to a fiff file
-            mne.write_bem_surfaces(fname_bem_surfaces, bem_surfaces)
+    fname_bem_surfaces = os.path.join(bem_dir, f'{subject}-5120-bem.fif')
+    if not os.path.isfile(fname_bem_surfaces):
+        print(f'  Setting up 1-layer BEM')
+        conductivity = (0.3, 0.006, 0.3)[:1]
+        try:
+            bem_surfaces = mne.make_bem_model(
+                subject, ico=4, conductivity=conductivity,
+                subjects_dir=subjects_dir)
+        except RuntimeError as exp:
+            print(f'  FAILED to create 1-layer BEM for {subject}: {exp.args[0]}')
+        # Write BEM surfaces to a fiff file
+        mne.write_bem_surfaces(fname_bem_surfaces, bem_surfaces)
 
-        # Create a BEM solution using the linear collocation approach
-        fname_bem = os.path.join(bem_dir, f'{subject}-{extra}-bem-sol.fif')
-        if not os.path.isfile(fname_bem):
-            print(f'  Computing  {n_layers}-layer BEM solution')
-            bem_model = mne.read_bem_surfaces(fname_bem_surfaces)
-            bem = mne.make_bem_solution(bem_model)
-            mne.write_bem_solution(fname_bem, bem)
+    # Create a BEM solution using the linear collocation approach
+    fname_bem = os.path.join(bem_dir, f'{subject}-5120-bem-sol.fif')
+    if not os.path.isfile(fname_bem):
+        print(f'  Computing  1-layer BEM solution')
+        bem_model = mne.read_bem_surfaces(fname_bem_surfaces)
+        bem = mne.make_bem_solution(bem_model)
+        mne.write_bem_solution(fname_bem, bem)
 
     # Create the surface source space
     fname_src = os.path.join(subjects_dir, subject, 'bem', f'{subject}-{spacing}-src.fif')
