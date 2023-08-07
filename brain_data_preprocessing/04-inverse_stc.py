@@ -1,6 +1,7 @@
 import os
 import sys
 import glob
+import pickle
 import numpy as np
 
 import mne
@@ -85,6 +86,24 @@ def morph_source_estimates(fname_mrp, stcs, subject, method, stimuli_file_name):
         morphed.append(morph)
     return morphed
 
+def average_source_estimates_by_ROIs(fname_time_courses, morphed):
+    label_list = mne.read_labels_from_annot("fsaverage", parc="aparc_sub", subjects_dir=subjects_dir)
+    fname_fsaverage_src = os.path.join(subjects_dir , "fsaverage" , "bem" , "fsaverage-5-src.fif")
+    src = mne.read_source_spaces(fname_fsaverage_src)
+
+    time_courses_dict = {}
+
+    for idx, source_estimate in enumerate(morphed):
+        epoch_time_courses = {}
+        # Loop through each label and extract the time course for the source estimate
+        for label in label_list:
+            label_name = label.name
+            time_course = mne.extract_label_time_course(source_estimate, labels=label, src=src, mode='mean')
+            epoch_time_courses[label_name] = time_course
+        time_courses_dict[idx] = epoch_time_courses
+    with open(fname_time_courses, 'wb') as file:
+        pickle.dump(time_courses_dict, file)
+    return time_courses_dict
 
 
 if __name__=="__main__":
@@ -101,6 +120,7 @@ if __name__=="__main__":
     fname_inv = os.path.join(meg_dir, subject, f'{subject}-tsss_10_{args.stimuli_file_name}-meg-{spacing}-inv.fif')
     fname_stc = os.path.join(meg_dir, subject, 'src')
     fname_mrph = os.path.join(meg_dir, subject, 'morph')
+    fname_tcs = os.path.join(meg_dir, subject, f'{subject}-tsss_10_{args.stimuli_file_name}-meg-ROI-time-courses.pkl')
 
     if not os.path.isfile(fname_trans) or args.overwrite:
         coreg = compute_coregistration(fname_trans, subject, args.overwrite)
@@ -150,5 +170,11 @@ if __name__=="__main__":
             morph = mne.read_source_estimate(file_path)
             morphed.append(morph)
 
+    if  not os.path.isdir(fname_tcs) or args.overwrite:
+        morphed = average_source_estimates_by_ROIs(fname_tcs, morphed)
+    else:
+        print(" ========> loading ROI time courses")
+        with open(fname_tcs, 'rb') as file:
+            time_courses_dict = pickle.load(file)
 
 
