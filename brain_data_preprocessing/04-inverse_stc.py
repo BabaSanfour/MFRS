@@ -62,8 +62,27 @@ def compute_source_estimates(fname_stc, epochs, inverse_operator, method, stimul
     )
     os.makedirs(fname_stc)
     for idx, stc in enumerate(stcs):
-        filename = os.path.join(fname_stc, f'{idx}_{args.method}_src_tsss_10_{stimuli_file_name}')
+        filename = os.path.join(fname_stc, f'{idx}_{method}_src_tsss_10_{stimuli_file_name}')
         stc.save(filename)
+    return stcs
+
+def morph_source_estimates(fname_mrp, stcs, subject, method, stimuli_file_name):
+    print(" ========> morphing source estimates")
+    fname_fsaverage_src = os.path.join(subjects_dir , "fsaverage" , "bem" , "fsaverage-5-src.fif")
+    src_to = mne.read_source_spaces(fname_fsaverage_src)
+    os.makedirs(fname_mrp)
+    for idx, stc in enumerate(stcs): 
+        morph = mne.compute_source_morph(
+            stc,
+            subject_from=subject,
+            subject_to="fsaverage",
+            src_to=src_to,
+            subjects_dir=subjects_dir,
+        ).apply(stc)
+        filename = os.path.join(fname_mrp, f'{idx}_{method}_morph_tsss_10_{stimuli_file_name}')
+        morph.save(filename)
+    return morphed
+
 
 
 if __name__=="__main__":
@@ -79,6 +98,7 @@ if __name__=="__main__":
     fname_cov = os.path.join(meg_dir, subject, f'{subject}-tsss_10_{args.stimuli_file_name}-cov.fif')
     fname_inv = os.path.join(meg_dir, subject, f'{subject}-tsss_10_{args.stimuli_file_name}-meg-{spacing}-inv.fif')
     fname_stc = os.path.join(meg_dir, subject, 'src')
+    fname_mrph = os.path.join(meg_dir, subject, 'morph')
 
     if not os.path.isfile(fname_trans) or args.overwrite:
         coreg = compute_coregistration(fname_trans, subject, args.overwrite)
@@ -110,12 +130,23 @@ if __name__=="__main__":
         stcs = compute_source_estimates(fname_stc, epochs, inverse_operator, args.method, args.stimuli_file_name)
     else:
         print(" ========> loading source estimates")
-        file_list = glob.glob(os.path.join(fname_stc, '*Fam-stc.h5'))
+        file_list = glob.glob(os.path.join(fname_stc, f'*{args.method}*.h5'))
         file_list.sort()
         stcs = []
         for file_path in file_list:
             stc = mne.read_source_estimate(file_path)
             stcs.append(stc)
+
+    if  not os.path.isdir(fname_mrph) or args.overwrite:
+        morphed = morph_source_estimates(fname_mrph, stcs, subject, args.method, args.stimuli_file_name)
+    else:
+        print(" ========> loading morphed source estimates")
+        file_list = glob.glob(os.path.join(fname_mrph, f'*{args.method}*.h5'))
+        file_list.sort()
+        morphed = []
+        for file_path in file_list:
+            morph = mne.read_source_morph(file_path)
+            morphed.append(morph)
 
 
 
