@@ -1,6 +1,6 @@
 import os
 import sys
-import pickle
+import glob
 import numpy as np
 
 import mne
@@ -17,7 +17,6 @@ def compute_coregistration(fname_trans, subject, overwrite):
     fname_raw = os.path.join(study_path, f"ds000117/{subject}/ses-meg/meg", f"{subject}_ses-meg_task-facerecognition_run-01_meg.fif")
     info = mne.io.read_info(fname_raw)
     coreg = mne.coreg.Coregistration(info, subject, subjects_dir, fiducials="estimated")
-    coreg.fit_fiducials(verbose=True)
     coreg.fit_icp(n_iterations=6, nasion_weight=2.0, verbose=True)
     coreg.omit_head_shape_points(distance=5.0 / 1000)  # distance is in meters
     coreg.fit_icp(n_iterations=20, nasion_weight=10.0, verbose=True)
@@ -49,7 +48,7 @@ def compute_inverse_problem(fname_inv, epochs, fwd, cov, overwrite):
     mne.minimum_norm.write_inverse_operator(fname_inv, inverse_operator, overwrite=overwrite)
     return inverse_operator
 
-def compute_source_estimates(fname_stc, epochs, inverse_operator, method):
+def compute_source_estimates(fname_stc, epochs, inverse_operator, method, stimuli_file_name):
     print(" ========> computing source estimates")
     snr = 3.0
     lambda2 = 1.0 / snr**2
@@ -61,8 +60,10 @@ def compute_source_estimates(fname_stc, epochs, inverse_operator, method):
         pick_ori='vector',
         verbose=True,
     )
-    with open(fname_stc, 'wb') as f:
-        pickle.dump(stcs, f)
+    os.makedirs(fname_stc)
+    for idx, stc in enumerate(stcs):
+        filename = os.path.join(fname_stc, f'{idx}_{args.method}_src_tsss_10_{stimuli_file_name}')
+        stc.save(filename)
 
 
 if __name__=="__main__":
@@ -76,8 +77,8 @@ if __name__=="__main__":
     fname_epo = os.path.join(meg_dir, subject, f'{subject}-tsss_10_{args.stimuli_file_name}-epo.fif')
     fname_fwd = os.path.join(meg_dir, subject, f'{subject}-meg-eeg-{spacing}-fwd.fif' )
     fname_cov = os.path.join(meg_dir, subject, f'{subject}-tsss_10_{args.stimuli_file_name}-cov.fif')
-    fname_inv = os.path.join(meg_dir, subject, f"{subject}-tsss_10_{args.stimuli_file_name}-meg-{spacing}-inv.fif")
-    fname_stc = os.path.join(meg_dir, subject, f'{args.method}_src_tsss_10_{args.stimuli_file_name}.pkl')
+    fname_inv = os.path.join(meg_dir, subject, f'{subject}-tsss_10_{args.stimuli_file_name}-meg-{spacing}-inv.fif')
+    fname_stc = os.path.join(meg_dir, subject, 'src')
 
     if not os.path.isfile(fname_trans) or args.overwrite:
         coreg = compute_coregistration(fname_trans, subject, args.overwrite)
@@ -105,12 +106,16 @@ if __name__=="__main__":
         print(" ========> loading inverse operatpr")
         inverse_operator = mne.minimum_norm.read_inverse_operator(fname_inv)
 
-    if not os.path.isfile(fname_stc) or args.overwrite:
-        stcs = compute_source_estimates(fname_stc, epochs, inverse_operator, args.method)
+    if  not os.path.isdir(fname_stc) or args.overwrite:
+        stcs = compute_source_estimates(fname_stc, epochs, inverse_operator, args.method, args.stimuli_file_name)
     else:
         print(" ========> loading source estimates")
-        with open(fname_stc, 'rb') as f:
-            stcs = pickle.load(f)
+        file_list = glob.glob(os.path.join(fname_stc, '*Fam-stc.h5'))
+        file_list.sort()
+        stcs = []
+        for file_path in file_list:
+            stc = mne.read_source_estimate(file_path)
+            stcs.append(stc)
 
 
 
