@@ -71,6 +71,7 @@ def morph_source_estimates(fname_mrp, stcs, subject, method, stimuli_file_name):
     fname_fsaverage_src = os.path.join(subjects_dir , "fsaverage" , "bem" , "fsaverage-5-src.fif")
     src_to = mne.read_source_spaces(fname_fsaverage_src)
     os.makedirs(fname_mrp)
+    morphed = []
     for idx, stc in enumerate(stcs): 
         morph = mne.compute_source_morph(
             stc,
@@ -81,6 +82,7 @@ def morph_source_estimates(fname_mrp, stcs, subject, method, stimuli_file_name):
         ).apply(stc)
         filename = os.path.join(fname_mrp, f'{idx}_{method}_morph_tsss_10_{stimuli_file_name}')
         morph.save(filename)
+        morphed.append(morph)
     return morphed
 
 
@@ -145,7 +147,7 @@ if __name__=="__main__":
         file_list.sort()
         morphed = []
         for file_path in file_list:
-            morph = mne.read_source_morph(file_path)
+            morph = mne.read_source_estimate(file_path)
             morphed.append(morph)
 
 
