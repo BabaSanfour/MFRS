@@ -6,15 +6,15 @@ import numpy as np
 sys.path.append('../../MFRS/')
 from utils.config import study_path, meg_dir, cal, ctc
 
-def run_maxwell_filter(subject_id):
+def run_maxwell_filter(subject_id: int) -> None:
     """
     Apply Maxwell filtering to MEG data for a specific subject.
 
-    Parameters:
-    subject_id (int): Subject ID.
+    Args:
+        subject_id (int): Subject ID.
 
     Returns:
-    None
+        None
     """
     subject = f"sub-{subject_id:02d}"
     print(f"processing subject: {subject}")
