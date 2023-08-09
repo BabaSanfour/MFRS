@@ -10,7 +10,7 @@ sys.path.append('../../MFRS/')
 from utils.config import study_path, meg_dir, reject_tmax, map_subjects, N_JOBS, conditions_mapping
 from utils.arg_parser import get_similarity_parser
 
-def run_events(subject_id):
+def run_events(subject_id: int) -> None:
     """
     Process events for a subject's MEG runs.
     
@@ -28,8 +28,7 @@ def run_events(subject_id):
     
     for run in range(1, 7):
         fname_events = os.path.join(meg_dir, subject, f'run_{run:02d}-eve.fif')
-        out_path = os.path.join(study_path, 'ds000117', subject, 'ses-meg/meg')
-        run_fname = os.path.join(out_path, f'sub-{subject_id:02d}_ses-meg_task-facerecognition_run-{run:02d}_meg.fif')
+        run_fname = os.path.join(study_path, 'ds000117', subject, 'ses-meg/meg', f'sub-{subject_id:02d}_ses-meg_task-facerecognition_run-{run:02d}_meg.fif')
         raw = mne.io.read_raw_fif(run_fname, verbose=False)
         
         # Find events
@@ -38,7 +37,7 @@ def run_events(subject_id):
                                  mask_type='not_and', min_duration=0.003)
         
         # Read CSV for events
-        csv_path = os.path.join(out_path, f'sub-{subject_id:02d}_ses-meg_task-facerecognition_run-{run:02d}_events.tsv')
+        csv_path = os.path.join(study_path, 'ds000117', subject, 'ses-meg/meg', f'sub-{subject_id:02d}_ses-meg_task-facerecognition_run-{run:02d}_events.tsv')
         event_csv = read_csv(csv_path, sep='\t')
         
         # Match events and CSV rows
@@ -59,7 +58,7 @@ def run_events(subject_id):
     
     events_disregarded = {"order 1": order1, "order 2": order2}
     
-    with open(os.path.join(out_path, "events_disregarded.json"), "w") as json_file:
+    with open(os.path.join(meg_dir, subject, "events_disregarded.json"), "w") as json_file:
         json.dump(events_disregarded, json_file)
 
 def run_epochs(subject_id, name, tsss, fmin=0.5, fmax=4, frequency_band=None):
