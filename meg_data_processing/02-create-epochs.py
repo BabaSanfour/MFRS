@@ -1,50 +1,66 @@
 import os
 import sys
 import mne
+import json
 import numpy as np
 from pandas import read_csv
 from mne.parallel import parallel_func
 
 sys.path.append('../../MFRS/')
-from utils.config import study_path, meg_dir, reject_tmax, map_subjects, N_JOBS
+from utils.config import study_path, meg_dir, reject_tmax, map_subjects, N_JOBS, conditions_mapping
 from utils.arg_parser import get_similarity_parser
 
-def run_events(subject_id, selected, name, conditions_mapping):
-    subject = f"sub-{subject_id :02d}" 
-    print(f"processing subject: {subject}")
-    in_path = os.path.join(study_path, 'ds000117', subject, 'ses-meg/meg')
-    out_path = os.path.join(meg_dir, subject)
+def run_events(subject_id):
+    """
+    Process events for a subject's MEG runs.
+    
+    Args:
+        subject_id (int): Subject ID.
+    
+    Returns:
+        None
+    """
+    subject = f"sub-{subject_id:02d}"
+    print(f"Processing subject: {subject}")
+    
+    existing_order1 = []
+    existing_order2 = []
+    
     for run in range(1, 7):
-        run_fname = os.path.join(in_path, f'sub-{subject_id :02d}_ses-meg_task-facerecognition_run-{run :02d}_meg.fif')
-        raw = mne.io.read_raw_fif(run_fname)
-        mask = 4096 + 256  # mask for excluding high order bits
-        events = mne.find_events(raw, stim_channel='STI101',
-                                 consecutive='increasing', mask=mask,
+        fname_events = os.path.join(meg_dir, subject, f'run_{run:02d}-eve.fif')
+        out_path = os.path.join(study_path, 'ds000117', subject, 'ses-meg/meg')
+        run_fname = os.path.join(out_path, f'sub-{subject_id:02d}_ses-meg_task-facerecognition_run-{run:02d}_meg.fif')
+        raw = mne.io.read_raw_fif(run_fname, verbose=False)
+        
+        # Find events
+        mask = 4096 + 256
+        events = mne.find_events(raw, stim_channel='STI101', consecutive='increasing', mask=mask,
                                  mask_type='not_and', min_duration=0.003)
-        print(f"S {subject} - R {run}")
-        csv_path = os.path.join(in_path, f'sub-{subject_id :02d}_ses-meg_task-facerecognition_run-{run :02d}_events.tsv')
+        
+        # Read CSV for events
+        csv_path = os.path.join(out_path, f'sub-{subject_id:02d}_ses-meg_task-facerecognition_run-{run:02d}_events.tsv')
         event_csv = read_csv(csv_path, sep='\t')
-        # select epochs depending on stimuli type in csv file
-        not_selected=[stim_type for stim_type in ['Famous', 'Unfamiliar', 'Scrambled'] if stim_type not in selected[0]]
-        for stim_type in not_selected:
-            event_csv=event_csv[event_csv['stim_type']!=stim_type]
-
-        # select epochs depending on stimuli number in events list
-        not_selected=[event_numb for event_numb in [5,6,7,13,14,15,17,18,19] if event_numb not in selected[1]]
-        events = np.array([event for event in events if event[2] not in not_selected])
-        # fix mismatch between csv file and events from raw file.
-        while len(event_csv) != len(events):
-            assert len(events) >= len(event_csv), "The code removes items from events while this condition requires the opposite"
-            for i in range(len(events)):
-                if i >= len(event_csv) or events[i][2] != event_csv.iloc[i, 4]:
-                    events = np.delete(events, i, axis=0)
-                    break
-        #Select only one trial per condition
-        events[:, 2] = [conditions_mapping[event_csv.iloc[i, 5]] for i in range(len(events))]
-        unique = []
-        events = np.array([events[i] for i in range(len(events)) if events[i][2] not in unique and not unique.append(events[i][2])])
-        fname_events = os.path.join(out_path, f'run_{run :02d}_{name}-eve.fif')
+        
+        # Match events and CSV rows
+        events = [event for event in events if event[2] in event_csv['trigger'].values]
+        
+        # Add order of trial and change event name
+        events[:, 1] = [1 if row['trigger'] in [5, 13, 17] else 2 for _, row in event_csv.iterrows()]
+        events[:, 2] = [conditions_mapping[row['stim_file']] for _, row in event_csv.iterrows()]
+        
+        # Get list of events (by order) that were disregarded
+        existing_order1.extend(event_csv.loc[i, 'stim_file'] for i, row in event_csv.iterrows() if row['trigger'] in [5, 13, 17])
+        existing_order2.extend(event_csv.loc[i, 'stim_file'] for i, row in event_csv.iterrows() if row['trigger'] not in [5, 13, 17])
+        
         mne.write_events(fname_events, events, overwrite=True)
+    
+    order1 = [name for name in list(conditions_mapping.values()) if name not in existing_order1]
+    order2 = [name for name in list(conditions_mapping.values()) if name not in existing_order2]
+    
+    events_disregarded = {"order 1": order1, "order 2": order2}
+    
+    with open(os.path.join(out_path, "events_disregarded.json"), "w") as json_file:
+        json.dump(events_disregarded, json_file)
 
 def run_epochs(subject_id, name, tsss, fmin=0.5, fmax=4, frequency_band=None):
     subject = f"sub-{subject_id :02d}"
@@ -96,7 +112,7 @@ def run_epochs(subject_id, name, tsss, fmin=0.5, fmax=4, frequency_band=None):
     print('  Epoching')
     events_id=[events[i][2] for i in range(len(events))]
     epochs = mne.Epochs(raw, events, events_id, 0, 0.8, proj=True,
-                        picks=picks, baseline=None, preload=True,
+                        picks=picks, baseline=(-0.2, 0.0), preload=True,
                         reject=None, reject_tmax=reject_tmax, on_missing='warn')
 
 
@@ -113,33 +129,23 @@ if __name__ == '__main__':
 
     conditions_mapping ={}
     for i in range (1,151):
-        conditions_mapping["meg/f%03d.bmp"%i]=i
-        conditions_mapping["meg/u%03d.bmp"%i]=i+150
-        conditions_mapping["meg/s%03d.bmp"%i]=i+300
-    if args.stimuli_file_name == "FamUnfam":
-        selected = [["Famous", "Unfamiliar"], [5,6,7, 13,14,15,]]
-    elif args.stimuli_file_name == "FamScram":
-        selected = [["Famous", "Scrambled"], [5,6,7, 17,18,19]]
-    elif args.stimuli_file_name == "Fam":
-        selected = [["Famous"], [5,6,7, ]]
-    elif args.stimuli_file_name == "Unfam":
-        selected = [["Unfamiliar"],[13,14,15,] ]
-    else:
-        selected = [["Scrambled"], [17,18,19]]
-
+        conditions_mapping[f"meg/f{i:03d}.bmp"]=str(i)
+        conditions_mapping[f"meg/u{i:03d}.bmp"]=str(i+150)
+        conditions_mapping[f"meg/s{i:03d}.bmp"]=str(i+300)
     # Get events
     parallel, run_func, _ = parallel_func(run_events, n_jobs=N_JOBS)
-    parallel(run_func(subject_id, selected, args.stimuli_file_name, conditions_mapping) for subject_id in range(1, 17))
+    parallel(run_func(subject_id) for subject_id in range(1, 17))
 
     # Create epochs
     parallel, run_func, _ = parallel_func(run_epochs, n_jobs=max(N_JOBS // 4, 1))
     parallel(run_func(subject_id, args.stimuli_file_name, 10) for subject_id in range(1, 17))
 
-    FREQ_BANDS = {"delta": [1.5, 4.5],
+    FREQ_BANDS = {
               "theta": [4.5, 8.5],
               "alpha": [8.5, 15.5],
               "beta": [15.5, 30],
-              "Gamma": [30, 70]}
+              "Gamma1": [30, 60],
+              "Gamma2": [60, 90]}
 
     subjects_ids=[i for i in range(1,17)]
     # Create epochs for power bands
