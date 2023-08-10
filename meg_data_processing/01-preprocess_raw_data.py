@@ -30,7 +30,7 @@ def run_maxwell_filter(subject_id: int) -> None:
     for run in range(1, 7):
         raw_out = os.path.join(meg_dir, subject, f'run_{run:02d}_filt_raw.fif')
         if os.path.exists(raw_out):
-            print(f"The file {os.path.baseline(raw_out)} already exists!")
+            print(f"The file {os.path.basename(raw_out)} already exists!")
         else:
             raw_in = os.path.join(study_path, 'ds000117', subject, 
                                 'ses-meg/meg', f'sub-{subject_id:02d}_ses-meg_task-facerecognition_run-{run:02d}_meg.fif')
