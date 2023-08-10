@@ -15,7 +15,7 @@ from distutils.version import LooseVersion
 # Let's set the path where the data is downloaded and stored.
 sys.path.append('../../MFRS')
 user = os.path.expanduser('~')
-scratch_folder = os.path.join(user, "scratch")
+scratch_folder = os.path.join(user, "Projects")
 if not os.path.isdir(scratch_folder):
     print("Scratch folder does not exists!!!")
     print("Creating Scratch folder.")
@@ -85,6 +85,11 @@ map_subjects = {1: 'subject_02', 2: 'subject_03', 3: 'subject_06',
                 13: 'subject_19', 14: 'subject_23', 15: 'subject_24',
                 16: 'subject_25'}
 
+conditions_mapping ={}
+for i in range (1,151):
+    conditions_mapping[f"meg/f{i:03d}.bmp"]=str(i)
+    conditions_mapping[f"meg/u{i:03d}.bmp"]=str(i+150)
+    conditions_mapping[f"meg/s{i:03d}.bmp"]=str(i+300)
 
 ###############################################################################
 # Subjects that are known to be bad from the publication
@@ -154,7 +159,7 @@ channels_grad1=raw.copy().pick_types(meg='planar1').info.ch_names
 channels_grad2=raw.copy().pick_types(meg='planar2').info.ch_names
 sensors_position=raw.copy().pick_types(meg='mag').info
 out_file = os.path.join(meg_dir, "RDMs_FamUnfam_16-subject_1-sub_opt1-chl_opt.npy")
-meg_rdm = np.load(out_file)
+# meg_rdm = np.load(out_file)
 
 # for plotting
 mask_params=dict(marker='*', markerfacecolor='w', markeredgecolor='k',
