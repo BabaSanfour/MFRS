@@ -2,6 +2,7 @@ import os
 import sys
 import mne
 import numpy as np
+from mne.parallel import parallel_func
 
 sys.path.append('../../MFRS/')
 from utils.config import study_path, meg_dir, cal, ctc
@@ -80,6 +81,5 @@ def run_maxwell_filter(subject_id: int) -> None:
 
 if __name__ == "__main__":
 
-    subjects_ids = list(range(1, 17))
-    for subject_id in subjects_ids:
-        run_maxwell_filter(subject_id)
+    parallel, run_func, _ = parallel_func(run_maxwell_filter, n_jobs=-1)
+    parallel(run_func(subject_id) for subject_id in list(range(1, 17)))
