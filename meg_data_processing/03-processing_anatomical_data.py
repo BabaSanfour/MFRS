@@ -1,11 +1,10 @@
 import os
 import sys
 import time
-import glob
 import shutil
 import subprocess
 import numpy as np
-import json
+from typing import List
 
 import mne
 import nibabel as nib
@@ -15,13 +14,13 @@ sys.path.append('../../MFRS/')
 from utils.config import study_path, subjects_dir, spacing
 from utils.arg_parser import source_rescontruction_parser
 
-def tee_output(command, log_file):
+def tee_output(command: List[str], log_file: str) -> None:
     """
     Run a command and log the output to a file.
 
     Parameters:
     -----------
-    command : list
+    command : List[str]
         List of strings representing the command and its arguments to be executed.
     log_file : str
         File path to log the output of the command.
@@ -51,7 +50,7 @@ def tee_output(command, log_file):
         raise RuntimeError('Command failed')
 
 
-def process_subject_anat(subject_id):
+def process_subject_anat(subject_id: int) -> None:
     """
     Process the anatomical data for a subject using recon-all and create BEM and source space.
 
