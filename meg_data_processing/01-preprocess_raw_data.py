@@ -2,10 +2,15 @@ import os
 import sys
 import mne
 import numpy as np
+import logging
 from mne.parallel import parallel_func
 
 sys.path.append('../../MFRS/')
 from utils.config import study_path, meg_dir, cal, ctc
+
+# Set up logging
+logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
+logger = logging.getLogger(__name__)
 
 def run_maxwell_filter(subject_id: int) -> None:
     """
@@ -18,7 +23,7 @@ def run_maxwell_filter(subject_id: int) -> None:
         None
     """
     subject = f"sub-{subject_id:02d}"
-    print(f"processing subject: {subject}")
+    logger.info(f"Processing subject: {subject}")
 
     st_duration=10
     #To match analysis in previous studies: transform to the head position of the 4th run
@@ -81,5 +86,9 @@ def run_maxwell_filter(subject_id: int) -> None:
 
 if __name__ == "__main__":
 
+    logger.info("Running Maxwell filter for all subjects...")
+
     parallel, run_func, _ = parallel_func(run_maxwell_filter, n_jobs=-1)
     parallel(run_func(subject_id) for subject_id in list(range(1, 17)))
+
+    logger.info("Maxwell filtering completed for all subjects.")

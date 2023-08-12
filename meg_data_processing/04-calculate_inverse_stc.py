@@ -18,8 +18,24 @@ from utils.arg_parser import source_rescontruction_parser
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-def setup_filenames(subject, spacing):
-    # Define filenames
+def setup_filenames(subject: str, spacing: str) -> dict:
+    """
+    Set up filenames for various files related to source reconstruction.
+
+    Parameters:
+    -----------
+    subject : str
+        Subject identifier.
+    spacing : str
+        The spacing to be used for source space.
+    stimuli_file_name : str
+        Name of the stimuli file.
+
+    Returns:
+    --------
+    filenames : dict
+        Dictionary containing file paths for various related files.
+    """
     filenames = {
         'trans': os.path.join(subjects_dir, f'{subject}/{subject}-trans.fif'),
         'src': os.path.join(subjects_dir, subject, 'bem', f'{subject}-{spacing}-src.fif'),
@@ -35,6 +51,10 @@ def setup_filenames(subject, spacing):
     return filenames
 
 def main():
+    """
+    Main function to perform source reconstruction pipeline.
+    Reads command line arguments, processes subject data, and performs source reconstruction steps.
+    """
     parser = source_rescontruction_parser()
     args = parser.parse_args()
     subject = f"sub-{args.subject:02d}"
@@ -42,9 +62,6 @@ def main():
 
     if not os.path.isfile(filenames['trans']) or args.overwrite:
         coreg = compute_coregistration(filenames['trans'], subject, args.overwrite)
-    else:
-        logger.info("Loading registration matrix")
-        coreg = mne.read_trans(filenames['trans'])
 
     epochs = mne.read_epochs(filenames['epo'], preload=True)
 
@@ -84,10 +101,6 @@ def main():
 
     if not os.path.isfile(filenames['tcs']) or args.overwrite:
         morphed = average_source_estimates_by_ROIs(filenames['tcs'], morphed)
-    else:
-        logger.info("Loading ROI time courses")
-        with open(filenames['tcs'], 'rb') as file:
-            time_courses_dict = pickle.load(file)
 
 def compute_coregistration(fname_trans: str, subject: str, overwrite: bool = False) -> mne.coreg.Coregistration:
     """
