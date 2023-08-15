@@ -1,0 +1,156 @@
+import os
+import cv2
+import dlib
+import numpy as np
+from tqdm import tqdm
+import matplotlib.pyplot as plt
+
+import sys
+sys.path.append('../../MFRS')
+
+from utils.config import study_path
+
+detector = dlib.get_frontal_face_detector()
+predictor = dlib.shape_predictor("shape_predictor_68_face_landmarks.dat")
+face_encoder = dlib.face_recognition_model_v1("dlib_face_recognition_resnet_model_v1.dat")
+
+#utils
+def face_distance(face_encodings: np.array, face_to_compare: np.array):
+    """
+    Calculate the Euclidean distance between two face encodings.
+
+    Parameters:
+    ----------
+    face_encodings : np.ndarray
+        The known face encodings to compare against.
+    face_to_compare : np.ndarray
+        The face encoding to compare.
+
+    Returns:
+    -------
+    distance : float
+        The Euclidean distance between the face encodings.
+    """
+    return np.linalg.norm(face_encodings - face_to_compare)
+
+
+def compare_faces(known_face_encodings: list, face_encoding_to_check: list, tolerance: int = 0.6):
+    """
+    Compare a face encoding to a list of known face encodings.
+
+    Parameters:
+    ----------
+    known_face_encodings : list
+        List of known face encodings.
+    face_encoding_to_check : np.ndarray
+        Face encoding to compare.
+    tolerance : float, optional
+        Tolerance threshold for considering a match, by default 0.6.
+
+    Returns:
+    -------
+    comparison_result : list
+        List containing the comparison result (True or False) and the distance.
+    """
+    torf = (face_distance(known_face_encodings, face_encoding_to_check) <= tolerance)
+    dis = np.round(face_distance(known_face_encodings, face_encoding_to_check), 2)
+    return [torf, dis]
+
+
+if __name__ == '__main__':
+
+    sitmuli_colors = os.path.join(study_path, 'web_scrapping_stimuli/')
+    pictures_pathes = sorted(
+        [
+            os.path.join(sitmuli_colors, sname)
+            for sname in os.listdir(sitmuli_colors)
+        ]
+    )
+    #all data is a subset of celebA but with only 5 pictures for each id
+    all_data = os.path.join(study_path, 'all_data/')
+    all_data = sorted(
+        [
+            os.path.join(all_data, sname)
+            for sname in os.listdir(all_data)
+        ]
+    )
+
+    if os.path.exists()==False:
+        pictures_loop_generator = tqdm(all_data)
+        final_list = []
+        for picture in pictures_loop_generator:
+            img = cv2.imread(picture)
+            img_gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+            img_face = detector(img_gray)[0]
+
+            landmarks = predictor(img_gray, img_face)
+            face_embedding = np.array(face_encoder.compute_face_descriptor(img_face, landmarks, num_jitters=1))
+            final_list.append(face_embedding)
+
+        np.save("celebA_embeddings.npy", np.array(final_list))
+    else:
+        final_list = list(np.load("celebA_embeddings.npy"))
+
+    for id in range(150):
+        img = cv2.imread(pictures_pathes[id])
+        gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+        face = detector(gray)[0]
+        landmarks = predictor(gray, face)
+        main_face_embedding = np.array(face_encoder.compute_face_descriptor(im, landmarks, num_jitters=1))
+
+        list_comp = []
+        for i, list_of_face_embedding in enumerate(final_list):
+            if len(list_of_face_embedding)==0:
+                list_comp.append([i, -1])
+                continue
+            listof = compare_faces(list_of_face_embedding[0], main_face_embedding, tolerance=0.6)
+            list_comp.append(listof)
+        
+        min_score, max_score = 0.0, 0.5
+        selected=[]
+        for i, item in enumerate(list_comp):
+            if type(item[0])==int:
+                continue
+            if  item[1]>=min_score and item[1]<max_score:
+                selected.append(i)
+
+        # plot pictures and verify 
+        fig, axes = plt.subplots(len(selected),1, figsize=(15, len(selected)*5))
+        for i in range(len(selected)):
+            im=plt.imread(all_data[selected[i]])
+            axes[i].imshow(im)
+        
+        # running this script and double checking gave the following list:
+        # key: id in stiumili, value: index in all_data
+        matched = {4:[12951, 33166, 15094],
+          5: [9048],
+          8: [5364, 3574, 15500],
+          11:[16119],
+          16: [6203],
+          19: [2910, 15246, 31560 ],
+          20: [7522],
+          29: [9819, 25086],
+           36: [46476],
+           101: [34937],
+           102: [25683],
+           105:[20983],
+           107:[31166],
+           109: [25198, 10701],
+           114: [19497],
+           123: [33688], 
+           125: [6155],
+           130: [45260, 48905],
+           136: [39948],
+           138: [41123],
+           140: [28371],
+           143: [11257],
+           52: [1007],
+           53: [44424],
+           57: [2926],
+           62: [1105],
+           65: [6577],
+           68: [5539],
+           69: [23033],
+           80: [27486],
+           81: [17062],
+           }
