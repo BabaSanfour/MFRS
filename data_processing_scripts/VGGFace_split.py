@@ -1,92 +1,90 @@
-"""
-    For each folder: a folder contains all different pictures for one identity
-    - We take all the pictures and split them into three classes: Train, Valid and Test.
-    - Create data repartitions folders and copy pictures into train/id_picture valid/id_picture test/id_picture (generate new ids)
-"""
 import os
 import sys
 import glob
 import shutil
-import random
 import numpy as np
+
+# Importing from the utils folder
 sys.path.append("../../MFRS")
 from utils.config import study_path
-fold = os.path.join(study_path, "VGGface2_HQ_cropped/VGGface2_HQ_cropped/*")
-new_fold = os.path.join(study_path, "VGGface2/")
+from utils.utils import split
 
-def split(a,b,c):
+# Define paths
+original_folders = os.path.join(study_path, "VGGface2_HQ_cropped/VGGface2_HQ_cropped/*")
+new_folder_base = os.path.join(study_path, "VGGface2/")
+
+def assign_class(num_files: int) -> dict:
     """
-        Give a random class for each picture
+    Assign a class to each picture based on repartition counts.
+
+    Args:
+    ----------
+    num_files : int
+        Number of files to assign classes to.
+
+    Returns:
+    -------
+    class_dic : dict
+        Dictionary containing index as key and assigned class as value.
     """
-    if (a<0 or b<0 or c<0):
-        print('We have a problem: code 1 ')
-    elif(a==0 and b==0 and c==0):
-        print('We have a problem: code 2 ')
-        return -1
-    elif (a==0 and b==0):
-        return 2
-    elif(a==0 and c==0):
-        return 1
-    elif (b==0 and c==0):
-        return 0
-    elif (b==0):
-        return 2*random.randrange(2)
-    elif(c==0):
-        return random.randrange(2)
-    elif (a==0):
-        return random.randrange(2)+1
-    else:
-        return random.randrange(3)
+    train_count = int(np.around(num_files * 0.7))
+    test_count = int(np.around(num_files * 0.15))
+    valid_count = num_files - test_count - train_count
+    counts = [train_count, valid_count, test_count]
 
-
-def assign_class(list):
-    number_files = len(list)
-    # get the list with number of occurence for a picture in each class
-    train_count = int(np.around(number_files*0.7))
-    test_count = int(np.around(number_files*0.15))
-    valid_count = number_files - test_count - train_count
-    counts= [train_count, valid_count, test_count]
-    # assign the class randomly and add it to csv file
     class_dic = {}
-    for picture in list:
-        picture_class=split(counts[0],counts[1],counts[2])
-        counts[picture_class]=counts[picture_class]-1
-        class_dic[picture]=picture_class
+    for index in range(num_files):
+        picture_class = split(counts[0], counts[1], counts[2])
+        counts[picture_class] -= 1
+        class_dic[index] = picture_class
     return class_dic
 
-def create_repartitions(folder, new_folder, class_dic):
-    # Create data repartitions folders and copy pictures
+def create_repartitions(src_folder: str, dest_folder: str, class_dic: dict) -> None:
+    """
+    Create data repartitions folders and copy pictures.
 
-    train_folder=new_fold + 'train/%s/'%(new_folder)
-    test_folder=new_fold + 'test/%s/'%(new_folder)
-    valid_folder=new_fold + 'valid/%s/'%(new_folder)
+    Args:
+    ----------
+    src_folder : str
+        Source folder containing pictures to be repartitioned.
+    dest_folder : str
+        Destination folder where repartitioned data will be stored.
+    class_dic : dict
+        Dictionary containing index as key and assigned class as value.
 
-    if not os.path.exists(train_folder):
-        os.makedirs(train_folder)
-    if not os.path.exists(test_folder):
-        os.makedirs(test_folder)
-    if not os.path.exists(valid_folder):
-        os.makedirs(valid_folder)
-    for picture, cl in class_dic.items():
+    Returns:
+    -------
+    None
+    """
+    train_folder = os.path.join(dest_folder, 'train')
+    test_folder = os.path.join(dest_folder, 'test')
+    valid_folder = os.path.join(dest_folder, 'valid')
 
-        im=os.path.join(folder, picture)
+    os.makedirs(train_folder, exist_ok=True)
+    os.makedirs(test_folder, exist_ok=True)
+    os.makedirs(valid_folder, exist_ok=True)
+
+    for index, cl in class_dic.items():
+        src_picture = os.path.join(src_folder, str(index))
         if cl == 0:
-            shutil.move(im, train_folder)
+            dest_picture = os.path.join(train_folder, str(index))
         elif cl == 1:
-            shutil.move(im, valid_folder)
-        else :
-            shutil.move(im, test_folder)
-
+            dest_picture = os.path.join(valid_folder, str(index))
+        else:
+            dest_picture = os.path.join(test_folder, str(index))
+        
+        shutil.move(src_picture, dest_picture)
 
 if __name__ == '__main__':
-    # run through all the csv files in files/csv_files
-    i=0
-    for folder in glob.glob(fold):
-        list = os.listdir(folder) # list of pictures in an id folder
-        # Assign a class to each picture
-        class_dic=assign_class(list)
-        #create new id
-        new_folder = '0' * (4-len(str(i))) + str(i)
-        # Create data repartitions folders and copy pictures
-        create_repartitions(folder,new_folder, class_dic)
-        i+=1
+    i = 0
+    for folder in glob.glob(original_folders):
+        picture_list = os.listdir(folder)
+        num_files = len(picture_list)
+
+        class_dic = assign_class(num_files)
+        new_folder_name = '0' * (4 - len(str(i))) + str(i)
+        new_folder_path = os.path.join(new_folder_base, new_folder_name)
+
+        create_repartitions(folder, new_folder_path, class_dic)
+        i += 1
+
