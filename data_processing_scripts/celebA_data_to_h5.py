@@ -1,23 +1,3 @@
-"""
-    For each txt file:
-    - Create a HDF5 file with pictures and their IDs.
-    For each picture:
-    - Get face bounding box by landmarks points.
-    - Crop face to include only face, forehead, chin and part of the hair.
-    ---------------
-    Input Files:
-    ---------------
-    read files in files/txt_files:       24 txt file with pictures name and id
-    ---------------
-    Output Files:
-    ---------------
-    24 HDF5 files in data/MFRS_data/HDF5_files: 3 HDF5 files for each data repartition set: Train, valid and test classes
-    Parameters:
-    images       images array, (N, 224, 224, 1) to be stored
-    labels       labels array, (N, ) to be stored
-
-"""
-
 import os
 import cv2
 import sys
@@ -27,47 +7,58 @@ import datetime
 import numpy as np
 import torchvision
 import face_alignment
-from PIL import Image, ImageOps
+from typing import Tuple, TextIO
 
-dic = {30:1000}
+from PIL import Image, ImageOps
+import logging
 
 sys.path.append("../../MFRS")
 from utils.config import proj_path, study_path
 
+# Configure logging
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+logger = logging.getLogger(__name__)
 
-def get_box_by_facial_landmarks(
-        landmarks: np.ndarray,
-        additive_coefficient: float = 0.1) -> list:
+
+def get_box_by_facial_landmarks(landmarks: np.ndarray, additive_coefficient: float = 0.1) -> list:
     """
-    Configure face bounding box by landmarks points
+    Calculate face bounding box based on facial landmarks.
+
     Args:
-        landmarks: landmarks points in int32 datatype and XY format
-        additive_coefficient: value of additive face area on box
+        landmarks (np.ndarray): Facial landmarks points in int32 datatype and XY format.
+        additive_coefficient (float, optional): Value of additive face area on box. Default is 0.1.
 
     Returns:
-        List with bounding box data in XYXY format
+        list: Bounding box data in XYXY format [x_min, y_min, x_max, y_max].
     """
+    # Calculate minimum and maximum x, y coordinates
     x0 = landmarks[..., 0].min()
     y0 = landmarks[..., 1].min()
-
     x1 = landmarks[..., 0].max()
     y1 = landmarks[..., 1].max()
 
+    # Calculate delta x and delta y based on the additive_coefficient
     dx = int((x1 - x0) * additive_coefficient)
     dy = int((y1 - y0) * additive_coefficient * 2)
 
-    return [
-        x0 - dx // 2, y0 - dy  ,
-        x1 + dx // 2, y1 + dy // 3]
+    # Calculate bounding box coordinates [x_min, y_min, x_max, y_max]
+    box = [
+        x0 - dx // 2, y0 - dy,
+        x1 + dx // 2, y1 + dy // 3
+    ]
+    return box
+
 
 def create_square_crop_by_detection(frame: np.ndarray, box: list) -> np.ndarray:
     """
-    Rebuild detection box to square shape
+    Create a square crop from the input image based on the given detection box.
+
     Args:
-        frame: rgb image in np.uint8 format
-        box: list with follow structure: [x1, y1, x2, y2]
+        frame (np.ndarray): RGB image in np.uint8 format.
+        box (list): List specifying the detection box in the format [x1, y1, x2, y2].
+
     Returns:
-        Image crop by box with square shape
+        np.ndarray: Cropped image with a square shape.
     """
     w = box[2] - box[0]
     h = box[3] - box[1]
@@ -77,7 +68,7 @@ def create_square_crop_by_detection(frame: np.ndarray, box: list) -> np.ndarray:
     exist_box = []
     pads = []
 
-    # y top
+    # Calculate valid y range (top)
     if cy - radius >= 0:
         exist_box.append(cy - radius)
         pads.append(0)
@@ -85,7 +76,7 @@ def create_square_crop_by_detection(frame: np.ndarray, box: list) -> np.ndarray:
         exist_box.append(0)
         pads.append(-(cy - radius))
 
-    # y bottom
+    # Calculate valid y range (bottom)
     if cy + radius >= frame.shape[0]:
         exist_box.append(frame.shape[0] - 1)
         pads.append(cy + radius - frame.shape[0] + 1)
@@ -93,7 +84,7 @@ def create_square_crop_by_detection(frame: np.ndarray, box: list) -> np.ndarray:
         exist_box.append(cy + radius)
         pads.append(0)
 
-    # x left
+    # Calculate valid x range (left)
     if cx - radius >= 0:
         exist_box.append(cx - radius)
         pads.append(0)
@@ -101,7 +92,7 @@ def create_square_crop_by_detection(frame: np.ndarray, box: list) -> np.ndarray:
         exist_box.append(0)
         pads.append(-(cx - radius))
 
-    # x right
+    # Calculate valid x range (right)
     if cx + radius >= frame.shape[1]:
         exist_box.append(frame.shape[1] - 1)
         pads.append(cx + radius - frame.shape[1] + 1)
@@ -109,10 +100,13 @@ def create_square_crop_by_detection(frame: np.ndarray, box: list) -> np.ndarray:
         exist_box.append(cx + radius)
         pads.append(0)
 
+    # Crop the valid region from the frame
     exist_crop = frame[
-                 exist_box[0]:exist_box[1],
-                 exist_box[2]:exist_box[3]
-                 ]
+        exist_box[0]:exist_box[1],
+        exist_box[2]:exist_box[3]
+    ]
+    
+    # Pad the cropped image to make it square
     croped = np.pad(
         exist_crop,
         (
@@ -124,99 +118,139 @@ def create_square_crop_by_detection(frame: np.ndarray, box: list) -> np.ndarray:
     )
     return croped
 
-def store_many_hdf5(images, labels, folder):
-    """ Stores an array of images to HDF5.
-        Parameters:
-        ---------------
-        images       images array, (N, 224, 224, 1) to be stored
-        labels       labels array, (N, ) to be stored
+
+def store_many_hdf5(images: np.ndarray, labels: np.ndarray, file_name: str) -> None:
+    """
+    Stores an array of images to HDF5.
+
+    Args:
+    images: np.ndarray
+        Images array, (N, 224, 224, 1) to be stored.
+    labels: np.ndarray
+        Labels array, (N, ) to be stored.
+    file_name: str
+        file name for HDF5 storage.
     """
     hdf5_dir = os.path.join(study_path, "hdf5/")
     if not os.path.exists(hdf5_dir):
         os.makedirs(hdf5_dir)
+
     # Create a new HDF5 file
-    file = h5py.File("%s%s.h5"%(hdf5_dir,"new_"+folder), "w")
-    print("{} h5 file created".format(folder))
+    file = h5py.File(os.path.join(hdf5_dir, f"{file_name}.h5"), "w")
+    logger.info(f"{file} h5 file created")
 
     # Create a dataset in the file
-    dataset = file.create_dataset("images", np.shape(images), data=images) #h5py.h5t.STD_U8BE,
+    dataset = file.create_dataset("images", np.shape(images), data=images)  # h5py.h5t.STD_U8BE,
     metaset = file.create_dataset("meta", np.shape(labels), data=labels)
     file.close()
-    print("{} h5 is ready".format(folder))
+    logger.info(f"{file_name} h5 is ready")
 
 
-def transform_picture(img_sample, landmarks, resize, greyscale=True):
-    """ Crop an image and transform it into grayscale.
-        Parameters:
-        ---------------
-        img_sample       image to process
-        landmarks        landmarks of the face
+def transform_picture(img_sample: np.array, landmarks: np.array, resize: torch, greyscale: bool = True):
     """
-    # if we detected landmarks we crop the picture
-    if landmarks != None:
+    Crop an image based on landmarks and transform it into grayscale.
+
+    Args:
+        img_sample (np.ndarray): Image to process.
+        landmarks (np.ndarray or None): Landmarks of the face or None.
+        resize (function): Function to resize the image.
+        greyscale (bool): Flag to determine whether to convert to grayscale.
+
+    Returns:
+        np.ndarray: Transformed image.
+    """
+    # If landmarks are detected, crop the picture
+    if landmarks is not None:
         landmarks = np.floor(landmarks[0]).astype(np.int32)
         face_box = get_box_by_facial_landmarks(landmarks)
         img_sample = create_square_crop_by_detection(img_sample, face_box)
 
-    # Otherwise we transform it directly to greyscale
+    # Convert to PIL Image
     PIL_image = Image.fromarray(img_sample.astype('uint8'), 'RGB')
+
+    # Convert to grayscale if greyscale flag is True
     if greyscale:
         PIL_image = ImageOps.grayscale(PIL_image)
+
+    # Resize the image using the provided resize function
     sample = np.asarray(resize(PIL_image), dtype=np.uint8)
     return sample
 
+def make_array(pictures_dir: str, identity_file: TextIO, device: str, size: Tuple[int, int] = (224, 224)) -> Tuple[np.ndarray, np.ndarray]:
+    """
+    Create arrays of images and corresponding labels.
 
-def make_array(folder, identity_file, device, size=(224,224)):
-    # pictures_dir = os.path.join(study_path, folder)
-    pictures_dir = "new_" + folder
+    Args:
+        pictures_dir (str): Path to the image folder.
+        identity_file: File containing image identities.
+        device: Device to use for face alignment.
+        size (tuple): Desired size for the images.
+        logger: Logger instance for logging messages.
+
+    Returns:
+        np.ndarray: Array of images.
+        np.ndarray: Array of labels.
+    """
+
+    logger.info(f"Creating arrays for folder: {folder}")
 
     # Concatenate array of images
     img_array = []
     label_array = []
-    # initilize FaceAlignment
+
+    # Initialize FaceAlignment
     fa = face_alignment.FaceAlignment(
         face_alignment.LandmarksType._2D,
         device=device
-        )
+    )
 
-    # resize images to 224 224
+    # Resize images to specified size
     resize = torchvision.transforms.Resize(size)
 
-    for  line in identity_file.readlines():
-        # read the image        print(img_sample)
-        im_path = os.path.join(pictures_dir, line[0:10])
+    for line in identity_file.readlines():
+        im_path = os.path.join(study_path, pictures_dir, line[0:10])
 
-        if os.path.isfile(im_path)==False:
-            print(im_path)
+        if not os.path.isfile(im_path):
+            logger.warning(f"Image not found: {im_path}")
+            continue
 
         img_sample = cv2.imread(im_path, cv2.COLOR_BGR2RGB)
+
         # Get facial landmarks
         landmarks = fa.get_landmarks_from_image(img_sample)
-        # transform the image
-        sample=transform_picture(img_sample, landmarks, resize)
-        # extract label
+
+        # Transform the image
+        sample = transform_picture(img_sample, landmarks, resize)
+
+        # Extract label
         label = np.array(int(line[11:-1]))
 
-        # append image and label to image and labels list
+        # Append image and label to arrays
         img_array.append(sample)
         label_array.append(label)
 
-    # print label and image array shapes
-    print(np.asarray(label_array).shape)
-    print(np.asarray(img_array).shape)
-    # return image and label arrays
-    return np.asarray(img_array), np.asarray(label_array)
+    img_array = np.asarray(img_array)
+    label_array = np.asarray(label_array)
+
+    logger.info(f"Label array shape: {label_array.shape}")
+    logger.info(f"Image array shape: {img_array.shape}")
+
+    return img_array, label_array
 
 if __name__ == '__main__':
     begin_time = datetime.datetime.now()
+
     if torch.cuda.is_available():
         device = "cuda:0"
-    else :
+    else:
         device = "cpu"
-    for key, length in dic.items():
-        for folder in ["train_%s_%s"%(length, key),"test_%s_%s"%(length, key),"valid_%s_%s"%(length, key)] :
-            dir_txt = os.path.join(proj_path, "files/txt_files/new_identity_CelebA_%s.txt"%folder)
+
+    for type_data in ["with", "without"]:
+        for folder in ["train", "test", "valid"]:
+            dir_txt = os.path.join(proj_path, "data_processing_scripts", "files", f"identity_CelebA_{folder}_{type_data}_meg_stimuli.txt")
             identity_file = open(dir_txt, "r")
-            img_array, label_array = make_array(folder, identity_file, device)
-            store_many_hdf5(img_array,label_array, folder)
-    print(datetime.datetime.now()-begin_time)
+            img_array, label_array = make_array(f"{folder}_{type_data}_meg_stimuli", identity_file, device)
+            store_many_hdf5(img_array, label_array, f"{folder}_{type_data}_meg_stimuli")
+            logger.info(f"{folder}, {type_data} meg stimuli processed and stored to HDF5.")
+
+    logger.info(f"Total time taken: {datetime.datetime.now() - begin_time}")
