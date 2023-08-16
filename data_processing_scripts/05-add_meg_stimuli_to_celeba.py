@@ -76,10 +76,10 @@ if __name__=="__main__":
         new_id += 1
 
     # Save new file and mapping dict
-    old_celebA_labels.to_csv('identity_CelebA_with_meg_stimuli.txt', header=None, index=None, sep=' ', mode='a')
+    old_celebA_labels.to_csv('/files/identity_CelebA_with_meg_stimuli.txt', header=None, index=None, sep=' ', mode='a')
     logger.info(f"Mapping dictionary saved to identity_CelebA_with_meg_stimuli.txt")
 
-    with open('mapping_dict.pickle', 'wb') as pickle_file:
+    with open('/files/mapping_dict.pickle', 'wb') as pickle_file:
         pickle.dump(matched_ids_mapping, pickle_file)
     logger.info(f"Mapping dictionary saved to mapping_dict.pickle")
 
