@@ -21,7 +21,7 @@ def face_distance(face_encodings: np.array, face_to_compare: np.array) -> float:
     """
     Calculate the Euclidean distance between two face encodings.
 
-    Parameters:
+    Args:
     ----------
     face_encodings : np.ndarray
         The known face encodings to compare against.
@@ -39,7 +39,7 @@ def compare_faces(known_face_encodings: list, face_encoding_to_check: list, tole
     """
     Compare a face encoding to a list of known face encodings.
 
-    Parameters:
+    Args:
     ----------
     known_face_encodings : list
         List of known face encodings.

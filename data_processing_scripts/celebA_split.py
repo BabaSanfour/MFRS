@@ -28,10 +28,6 @@ test_dir = os.path.join(proj_path, "files/txt_files/identity_CelebA_test_%s_%s.t
 valid_dir = os.path.join(proj_path, "files/txt_files/identity_CelebA_valid_%s_%s.txt")
 fold = study_path
 
-dic = {25:[15,5,5], 12:[6,3,3],
-        27:[17,5,5], 13:[7,3,3],
-        28:[18,5,5], 14:[8,3,3],
-        29:[19,5,5], 15:[9,3,3]}
 
 
 def read_file(file):

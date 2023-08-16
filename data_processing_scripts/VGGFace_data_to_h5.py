@@ -31,7 +31,7 @@ def store_many_hdf5(images: np.ndarray, labels: np.ndarray, folder: str) -> None
     folder : str
         Name of the folder for the HDF5 file.
     """
-    hdf5_dir = "/home/hamza97/scratch/data/MFRS_data/hdf5/"
+    hdf5_dir = os.path.join(study_path, "hdf5")
     if not os.path.exists(hdf5_dir):
         os.makedirs(hdf5_dir)
     
