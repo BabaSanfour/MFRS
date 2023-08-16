@@ -13,9 +13,62 @@
 """
 import os
 import sys
+import pickle
+import shutil 
 import pandas as pd
 sys.path.append("../../MFRS")
-from utils.config import proj_path
+from utils.config import study_path
+from utils.utils import split
+
+def assign_class(file_csv) -> dict:
+
+    """
+    Assign a class to each picture based on repartition counts.
+
+    Args:
+    ----------
+    num_files : int
+        Number of files to assign classes to.
+
+    Returns:
+    -------
+    class_dic : dict
+        Dictionary containing index as key and assigned class as value.
+    """
+
+    for id in (list(file_csv["new_id"].unique())):
+        # get the list of indexes for each id (label)
+        id_index=list(file_csv[file_csv['new_id']==id].index)
+        # get the list with number of occurence for a picture in each class
+        train_count = int(np.around(len(id_index) * 0.7))
+        test_count = int(np.around(len(id_index) * 0.15))
+        valid_count = len(id_index) - test_count - train_count
+        counts = [train_count, valid_count, test_count]
+        # assign the class randomly and add it to csv file
+        for ind in (id_index):
+            id_class=split(counts[0],counts[1],counts[2])
+            counts[id_class]=counts[id_class]-1
+            file_csv.loc[ind,'class']=int(id_class)
+    return file_csv
+
+def create_txt(file_csv, files):
+
+    # read train i file
+    train= open(files[0],"w+")
+    # read test i file
+    test= open(files[1],"w+")
+    # read valid i file
+    valid= open(files[2],"w+")
+
+    # add each picture to the class it belongs to
+    for i in range(len(file_csv)):
+        name=file_csv.loc[i,'name']+' '+str(int(file_csv.loc[i,'new_id']))+'\n'
+        if int(file_csv.loc[i,'class']) == 0:
+            train.write(name)
+        elif int(file_csv.loc[i,'class']) == 1:
+            valid.write(name)
+        else :
+            test.write(name)
 
 def correct_gender(merged):
     """
@@ -142,29 +195,77 @@ def generate_new_ids(final):
     selected = ['name','new_id']
     return drop_unwanted_columns(selected, final)
 
+def create_repartitions(file_csv, data_folders):
+    # Create data repartitions folders and copy pictures
+
+    train_folder=os.path.join(study_path , data_folders[0])
+    test_folder=os.path.join(study_path , data_folders[1])
+    valid_folder=os.path.join(study_path , data_folders[2])
+
+    os.makedirs(train_folder)
+    os.makedirs(test_folder)
+    os.makedirs(valid_folder)
+
+    for i in range(len(file_csv)):
+        im=os.path.join(study_path, "img_align_celeba/img_align_celeba", file_csv.loc[i,'name'])
+        if file_csv.loc[i,'class'] == 0:
+            shutil.copy(im, train_folder)
+        elif file_csv.loc[i,'class'] == 1:
+            shutil.copy(im, valid_folder)
+        else :
+            shutil.copy(im, test_folder)
+
 if __name__ == '__main__':
-    dir_path = os.path.join(proj_path, "MFRS/files/")
+    new_data = pd.read_csv('identity_CelebA_with_meg_stimuli.txt', sep=" ", header=None)
+    with open("mapping_dict.pickle", "rb") as pickle_file:
+        loaded_data = pickle.load(pickle_file)
+    stimuli_ids = [value[0] for key, value in loaded_data.items()]
+    stimuli_ids.extend([9558, 5183])
 
-    # read identity_CelebA.txt
-    dir_txt = dir_path + 'identity_CelebA.txt'
-    identity_file = pd.read_csv(dir_txt, sep=' ', header=None)
-    # read list_attr_celeba.csv
-    dir_csv = dir_path+'list_attr_celeba.csv'
-    list_attr_celeba = pd.read_csv(dir_csv)
-    # Combine, process, and clean original files
-    # create female and male dataframes ( to select equal %)
-    df_male, df_female, merged = clean_csv(identity_file, list_attr_celeba)
+    old_data = pd.read_csv('identity_CelebA.txt', sep=" ", header=None)
+    old_data.columns =["name", "id"]
+    list_attr_celeba = pd.read_csv('list_attr_celeba.csv')
+    list_attr_celeba = pd.merge(old_data, list_attr_celeba, on='name', how='outer')
+    list_attr_celeba = list_attr_celeba[~list_attr_celeba["id"].isin(stimuli_ids)].reset_index(drop=True)
 
-    # create a dict where :
-    # key => number of pictures per id
-    # value => total number of ids per gender
-    dic = {25:500, 12:500,
-            27:250, 13:250,
-            28:150, 14:150,
-            29:75, 15:75}
+    # Count the occurence of each id in the dataset
+    id_occurence=list_attr_celeba['id'].value_counts()
+    id_occurence=id_occurence.to_frame().reset_index()
+    id_occurence.columns=['id', 'values']
 
-    # run through the dic
-    for key in dic:
-        final=create_csv(key, dic[key], df_male, df_female, merged)
-        final=generate_new_ids(final)
-        final.to_csv(dir_path+"csv_files/"+"id_%s_PicPerId_%s.csv"%(dic[key]*2, key))
+    # Merge the id_occurence dataframe and merged dataframe
+    merged = pd.merge(list_attr_celeba, id_occurence, on="id")
+
+    # Corret some mistakes in gender attribue
+    merged=correct_gender(merged)
+    df_male=merged[merged['Male']==1]
+    df_female=merged[merged['Male']==-1]
+
+    final=create_csv(30, 437, df_male, df_female, merged)
+    final = final[final["id"] != 59]
+
+    not_included = new_data[new_data[1].isin(stimuli_ids)].reset_index(drop=True)
+    not_included.columns = ["name", "id"]
+    final = pd.concat([final, not_included])
+    final=generate_new_ids(final)
+    final.to_csv("celebA_with_stimuli.csv")
+
+    file_csv=assign_class(final)
+    final.to_csv("celebA_with_stimuli_class_dist.csv")
+
+    files = ["identity_CelebA_train_with_meg_stimuli.txt",  "identity_CelebA_test_with_meg_stimuli.txt", "identity_CelebA_valid_with_meg_stimuli.txt"]
+    create_txt(file_csv, files)
+    data_folders = ['train_with_meg_stimuli', 'test_with_meg_stimuli', 'valid_with_meg_stimuli/']
+    create_repartitions(file_csv, data_folders)
+
+
+    # Now without the MEG_stimuli
+    final_without=create_csv(30, 500, df_male, df_female, merged)
+    final_without=generate_new_ids(final_without)
+    final_without.to_csv("celebA_without_stimuli.csv")
+    final_without_csv=assign_class(final_without)
+    final_without_csv.to_csv("celebA_without_stimuli_class_dist.csv")
+    files = ["identity_CelebA_train_without_meg_stimuli.txt",  "identity_CelebA_test_without_meg_stimuli.txt", "identity_CelebA_valid_without_meg_stimuli.txt"]
+    create_txt(final_without_csv, files)
+    data_folders = ['train_without_meg_stimuli', 'test_without_meg_stimuli', 'valid_without_meg_stimuli/']
+    create_repartitions(final_without_csv, data_folders)
