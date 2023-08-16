@@ -9,12 +9,12 @@ import pickle
 
 sys.path.append('../../MFRS')
 
-from utils.config import study_path
+from utils.config import study_path, proj_path
 
 # Initialize dlib components
 detector = dlib.get_frontal_face_detector()
-predictor = dlib.shape_predictor("shape_predictor_68_face_landmarks.dat")
-face_encoder = dlib.face_recognition_model_v1("dlib_face_recognition_resnet_model_v1.dat")
+predictor = dlib.shape_predictor(os.path.join(proj_path, "utils", "shape_predictor_68_face_landmarks.dat"))
+face_encoder = dlib.face_recognition_model_v1(os.path.join(proj_path, "dlib_face_recognition_resnet_model_v1.dat"))
 
 # Utilities
 def face_distance(face_encodings: np.array, face_to_compare: np.array) -> float:
