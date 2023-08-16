@@ -1,271 +1,396 @@
-"""
-    Clean original CSV file
-    Create multiple CSV file with different number of ids.
-    ---------------
-    Input Files:
-    ---------------
-    identity_CelebA.txt        Text contraining picture names and original Ids
-    list_attr_celeba.csv       CSV file with 40 attribute for each pictures
-    ---------------
-    Output Files:
-    ---------------
-    8 CSV files with different number of ids and pictures per id.
-"""
 import os
-import sys
 import pickle
-import shutil 
+import shutil
 import pandas as pd
-sys.path.append("../../MFRS")
+import numpy as np
+import logging
+from typing import Tuple, List
 from utils.config import study_path
 from utils.utils import split
 
-def assign_class(file_csv) -> dict:
+# Configure logging
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+logger = logging.getLogger(__name__)
 
+def assign_class(file_csv: pd.DataFrame) -> pd.DataFrame:
     """
-    Assign a class to each picture based on repartition counts.
+    Assigns a class to each picture based on repartition counts.
 
     Args:
-    ----------
-    num_files : int
-        Number of files to assign classes to.
+        file_csv (pd.DataFrame): DataFrame containing picture information.
 
     Returns:
-    -------
-    class_dic : dict
-        Dictionary containing index as key and assigned class as value.
+        pd.DataFrame: DataFrame with assigned class for each picture.
     """
-
-    for id in (list(file_csv["new_id"].unique())):
-        # get the list of indexes for each id (label)
-        id_index=list(file_csv[file_csv['new_id']==id].index)
-        # get the list with number of occurence for a picture in each class
+    for id in file_csv["new_id"].unique():
+        # Get the list of indexes for each id (label)
+        id_index = list(file_csv[file_csv['new_id'] == id].index)
+        # Calculate the number of occurrences for each class
         train_count = int(np.around(len(id_index) * 0.7))
         test_count = int(np.around(len(id_index) * 0.15))
         valid_count = len(id_index) - test_count - train_count
         counts = [train_count, valid_count, test_count]
-        # assign the class randomly and add it to csv file
-        for ind in (id_index):
-            id_class=split(counts[0],counts[1],counts[2])
-            counts[id_class]=counts[id_class]-1
-            file_csv.loc[ind,'class']=int(id_class)
+        
+        # Assign the class randomly and add it to the CSV file
+        for ind in id_index:
+            id_class = split(counts[0], counts[1], counts[2])
+            counts[id_class] = counts[id_class] - 1
+            file_csv.loc[ind, 'class'] = int(id_class)
     return file_csv
 
-def create_txt(file_csv, files):
-
-    # read train i file
-    train= open(files[0],"w+")
-    # read test i file
-    test= open(files[1],"w+")
-    # read valid i file
-    valid= open(files[2],"w+")
-
-    # add each picture to the class it belongs to
-    for i in range(len(file_csv)):
-        name=file_csv.loc[i,'name']+' '+str(int(file_csv.loc[i,'new_id']))+'\n'
-        if int(file_csv.loc[i,'class']) == 0:
-            train.write(name)
-        elif int(file_csv.loc[i,'class']) == 1:
-            valid.write(name)
-        else :
-            test.write(name)
-
-def correct_gender(merged):
+def create_txt(file_csv: pd.DataFrame, files: list) -> None:
     """
-        Some of the ids have mixed designation for the Male attribue
-        In this function we correct this problem.
+    Create train, test, and valid text files and write picture names with IDs to each file.
+
+    Args:
+        file_csv (pd.DataFrame): DataFrame containing picture information.
+        files (list): List of file paths for train, test, and valid text files.
     """
-    # test is a Series with the count of Male attribute designation for every id
-    test= merged.groupby(['id','Male'])['Male'].count()
-    # list of unique ids
-    id_list= merged['id'].unique()
-    for i in id_list:
-        if len(test[i])==1:
-            #if the id has 1 type of designation (-1 or 1) then we go the next one
-            continue
-        else:
-            # if it has 2: -1 and 1
-            ids=list(merged[merged['id']==i]['Male'].index)
-            # we take the designation that has the maximum of occurence
-            # and attribue it to the rest of pictures of this id
-            if test[i][1]>test[i][-1]:
-                merged.loc[ids,'Male']=1
+    try:
+        # Open train, test, and valid text files
+        with open(files[0], "w+") as train, open(files[1], "w+") as test, open(files[2], "w+") as valid:
+            for i in range(len(file_csv)):
+                name = f"{file_csv.loc[i,'name']} {int(file_csv.loc[i,'new_id'])}\n"
+                if int(file_csv.loc[i,'class']) == 0:
+                    train.write(name)
+                elif int(file_csv.loc[i,'class']) == 1:
+                    valid.write(name)
+                else:
+                    test.write(name)
+        logger.info("Train, test, and valid text files created successfully.")
+    except Exception as e:
+        logger.error(f"An error occurred while creating text files: {e}")
+
+
+def correct_gender(merged: pd.DataFrame) -> pd.DataFrame:
+    """
+    Corrects mixed gender designation for the attribute in the dataset.
+
+    Args:
+        merged (pd.DataFrame): Merged DataFrame containing picture and attribute information.
+
+    Returns:
+        pd.DataFrame: DataFrame with corrected gender attributions.
+    """
+    try:
+        # Calculate the count of Male attribute designation for each id
+        test = merged.groupby(['id', 'Male'])['Male'].count()
+        
+        # List of unique ids
+        id_list = merged['id'].unique()
+        
+        # Iterate through each id
+        for i in id_list:
+            if len(test[i]) == 1:
+                # If the id has only one type of designation (-1 or 1), skip to the next one
+                continue
             else:
-                merged.loc[ids,'Male']=-1
-    return merged
+                # If it has both designations: -1 and 1
+                ids = list(merged[merged['id'] == i]['Male'].index)
+                
+                # Determine the designation with the maximum occurrence
+                if test[i][1] > test[i][-1]:
+                    merged.loc[ids, 'Male'] = 1
+                else:
+                    merged.loc[ids, 'Male'] = -1
+        logger.info("Gender attributions corrected successfully.")
+        return merged
+    except Exception as e:
+        logger.error(f"An error occurred while correcting gender attributions: {e}")
 
-def drop_unwanted_columns(selected, df):
-    # Generate list of columns in attribue file:
-    col=list(df.columns)
-    # list of unwanted columns
-    removed = list(set(col) - set(selected))
-    # drop unwanted columns
-    return df.drop(removed, axis=1)
 
-def clean_csv(identity_file, list_attr_celeba):
+def drop_unwanted_columns(selected: list, df: pd.DataFrame) -> pd.DataFrame:
     """
-        Takes the original dataset (txt and csv file)
-        Select the columns we need
-        Merge the two Files
-        Remove pictures with Eyeglasses, Hats, and Earrings
-        Count occurence of each id
-        Correct some mistakes in the Male attribue
-        return a male and female dataframes
+    Drops unwanted columns from a DataFrame.
+
+    Args:
+        selected (list): List of selected columns to keep.
+        df (pd.DataFrame): DataFrame containing columns to be filtered.
+
+    Returns:
+        pd.DataFrame: DataFrame with unwanted columns dropped.
     """
-    # rename the columns
-    identity_file.columns=['name', 'id']
-
-    # Clean attribute file
-    list_attr_celeba=list_attr_celeba.drop('Unnamed: 0', axis=1)
-    # define the list of attribues (columns) we need
-    selected = ['Eyeglasses','Male' ,'Wearing_Hat', 'name', 'Wearing_Earrings' ]
-
-    # drop columns
-    list_attr_celeba=drop_unwanted_columns(selected, list_attr_celeba)
-
-    # Merge the two dataframes on the name column
-    merged = pd.merge(list_attr_celeba, identity_file, on="name")
-    merged=merged.reset_index(drop=True)
-
-    # Drop pictures with eyeglasses, Hats, and Earrings.
-    merged=merged[merged['Eyeglasses']==-1]
-    merged=merged[merged['Wearing_Hat']==-1]
-    merged=merged[merged['Wearing_Earrings']==-1]
-
-    # Count the occurence of each id in the dataset
-    id_occurence=merged['id'].value_counts()
-    id_occurence=id_occurence.to_frame().reset_index()
-    id_occurence.columns=['id', 'values']
-
-    # Merge the id_occurence dataframe and merged dataframe
-    merged = pd.merge(merged, id_occurence, on="id")
-
-    # Corret some mistakes in gender attribue
-    merged=correct_gender(merged)
-
-    df_male=merged[merged['Male']==1]
-    df_female=merged[merged['Male']==-1]
-
-    # return two dataframes: male and female
-    return merged[merged['Male']==1], merged[merged['Male']==-1], merged
-
-def drop_unwanted_rows(key, selected, df):
-    # for earch id we select the desired number of pictures(key) and drop the rest
-    df['drop']=1
-    for i in selected:
-        ids=list(df[df['id']==i].index)
-        df.loc[ids[:key],'drop']=-1
-
-    return df[df['drop']==-1]
+    try:
+        # Generate a list of columns in the attribute file
+        col = list(df.columns)
+        
+        # List of unwanted columns
+        removed = list(set(col) - set(selected))
+        
+        # Drop unwanted columns
+        filtered_df = df.drop(removed, axis=1)
+        logger.info("Unwanted columns dropped successfully.")
+        return filtered_df
+    except Exception as e:
+        logger.error(f"An error occurred while dropping unwanted columns: {e}")
 
 
-def create_csv(key, value, df_male, df_female, merged):
-    # select VALUE male ids with occurence > key
+def clean_csv(identity_file: pd.DataFrame, list_attr_celeba: pd.DataFrame) -> Tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame]:
+    """
+    Cleans the original dataset, selects relevant columns, merges files, and corrects gender attributions.
 
-    labels_male=df_male[df_male['values']>=key]['id'].unique()[:value]
+    Args:
+        identity_file (pd.DataFrame): DataFrame containing picture names and IDs.
+        list_attr_celeba (pd.DataFrame): DataFrame containing attribute information for pictures.
 
-    # select VALUE female ids with occurence > key
-    labels_female=df_female[df_female['values']>=key]['id'].unique()[:value]
+    Returns:
+        Tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame]: Three DataFrames representing male, female, and merged data.
+    """
+    try:
+        # Rename the columns in identity_file
+        identity_file.columns = ['name', 'id']
 
-    # regroup male and female id list
-    selected= list(labels_female)+list(labels_male)
+        # Clean the attribute file
+        list_attr_celeba = list_attr_celeba.drop('Unnamed: 0', axis=1)
 
-    # Select only desired ids pictures
-    merged=merged.loc[merged['id'].isin(selected)]
+        # Define the list of attributes (columns) to keep
+        selected = ['Eyeglasses', 'Male', 'Wearing_Hat', 'name', 'Wearing_Earrings']
 
-    merged=merged.reset_index(drop=True)
-    # drop rows for ids with occurence > key
-    merged=drop_unwanted_rows(key, selected, merged)
-    selected = ['name','id']
-    return drop_unwanted_columns(selected, merged)
+        # Drop unwanted columns from the attribute file
+        list_attr_celeba = drop_unwanted_columns(selected, list_attr_celeba)
 
-def generate_new_ids(final):
-    final=final.reset_index(drop=True)
-    # extract labels of dataframe
-    labels=list(final.id.unique())
-    # Assign a new label to each old label
-    dic ={}
-    for i in range (len(labels)):
-        dic[labels[i]]=i
-    # Change labels
-    final['new_id']=-1
-    # Assign new labels to ids
-    for i in range (len(final)):
-        final.loc[i,'new_id']=dic[final.loc[i,'id']]
-    selected = ['name','new_id']
-    return drop_unwanted_columns(selected, final)
+        # Merge the two dataframes on the 'name' column
+        merged = pd.merge(list_attr_celeba, identity_file, on="name")
+        merged = merged.reset_index(drop=True)
 
-def create_repartitions(file_csv, data_folders):
-    # Create data repartitions folders and copy pictures
+        # Drop pictures with Eyeglasses, Hats, and Earrings
+        merged = merged[merged['Eyeglasses'] == -1]
+        merged = merged[merged['Wearing_Hat'] == -1]
+        merged = merged[merged['Wearing_Earrings'] == -1]
 
-    train_folder=os.path.join(study_path , data_folders[0])
-    test_folder=os.path.join(study_path , data_folders[1])
-    valid_folder=os.path.join(study_path , data_folders[2])
+        # Count the occurrence of each id in the dataset
+        id_occurence = merged['id'].value_counts()
+        id_occurence = id_occurence.to_frame().reset_index()
+        id_occurence.columns = ['id', 'values']
 
-    os.makedirs(train_folder)
-    os.makedirs(test_folder)
-    os.makedirs(valid_folder)
+        # Merge the id_occurrence dataframe and merged dataframe
+        merged = pd.merge(merged, id_occurence, on="id")
 
-    for i in range(len(file_csv)):
-        im=os.path.join(study_path, "img_align_celeba/img_align_celeba", file_csv.loc[i,'name'])
-        if file_csv.loc[i,'class'] == 0:
-            shutil.copy(im, train_folder)
-        elif file_csv.loc[i,'class'] == 1:
-            shutil.copy(im, valid_folder)
-        else :
-            shutil.copy(im, test_folder)
+        # Correct gender attributions
+        merged = correct_gender(merged)
+
+        # Separate male and female dataframes
+        df_male = merged[merged['Male'] == 1]
+        df_female = merged[merged['Male'] == -1]
+
+        logger.info("Dataset cleaned and attributes corrected successfully.")
+        return df_male, df_female, merged
+    except Exception as e:
+        logger.error(f"An error occurred while cleaning the dataset: {e}")
+
+
+def drop_unwanted_rows(key: int, selected: List[int], df: pd.DataFrame) -> pd.DataFrame:
+    """
+    Drops unwanted rows from the DataFrame based on the selected number of pictures for each ID.
+
+    Args:
+        key (int): Number of pictures to keep for each ID.
+        selected (List[int]): List of IDs to process.
+        df (pd.DataFrame): DataFrame to drop rows from.
+
+    Returns:
+        pd.DataFrame: DataFrame with unwanted rows dropped.
+    """
+    try:
+        # Create a column 'drop' and initialize it with 1
+        df['drop'] = 1
+
+        # For each selected ID, select the desired number of pictures (key) and mark the rest to be dropped
+        for i in selected:
+            ids = list(df[df['id'] == i].index)
+            df.loc[ids[:key], 'drop'] = -1
+
+        # Return the DataFrame with only rows that were marked to be dropped (-1)
+        return df[df['drop'] == -1]
+    except Exception as e:
+        logger.error(f"An error occurred while dropping unwanted rows: {e}")
+
+
+
+def create_csv(key: int, value: int, df_male: pd.DataFrame, df_female: pd.DataFrame, merged: pd.DataFrame) -> pd.DataFrame:
+    """
+    Creates a new DataFrame with selected male and female IDs based on occurrence and key.
+
+    Args:
+        key (int): Minimum occurrence count for each ID.
+        value (int): Number of IDs to select.
+        df_male (pd.DataFrame): DataFrame containing male data.
+        df_female (pd.DataFrame): DataFrame containing female data.
+        merged (pd.DataFrame): Merged DataFrame containing attributes and IDs.
+
+    Returns:
+        pd.DataFrame: New DataFrame with selected male and female IDs.
+    """
+    try:
+        # Select male IDs with occurrence greater than or equal to key
+        labels_male = df_male[df_male['values'] >= key]['id'].unique()[:value]
+
+        # Select female IDs with occurrence greater than or equal to key
+        labels_female = df_female[df_female['values'] >= key]['id'].unique()[:value]
+
+        # Combine selected male and female IDs
+        selected = list(labels_female) + list(labels_male)
+
+        # Select only desired IDs' pictures
+        selected_merged = merged.loc[merged['id'].isin(selected)].reset_index(drop=True)
+
+        # Drop rows for IDs with occurrence > key
+        selected_merged = drop_unwanted_rows(key, selected, selected_merged)
+
+        selected_columns = ['name', 'id']
+        return drop_unwanted_columns(selected_columns, selected_merged)
+    except Exception as e:
+        logger.error(f"An error occurred while creating the new DataFrame: {e}")
+
+
+def generate_new_ids(final: pd.DataFrame) -> pd.DataFrame:
+    """
+    Generates new IDs for the given DataFrame.
+
+    Args:
+        final (pd.DataFrame): DataFrame containing original IDs.
+
+    Returns:
+        pd.DataFrame: DataFrame with new IDs assigned.
+    """
+    try:
+        final = final.reset_index(drop=True)
+
+        # Extract unique labels (IDs) from the DataFrame
+        labels = list(final['id'].unique())
+
+        # Assign new IDs to each old label
+        id_mapping = {}
+        for i, label in enumerate(labels):
+            id_mapping[label] = i
+
+        # Create a new column 'new_id' and assign new labels
+        final['new_id'] = final['id'].map(id_mapping)
+
+        selected_columns = ['name', 'new_id']
+        return drop_unwanted_columns(selected_columns, final)
+    except Exception as e:
+        logger.error(f"An error occurred while generating new IDs: {e}")
+
+
+def create_repartitions(file_csv: pd.DataFrame, data_folders: Tuple[str, str, str]) -> None:
+    """
+    Create data repartition folders and copy pictures to respective folders.
+
+    Args:
+        file_csv (pd.DataFrame): DataFrame containing picture information and classes.
+        data_folders (Tuple[str, str, str]): Tuple containing names of train, test, and valid folders.
+
+    Returns:
+        None
+    """
+    try:
+        train_folder = os.path.join(study_path, data_folders[0])
+        test_folder = os.path.join(study_path, data_folders[1])
+        valid_folder = os.path.join(study_path, data_folders[2])
+
+        os.makedirs(train_folder, exist_ok=True)
+        os.makedirs(test_folder, exist_ok=True)
+        os.makedirs(valid_folder, exist_ok=True)
+
+        for i in range(len(file_csv)):
+            im = os.path.join(study_path, "img_align_celeba/img_align_celeba", file_csv.loc[i, 'name'])
+            if file_csv.loc[i, 'class'] == 0:
+                shutil.copy(im, train_folder)
+            elif file_csv.loc[i, 'class'] == 1:
+                shutil.copy(im, valid_folder)
+            else:
+                shutil.copy(im, test_folder)
+    except Exception as e:
+        logger.error(f"An error occurred while creating data repartitions: {e}")
+
 
 if __name__ == '__main__':
-    new_data = pd.read_csv('identity_CelebA_with_meg_stimuli.txt', sep=" ", header=None)
-    with open("mapping_dict.pickle", "rb") as pickle_file:
+    # Load 'identity_CelebA_with_meg_stimuli.txt' file
+    new_data = pd.read_csv('/files/identity_CelebA_with_meg_stimuli.txt', sep=" ", header=None)
+
+    # Load 'mapping_dict.pickle' file
+    with open("/files/mapping_dict.pickle", "rb") as pickle_file:
         loaded_data = pickle.load(pickle_file)
     stimuli_ids = [value[0] for key, value in loaded_data.items()]
     stimuli_ids.extend([9558, 5183])
 
-    old_data = pd.read_csv('identity_CelebA.txt', sep=" ", header=None)
-    old_data.columns =["name", "id"]
-    list_attr_celeba = pd.read_csv('list_attr_celeba.csv')
+    # Load 'identity_CelebA.txt' file
+    old_data = pd.read_csv('/files/identity_CelebA.txt', sep=" ", header=None)
+    old_data.columns = ["name", "id"]
+
+    # Load 'list_attr_celeba.csv' file
+    list_attr_celeba = pd.read_csv('/files/list_attr_celeba.csv')
+    # Merge 'old_data' and 'list_attr_celeba' files based on 'name' column
     list_attr_celeba = pd.merge(old_data, list_attr_celeba, on='name', how='outer')
+    # Remove rows with IDs present in 'stimuli_ids'
     list_attr_celeba = list_attr_celeba[~list_attr_celeba["id"].isin(stimuli_ids)].reset_index(drop=True)
 
-    # Count the occurence of each id in the dataset
-    id_occurence=list_attr_celeba['id'].value_counts()
-    id_occurence=id_occurence.to_frame().reset_index()
-    id_occurence.columns=['id', 'values']
+    # Count the occurrence of each ID in the dataset
+    id_occurence = list_attr_celeba['id'].value_counts()
+    id_occurence = id_occurence.to_frame().reset_index()
+    id_occurence.columns = ['id', 'values']
 
-    # Merge the id_occurence dataframe and merged dataframe
+    # Merge 'id_occurence' and 'list_attr_celeba' dataframes
     merged = pd.merge(list_attr_celeba, id_occurence, on="id")
 
-    # Corret some mistakes in gender attribue
-    merged=correct_gender(merged)
-    df_male=merged[merged['Male']==1]
-    df_female=merged[merged['Male']==-1]
+    # Correct some mistakes in gender attribute
+    merged = correct_gender(merged)
+    df_male = merged[merged['Male'] == 1]
+    df_female = merged[merged['Male'] == -1]
 
-    final=create_csv(30, 437, df_male, df_female, merged)
+    # Create CSV with specific parameters
+    final = create_csv(30, 437, df_male, df_female, merged)
     final = final[final["id"] != 59]
 
+    # Concatenate new_data and final dataframes
     not_included = new_data[new_data[1].isin(stimuli_ids)].reset_index(drop=True)
     not_included.columns = ["name", "id"]
     final = pd.concat([final, not_included])
-    final=generate_new_ids(final)
-    final.to_csv("celebA_with_stimuli.csv")
 
-    file_csv=assign_class(final)
-    final.to_csv("celebA_with_stimuli_class_dist.csv")
+    # Generate new IDs for the final dataframe
+    final = generate_new_ids(final)
 
-    files = ["identity_CelebA_train_with_meg_stimuli.txt",  "identity_CelebA_test_with_meg_stimuli.txt", "identity_CelebA_valid_with_meg_stimuli.txt"]
+    # Save final dataframe to 'celebA_with_stimuli.csv'
+    final.to_csv("/files/celebA_with_stimuli.csv")
+
+    # Assign classes to the final dataframe
+    file_csv = assign_class(final)
+    # Save class distribution to 'celebA_with_stimuli_class_dist.csv'
+    file_csv.to_csv("/files/celebA_with_stimuli_class_dist.csv")
+
+    # Define file paths for txt files
+    files = ["identity_CelebA_train_with_meg_stimuli.txt", "identity_CelebA_test_with_meg_stimuli.txt", "identity_CelebA_valid_with_meg_stimuli.txt"]
+
+    # Create txt files
     create_txt(file_csv, files)
+
+    # Define data folders
     data_folders = ['train_with_meg_stimuli', 'test_with_meg_stimuli', 'valid_with_meg_stimuli/']
+
+    # Create data repartitions using defined data folders
     create_repartitions(file_csv, data_folders)
 
+    # Create CSV without MEG_stimuli
+    final_without = create_csv(30, 500, df_male, df_female, merged)
+    final_without = generate_new_ids(final_without)
 
-    # Now without the MEG_stimuli
-    final_without=create_csv(30, 500, df_male, df_female, merged)
-    final_without=generate_new_ids(final_without)
-    final_without.to_csv("celebA_without_stimuli.csv")
-    final_without_csv=assign_class(final_without)
-    final_without_csv.to_csv("celebA_without_stimuli_class_dist.csv")
-    files = ["identity_CelebA_train_without_meg_stimuli.txt",  "identity_CelebA_test_without_meg_stimuli.txt", "identity_CelebA_valid_without_meg_stimuli.txt"]
+    # Save final_without dataframe to 'celebA_without_stimuli.csv'
+    final_without.to_csv("/files/celebA_without_stimuli.csv")
+
+    # Assign classes to the final_without dataframe
+    final_without_csv = assign_class(final_without)
+    # Save class distribution to 'celebA_without_stimuli_class_dist.csv'
+    final_without_csv.to_csv("/files/celebA_without_stimuli_class_dist.csv")
+
+    # Define file paths for txt files without MEG_stimuli
+    files = ["identity_CelebA_train_without_meg_stimuli.txt", "identity_CelebA_test_without_meg_stimuli.txt", "identity_CelebA_valid_without_meg_stimuli.txt"]
+
+    # Create txt files without MEG_stimuli
     create_txt(final_without_csv, files)
+
+    # Define data folders without MEG_stimuli
     data_folders = ['train_without_meg_stimuli', 'test_without_meg_stimuli', 'valid_without_meg_stimuli/']
+
+    # Create data repartitions without MEG_stimuli using defined data folders
     create_repartitions(final_without_csv, data_folders)
