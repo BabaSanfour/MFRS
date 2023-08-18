@@ -1,0 +1,135 @@
+import os
+import sys
+import time
+import logging
+import random
+import pickle 
+
+import pandas as pd
+
+# Set up logger
+logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(name)s - %(levelname)s - %(message)s")
+logger = logging.getLogger(__name__)
+
+# Add necessary paths
+sys.path.append("../../MFRS")
+from utils.config import proj_path, study_path
+
+# Define the path for the imagenet training data
+train_path = os.path.join(study_path, 'ILSVRC', 'Data', 'CLS-LOC', 'train')
+
+def get_all_image_files(directory: dict) -> list:
+    """
+    Get a list of all image filenames in a directory.
+    
+    Args:
+        directory (str): Path to the directory containing image files.
+        
+    Returns:
+        list: List of filenames of image files.
+    """
+    filenames = []
+    class_name = directory.split('/')[-1]
+    for filename in os.listdir(directory):
+        if os.path.isfile(os.path.join(directory, filename)):
+            filenames.append(filename)
+            part_name = filename.split('_')[0]
+            assert part_name == class_name
+    return filenames
+
+def copy_selected_data(dirs: list, new_train_path: str) -> None:
+    """
+    Copy selected data from specified directories to a new destination path.
+    
+    Args:
+        dirs (list): List of directory names containing data to be copied.
+        new_train_path (str): Path to the new destination directory.
+    """
+    total_images = 0
+    for directory in dirs:
+        directory_path = os.path.join(train_path, directory)
+        filenames = get_all_image_files(directory_path)
+        new_number_images_per_class = 500
+        if len(filenames) > new_number_images_per_class:
+            filenames = random.sample(filenames, new_number_images_per_class)
+        total_images += len(filenames)
+        
+        new_directory_path = os.path.join(new_train_path, directory)
+        os.makedirs(new_directory_path, exist_ok=True)
+        
+        for filename in filenames:
+            src_file_path = os.path.join(train_path, directory, filename)
+            tgt_file_path = os.path.join(new_directory_path, filename)
+            os.system(f'cp {src_file_path} {tgt_file_path}')
+    
+    logger.info(f'Total number of images selected: {total_images}')
+
+def add_faces_class(face_pictures_list: list, new_train_path: str, directory: str) -> None:
+    """
+    Add face images from a list to a specific directory in the new training path.
+    
+    Args:
+        face_pictures_list (list): List of filenames of face images to be added.
+        new_train_path (str): Path to the new destination directory.
+        directory (str): Directory name to add the face images.
+    """
+    logger.info(f"Adding face images to {directory} directory.")
+    
+    new_directory_path = os.path.join(new_train_path, directory)
+    os.makedirs(new_directory_path, exist_ok=True)
+    
+    for filename in face_pictures_list:
+        src_file_path = os.path.join(study_path, 'img_align_celeba/img_align_celeba', filename)
+        tgt_file_path = os.path.join(new_directory_path, filename)
+        os.system(f'cp {src_file_path} {tgt_file_path}')
+    
+    logger.info(f'{directory} face images added.')
+
+
+
+if __name__ == '__main__':
+    logger.info("Starting the data processing.")
+    process_start_time = time.time()
+    
+    # Get the list of class directories in the training path
+    class_directories = [d for d in os.listdir(train_path) if os.path.isdir(os.path.join(train_path, d))]
+    num_classes = len(class_directories)
+    logger.info(f'Number of classes: {num_classes}')
+    
+    # Define the new training path
+    new_train_path = 'imagenet_train_subset/'
+    if not os.path.exists(new_train_path):
+        os.makedirs(new_train_path)
+    
+    # Copy a subset of images from each class to the new training path
+    copy_selected_data(class_directories, new_train_path)
+
+    # Load CSV and pickle files
+    csv_path = os.path.join(proj_path, "data_processing_scripts", "files", "CelebA_with_stimuli.csv")
+
+    dir_txt = os.path.join(proj_path, "data_processing_scripts", "files", "identity_CelebA_with_meg_stimuli.txt")
+    data = pd.read_csv(dir_txt, sep=" ", header=None)
+    data.columns = ["name", "id"]
+
+    with open(os.path.join(proj_path, "data_processing_scripts", "files", "mapping_dict.pickle"), "rb") as pickle_file:
+        loaded_data = pickle.load(pickle_file)
+    
+    id_values = [value[0] for value in loaded_data.values()]
+
+    # Filter the DataFrame to include only rows where the ID exists in id_values
+    filtered_df = data[data["id"].isin(id_values)]
+
+    # Randomly select 650 names from the filtered data
+    selected_names = random.sample(filtered_df["name"].tolist(), 500)
+
+    # Add face images to the new training path
+    add_faces_class(selected_names, new_train_path, "meg_stimuli")
+
+    # Filter the DataFrame for IDs not in id_values
+    filtered_df = data[~data['id'].isin(id_values)]
+    selected_names = random.sample(filtered_df['name'].tolist(), 500)
+
+    # Add random face images to the new training path
+    add_faces_class(selected_names, new_train_path, "random_faces")
+
+    logger.info(f'Finished processing, total time taken: {time.time() - process_start_time:.2f} sec')
