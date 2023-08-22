@@ -192,7 +192,7 @@ def make_array(pictures_dir: str, identity_file: TextIO, device: str, size: Tupl
         np.ndarray: Array of labels.
     """
 
-    logger.info(f"Creating arrays for folder: {folder}")
+    logger.info(f"Creating arrays for folder: {pictures_dir}")
 
     # Concatenate array of images
     img_array = []
@@ -208,7 +208,7 @@ def make_array(pictures_dir: str, identity_file: TextIO, device: str, size: Tupl
     resize = torchvision.transforms.Resize(size)
 
     for line in identity_file.readlines():
-        im_path = os.path.join(study_path, pictures_dir, line[0:10])
+        im_path = os.path.join(pictures_dir, line[0:10])
 
         if not os.path.isfile(im_path):
             logger.warning(f"Image not found: {im_path}")
