@@ -1,5 +1,6 @@
 import os
 import sys
+import json
 import time
 import logging
 import random
@@ -17,6 +18,7 @@ from utils.config import proj_path, study_path
 
 # Define the path for the imagenet training data
 train_path = os.path.join(study_path, 'ILSVRC', 'Data', 'CLS-LOC', 'train')
+valid_path = os.path.join(study_path, 'ILSVRC', 'Data', 'CLS-LOC', 'valid')
 
 def get_all_image_files(directory: dict) -> list:
     """
@@ -64,12 +66,12 @@ def copy_selected_data(dirs: list, new_train_path: str) -> None:
     
     logger.info(f'Total number of images selected: {total_images}')
 
-def add_faces_class(face_pictures_list: list, new_train_path: str, directory: str) -> None:
+def add_faces_class(train_face_pictures_list: list, new_train_path: str, directory: str) -> None:
     """
     Add face images from a list to a specific directory in the new training path.
     
     Args:
-        face_pictures_list (list): List of filenames of face images to be added.
+        train_face_pictures_list (list): List of filenames of face images to be added to train set.
         new_train_path (str): Path to the new destination directory.
         directory (str): Directory name to add the face images.
     """
@@ -78,13 +80,42 @@ def add_faces_class(face_pictures_list: list, new_train_path: str, directory: st
     new_directory_path = os.path.join(new_train_path, directory)
     os.makedirs(new_directory_path, exist_ok=True)
     
-    for filename in face_pictures_list:
+    for filename in train_face_pictures_list:
         src_file_path = os.path.join(study_path, 'img_align_celeba/img_align_celeba', filename)
         tgt_file_path = os.path.join(new_directory_path, filename)
         os.system(f'cp {src_file_path} {tgt_file_path}')
-    
+
     logger.info(f'{directory} face images added.')
 
+def add_faces_class_valid(valid_meg_faces: list, valid_random_faces: list) -> None:
+    """
+    Add face images from to the validation set and update the validation labels csv file.
+    
+    Args:
+        valid_meg_faces (list): List of filenames of stimuli face images to be added to valid set.
+        valid_random_faces (list): List of filenames of random face images to be added to valid set.
+    """
+    logger.info(f"Adding face images to validation set.")
+
+    csv_data = pd.read_csv(os.path.join(proj_path, "data_processing_scripts", "files", "LOC_val_solution.csv"))
+
+    for filename in valid_meg_faces:
+        src_file_path = os.path.join(study_path, 'img_align_celeba/img_align_celeba', filename)
+        tgt_file_path = os.path.join(valid_path, filename)
+        os.system(f'cp {src_file_path} {tgt_file_path}')
+        new_row = {'ImageId': filename, 'PredictionString': 'meg_stimuli_faces'}
+        csv_data = csv_data.append(new_row, ignore_index=True)
+
+    for filename in valid_random_faces:
+        src_file_path = os.path.join(study_path, 'img_align_celeba/img_align_celeba', filename)
+        tgt_file_path = os.path.join(valid_path, filename)
+        os.system(f'cp {src_file_path} {tgt_file_path}')
+        new_row = {'ImageId': filename, 'PredictionString': 'random_faces'}
+        csv_data = csv_data.append(new_row, ignore_index=True)
+
+    csv_data.to_csv(os.path.join(proj_path, "data_processing_scripts", "files", "new_LOC_val_solution.csv"), index=False)
+
+    logger.info('validation face images added.')
 
 
 if __name__ == '__main__':
@@ -119,17 +150,25 @@ if __name__ == '__main__':
     # Filter the DataFrame to include only rows where the ID exists in id_values
     filtered_df = data[data["id"].isin(id_values)]
 
-    # Randomly select 650 names from the filtered data
-    selected_names = random.sample(filtered_df["name"].tolist(), 500)
+    # Randomly select 500 names from the filtered data
+    selected_train_names = random.sample(filtered_df["name"].tolist(), 500)
+    # Generate a list of names that are not in selected_train_names
+    remaining_names = [name for name in filtered_df["name"].tolist() if name not in selected_train_names]
+    # Select 100 names from the remaining_names list
+    additional_valid_names_meg = random.sample(remaining_names, 100)
 
-    # Add face images to the new training path
-    add_faces_class(selected_names, new_train_path, "meg_stimuli")
+    # Add face images to the new train set
+    add_faces_class(selected_train_names, new_train_path, "meg_stimuli_faces")
 
     # Filter the DataFrame for IDs not in id_values
     filtered_df = data[~data['id'].isin(id_values)]
-    selected_names = random.sample(filtered_df['name'].tolist(), 500)
+    selected_train_names = random.sample(filtered_df['name'].tolist(), 500)
+    remaining_names = [name for name in filtered_df["name"].tolist() if name not in selected_train_names]
+    additional_valid_names_random = random.sample(remaining_names, 100)
 
-    # Add random face images to the new training path
-    add_faces_class(selected_names, new_train_path, "random_faces")
+    # Add random face images to the new train set
+    add_faces_class(selected_train_names, new_train_path, "random_faces")
+
+    add_faces_class_valid(additional_valid_names_meg, additional_valid_names_random)
 
     logger.info(f'Finished processing, total time taken: {time.time() - process_start_time:.2f} sec')
