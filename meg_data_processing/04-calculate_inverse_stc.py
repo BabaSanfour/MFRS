@@ -58,7 +58,7 @@ def main():
     parser = source_rescontruction_parser()
     args = parser.parse_args()
     subject = f"sub-{args.subject:02d}"
-    filenames = setup_filenames(subject, spacing, args.stimuli_file_name)
+    filenames = setup_filenames(subject, spacing)
 
     if not os.path.isfile(filenames['trans']) or args.overwrite:
         coreg = compute_coregistration(filenames['trans'], subject, args.overwrite)
