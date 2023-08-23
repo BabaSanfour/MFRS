@@ -1,4 +1,4 @@
-# Data Processing Scripts
+# Images Data Processing
 
 This folder contains a collection of scripts designed to prepare the data for different experiments that we will run across the project. The division into HDF5 and repartition scripts is deliberate, aligning with the distinctive structures of our datasets.
 
