@@ -1,7 +1,6 @@
 import os
 import sys
 import cv2
-import h5py
 import datetime
 import numpy as np
 from tqdm import tqdm
@@ -11,6 +10,7 @@ import logging
 
 sys.path.append("../../MFRS")
 from utils.config import study_path
+from utils.utils import store_many_hdf5
 
 data_path = os.path.join(study_path, "VGGface2/")
 
@@ -18,32 +18,6 @@ data_path = os.path.join(study_path, "VGGface2/")
 logging.basicConfig(level=logging.INFO, format='%(levelname)s - %(message)s')
 logger = logging.getLogger(__name__)
 
-def store_many_hdf5(images: np.ndarray, labels: np.ndarray, folder: str) -> None:
-    """
-    Stores an array of images and labels to HDF5.
-
-    Args:
-    ----------
-    images : np.ndarray
-        Images array of shape (N, 224, 224, 3).
-    labels : np.ndarray
-        Labels array of shape (N, ).
-    folder : str
-        Name of the folder for the HDF5 file.
-    """
-    hdf5_dir = os.path.join(study_path, "hdf5")
-    if not os.path.exists(hdf5_dir):
-        os.makedirs(hdf5_dir)
-    
-    # Create a new HDF5 file
-    file = h5py.File(os.path.join(hdf5_dir, f"{folder}.h5"), "w")
-    logger.info(f"{folder} h5 file created")
-
-    # Create a dataset in the file
-    dataset = file.create_dataset("images", np.shape(images), data=images)
-    metaset = file.create_dataset("meta", np.shape(labels), data=labels)
-    file.close()
-    logger.info(f"{folder} h5 is ready")
 
 def make_array(data_folder: str) -> tuple:
     """

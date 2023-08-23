@@ -1,7 +1,6 @@
 import os
 import cv2
 import sys
-import h5py
 import torch
 import datetime
 import numpy as np
@@ -13,8 +12,8 @@ from PIL import Image, ImageOps
 import logging
 
 sys.path.append("../../MFRS")
-from utils.config import proj_path, study_path
-
+from utils.config import proj_path
+from utils.utils import store_many_hdf5
 # Configure logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 logger = logging.getLogger(__name__)
@@ -117,33 +116,6 @@ def create_square_crop_by_detection(frame: np.ndarray, box: list) -> np.ndarray:
         'constant'
     )
     return croped
-
-
-def store_many_hdf5(images: np.ndarray, labels: np.ndarray, file_name: str) -> None:
-    """
-    Stores an array of images to HDF5.
-
-    Args:
-    images: np.ndarray
-        Images array, (N, 224, 224, 1) to be stored.
-    labels: np.ndarray
-        Labels array, (N, ) to be stored.
-    file_name: str
-        file name for HDF5 storage.
-    """
-    hdf5_dir = os.path.join(study_path, "hdf5/")
-    if not os.path.exists(hdf5_dir):
-        os.makedirs(hdf5_dir)
-
-    # Create a new HDF5 file
-    file = h5py.File(os.path.join(hdf5_dir, f"{file_name}.h5"), "w")
-    logger.info(f"{file} h5 file created")
-
-    # Create a dataset in the file
-    dataset = file.create_dataset("images", np.shape(images), data=images)  # h5py.h5t.STD_U8BE,
-    metaset = file.create_dataset("meta", np.shape(labels), data=labels)
-    file.close()
-    logger.info(f"{file_name} h5 is ready")
 
 
 def transform_picture(img_sample: np.array, landmarks: np.array, resize: torch, greyscale: bool = True):
