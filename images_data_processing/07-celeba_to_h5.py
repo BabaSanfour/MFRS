@@ -219,7 +219,7 @@ if __name__ == '__main__':
 
     for type_data in ["with", "without"]:
         for folder in ["train", "test", "valid"]:
-            dir_txt = os.path.join(proj_path, "data_processing_scripts", "files", f"identity_CelebA_{folder}_{type_data}_meg_stimuli.txt")
+            dir_txt = os.path.join(proj_path, "images_processing_scripts", "files", f"identity_CelebA_{folder}_{type_data}_meg_stimuli.txt")
             identity_file = open(dir_txt, "r")
             img_array, label_array = make_array(f"{folder}_{type_data}_meg_stimuli", identity_file, device)
             store_many_hdf5(img_array, label_array, f"{folder}_{type_data}_meg_stimuli")
