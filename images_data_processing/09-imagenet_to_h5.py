@@ -16,11 +16,11 @@ logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(
 logger = logging.getLogger(__name__)
 
 # Load label matching data
-with open(os.path.join(proj_path, "images_processing_scripts", "files", "match_labels.json"), 'r') as f:
+with open(os.path.join(proj_path, "images_data_processing", "files", "match_labels.json"), 'r') as f:
     match_labels = json.load(f)
 
 # Load CSV data
-csv_data = pd.read_csv(os.path.join(proj_path, "images_processing_scripts", "files", "LOC_val_solution.csv"))
+csv_data = pd.read_csv(os.path.join(proj_path, "images_data_processing", "files", "LOC_val_solution.csv"))
 
 # Define the path for the ImageNet training and validation data
 folder_paths = {

@@ -28,8 +28,6 @@ def setup_filenames(subject: str, spacing: str) -> dict:
         Subject identifier.
     spacing : str
         The spacing to be used for source space.
-    stimuli_file_name : str
-        Name of the stimuli file.
 
     Returns:
     --------
@@ -86,14 +84,14 @@ def main():
 
     if not os.path.isdir(filenames['stc']) or args.overwrite:
         stcs = compute_source_estimates(filenames['stc'], epochs, inverse_operator,
-                                        args.method, args.stimuli_file_name)
+                                        args.method)
     else:
         logger.info("Loading source estimates")
         stc_files = sorted(glob.glob(os.path.join(filenames['stc'], f'*{args.method}*.h5')))
         stcs = [mne.read_source_estimate(file_path) for file_path in stc_files]
 
     if not os.path.isdir(filenames['mrph']) or args.overwrite:
-        morphed = morph_source_estimates(filenames['mrph'], stcs, subject, args.method, args.stimuli_file_name)
+        morphed = morph_source_estimates(filenames['mrph'], stcs, subject, args.method)
     else:
         logger.info("Loading morphed source estimates")
         morph_files = sorted(glob.glob(os.path.join(filenames['mrph'], f'*{args.method}*.h5')))

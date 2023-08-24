@@ -13,12 +13,12 @@ logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(name)s - %(level
 logger = logging.getLogger(__name__)
 
 # Add necessary paths
-sys.path.append("../../MFRS")
+sys.path.append("/home/hamza97/MFRS")
 from utils.config import proj_path, study_path
 
 # Define the path for the imagenet training data
-train_path = os.path.join(study_path, 'ILSVRC', 'Data', 'CLS-LOC', 'train')
-valid_path = os.path.join(study_path, 'ILSVRC', 'Data', 'CLS-LOC', 'valid')
+train_path = os.path.join('ILSVRC', 'Data', 'CLS-LOC', 'train')
+valid_path = os.path.join('ILSVRC', 'Data', 'CLS-LOC', 'val')
 
 def get_all_image_files(directory: dict) -> list:
     """
@@ -97,7 +97,7 @@ def add_faces_class_valid(valid_meg_faces: list, valid_random_faces: list) -> No
     """
     logger.info(f"Adding face images to validation set.")
 
-    csv_data = pd.read_csv(os.path.join(proj_path, "images_processing_scripts", "files", "LOC_val_solution.csv"))
+    csv_data = pd.read_csv(os.path.join(study_path, "LOC_val_solution.csv"))
 
     for filename in valid_meg_faces:
         src_file_path = os.path.join(study_path, 'img_align_celeba/img_align_celeba', filename)
@@ -113,7 +113,7 @@ def add_faces_class_valid(valid_meg_faces: list, valid_random_faces: list) -> No
         new_row = {'ImageId': filename, 'PredictionString': 'random_faces'}
         csv_data = csv_data.append(new_row, ignore_index=True)
 
-    csv_data.to_csv(os.path.join(proj_path, "images_processing_scripts", "files", "new_LOC_val_solution.csv"), index=False)
+    csv_data.to_csv(os.path.join(proj_path, "images_data_processing", "files", "new_LOC_val_solution.csv"), index=False)
 
     logger.info('validation face images added.')
 
@@ -136,13 +136,13 @@ if __name__ == '__main__':
     copy_selected_data(class_directories, new_train_path)
 
     # Load CSV and pickle files
-    csv_path = os.path.join(proj_path, "images_processing_scripts", "files", "CelebA_with_stimuli.csv")
+    csv_path = os.path.join(proj_path, "images_data_processing", "files", "CelebA_with_stimuli.csv")
 
-    dir_txt = os.path.join(proj_path, "images_processing_scripts", "files", "identity_CelebA_with_meg_stimuli.txt")
+    dir_txt = os.path.join(proj_path, "images_data_processing", "files", "identity_CelebA_with_meg_stimuli.txt")
     data = pd.read_csv(dir_txt, sep=" ", header=None)
     data.columns = ["name", "id"]
 
-    with open(os.path.join(proj_path, "images_processing_scripts", "files", "mapping_dict.pickle"), "rb") as pickle_file:
+    with open(os.path.join(proj_path, "images_data_processing", "files", "mapping_dict.pickle"), "rb") as pickle_file:
         loaded_data = pickle.load(pickle_file)
     
     id_values = [value[0] for value in loaded_data.values()]
