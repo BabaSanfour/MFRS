@@ -8,6 +8,8 @@ from PIL import Image
 import pandas as pd
 import logging
 import datetime
+import sys
+sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 from utils.config import proj_path, study_path
 from utils.utils import store_many_hdf5
 
@@ -20,12 +22,12 @@ with open(os.path.join(proj_path, "images_data_processing", "files", "match_labe
     match_labels = json.load(f)
 
 # Load CSV data
-csv_data = pd.read_csv(os.path.join(proj_path, "images_data_processing", "files", "LOC_val_solution.csv"))
+csv_data = pd.read_csv(os.path.join(proj_path, "images_data_processing", "files", "new_LOC_val_solution.csv"))
 
 # Define the path for the ImageNet training and validation data
 folder_paths = {
-    "train": os.path.join(study_path, 'ILSVRC', 'Data', 'CLS-LOC', 'train'),
-    "valid": os.path.join(study_path, 'ILSVRC', 'Data', 'CLS-LOC', 'valid'),
+    "train": os.path.join('imagenet_train_subset'),
+    "valid": os.path.join('valid'),
 }
 
 def make_array(analysis_type: str, data_dir: str, folder: str):
@@ -101,7 +103,7 @@ def make_array(analysis_type: str, data_dir: str, folder: str):
             # Extract labels from a CSV file (assuming a specific format)
             name = os.path.splitext(os.path.basename(picture_path))[0]
             label = csv_data.loc[csv_data['ImageId'] == name, 'PredictionString'].iloc[0][:9]
-            label = match_labels.get(label, None)  # Use match_labels if needed
+            label = match_labels.get(label, 1001)  # Use match_labels if needed
             if label in drop_labels:
                 continue
             img_sample = img_sample[:, :, ::-1]  # Transform from BGR to RGB

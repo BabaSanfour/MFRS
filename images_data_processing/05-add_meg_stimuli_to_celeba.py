@@ -5,7 +5,7 @@ import pandas as pd
 from PIL import Image
 
 import sys
-sys.path.append('../../MFRS')
+sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 
 # Configure logger
 logging.basicConfig(level=logging.INFO)

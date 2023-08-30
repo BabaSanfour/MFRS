@@ -5,6 +5,9 @@ import pandas as pd
 import numpy as np
 import logging
 from typing import Tuple, List
+
+import sys
+sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 from utils.config import study_path
 from utils.utils import split
 

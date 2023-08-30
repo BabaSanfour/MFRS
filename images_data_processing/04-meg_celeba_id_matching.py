@@ -4,10 +4,10 @@ import dlib
 import numpy as np
 from tqdm import tqdm
 import matplotlib.pyplot as plt
-import sys
 import pickle
 
-sys.path.append('../../MFRS')
+import sys
+sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 
 from utils.config import study_path, proj_path
 

@@ -1,5 +1,4 @@
 import os
-import sys
 import mne
 import json
 import numpy as np
@@ -7,7 +6,8 @@ from pandas import read_csv
 import logging
 from mne.parallel import parallel_func
 
-sys.path.append('../../MFRS/')
+import sys
+sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 from utils.config import study_path, meg_dir, reject_tmax, map_subjects, conditions_mapping
 
 # Set up logging

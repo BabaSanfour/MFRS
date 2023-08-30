@@ -1,5 +1,4 @@
 import os
-import sys
 import json
 import time
 import logging
@@ -13,7 +12,8 @@ logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(name)s - %(level
 logger = logging.getLogger(__name__)
 
 # Add necessary paths
-sys.path.append("/home/hamza97/MFRS")
+import sys
+sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 from utils.config import proj_path, study_path
 
 # Define the path for the imagenet training data

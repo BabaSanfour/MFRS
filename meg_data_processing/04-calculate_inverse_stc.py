@@ -1,5 +1,4 @@
 import os
-import sys
 import glob
 import pickle
 import numpy as np
@@ -9,7 +8,8 @@ import mne
 
 from sklearn.model_selection import KFold
 
-sys.path.append('../../MFRS/')
+import sys
+sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 from utils.config import study_path, subjects_dir, spacing, meg_dir, mindist
 from utils.arg_parser import source_rescontruction_parser
 

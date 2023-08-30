@@ -1,6 +1,5 @@
 import os
 import cv2
-import sys
 import torch
 import datetime
 import numpy as np
@@ -11,7 +10,8 @@ from typing import Tuple, TextIO
 from PIL import Image, ImageOps
 import logging
 
-sys.path.append("../../MFRS")
+import sys
+sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 from utils.config import proj_path
 from utils.utils import store_many_hdf5
 # Configure logging
