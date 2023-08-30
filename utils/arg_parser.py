@@ -1,66 +1,83 @@
 import argparse
 
-def get_config_parser():
-    parser = argparse.ArgumentParser(description="models evalution on Face datasets.")
+def get_training_config_parser():
+    """
+    Create an argparse parser for configuring model training.
+
+    Returns:
+        argparse.ArgumentParser: A parser for training configuration.
+    """
+    parser = argparse.ArgumentParser(description="Model evaluation on datasets.")
 
     data = parser.add_argument_group("Data")
     data.add_argument(
-        "--dataset", type=str, default="celebA", help="Dataset to use (default: %(default)s)."
+        "--dataset",
+        type=str,
+        default="celebA",
+        help="Dataset to use (default: %(default)s)."
+    )
+    data.add_argument(
+        "--analysis_type",
+        type=str,
+        help="Analysis type for the dataset."
     )
 
-    data = parser.add_argument_group("Data")
     data.add_argument(
-        "--batch_size", 
-        type=int, 
-        default=32, #fixed after Random Search
-        choices=[8, 16, 32, 64, 128, 256, 512],
-        help="batch size (default: %(default)s)."
+        "--batch_size",
+        type=int,
+        default=32,
+        help="Batch size (default: %(default)s)."
     )
     data.add_argument(
         "--num_classes",
         type=int,
         default=1000,
-        choices=[1000, 500, 300],
-        help="Use VGGFace pretrained weights (default: %(default)s).",
-    )
-    data.add_argument(
-        "--num_pictures",
-        type=int,
-        default=30,
-        help="Num pictures per class for CelebA (default: %(default)s).",
+        help="Number of classes (default: %(default)s).",
     )
 
     model = parser.add_argument_group("Model")
     model.add_argument(
         "--model",
         type=str,
-        choices=["alexnet", "resnet18" "resnet34", "deepID_1", 
-                "LightCNN", "cornet_z", "cornet_s", "resnet50",
-                 "mobilenet",  "vgg16_bn", 
-                 "vgg19_bn", "inception_v3", "FaceNet", "SphereFace",
-                 "resnet101", "resnet152", "vgg16", "vgg19"],
+        choices=[
+            "cornet_s", "resnet50", "mobilenet", "vgg16_bn",
+            "inception_v3", "FaceNet", "SphereFace",
+        ],
         default="resnet50",
-        help="name of the model to run (default: %(default)s).",
+        help="Name of the model to run (default: %(default)s).",
     )
     model.add_argument(
         "--n_input_channels",
         type=int,
         choices=[1, 3],
         default=1,
-        help="RGB or GreyScale pictures as input (default: %(default)s).",
+        help="Number of input channels (1 for grayscale, 3 for RGB, default: %(default)s).",
     )
 
     model.add_argument(
         "--pretrained",
         type=bool,
         default=True,
-        help="Use VGGFace pretrained weights (default: %(default)s).",
+        help="Use pretrained weights (default: %(default)s).",
     )
     model.add_argument(
-        "--weights",
+        "--transfer",
+        type=bool,
+        default=True,
+        help="Transfer learning (default: %(default)s).",
+    )
+
+    model.add_argument(
+        "--in_weights",
         type=str,
         default=None,
-        help="Weights to use in case of pretrained=true (default: %(default)s).",
+        help="Input weights file for pretrained models.",
+    )
+    model.add_argument(
+        "--out_weights",
+        type=str,
+        default=None,
+        help="Output weights file to save the trained model.",
     )
 
     optimization = parser.add_argument_group("Optimization")
@@ -68,33 +85,33 @@ def get_config_parser():
         "--num_epochs",
         type=int,
         default=50,
-        help="number of epochs for training (default: %(default)s).",
+        help="Number of epochs for training (default: %(default)s).",
     )
     optimization.add_argument(
         "--optimizer",
         type=str,
         default="momentum",
         choices=["sgd", "momentum", "adam", "adamw"],
-        help="choice of optimizer (default: %(default)s).",
+        help="Optimizer choice (default: %(default)s).",
     )
     optimization.add_argument(
         "--lr",
         type=float,
-        default=1e-2, #fixed after random search
+        default=1e-2,
         choices=[1e-1, 1e-2, 1e-3],
-        help="learning rate for Adam optimizer (default: %(default)s).",
+        help="Learning rate for Adam optimizer (default: %(default)s).",
     )
     optimization.add_argument(
         "--momentum",
         type=float,
         default=0.9,
-        help="momentum for SGD optimizer (default: %(default)s).",
+        help="Momentum for SGD optimizer (default: %(default)s).",
     )
     optimization.add_argument(
         "--weight_decay",
         type=float,
         default=5e-4,
-        help="weight decay (default: %(default)s).",
+        help="Weight decay (default: %(default)s).",
     )
     optimization.add_argument(
         "--step_size",
@@ -106,7 +123,7 @@ def get_config_parser():
         "--gamma",
         type=int,
         default=0.1,
-        help="Step size (default: %(default)s).",
+        help="Gamma value (default: %(default)s).",
     )
 
     exp = parser.add_argument_group("Experiment config")
@@ -114,18 +131,11 @@ def get_config_parser():
         "--seed",
         type=int,
         default=42,
-        help="random seed for repeatability (default: %(default)s).",
+        help="Random seed for repeatability (default: %(default)s).",
     )
 
-    misc = parser.add_argument_group("Miscellaneous")
-    misc.add_argument(
-        "--device",
-        type=str,
-        choices=["cpu", "cuda"],
-        default="cuda",
-        help="device to store tensors on (default: %(default)s).",
-    )
     return parser
+
 
 def get_similarity_parser():
     parser = argparse.ArgumentParser(description='Compute similarity values for a model')

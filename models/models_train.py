@@ -21,7 +21,7 @@ from models.SphereFace import SphereFace
 import sys
 sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 from utils.load_data import dataloader
-from utils.arg_parser import get_config_parser
+from utils.arg_parser import get_training_config_parser
 from utils.config import weights_path
 
 # Set up logging
@@ -196,7 +196,7 @@ def save_network_weights(model: nn.Module, weights_name: str) -> None:
 
 if __name__ == '__main__':
 
-    parser = get_config_parser()
+    parser = get_training_config_parser()
     args = parser.parse_args()
     start = time.time()
 
