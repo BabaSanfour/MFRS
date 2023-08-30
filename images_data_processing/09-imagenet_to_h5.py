@@ -68,7 +68,7 @@ def make_array(analysis_type: str, data_dir: str, folder: str):
         )
 
         for label_folder in label_folders:
-            label = match_labels[label_folder]
+            label = match_labels.get(label_folder, 1001)
             if label in drop_labels:
                 continue
             pictures_paths = sorted(
