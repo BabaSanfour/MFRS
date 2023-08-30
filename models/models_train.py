@@ -206,7 +206,7 @@ if __name__ == '__main__':
 
     # Loss function
     criterion = torch.nn.CrossEntropyLoss()
-    dataset_loader, dataset_sizes = dataloader(args.batch_size, args.dataset)
+    dataset_loader, dataset_sizes = dataloader(args.batch_size, args.dataset, args.analysis_type)
     
     # Initialize Weights and Biases
     wandb.init(

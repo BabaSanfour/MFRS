@@ -1,13 +1,16 @@
 import os
-import torch
-import torchvision
-import sys
-sys.path.append('../../MFRS')
-from utils.config import study_path
-data_path= os.path.join(study_path, 'hdf5/')
-from torch.utils.data import Dataset
 import h5py
 import numpy as np
+
+import torch
+import torchvision
+from torch.utils.data import Dataset, DataLoader
+from torchvision.transforms import ToTensor, Normalize
+
+import sys
+sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
+from utils.config import study_path
+data_path= os.path.join(study_path, 'hdf5/')
 
 
 class HDF5Dataset(Dataset):
@@ -56,64 +59,89 @@ class HDF5Dataset(Dataset):
             return sample
 
 
-def dataloader(batch_n, dataset, num_classes=1000, num_pictures=30):
-    """Return datasets train and valid"""
-    # Argument :
-    # batch_n : batch_size
-    # Num classes : classes
-    # Num pictures : pictures
+def dataloader(batch_size: int, dataset: str, analysis_type: str) -> (dict, dict):
+    """
+    Create data loaders for training, validation, and test datasets.
+
+    Args:
+        batch_size (int): The batch size for data loaders.
+        dataset (str): The dataset name ('celebA', 'VGGFace', 'imagenet', etc.).
+        analysis_type (str): The type of analysis being performed.
+
+    Returns:
+        dict: A dictionary containing data loaders for 'train', 'valid', and 'test' datasets.
+        dict: A dictionary containing sizes of 'train', 'valid', and 'test' datasets.
+    """
+    data_path = '/your/data/path'  # Change this to the actual data path
+
+    mean, std = [0.485, 0.456, 0.406], [0.229, 0.224, 0.225]
     if dataset == "celebA":
-        train_path = os.path.join(data_path, "new_train_%s_%s.h5"%(num_classes, num_pictures))
-        valid_path = os.path.join(data_path, "new_valid_%s_%s.h5"%(num_classes, num_pictures))
-        test_path = os.path.join(data_path, "new_test_%s_%s.h5"%(num_classes, num_pictures))
+        train_filename = f"train_{analysis_type}_meg_stimuli.h5"
+        valid_filename = f"valid_{analysis_type}_meg_stimuli.h5"
+        test_filename = f"test_{analysis_type}_meg_stimuli.h5"
         mean, std = [0.3612], [0.3056]
     elif dataset == "VGGFace":
-        train_path = os.path.join(data_path,"train.h5")
-        valid_path = os.path.join(data_path,"valid.h5")
-        test_path = os.path.join(data_path,"test.h5")
-        mean, std = [0.485, 0.456, 0.406], [0.229, 0.224, 0.225]
-    else :
-        print('Error loading data')
+        train_filename = "train.h5"
+        valid_filename = "valid.h5"
+        test_filename = "test.h5"
+    elif dataset == "imagenet":
+        train_filename = f"imagenet_subset_train_{analysis_type}.h5"
+        valid_filename = f"imagenet_subset_valid_{analysis_type}.h5"
+        # Split 'valid' into 'valid' and 'test' for ImageNet
+        valid_loader = HDF5Dataset(os.path.join(data_path, valid_filename),
+                                   transform=torchvision.transforms.Compose([ToTensor(),
+                                                                             Normalize(mean=[mean], std=[std])]))
+        valid_size = len(valid_loader)
+        valid_size = int(valid_size * 0.5)  # Splitting the 'valid' set in half
+        valid_loader, test_loader = torch.utils.data.random_split(valid_loader, [valid_size, valid_size])
+    else:
+        raise ValueError("Invalid dataset name")
 
-    # extract mean and std:
-    list_mean_std = mean_std[str(num_classes)+'_'+str(num_pictures)]
-    mean, std = list_mean_std[0], list_mean_std[1]
+    # Create data loaders
+    train_loader = DataLoader(HDF5Dataset(os.path.join(data_path, train_filename),
+                                          transform=torchvision.transforms.Compose([ToTensor(),
+                                                                                    Normalize(mean=[mean], std=[std])])),
+                                            batch_size=batch_size, num_workers=2, shuffle=True)
 
-    # ##Training dataset
-    train_dataset = generate_Dataset_h5(train_path,
-                                        torchvision.transforms.Compose([torchvision.transforms.ToTensor(),
-                                        torchvision.transforms.Normalize(mean=[mean], std=[std])]))
+    if dataset != "imagenet":
+        valid_loader = DataLoader(valid_loader,
+                                  batch_size=batch_size, num_workers=2, shuffle=True)
 
-    # ##Validation dataset
-    valid_dataset = generate_Dataset_h5(valid_path,
-                                        torchvision.transforms.Compose([torchvision.transforms.ToTensor(),
-                                        torchvision.transforms.Normalize(mean=[mean], std=[std])]))
+    test_loader = DataLoader(HDF5Dataset(os.path.join(data_path, test_filename),
+                                         transform=torchvision.transforms.Compose([ToTensor(),
+                                                                                   Normalize(mean=[mean], std=[std])])),
+                                            batch_size=batch_size, num_workers=2, shuffle=True)
 
-    test_dataset = generate_Dataset_h5(test_path,
-                                        torchvision.transforms.Compose([torchvision.transforms.ToTensor(),
-                                        torchvision.transforms.Normalize(mean=[mean], std=[std])]))
+    # Create dictionaries for loaders and sizes
+    data_loaders = {'train': train_loader, 'valid': valid_loader, 'test': test_loader}
+    data_sizes = {'train': len(train_loader.dataset), 'valid': len(valid_loader.dataset), 'test': len(test_loader.dataset)}
 
-    # ##Test dataset
-    dataset_loader = {'train': torch.utils.data.DataLoader(train_dataset, batch_size=batch_n, num_workers=2, shuffle=True),
-                      'valid': torch.utils.data.DataLoader(valid_dataset, batch_size=batch_n, num_workers=2, shuffle=True),
-                      'test': torch.utils.data.DataLoader(test_dataset, batch_size=batch_n, num_workers=2, shuffle=True)}
-
-    dataset_sizes = {'train': len(train_dataset), 'valid' : len(valid_dataset), 'test' : len(test_dataset)}
-
-    return dataset_loader, dataset_sizes
+    return data_loaders, data_sizes
 
 
-def Stimuliloader(batch_n, file_name):
-    """Return datasets train and valid"""
-    # Argument :
-    # batch_n : batch_size
-    # file_name : file_name
-    data=os.path.join(data_path, "%s.h5"%file_name)
-    mean, std =[0.3612], [0.3056]
+def Stimuliloader(batch_size: int, file_name: str) -> DataLoader:
+    """
+    Create a data loader for stimuli data.
 
-    # ##Stimuli dataset
-    stimuli_dataset = generate_stimuli_h5(data,
-                                        torchvision.transforms.Compose([torchvision.transforms.ToTensor(),
-                                        torchvision.transforms.Normalize(mean=[mean], std=[std])]))
+    Args:
+        batch_size (int): The batch size for the data loader.
+        file_name (str): The name of the HDF5 file containing stimuli data.
 
-    return torch.utils.data.DataLoader(stimuli_dataset, batch_size=batch_n,shuffle=False)
+    Returns:
+        DataLoader: A data loader for stimuli data.
+    """
+    data_file = os.path.join(data_path, f"{file_name}.h5")
+    
+    # Set mean and std for normalization
+    mean, std = [0.3612], [0.3056]
+
+    # Create a stimuli dataset
+    stimuli_dataset = HDF5Dataset(data_file,
+                                   transform=torchvision.transforms.Compose([torchvision.transforms.ToTensor(),
+                                                                             torchvision.transforms.Normalize(mean=mean, std=std)]),
+                                   has_labels=False)  
+
+    # Create a data loader for the stimuli dataset
+    stimuli_loader = DataLoader(stimuli_dataset, batch_size=batch_size, shuffle=False)
+
+    return stimuli_loader
