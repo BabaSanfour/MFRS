@@ -1,12 +1,14 @@
 """
 Cornet-S network
 """
-import sys
+import os
 import math
 from typing import Any
 from collections import OrderedDict
 from torch import nn
-sys.path.append('../../MFRS/')
+
+import sys
+sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 from utils.load_weights import load_weights
 
 class Flatten(nn.Module):
@@ -142,8 +144,8 @@ class CORnet_S(nn.Module):
         return output
 
 
-def cornet_s(pretrained: bool = False, num_classes: int = 1000, n_input_channels: int = 3,  map_location=None, weights: str = None,**kwargs: Any) -> CORnet_S:
+def cornet_s(pretrained: bool = False, num_classes: int = 1000, n_input_channels: int = 3,  transfer: bool = False, weights: str = None) -> CORnet_S:
     model = CORnet_S(num_classes, n_input_channels)
     if pretrained:
-        return load_weights('cornet_s', model, n_input_channels, weights)
+        return load_weights(model, transfer, weights)
     return model

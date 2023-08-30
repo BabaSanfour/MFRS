@@ -1,14 +1,16 @@
 """
 MobileNet network
 """
-import sys
+import os
 import warnings
 import torch
 from torch import Tensor
 import torch.nn as nn
 # from utils import load_state_dict_from_url
 from typing import Any, Callable, List, Optional
-sys.path.append('../../MFRS/')
+
+import sys
+sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 from utils.load_weights import load_weights
 
 
@@ -256,12 +258,12 @@ class MobileNetV2(nn.Module):
         return self._forward_impl(x)
 
 
-def mobilenet_v2(pretrained: bool = False, num_classes: int = 1000, n_input_channels: int = 3,  weights: str = None, progress: bool = True, **kwargs: Any) -> MobileNetV2:
+def mobilenet_v2(pretrained: bool = False, num_classes: int = 1000, n_input_channels: int = 3,  transfer: bool = False, weights: str = None, progress: bool = True, **kwargs: Any) -> MobileNetV2:
     """
     Constructs a MobileNetV2 architecture from
     `"MobileNetV2: Inverted Residuals and Linear Bottlenecks" <https://arxiv.org/abs/1801.04381>`_.
     """
     model = MobileNetV2(num_classes, n_input_channels, **kwargs)
     if pretrained:
-        return load_weights('mobilenet', model, n_input_channels, weights)
+        return load_weights(model, transfer, weights)
     return model

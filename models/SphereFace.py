@@ -1,13 +1,16 @@
 """
 SphereFace network
 """
+import os
 import sys
 import math
 import torch
 import torch.nn as nn
 from torch.autograd import Variable
 from torch.nn import Parameter
-sys.path.append('../../MFRS/')
+
+import sys
+sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 from utils.load_weights import load_weights
 
 def myphi(x,m):
@@ -194,9 +197,10 @@ def SphereFace(
     pretrained: bool = False,
     num_classes: int = 1000,
     n_input_channels: int = 3,
+    transfer: bool = False,
     weights: str = None
 ) -> sphere20a:
     model = sphere20a(num_classes, n_input_channels)
     if pretrained:
-        return load_weights('SphereFace', model, n_input_channels, weights)
+        return load_weights(model, transfer, weights)
     return model

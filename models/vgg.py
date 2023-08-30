@@ -1,11 +1,14 @@
 """
 VGG networks
 """
+import os
 import sys
 import torch
 import torch.nn as nn
 from typing import  Any, Union, List, Dict, cast
-sys.path.append('../../MFRS/')
+
+import sys
+sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 from utils.load_weights import load_weights
 
 
@@ -69,14 +72,14 @@ cfgs: Dict[str, List[Union[str, int]]] = {
     }
 
 
-def _vgg(arch: str, cfg: str, batch_norm: bool, pretrained: bool, num_classes: int, n_input_channels: int, weights: str, progress: bool, **kwargs: Any) -> VGG:
+def _vgg(cfg: str, batch_norm: bool, pretrained: bool, num_classes: int, n_input_channels: int, transfer: bool , weights: str, **kwargs: Any) -> VGG:
     model = VGG(make_layers(cfgs[cfg], batch_norm=batch_norm, n_input_channels=n_input_channels), num_classes, **kwargs)
     if pretrained:
-        return load_weights(arch, model, n_input_channels, weights)
+        return load_weights(model, transfer, weights)
     return model
 
 
-def vgg16(pretrained: bool = False, num_classes: int = 1000, n_input_channels: int = 3, weights: str = None, progress: bool = True, **kwargs: Any) -> VGG:
+def vgg16(pretrained: bool = False, num_classes: int = 1000, n_input_channels: int = 3, transfer: bool = False, weights: str = None, progress: bool = True, **kwargs: Any) -> VGG:
     r"""VGG 16-layer model (configuration "D")
     `"Very Deep Convolutional Networks For Large-Scale Image Recognition" <https://arxiv.org/pdf/1409.1556.pdf>`_.
     The required minimum input size of the model is 32x32.
@@ -84,10 +87,10 @@ def vgg16(pretrained: bool = False, num_classes: int = 1000, n_input_channels: i
         pretrained (bool): If True, returns a model pre-trained on ImageNet
         progress (bool): If True, displays a progress bar of the download to stderr
     """
-    return _vgg('vgg16', 'D', False, pretrained, num_classes, n_input_channels, weights, progress, **kwargs)
+    return _vgg('D', False, pretrained, num_classes, n_input_channels, transfer, weights, progress, **kwargs)
 
 
-def vgg16_bn(pretrained: bool = False, num_classes: int = 1000, n_input_channels: int = 3, weights: str = None, progress: bool = True, **kwargs: Any) -> VGG:
+def vgg16_bn(pretrained: bool = False, num_classes: int = 1000, n_input_channels: int = 3, transfer: bool = False, weights: str = None, progress: bool = True, **kwargs: Any) -> VGG:
     r"""VGG 16-layer model (configuration "D") with batch normalization
     `"Very Deep Convolutional Networks For Large-Scale Image Recognition" <https://arxiv.org/pdf/1409.1556.pdf>`_.
     The required minimum input size of the model is 32x32.
@@ -95,10 +98,10 @@ def vgg16_bn(pretrained: bool = False, num_classes: int = 1000, n_input_channels
         pretrained (bool): If True, returns a model pre-trained on ImageNet
         progress (bool): If True, displays a progress bar of the download to stderr
     """
-    return _vgg('vgg16_bn', 'D', True, pretrained, num_classes, n_input_channels, weights, progress, **kwargs)
+    return _vgg('D', True, pretrained, num_classes, n_input_channels, transfer, weights, progress, **kwargs)
 
 
-def vgg19(pretrained: bool = False, num_classes: int = 1000, n_input_channels: int = 3, weights: str = None, progress: bool = True, **kwargs: Any) -> VGG:
+def vgg19(pretrained: bool = False, num_classes: int = 1000, n_input_channels: int = 3, transfer: bool = False, weights: str = None, progress: bool = True, **kwargs: Any) -> VGG:
     r"""VGG 19-layer model (configuration "E")
     `"Very Deep Convolutional Networks For Large-Scale Image Recognition" <https://arxiv.org/pdf/1409.1556.pdf>`_.
     The required minimum input size of the model is 32x32.
@@ -106,10 +109,10 @@ def vgg19(pretrained: bool = False, num_classes: int = 1000, n_input_channels: i
         pretrained (bool): If True, returns a model pre-trained on ImageNet
         progress (bool): If True, displays a progress bar of the download to stderr
     """
-    return _vgg('vgg19', 'E', False, pretrained, num_classes, n_input_channels, weights, progress, **kwargs)
+    return _vgg('E', False, pretrained, num_classes, n_input_channels, transfer, weights, progress, **kwargs)
 
 
-def vgg19_bn(pretrained: bool = False, num_classes: int = 1000, n_input_channels: int = 3, weights: str = None, progress: bool = True, **kwargs: Any) -> VGG:
+def vgg19_bn(pretrained: bool = False, num_classes: int = 1000, n_input_channels: int = 3, transfer: bool = False, weights: str = None, progress: bool = True, **kwargs: Any) -> VGG:
     r"""VGG 19-layer model (configuration 'E') with batch normalization
     `"Very Deep Convolutional Networks For Large-Scale Image Recognition" <https://arxiv.org/pdf/1409.1556.pdf>`_.
     The required minimum input size of the model is 32x32.
@@ -117,4 +120,4 @@ def vgg19_bn(pretrained: bool = False, num_classes: int = 1000, n_input_channels
         pretrained (bool): If True, returns a model pre-trained on ImageNet
         progress (bool): If True, displays a progress bar of the download to stderr
     """
-    return _vgg('vgg19_bn', 'E', True, pretrained, num_classes, n_input_channels, weights, progress, **kwargs)
+    return _vgg('E', True, pretrained, num_classes, n_input_channels, transfer, weights, progress, **kwargs)

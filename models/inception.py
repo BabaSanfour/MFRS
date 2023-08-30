@@ -1,6 +1,7 @@
 """
 Inception network
 """
+import os
 import torch
 from torch import nn, Tensor
 import torch.nn.functional as F
@@ -8,8 +9,9 @@ import torch.nn.functional as F
 import warnings
 from collections import namedtuple
 from typing import Callable, Any, Optional, Tuple, List
+
 import sys
-sys.path.append('../../MFRS/')
+sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 from utils.load_weights import load_weights
 
 InceptionOutputs = namedtuple('InceptionOutputs', ['logits', 'aux_logits'])
@@ -19,7 +21,7 @@ InceptionOutputs.__annotations__ = {'logits': Tensor, 'aux_logits': Optional[Ten
 # _InceptionOutputs set here for backwards compat
 _InceptionOutputs = InceptionOutputs
 
-def inception_v3(pretrained: bool = False, num_classes: int = 1000, n_input_channels: int = 3, weights: str = None, progress: bool = True, **kwargs: Any) -> "Inception3":
+def inception_v3(pretrained: bool = False, num_classes: int = 1000, n_input_channels: int = 3, transfer: bool = False, weights: str = None, progress: bool = True, **kwargs: Any) -> "Inception3":
     r"""Inception v3 model architecture from
     `"Rethinking the Inception Architecture for Computer Vision" <http://arxiv.org/abs/1512.00567>`_.
     The required minimum input size of the model is 75x75.
@@ -41,7 +43,7 @@ def inception_v3(pretrained: bool = False, num_classes: int = 1000, n_input_chan
         model.aux_logits = False
         model.AuxLogits = None
 
-        return load_weights('inception', model, n_input_channels, weights)
+        return load_weights(model, transfer, weights)
 
 
     return Inception3(num_classes, n_input_channels, **kwargs)
