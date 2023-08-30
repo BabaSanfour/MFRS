@@ -10,71 +10,51 @@ import h5py
 import numpy as np
 
 
-class generate_Dataset_h5(Dataset):
-    """CelebA Dataset stored in hdf5 file"""
-    def __init__(self, dir_path, transform=False):
-        #read the hdf5 file
+class HDF5Dataset(Dataset):
+    """
+    Dataset for reading data from an HDF5 file.
+
+    Args:
+        dir_path (str): Path to the HDF5 file.
+        transform (callable, optional): A function/transform to apply to the data.
+        has_labels (bool, optional): Set to True if the dataset includes labels.
+    """
+
+    def __init__(self, dir_path, transform=None, has_labels=True):
         self.file = h5py.File(dir_path, 'r')
-        if len(self.file['images'].shape)==3:
-            self.n_images, self.nx, self.ny = self.file['images'].shape
-        else :
-            self.n_images, self.nx, self.ny, self.nz = self.file['images'].shape
+        dataset_shape = self.file['images'].shape
+        self.n_images = dataset_shape[0]
+        if len(dataset_shape) == 3:
+            self.nx, self.ny = dataset_shape[1], dataset_shape[2]
+        else:
+            self.nx, self.ny, self.nz = dataset_shape[1], dataset_shape[2], dataset_shape[3]
 
         self.transform = transform
+        self.has_labels = has_labels
 
     def __len__(self):
-        """number of images in the file"""
+        """Number of images in the file."""
         return self.n_images
 
     def __getitem__(self, idx):
-        """return the input image and the associated label"""
-        if len(self.file['images'].shape)==3:
-            input_h5 = self.file['images'][idx,:,:]
+        """Return the input image and optionally the associated label."""
+        if len(self.file['images'].shape) == 3:
+            input_h5 = self.file['images'][idx, :, :]
         else:
-            input_h5 = self.file['images'][idx,:,:,:]
-        label_h5 = self.file['meta'][idx]
+            input_h5 = self.file['images'][idx, :, :, :]
+
         sample = np.array(input_h5.astype('uint8'))
-        label = torch.tensor(int(label_h5))
-        sample = self.transform(sample)
 
-        return sample, label
+        if self.transform:
+            sample = self.transform(sample)
 
-
-class generate_stimuli_h5(Dataset):
-    """CelebA Dataset stored in hdf5 file"""
-    def __init__(self, dir_path, transform=False):
-        #read the hdf5 file
-        self.file = h5py.File(dir_path, 'r')
-        if len(self.file['images'].shape)==3:
-            self.n_images, self.nx, self.ny = self.file['images'].shape
-        else :
-            self.n_images, self.nx, self.ny, self.nz = self.file['images'].shape
-
-        self.transform = transform
-
-    def __len__(self):
-        """number of images in the file"""
-        return self.n_images
-
-    def __getitem__(self, idx):
-        """return the input image and the associated label"""
-        if len(self.file['images'].shape)==3:
-            input_h5 = self.file['images'][idx,:,:]
+        if self.has_labels:
+            label_h5 = self.file['meta'][idx]
+            label = torch.tensor(int(label_h5))
+            return sample, label
         else:
-            input_h5 = self.file['images'][idx,:,:,:]
-        sample = np.array(input_h5.astype('uint8'))
-        sample = self.transform(sample)
+            return sample
 
-        return sample
-
-
-mean_std = { '1000_30': [0.3612, 0.3056],
-              '1000_25': [0.3736, 0.3082],
-              '1000_12': [0.3642, 0.3047],
-              '500_27': [0.3780, 0.3090],
-              '500_14': [0.3620, 0.3041],
-              '300_28': [0.3779, 0.3085],
-              '300_14': [0.3614, 0.3045] }
 
 def dataloader(batch_n, dataset, num_classes=1000, num_pictures=30):
     """Return datasets train and valid"""
