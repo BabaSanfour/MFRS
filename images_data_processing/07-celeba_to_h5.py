@@ -187,7 +187,9 @@ def make_array(pictures_dir: str, identity_file: TextIO, device: str, size: Tupl
             continue
 
         img_sample = cv2.imread(im_path, cv2.COLOR_BGR2RGB)
-
+        if img_sample is None:
+            logger.warning(f"Image not found: {im_path}")
+            continue
         # Get facial landmarks
         landmarks = fa.get_landmarks_from_image(img_sample)
 
@@ -218,7 +220,7 @@ if __name__ == '__main__':
         device = "cpu"
 
     for type_data in ["with", "without"]:
-        for folder in ["train", "test", "valid"]:
+        for folder in ["valid", "test", "train"]:
             dir_txt = os.path.join(proj_path, "images_data_processing", "files", f"identity_CelebA_{folder}_{type_data}_meg_stimuli.txt")
             identity_file = open(dir_txt, "r")
             img_array, label_array = make_array(f"{folder}_{type_data}_meg_stimuli", identity_file, device)
