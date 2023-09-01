@@ -10,13 +10,13 @@ from torch.optim import Optimizer
 from torch.optim.lr_scheduler import _LRScheduler
 from torch.utils.data import DataLoader
 
-from models.inception import inception_v3
-from models.cornet_s import cornet_s
-from models.mobilenet import mobilenet_v2
-from models.resnet import resnet50
-from models.vgg import vgg16_bn
-from models.FaceNet import FaceNet
-from models.SphereFace import SphereFace
+from inception import inception_v3
+from cornet_s import cornet_s
+from mobilenet import mobilenet_v2
+from resnet import resnet50
+from vgg import vgg16_bn
+from FaceNet import FaceNet
+from SphereFace import SphereFace
 
 import sys
 sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
@@ -169,7 +169,7 @@ def test_model(model: nn.Module, dataset_loader: Dict[str, DataLoader], dataset_
 
     avg_test_accuracy = 100.0 * correct_predictions / dataset_sizes["test"]
     avg_test_loss = test_loss / dataset_sizes["test"]
-    avg_test_accuracy_topk = 100.0 * correct_topk_predictions / dataset_sizes["test"]
+    avg_test_accuracy_topk = (100.0 * correct_topk_predictions / dataset_sizes["test"]).to("cpu").numpy().item()
 
     # Log the results
     logger.info(f'Test Loss: {avg_test_loss:.2f}')
@@ -227,7 +227,7 @@ if __name__ == '__main__':
 
     # Initialize the model
     model = model_cls(args.pretrained, args.num_classes, args.n_input_channels, args.transfer, args.in_weights)
-    model.to(args.device)
+    model.to(device)
 
     # Choose optimizer based on args.optimizer
     if args.optimizer == "adamw":
@@ -243,7 +243,7 @@ if __name__ == '__main__':
 
     experiment_name = f"final_{args.model}_{args.num_classes}"
 
-    model_ft, wandb = train_model(model, criterion, optimizer_ft, exp_lr_scheduler, args.num_epochs, dataset_loader, dataset_sizes, wandb)
+    model_ft = train_model(model, criterion, optimizer_ft, exp_lr_scheduler, args.num_epochs, dataset_loader, dataset_sizes, wandb)
     acc = test_model(model_ft, dataset_loader, dataset_sizes)
     wandb.log({"Test Acc": acc})
 

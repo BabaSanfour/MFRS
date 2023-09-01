@@ -56,15 +56,30 @@ def get_training_config_parser():
 
     model.add_argument(
         "--pretrained",
-        type=bool,
-        default=True,
-        help="Use pretrained weights (default: %(default)s).",
+        dest="pretrained", 
+        action="store_true",
+        help="If we want to use pretrained weights.",
     )
+
+    model.add_argument(
+        "--no-pretrained", 
+        dest="pretrained", 
+        action="store_false",
+        help="Without pretrained weights."
+    )
+
     model.add_argument(
         "--transfer",
-        type=bool,
-        default=True,
-        help="Transfer learning (default: %(default)s).",
+        dest="transfer", 
+        action="store_true",
+        help="If we want to transfer from 3D first layer to 1D.",
+    )
+
+    model.add_argument(
+        "--no-transfer", 
+        dest="transfer", 
+        action="store_true",
+        help="If we do not want to transfer from 3D first layer to 1D.",
     )
 
     model.add_argument(

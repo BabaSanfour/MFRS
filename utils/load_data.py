@@ -72,7 +72,6 @@ def dataloader(batch_size: int, dataset: str, analysis_type: str) -> (dict, dict
         dict: A dictionary containing data loaders for 'train', 'valid', and 'test' datasets.
         dict: A dictionary containing sizes of 'train', 'valid', and 'test' datasets.
     """
-    data_path = '/your/data/path'  # Change this to the actual data path
 
     mean, std = [0.485, 0.456, 0.406], [0.229, 0.224, 0.225]
     if dataset == "celebA":
@@ -88,9 +87,9 @@ def dataloader(batch_size: int, dataset: str, analysis_type: str) -> (dict, dict
         train_filename = f"imagenet_subset_train_{analysis_type}.h5"
         valid_filename = f"imagenet_subset_valid_{analysis_type}.h5"
         # Split 'valid' into 'valid' and 'test' for ImageNet
-        valid_loader = HDF5Dataset(os.path.join(data_path, valid_filename),
+        valid_loader = DataLoader(HDF5Dataset(os.path.join(data_path, valid_filename),
                                    transform=torchvision.transforms.Compose([ToTensor(),
-                                                                             Normalize(mean=[mean], std=[std])]))
+                                                                             Normalize(mean=mean, std=std)])))
         valid_size = len(valid_loader)
         valid_size = int(valid_size * 0.5)  # Splitting the 'valid' set in half
         valid_loader, test_loader = torch.utils.data.random_split(valid_loader, [valid_size, valid_size])
@@ -99,18 +98,20 @@ def dataloader(batch_size: int, dataset: str, analysis_type: str) -> (dict, dict
 
     # Create data loaders
     train_loader = DataLoader(HDF5Dataset(os.path.join(data_path, train_filename),
-                                          transform=torchvision.transforms.Compose([ToTensor(),
-                                                                                    Normalize(mean=[mean], std=[std])])),
+                                            transform=torchvision.transforms.Compose([ToTensor(),
+                                                                                    Normalize(mean=mean, std=std)])),
                                             batch_size=batch_size, num_workers=2, shuffle=True)
 
     if dataset != "imagenet":
-        valid_loader = DataLoader(valid_loader,
-                                  batch_size=batch_size, num_workers=2, shuffle=True)
+        valid_loader = DataLoader(HDF5Dataset(os.path.join(data_path, valid_filename),
+                                          transform=torchvision.transforms.Compose([ToTensor(),
+                                                                                    Normalize(mean=[mean], std=[std])])),
+                                            batch_size=batch_size, num_workers=2, shuffle=False)
 
-    test_loader = DataLoader(HDF5Dataset(os.path.join(data_path, test_filename),
-                                         transform=torchvision.transforms.Compose([ToTensor(),
-                                                                                   Normalize(mean=[mean], std=[std])])),
-                                            batch_size=batch_size, num_workers=2, shuffle=True)
+        test_loader = DataLoader(HDF5Dataset(os.path.join(data_path, test_filename),
+                                            transform=torchvision.transforms.Compose([ToTensor(),
+                                                                                   Normalize(mean=mean, std=std)])),
+                                            batch_size=batch_size, num_workers=2, shuffle=False)
 
     # Create dictionaries for loaders and sizes
     data_loaders = {'train': train_loader, 'valid': valid_loader, 'test': test_loader}
