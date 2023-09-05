@@ -1,4 +1,5 @@
 import os
+import re
 import cv2
 import json
 import numpy as np
@@ -26,8 +27,8 @@ csv_data = pd.read_csv(os.path.join(proj_path, "images_data_processing", "files"
 
 # Define the path for the ImageNet training and validation data
 folder_paths = {
-    "train": os.path.join('imagenet_train_subset'),
-    "valid": os.path.join('valid'),
+    "train": 'imagenet_train_subset',
+    "valid": os.path.join('ILSVRC', 'Data', 'CLS-LOC', 'val'),
 }
 
 def make_array(analysis_type: str, data_dir: str, folder: str):
@@ -59,22 +60,17 @@ def make_array(analysis_type: str, data_dir: str, folder: str):
     drop_labels = drop_labels_map.get(analysis_type, ["random_faces", "meg_stimuli_faces"])
 
     if folder == 'train':
-        label_folders = sorted(
-            [
-                os.path.join(data_dir, label)
-                for label in os.listdir(data_dir)
-                if os.path.isdir(os.path.join(data_dir, label))
-            ]
-        )
-
+        label_folders = sorted( [ label for label in os.listdir(data_dir) if os.path.isdir(os.path.join(data_dir, label)) ])
         for label_folder in label_folders:
-            label = match_labels.get(label_folder, 1001)
-            if label in drop_labels:
+            print(label_folder)
+            if label_folder in drop_labels:
+                logger.info(f"Skipping label: {label_folder}")
                 continue
+            label = match_labels.get(label_folder, 1000)
             pictures_paths = sorted(
                 [
-                    os.path.join(label_folder, sname)
-                    for sname in os.listdir(label_folder)
+                    os.path.join(data_dir, label_folder, sname)
+                    for sname in os.listdir(os.path.join(data_dir, label_folder))
                 ]
             )
 
@@ -102,10 +98,13 @@ def make_array(analysis_type: str, data_dir: str, folder: str):
                 continue
             # Extract labels from a CSV file (assuming a specific format)
             name = os.path.splitext(os.path.basename(picture_path))[0]
-            label = csv_data.loc[csv_data['ImageId'] == name, 'PredictionString'].iloc[0][:9]
-            label = match_labels.get(label, 1001)  # Use match_labels if needed
+            if name[0]!="I":
+                name = name + ".jpg"
+            label = csv_data.loc[csv_data['ImageId'] == name, 'PredictionString'].iloc[0].split()[0]
             if label in drop_labels:
+                logger.info(f"Skipping label: {label}")
                 continue
+            label = match_labels.get(label, 1000)  # Use match_labels if needed
             img_sample = img_sample[:, :, ::-1]  # Transform from BGR to RGB
             PIL_image = Image.fromarray(img_sample.astype('uint8'), 'RGB')
             sample = np.asarray(resize(PIL_image), dtype=np.uint8)
@@ -119,7 +118,8 @@ def make_array(analysis_type: str, data_dir: str, folder: str):
 if __name__ == '__main__':
     begin_time = datetime.datetime.now()
     for folder in ["train", "valid"]:
-        for analysis_type in ["random_faces", "meg_stimuli_faces", "None"]:
+        for analysis_type in ["random_faces", "meg_stimuli_faces", None]:
+            logger.info(f"Starting {folder} set of {analysis_type} analysis.")
             img_array, label_array = make_array(analysis_type, folder_paths[folder], folder)
             hdf5_filename = f"imagenet_subset_{folder}_{analysis_type}"
             store_many_hdf5(img_array, label_array, hdf5_filename)
