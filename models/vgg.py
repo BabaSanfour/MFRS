@@ -79,7 +79,7 @@ def _vgg(cfg: str, batch_norm: bool, pretrained: bool, num_classes: int, n_input
     return model
 
 
-def vgg16(pretrained: bool = False, num_classes: int = 1000, n_input_channels: int = 3, transfer: bool = False, weights: str = None, progress: bool = True, **kwargs: Any) -> VGG:
+def vgg16(pretrained: bool = False, num_classes: int = 1000, n_input_channels: int = 3, transfer: bool = False, weights: str = None, **kwargs: Any) -> VGG:
     r"""VGG 16-layer model (configuration "D")
     `"Very Deep Convolutional Networks For Large-Scale Image Recognition" <https://arxiv.org/pdf/1409.1556.pdf>`_.
     The required minimum input size of the model is 32x32.
@@ -90,7 +90,7 @@ def vgg16(pretrained: bool = False, num_classes: int = 1000, n_input_channels: i
     return _vgg('D', False, pretrained, num_classes, n_input_channels, transfer, weights, progress, **kwargs)
 
 
-def vgg16_bn(pretrained: bool = False, num_classes: int = 1000, n_input_channels: int = 3, transfer: bool = False, weights: str = None, progress: bool = True, **kwargs: Any) -> VGG:
+def vgg16_bn(pretrained: bool = False, num_classes: int = 1000, n_input_channels: int = 3, transfer: bool = False, weights: str = None, **kwargs: Any) -> VGG:
     r"""VGG 16-layer model (configuration "D") with batch normalization
     `"Very Deep Convolutional Networks For Large-Scale Image Recognition" <https://arxiv.org/pdf/1409.1556.pdf>`_.
     The required minimum input size of the model is 32x32.
@@ -98,10 +98,10 @@ def vgg16_bn(pretrained: bool = False, num_classes: int = 1000, n_input_channels
         pretrained (bool): If True, returns a model pre-trained on ImageNet
         progress (bool): If True, displays a progress bar of the download to stderr
     """
-    return _vgg('D', True, pretrained, num_classes, n_input_channels, transfer, weights, progress, **kwargs)
+    return _vgg('D', True, pretrained, num_classes, n_input_channels, transfer, weights, **kwargs)
 
 
-def vgg19(pretrained: bool = False, num_classes: int = 1000, n_input_channels: int = 3, transfer: bool = False, weights: str = None, progress: bool = True, **kwargs: Any) -> VGG:
+def vgg19(pretrained: bool = False, num_classes: int = 1000, n_input_channels: int = 3, transfer: bool = False, weights: str = None, **kwargs: Any) -> VGG:
     r"""VGG 19-layer model (configuration "E")
     `"Very Deep Convolutional Networks For Large-Scale Image Recognition" <https://arxiv.org/pdf/1409.1556.pdf>`_.
     The required minimum input size of the model is 32x32.
@@ -109,10 +109,10 @@ def vgg19(pretrained: bool = False, num_classes: int = 1000, n_input_channels: i
         pretrained (bool): If True, returns a model pre-trained on ImageNet
         progress (bool): If True, displays a progress bar of the download to stderr
     """
-    return _vgg('E', False, pretrained, num_classes, n_input_channels, transfer, weights, progress, **kwargs)
+    return _vgg('E', False, pretrained, num_classes, n_input_channels, transfer, weights, **kwargs)
 
 
-def vgg19_bn(pretrained: bool = False, num_classes: int = 1000, n_input_channels: int = 3, transfer: bool = False, weights: str = None, progress: bool = True, **kwargs: Any) -> VGG:
+def vgg19_bn(pretrained: bool = False, num_classes: int = 1000, n_input_channels: int = 3, transfer: bool = False, weights: str = None, **kwargs: Any) -> VGG:
     r"""VGG 19-layer model (configuration 'E') with batch normalization
     `"Very Deep Convolutional Networks For Large-Scale Image Recognition" <https://arxiv.org/pdf/1409.1556.pdf>`_.
     The required minimum input size of the model is 32x32.
@@ -120,4 +120,4 @@ def vgg19_bn(pretrained: bool = False, num_classes: int = 1000, n_input_channels
         pretrained (bool): If True, returns a model pre-trained on ImageNet
         progress (bool): If True, displays a progress bar of the download to stderr
     """
-    return _vgg('E', True, pretrained, num_classes, n_input_channels, transfer, weights, progress, **kwargs)
+    return _vgg('E', True, pretrained, num_classes, n_input_channels, transfer, weights, **kwargs)
