@@ -8,64 +8,82 @@ from utils.arg_parser import get_similarity_parser
 from utils.general import save_npy, load_npy, load_pickle
 from utils.config import rdms_folder, activations_folder
 
-def limtozero(value: float) -> float:
-    """
-    Rounds a float value to zero if it's close enough (within 1e-15).
-    Parameters:
-        value (float): The float value to round to zero.
-    Returns:
-        The original value rounded to zero if it's close enough, otherwise the original value.
-    """
-    if abs(value) < 1e-15:
-        value = 0
-    return value
 
+class RDM:
+    def __init__(self, calculate_absolute=True):
+        """
+        Initializes an RDMCalculator.
 
-def oneRDM(activations: np.array, cons: int, stimuli_file: str = None, model_name: str = None, save: bool = False, activ_type: str = "main", abs: bool = False) -> np.array:
-    """
-    Calculates the Representational Dissimilarity Matrix (RDM) for one Artificial Neural Network layer
-    activations or for the network concatenated activations
-    Parameters:
-    ----------
-    activations : np.array
-        The layer/concatenated network activations, shape [n_cons, n_neurons].
-        n_cons & n_neurons represent the number of conditions & the number of neurons respectively.
-    model_name : str
-        The name of the model.
-    stimuli_file_name : str
-        The name of the stimuli file.    
-    cons : int
-        The number of conditions.
-    save : bool
-        Save computed similarity scores stats, default: False.
-    absolute : bool
-        Calculate the absolute value of Pearson r or not, default is True.
-    Returns:
-    -------
-    RDM : np.array
-        The activations RDM. The shape is [n_cons, n_cons].
-    """
-    if activations.ndim != 2:
-        raise ValueError("The input for oneRDM function must have shape [n_cons, n_neurons].")
+        Args:
+            calculate_absolute (bool, optional): Calculate the absolute value of Pearson r or not, default is True.
+        """
+        self.calculate_absolute = calculate_absolute
 
-    # initialize the RDM
-    rdm = np.zeros([cons, cons], dtype=np.float64)
-    for i in tqdm(range(cons), desc="Calculating RDM"):
-        # RDMs are symetric, so we calculate only the upper half and assign the values to the lower one.
-        for j in range(i+1, cons):
-            # calculate the Pearson Coefficient
-            r = pearsonr(activations[i], activations[j])[0]
-            # calculate the dissimilarity
-            if abs == True:
-                value = limtozero(1 - np.abs(r))
-                rdm[j, i], rdm[i, j] = value, value
-            else:
-                value = limtozero(1 - r)
-                rdm[j, i], rdm[i, j] = value, value
-    if save:
-        rdm_path = os.path.join(rdms_folder, f"{model_name}_{stimuli_file}_rdm_{activ_type}.npy")
-        save_npy(rdm, rdm_path)
-    return rdm
+    @staticmethod
+    def round_to_zero_if_close(value):
+        """
+        Rounds a float value to zero if it's close enough (within 1e-15).
+
+        Args:
+            value (float): The float value to round to zero.
+
+        Returns:
+            float: The original value rounded to zero if it's close enough, otherwise the original value.
+        """
+        if abs(value) < 1e-15:
+            return 0
+        return value
+
+    def compute_rdm(self, activity):
+        """
+        Calculates the Representational Dissimilarity Matrix (RDM) for one Artificial Neural Network layer
+        activations or for a brain region.
+
+        Args:
+            activity (np.ndarray): The model layer/brain region activity patterns.
+
+        Returns:
+            np.ndarray: The activations RDM. The shape is [num_conditions, num_conditions].
+        """
+        num_conditions = activity.shape[0]
+        rdm = np.zeros((num_conditions, num_conditions), dtype=np.float64)
+
+        for i in range(num_conditions):
+            for j in range(i + 1, num_conditions):
+                r = pearsonr(activity[i], activity[j])[0]
+                value = 1 - np.abs(r) if self.calculate_absolute else 1 - r
+                rdm[j, i] = rdm[i, j] = self.round_to_zero_if_close(value)
+
+        return rdm
+
+    def save(self, rdm, file_path):
+        """
+        Saves an RDM to a NumPy file.
+
+        Args:
+            rdm (np.ndarray): The RDM to save.
+            file_path (str): The path to the NumPy file where the RDM will be saved.
+        """
+        np.save(file_path, rdm)
+
+    def load(self, file_path):
+        """
+        Loads an RDM from a NumPy file.
+
+        Args:
+            file_path (str): The path to the NumPy file containing the RDM.
+
+        Returns:
+            np.ndarray: The loaded RDM.
+        """
+        return np.load(file_path)
+
+    def brain_rdms(self):
+        pass
+
+    def model_rdms(self):
+        pass
+
 
 def groupRDMs(layers_activations: list, model_name: str, stimuli_file: str, cons: int, 
               save: bool = False, activ_type: str = "trained", abs: bool = False) -> np.array:
