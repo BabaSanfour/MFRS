@@ -5,7 +5,7 @@ import numpy as np
 from typing import Union,  Dict
 import pickle
 import sys
-sys.path.append(os.path.join(os.path.dirname(__file__), '...'))
+sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 from utils.config import activations_folder, layer_types_to_select
 from utils.load_data import Stimuliloader
 from inception import inception_v3
