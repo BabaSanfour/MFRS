@@ -102,7 +102,7 @@ class RDM:
 
     def model_rdms_parallel(self, model_activations: Dict[str, np.ndarray], num_processes: int = None) -> np.ndarray:
         """
-        Calculate the Representational Dissimilarity Matrix(Matrices) - RDM(s) for Artificial Neural Networks layers activations.
+        Calculate the Representational Dissimilarity Matrix(Matrices) - RDM(s) for Artificial Neural Networks layers activations using parallel processing.
 
         Args:
             model_activations (dict): A dictionary containing the activations of the Artificial Neural Network layers.
