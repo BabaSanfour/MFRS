@@ -1,21 +1,25 @@
 import os
-import torch
-import torch.nn as nn
+import pickle
 import numpy as np
 from typing import Union,  Dict
-import pickle
+
+import torch
+import torch.nn as nn
+import torch.nn.modules as mod
+
 import sys
 sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
-from utils.config import activations_folder, layer_types_to_select
+from utils.config import activations_folder
+from utils.arg_parser import get_training_config_parser
 from utils.load_data import Stimuliloader
-from inception import inception_v3
+
+from inception import inception_v3, InceptionA, InceptionC, InceptionB, Inception3, InceptionE, InceptionD
 from cornet_s import cornet_s
 from mobilenet import mobilenet_v2
 from resnet import resnet50
 from vgg import vgg16_bn
-from FaceNet import FaceNet
+from FaceNet import FaceNet, Block35, Mixed_6a, Mixed_7a, Block8, Block17
 from SphereFace import SphereFace
-from utils.arg_parser import get_training_config_parser
 
 import logging  # Import the logging module
 
@@ -144,6 +148,14 @@ def extract_activations(
 if __name__ == '__main__':
     parser = get_training_config_parser()
     args = parser.parse_args()
+
+    layer_types_to_select = [ mod.activation.PReLU, mod.batchnorm.BatchNorm1d, mod.conv.Conv2d,
+                        mod.linear.Linear, mod.batchnorm.BatchNorm2d, mod.pooling.AdaptiveAvgPool2d,
+                        mod.activation.ReLU, mod.pooling.MaxPool2d,  mod.activation.ReLU6, 
+                         InceptionA, InceptionC, InceptionB, Inception3,
+                         Block35, Mixed_6a, Mixed_7a, Block8, Block17, InceptionE, InceptionD
+                        ]
+
     model_name = args.model
     # Create the model
     model_cls = {
