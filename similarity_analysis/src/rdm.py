@@ -8,9 +8,15 @@ from typing import Dict
 def calculate_rdm_parallel(layer_id, layer_activation, rdm_calculator):
     return rdm_calculator.calculate_rdm(layer_activation)
 
+def calculate_rdm_parallel_temp_brain_rdms(segment_data, rdm_calculator):
+    time_segment_id, t_segment_start, t_segment_end, brain_element_id, brain_element_activity = segment_data
+    segment_activity = brain_element_activity[:, t_segment_start:t_segment_end]
+    rdm = rdm_calculator(segment_activity)
+    return time_segment_id, brain_element_id, rdm
+
 
 class RDM:
-    def __init__(self, num_conditions, calculate_absolute=False):
+    def __init__(self, num_conditions: int, calculate_absolute: bool = False):
         """
         Initializes an RDMCalculator.
 
@@ -79,8 +85,87 @@ class RDM:
         """
         return np.load(file_path)
 
-    def brain_rdms(self):
-        pass
+    
+    def temp_brain_rdms(self, brain_activity: Dict[str, np.ndarray], time_segment: int = 550, sliding_window: int = 50, t_start: int = 220, t_end: int = 1101, ) -> np.ndarray:
+        """
+        Calculate the Representational Dissimilarity Matrix(Matrices) - RDM(s) for brain regions/sensors activity patterns across time.
+
+        Args:
+            brain_activity (dict): A dictionary containing the brain regions/sensors activity patterns.
+            time_segment (int, optional): The time segment length to use to compute the RDMs, default is 550.
+            sliding_window (int, optional): The sliding window to use to compute the RDMs, default is 50.
+            t_start (int, optional): The start time from where we will start computing RDMs, default is 220.
+            t_end (int, optional): The end time from where we will stop computing RDMs, default is 1101.
+
+        Returns:
+            np.ndarray: An array of RDMs for each time segment. The shape is [num_time_segments, num_brain_elements, num_conditions, num_conditions].
+        """
+
+        num_time_segments = ((t_end - t_start - time_segment )  // sliding_window ) + 1
+        num_brain_elements = len(brain_activity)
+        rdms = np.zeros((num_time_segments, num_brain_elements, self.num_conditions, self.num_conditions), dtype=np.float64)
+
+        for time_segment_id in tqdm(range(num_time_segments), desc="Calculating RDMs"):
+            t_segment_start = t_start + time_segment_id * sliding_window
+            t_segment_end = t_segment_start + time_segment
+            
+            for brain_element_id, (_, brain_element_activity) in enumerate(brain_activity.items()):
+                segment_activity = brain_element_activity[:, t_segment_start:t_segment_end]
+                rdms[time_segment_id, brain_element_id] = self.calculate_rdm(segment_activity)
+
+        return rdms
+
+
+    def temp_brain_rdms_parallel(self, brain_activity: Dict[str, np.ndarray], time_segment: int = 550, sliding_window: int = 50, t_start: int = 220, t_end: int = 1101) -> np.ndarray:
+        """
+        Calculate the Representational Dissimilarity Matrix(Matrices) - RDM(s) for brain regions/sensors activity patterns across time using parallel processing.
+
+        Args:
+            brain_activity (dict): A dictionary containing the brain regions/sensors activity patterns.
+            time_segment (int, optional): The time segment length to use to compute the RDMs, default is 550.
+            sliding_window (int, optional): The sliding window to use to compute the RDMs, default is 50.
+            t_start (int, optional): The start time from where we will start computing RDMs, default is 220.
+            t_end (int, optional): The end time from where we will stop computing RDMs, default is 1101.
+
+        Returns:
+            np.ndarray: An array of RDMs for each time segment. The shape is [num_time_segments, num_brain_elements, num_conditions, num_conditions].
+        """
+
+        num_time_segments = ((t_end - t_start - time_segment) // sliding_window) + 1
+        num_brain_elements = len(brain_activity)
+        rdms = np.zeros((num_time_segments, num_brain_elements, self.num_conditions, self.num_conditions), dtype=np.float64)
+
+        # Create a list of segment data for parallel processing
+        segment_data_list = []
+
+        for time_segment_id in range(num_time_segments):
+            t_segment_start = t_start + time_segment_id * sliding_window
+            t_segment_end = t_segment_start + time_segment
+
+            for brain_element_id, (_, brain_element_activity) in enumerate(brain_activity.items()):
+                segment_data = (time_segment_id, t_segment_start, t_segment_end, brain_element_id, brain_element_activity)
+                segment_data_list.append(segment_data)
+
+        # Parallel processing
+        with multiprocessing.Pool() as pool:
+            results = list(
+                tqdm(
+                    pool.starmap(
+                        calculate_rdm_parallel_temp_brain_rdms,
+                        [(data, self.calculate_rdm) for data in segment_data_list],
+                    ),
+                    total=len(segment_data_list),
+                    desc="Calculating RDMs in parallel",
+                )
+            )
+
+        # Organize the results into the rdms array
+        for result in results:
+            time_segment_id, brain_element_id, rdm = result
+            rdms[time_segment_id, brain_element_id] = rdm
+
+        return rdms
+
 
     def model_rdms(self, model_activations: Dict[str, np.ndarray]) -> np.ndarray:
         """
