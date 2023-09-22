@@ -44,7 +44,10 @@ def setup_filenames(subject: str, spacing: str) -> dict:
         'inv': os.path.join(meg_dir, subject, f'{subject}-meg-{spacing}-inv.fif'),
         'stc': os.path.join(meg_dir, subject, 'src'),
         'mrph': os.path.join(meg_dir, subject, 'morph'),
-        'tcs': os.path.join(meg_dir, subject, f'{subject}-meg-ROI-time-courses.pkl')
+        'avg_tcs': os.path.join(meg_dir, subject, f'{subject}-meg-ROI-avg-time-courses.pkl'),
+        'raw_tcs': os.path.join(meg_dir, subject, f'{subject}-meg-ROI-raw-time-courses.pkl'),
+        'trans_avg_tcs': os.path.join(meg_dir, subject, f'{subject}-meg-ROI-trans-avg-time-courses.pkl'),
+        'trans_raw_tcs': os.path.join(meg_dir, subject, f'{subject}-meg-ROI-trans-raw-time-courses.pkl')
     }
     return filenames
 
@@ -76,29 +79,48 @@ def main():
         logger.info("Loading forward solution")
         fwd = mne.read_forward_solution(filenames['fwd'])
 
-    if not os.path.isfile(filenames['inv']) or args.overwrite:
+    if not os.path.isfile(filenames['inv']): # or args.overwrite:
         inverse_operator = compute_inverse_problem(filenames['inv'], epochs, fwd, cov, args.overwrite)
     else:
         logger.info("Loading inverse operator")
         inverse_operator = mne.minimum_norm.read_inverse_operator(filenames['inv'])
 
     if not os.path.isdir(filenames['stc']) or args.overwrite:
-        stcs = compute_source_estimates(filenames['stc'], epochs, inverse_operator,
-                                        args.method)
-    else:
+        compute_source_estimates(filenames['stc'], epochs, inverse_operator, args.method, args.overwrite)
+        del inverse_operator
+
+    del epochs            
+
+    if not os.path.isdir(filenames['mrph']) or args.overwrite:
         logger.info("Loading source estimates")
         stc_files = sorted(glob.glob(os.path.join(filenames['stc'], f'*{args.method}*.h5')))
         stcs = [mne.read_source_estimate(file_path) for file_path in stc_files]
+        morph_source_estimates(filenames['mrph'], stcs, subject, args.method, args.overwrite)
+        del stcs
 
-    if not os.path.isdir(filenames['mrph']) or args.overwrite:
-        morphed = morph_source_estimates(filenames['mrph'], stcs, subject, args.method)
-    else:
+    if not os.path.isfile(filenames['avg_tcs']) or args.overwrite:
         logger.info("Loading morphed source estimates")
         morph_files = sorted(glob.glob(os.path.join(filenames['mrph'], f'*{args.method}*.h5')))
         morphed = [mne.read_source_estimate(file_path) for file_path in morph_files]
+        morphed = extract_source_estimates_by_ROIs(filenames['avg_tcs'], morphed, "mean")
 
-    if not os.path.isfile(filenames['tcs']) or args.overwrite:
-        morphed = average_source_estimates_by_ROIs(filenames['tcs'], morphed)
+    if not os.path.isfile(filenames['trans_avg_tcs']) or args.overwrite:
+        with open(filenames['avg_tcs'], 'rb') as file:
+            time_courses_dict = pickle.load(file)
+        transform_data(filenames['trans_avg_tcs'], time_courses_dict, "mean")
+
+    if not os.path.isfile(filenames['raw_tcs']):# or args.overwrite:
+        logger.info("Loading morphed source estimates")
+        morph_files = sorted(glob.glob(os.path.join(filenames['mrph'], f'*{args.method}*.h5')))
+        morphed = [mne.read_source_estimate(file_path) for file_path in morph_files]
+        morphed = extract_source_estimates_by_ROIs(filenames['raw_tcs'], morphed, "raw")
+        del morphed
+        
+    if not os.path.isfile(filenames['trans_raw_tcs']) or args.overwrite:
+        with open(filenames['raw_tcs'], 'rb') as file:
+            time_courses_dict = pickle.load(file)
+        transform_data(filenames['trans_raw_tcs'], time_courses_dict, "raw")
+
 
 def compute_coregistration(fname_trans: str, subject: str, overwrite: bool = False) -> mne.coreg.Coregistration:
     """
@@ -175,7 +197,7 @@ def compute_cov(fname_cov: str, epochs: mne.Epochs, overwrite: bool = False,
     - Cross-validation is performed to improve stability and generalization of the covariance estimate.
 
     """
-    print(" ========> Computing cov matrix")
+    logger.info("Computing cov matrix")
     
     # Define KFold cross-validation
     cv = KFold(n_splits=kfolds)
@@ -215,8 +237,8 @@ def compute_forward_solution(fname_fwd: str, fname_src: str, fname_epo: str,
     - The computed forward solution is saved to the specified file.
     - The forward solution contains information about source space and leadfield.
     """
-    print(" ========> Computing forward solution")
-    
+    logger.info("Computing forward solution")
+
     # Read source space and epochs info
     src = mne.read_source_spaces(fname_src)
     info = mne.io.read_info(fname_epo)
@@ -261,8 +283,8 @@ def compute_inverse_problem(fname_inv: str, epochs: mne.Epochs,
     - The computed inverse operator is saved to the specified file.
     - The inverse operator is used for source reconstruction using minimum norm estimation.
     """
-    print(" ========> Computing inverse operator")
-    
+    logger.info("Computing inverse operator")
+
     # Compute the inverse operator using the specified parameters
     inverse_operator = mne.minimum_norm.make_inverse_operator(epochs.info, fwd, cov, loose=0.2, depth=0.8)
     
@@ -274,7 +296,7 @@ def compute_inverse_problem(fname_inv: str, epochs: mne.Epochs,
 
 def compute_source_estimates(fname_stc: str, epochs: mne.Epochs,
                               inverse_operator: mne.minimum_norm.InverseOperator,
-                              method: str,) -> list:
+                              method: str, overwrite: bool = False) -> list:
     """
     Compute source estimates using the specified inverse operator.
 
@@ -286,6 +308,7 @@ def compute_source_estimates(fname_stc: str, epochs: mne.Epochs,
         epochs (mne.Epochs): The epochs data.
         inverse_operator (mne.minimum_norm.InverseOperator): The inverse operator.
         method (str): The method for computing source estimates (e.g., 'dSPM', 'sLORETA').
+        overwrite (bool, optional): Whether to overwrite existing source estimates.
 
     Returns:
         list of mne.SourceEstimate: The computed source estimates.
@@ -295,7 +318,7 @@ def compute_source_estimates(fname_stc: str, epochs: mne.Epochs,
     - Source estimates are saved in the specified directory with appropriate filenames.
     - The 'method' parameter determines the method used for source estimation.
     """
-    print(" ========> Computing source estimates")
+    logger.info("Computing source estimates")
     
     # Parameters for source estimation
     snr = 3.0
@@ -307,22 +330,20 @@ def compute_source_estimates(fname_stc: str, epochs: mne.Epochs,
         inverse_operator,
         lambda2,
         method=method,
-        pick_ori='vector',
-        verbose=True,
+        # pick_ori="normal",
+        verbose=False,
     )
     
     # Create the directory if it doesn't exist
     os.makedirs(fname_stc, exist_ok=True)
-    
+    print(len(stcs))
     # Save each source estimate with a suitable filename
     for idx, stc in enumerate(stcs):
-        filename = os.path.join(fname_stc, f'{idx}_{method}_src')
-        stc.save(filename)
+        filename = os.path.join(fname_stc, f'{idx:03d}_{method}_src')
+        stc.save(filename, ftype='h5', overwrite=overwrite)
     
-    return stcs
 
-
-def morph_source_estimates(fname_mrp: str, stcs: list, subject: str, method: str) -> list:
+def morph_source_estimates(fname_mrp: str, stcs: list, subject: str, method: str, overwrite: False) -> list:
     """
     Morph source estimates to a common brain space.
 
@@ -334,6 +355,7 @@ def morph_source_estimates(fname_mrp: str, stcs: list, subject: str, method: str
         stcs (list of mne.SourceEstimate): List of source estimates to be morphed.
         subject (str): The subject's ID.
         method (str): The method used for morphing (e.g., 'dSPM', 'sLORETA').
+        overwrite (bool): Whether to overwrite existing morphed source estimates.
 
     Returns:
         list of mne.SourceEstimate: The morphed source estimates.
@@ -343,7 +365,7 @@ def morph_source_estimates(fname_mrp: str, stcs: list, subject: str, method: str
       to a common brain space (e.g., fsaverage).
     - The 'method' parameter determines the method used for morphing.
     """
-    print(" ========> Morphing source estimates")
+    logger.info("Morphing source estimates")
     
     # Path to fsaverage source space
     fname_fsaverage_src = os.path.join(subjects_dir, "fsaverage", "bem", "fsaverage-5-src.fif")
@@ -351,9 +373,7 @@ def morph_source_estimates(fname_mrp: str, stcs: list, subject: str, method: str
     
     # Create the directory if it doesn't exist
     os.makedirs(fname_mrp, exist_ok=True)
-    
-    morphed = []
-    
+        
     # Morph each source estimate and save
     for idx, stc in enumerate(stcs):
         morph = mne.compute_source_morph(
@@ -364,23 +384,21 @@ def morph_source_estimates(fname_mrp: str, stcs: list, subject: str, method: str
             subjects_dir=subjects_dir,
         ).apply(stc)
         
-        filename = os.path.join(fname_mrp, f'{idx}_{method}_morph')
-        morph.save(filename)
-        morphed.append(morph)
-    
-    return morphed
+        filename = os.path.join(fname_mrp, f'{idx:03d}_{method}_morph')
+        morph.save(filename, ftype='h5', overwrite=overwrite)
 
 
-def average_source_estimates_by_ROIs(fname_time_courses: str, morphed: list) -> dict:
+def extract_source_estimates_by_ROIs(fname_avg_time_courses: str, morphed: list, mode: str) -> dict:
     """
-    Average source estimates within predefined ROIs.
+    Extract source estimates within predefined ROIs using specified mode.
 
-    This function calculates the average time course within predefined regions of interest (ROIs)
-    for a list of morphed source estimates.
+    This function extracts time courses within predefined regions of interest (ROIs)
+    for a list of source estimates.
 
     Args:
         fname_time_courses (str): The file path to save the averaged time courses in pickled format.
         morphed (list of mne.SourceEstimate): List of morphed source estimates.
+        mode (str): The mode for extracting time courses (e.g., 'mean', 'raw').
 
     Returns:
         dict: A dictionary containing averaged time courses for each ROI and each source estimate.
@@ -388,7 +406,7 @@ def average_source_estimates_by_ROIs(fname_time_courses: str, morphed: list) -> 
     Note:
     - The function calculates the average time course within predefined ROIs for each source estimate.
     """
-    print(" ========> Averaging source estimates by ROIs")
+    logger.info("Averaging source estimates by ROIs")
     
     # Read label list from fsaverage parcellation
     label_list = mne.read_labels_from_annot("fsaverage", parc="aparc_sub", subjects_dir=subjects_dir)
@@ -396,7 +414,6 @@ def average_source_estimates_by_ROIs(fname_time_courses: str, morphed: list) -> 
     # Read fsaverage source space
     fname_fsaverage_src = os.path.join(subjects_dir, "fsaverage", "bem", "fsaverage-5-src.fif")
     src = mne.read_source_spaces(fname_fsaverage_src)
-
     time_courses_dict = {}
 
     for idx, source_estimate in enumerate(morphed):
@@ -404,16 +421,65 @@ def average_source_estimates_by_ROIs(fname_time_courses: str, morphed: list) -> 
         # Loop through each label and extract the time course for the source estimate
         for label in label_list:
             label_name = label.name
-            time_course = mne.extract_label_time_course(source_estimate, labels=label, src=src, mode='mean')
+            time_course = mne.extract_label_time_course(source_estimate, labels=label, src=src, mode=mode)
             epoch_time_courses[label_name] = time_course
         time_courses_dict[idx] = epoch_time_courses
     
     # Save the time courses in pickled format
-    with open(fname_time_courses, 'wb') as file:
+    with open(fname_avg_time_courses, 'wb') as file:
         pickle.dump(time_courses_dict, file)
     
     return time_courses_dict
 
+
+def transform_data(fname_transformed_time_courses: str, original_data: dict, mode: str) -> None:
+    """
+    Transform and save data based on the specified mode.
+
+    Args:
+        fname_transformed_time_courses (str): File path to save the transformed data.
+        original_data (dict): Dictionary containing the original data.
+        mode (str): Transformation mode ('raw' or 'mean').
+
+    Returns:
+        None
+    """
+    logger.info("Transforming data")
+    transformed_data = {}
+
+    if mode == "raw":
+        # Transform data to 'raw' mode
+        pre_transformed_data = {}
+        for _, region_data in original_data.items():
+            for region, data in region_data.items():
+                if region not in pre_transformed_data:
+                    pre_transformed_data[region] = []
+                pre_transformed_data[region].append(data[0])
+        for key, value in pre_transformed_data.items():
+            transformed_data[key] = np.array(value)
+                               
+    elif mode == "mean":
+        # Transform data to 'mean' mode
+        regions = original_data[next(iter(original_data.keys()))].keys()
+
+        for region in regions:
+            region_matrix = []
+            for _, epoch_dict in original_data.items():
+                epoch_data = epoch_dict[region]
+                region_matrix.append(epoch_data)
+            region_matrix = np.vstack(region_matrix)
+            transformed_data[region] = region_matrix
+
+    else:
+        raise ValueError("Invalid mode. Supported modes: 'raw' or 'mean'.")
+    
+    logger.info("Data transformation complete")
+
+    # Save the transformed data to a pickle file
+    with open(fname_transformed_time_courses, 'wb') as file:
+        pickle.dump(transformed_data, file)
+
+    logger.info("Data saved to file")
 
 if __name__ == '__main__':
     main()
