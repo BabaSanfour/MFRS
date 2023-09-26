@@ -26,28 +26,6 @@ class RSA:
         self.num_conditions = num_conditions
         self.similarity_function = correlation_functions[self.similarity_measure]
 
-    def save(self, sim, file_path):
-        """
-        Saves an similary scores to a NumPy file.
-
-        Args:
-            sim (np.ndarray): The similarity scores to save.
-            file_path (str): The path to the NumPy file where the similarity scores will be saved.
-        """
-        np.save(file_path, sim)
-
-    def load(self, file_path):
-        """
-        Loads an similary scores from a NumPy file.
-
-        Args:
-            file_path (str): The path to the NumPy file containing the similary scores.
-
-        Returns:
-            np.ndarray: The loaded similary scores.
-        """
-        return np.load(file_path)
-
     def permutation(self, rdm1_vector: np.array, rdm2_vector: np.array, r: float, iter: int = 1000) -> float:
 
         """
@@ -99,6 +77,24 @@ class RSA:
 
         return rp
 
+    def _get_rdm_vectors(self, rdms: np.array) -> np.array:
+        """
+        Transform 2D RDMs into 1D vectors using the upper triangle.
+
+        Args:
+            rdms (np.array): The RDMs. Shape: [num_rdms, num_conditions, num_conditions].
+
+        Returns:
+            rdm_vectors (np.array): The RDM vectors. Shape: [num_rdms, num_conditions * (num_conditions - 1) / 2].
+
+        """
+        num_rdms = rdms.shape[0]
+        num_conditions = rdms.shape[1]
+        rdm_vectors = np.zeros((num_rdms, int(num_conditions * (num_conditions - 1) / 2)))
+        for i in range(num_rdms):
+            rdm_vectors[i] = rdms[i][np.triu_indices(num_conditions, k=1)]
+        return rdm_vectors
+
     def _rsa(self, meg_rdm: np.array, model_rdm: np.array, permutation: bool = False, iter: int = 1000) -> np.array:
         """
         Compute the similarity between MEG RDMs and model RDMs.
@@ -115,16 +111,21 @@ class RSA:
         if meg_rdm.shape[2] != model_rdm.shape[1]:
             raise ValueError("The two RDMs must have the same length.")
 
+
         num_brain_elements = meg_rdm.shape[0]
-        rdm_movie_length = meg_rdm.shape[1]
+        rdm_length = meg_rdm.shape[1]
         num_layers = model_rdm.shape[0]
+        meg_rdm_vector = np.zeros((num_brain_elements, rdm_length, int(self.num_conditions * (self.num_conditions - 1) / 2)))
+        for i in range(num_brain_elements):
+            meg_rdm_vector[i] =  self._get_rdm_vectors(meg_rdm[i])
+        model_rdm_vector = self._get_rdm_vectors(model_rdm) 
+        del meg_rdm, model_rdm
+        similarity = np.zeros((num_brain_elements, rdm_length, num_layers, 2))
 
-        similarity = np.zeros((num_brain_elements, rdm_movie_length, num_layers, 2))
-
-        for i in tqdm(range(meg_rdm.shape[0]), desc="Computing RSA"):
-            for j in range(meg_rdm.shape[1]):
-                for k in range(model_rdm.shape[0]):
-                    similarity[i, j, k] = self.calculate_rsa(meg_rdm[i, j], model_rdm[k], permutation)
+        for i in tqdm(range(num_brain_elements), desc="Computing RSA"):
+            for j in range(rdm_movie_length):
+                for k in range(num_layers):
+                    similarity[i, j, k] = self.calculate_rsa(meg_rdm_vector[i, j], model_rdm_vector[k], permutation)
         return similarity
 
     def _rsa_parallel(self, meg_rdm: np.array, model_rdm: np.array, permutation: bool = False, iter: int = 1000) -> np.array:
@@ -135,19 +136,24 @@ class RSA:
             raise ValueError("The two RDMs must have the same length.")
 
         num_brain_elements = meg_rdm.shape[0]
-        rdm_movie_length = meg_rdm.shape[1]
+        rdm_length = meg_rdm.shape[1]
         num_layers = model_rdm.shape[0]
 
-        similarity = np.zeros((num_brain_elements, rdm_movie_length, num_layers, 2))
+        meg_rdm_vector = np.zeros((num_brain_elements, rdm_length, int(self.num_conditions * (self.num_conditions - 1) / 2)))
+        for i in range(num_brain_elements):
+            meg_rdm_vector[i] =  self._get_rdm_vectors(meg_rdm[i])
+        model_rdm_vector = self._get_rdm_vectors(model_rdm) 
+        del meg_rdm, model_rdm
+        similarity = np.zeros((num_brain_elements, rdm_length, num_layers, 2))
 
         with multiprocessing.Pool() as pool:
             results = list(
                 tqdm(
                     pool.starmap(
                         _calculate_similarity_parallel_rsa_movie,
-                        [(i, j, k, meg_rdm, model_rdm, self.calculate_rsa, permutation, iter) for i in range(num_brain_elements) for j in range(rdm_movie_length) for k in range(num_layers)],
+                        [(i, j, k, meg_rdm_vector, model_rdm_vector, self.calculate_rsa, permutation, iter) for i in range(num_brain_elements) for j in range(rdm_length) for k in range(num_layers)],
                     ), 
-                    total=num_brain_elements * rdm_movie_length * num_layers,
+                    total=num_brain_elements * rdm_length * num_layers,
                     desc="Computing RSA in parallel",
                 )
             )
@@ -190,15 +196,64 @@ class RSA:
             max_values (np.ndarray): An array containing the max r values along the specified axis.
         """
         axis_map = {
-            'num_brain_elements': 0,
-            'num_rdms': 1,
-            'num_layers': 2
+            'brain_elements': 0,
+            'rdms': 1,
+            'layers': 2
         }
 
         if axis_name not in axis_map:
-            raise ValueError("Invalid axis_name. Use 'num_brain_elements', 'num_rdms', or 'num_layers'.")
+            raise ValueError("Invalid axis_name. Use 'brain_elements', 'rdms', or 'layers'.")
 
         axis_index = axis_map[axis_name]
         max_values = np.max(similarity, axis=axis_index)
 
         return max_values
+
+    def bootstrap(self, meg_rdm: np.array, model_rdm: np.array, parrallel: bool = True, N_bootstrap: int = 100) -> np.array:
+        """
+        Calculate the bootstrap error bars along the subjects.
+
+        Args:
+            meg_rdm (np.array): A 5D MEG RDM movie. Shape: [num_subjects, num_brain_elements, num_rdms, num_conditions, num_conditions].
+            model_rdm (np.array): The model RDMs. Shape: [num_layers, num_conditions, num_conditions].
+            parrallel (bool): Whether to use parallel computation or not.
+            N_bootstrap (int): The number of bootstrap iterations.
+
+        Returns:
+            similarity (np.array): The similarity measure and p-value. Shape: [num_brain_elements, num_rdms, num_layers, N_bootstrap, 2].
+        """
+
+        num_subjects = meg_rdm.shape[0]
+        num_brain_elements = meg_rdm.shape[1]
+        rdm_length = meg_rdm.shape[2]
+        num_layers = model_rdm.shape[0]
+        num_subjects_to_sample = int(num_subjects * 0.5)
+        similarity = np.zeros((num_brain_elements, rdm_length, num_layers, N_bootstrap, 2))
+        for i in range(N_bootstrap):
+            meg_rdm_selected = similarity[np.random.choice(num_subjects, num_subjects_to_sample, replace=False)]
+            meg_rdm_selected = np.mean(similarity_selected, axis=0)
+            similarity[:, :, :, i] = self.score(similarity_selected, model_rdm, parrallel)
+        
+        return similarity
+
+    def save(self, sim, file_path):
+        """
+        Saves an similary scores to a NumPy file.
+
+        Args:
+            sim (np.ndarray): The similarity scores to save.
+            file_path (str): The path to the NumPy file where the similarity scores will be saved.
+        """
+        np.save(file_path, sim)
+
+    def load(self, file_path):
+        """
+        Loads an similary scores from a NumPy file.
+
+        Args:
+            file_path (str): The path to the NumPy file containing the similary scores.
+
+        Returns:
+            np.ndarray: The loaded similary scores.
+        """
+        return np.load(file_path)
