@@ -231,8 +231,8 @@ class RSA:
         similarity = np.zeros((num_brain_elements, rdm_length, num_layers, N_bootstrap, 2))
         for i in range(N_bootstrap):
             meg_rdm_selected = similarity[np.random.choice(num_subjects, num_subjects_to_sample, replace=False)]
-            meg_rdm_selected = np.mean(similarity_selected, axis=0)
-            similarity[:, :, :, i] = self.score(similarity_selected, model_rdm, parrallel)
+            meg_rdm_selected = np.mean(meg_rdm_selected, axis=0)
+            similarity[:, :, :, i] = self.score(meg_rdm_selected, model_rdm, parrallel)
         
         return similarity
 
