@@ -190,7 +190,7 @@ class RDM:
 
         num_time_segments = ((t_end - t_start - time_segment )  // sliding_window ) + 1
         num_brain_elements = len(brain_activity)
-        rdms = np.zeros((num_time_segments, num_brain_elements, self.num_conditions, self.num_conditions), dtype=np.float64)
+        rdms = np.zeros((num_brain_elements, num_time_segments, self.num_conditions, self.num_conditions), dtype=np.float64)
 
         for time_segment_id in tqdm(range(num_time_segments), desc="Calculating brain temporal RDMs"):
             t_segment_start = t_start + time_segment_id * sliding_window
@@ -198,7 +198,7 @@ class RDM:
             
             for brain_element_id, (_, brain_element_activity) in enumerate(brain_activity.items()):
                 segment_activity = brain_element_activity[:, t_segment_start:t_segment_end]
-                rdms[time_segment_id, brain_element_id] = self.calculate_rdm(segment_activity)
+                rdms[brain_element_id, time_segment_id] = self.calculate_rdm(segment_activity)
 
         return rdms
 
@@ -214,12 +214,12 @@ class RDM:
             t_end (int, optional): The end time from where we will stop computing RDMs, default is 1101.
 
         Returns:
-            np.ndarray: An array of RDMs for each time segment. The shape is [num_time_segments, num_brain_elements, num_conditions, num_conditions].
+            np.ndarray: An array of RDMs for each time segment. The shape is [num_brain_elements, num_time_segments, num_conditions, num_conditions].
         """
 
         num_time_segments = ((t_end - t_start - time_segment) // sliding_window) + 1
         num_brain_elements = len(brain_activity)
-        rdms = np.zeros((num_time_segments, num_brain_elements, self.num_conditions, self.num_conditions), dtype=np.float64)
+        rdms = np.zeros((num_brain_elements, num_time_segments, self.num_conditions, self.num_conditions), dtype=np.float64)
 
         # Create a list of segment data for parallel processing
         segment_data_list = []
@@ -248,7 +248,7 @@ class RDM:
         # Organize the results into the rdms array
         for result in results:
             time_segment_id, brain_element_id, rdm = result
-            rdms[time_segment_id, brain_element_id] = rdm
+            rdms[brain_element_id, time_segment_id] = rdm
 
         return rdms
 
