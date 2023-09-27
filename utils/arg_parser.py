@@ -195,7 +195,7 @@ def get_similarity_parser():
             "trained", "untrained",
         ],
         default= "trained",
-        help='Activations type: trained, untrained
+        help='Activations type: trained, untrained'
     )
 
     brain = parser.add_argument_group("Brain Data")
