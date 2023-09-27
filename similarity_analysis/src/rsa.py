@@ -14,13 +14,13 @@ def _calculate_similarity_parallel_rsa_movie(i, j, k, meg_rdm, model_rdm, calcul
     return i, j, k, calculate_rsa(meg_rdm[i, j], model_rdm[k], permutation, iter)
 
 class RSA:
-    def __init__(self, similarity_measure: str, num_conditions: int):
+    def __init__(self, num_conditions: int, similarity_measure: str = "spearman"):
         """
         Initialize the RSA class.
 
         Args:
-        similarity_measure (str): The similarity measure to use, e.g., "spearman", "pearson".
         num_conditions (int): The number of conditions in the RDMs.
+        similarity_measure (str): The similarity measure to use, e.g., "spearman", "pearson".
         """
         self.similarity_measure = similarity_measure
         self.num_conditions = num_conditions
@@ -89,7 +89,7 @@ class RSA:
 
         """
         num_rdms = rdms.shape[0]
-        num_conditions = rdms.shape[1]
+        num_conditions = rdms.shape[-1]
         rdm_vectors = np.zeros((num_rdms, int(num_conditions * (num_conditions - 1) / 2)))
         for i in range(num_rdms):
             rdm_vectors[i] = rdms[i][np.triu_indices(num_conditions, k=1)]
@@ -115,7 +115,7 @@ class RSA:
         num_brain_elements = meg_rdm.shape[0]
         rdm_length = meg_rdm.shape[1]
         num_layers = model_rdm.shape[0]
-        meg_rdm_vector = np.zeros((num_brain_elements, rdm_length, int(self.num_conditions * (self.num_conditions - 1) / 2)))
+        meg_rdm_vector = np.zeros((num_brain_elements, rdm_length, int(meg_rdm.shape[-1] * (meg_rdm.shape[-1] - 1) / 2)))
         for i in range(num_brain_elements):
             meg_rdm_vector[i] =  self._get_rdm_vectors(meg_rdm[i])
         model_rdm_vector = self._get_rdm_vectors(model_rdm) 
@@ -123,7 +123,7 @@ class RSA:
         similarity = np.zeros((num_brain_elements, rdm_length, num_layers, 2))
 
         for i in tqdm(range(num_brain_elements), desc="Computing RSA"):
-            for j in range(rdm_movie_length):
+            for j in range(rdm_length):
                 for k in range(num_layers):
                     similarity[i, j, k] = self.calculate_rsa(meg_rdm_vector[i, j], model_rdm_vector[k], permutation)
         return similarity
@@ -139,7 +139,7 @@ class RSA:
         rdm_length = meg_rdm.shape[1]
         num_layers = model_rdm.shape[0]
 
-        meg_rdm_vector = np.zeros((num_brain_elements, rdm_length, int(self.num_conditions * (self.num_conditions - 1) / 2)))
+        meg_rdm_vector = np.zeros((num_brain_elements, rdm_length,  int(meg_rdm.shape[-1] * (meg_rdm.shape[-1] - 1) / 2)))
         for i in range(num_brain_elements):
             meg_rdm_vector[i] =  self._get_rdm_vectors(meg_rdm[i])
         model_rdm_vector = self._get_rdm_vectors(model_rdm) 
@@ -229,7 +229,7 @@ class RSA:
         num_layers = model_rdm.shape[0]
         num_subjects_to_sample = int(num_subjects * 0.5)
         similarity = np.zeros((num_brain_elements, rdm_length, num_layers, N_bootstrap, 2))
-        for i in range(N_bootstrap):
+        for i in tqdm(range(N_bootstrap), desc="bootsrapping RSA"):
             meg_rdm_selected = similarity[np.random.choice(num_subjects, num_subjects_to_sample, replace=False)]
             meg_rdm_selected = np.mean(meg_rdm_selected, axis=0)
             similarity[:, :, :, i] = self.score(meg_rdm_selected, model_rdm, parrallel)
