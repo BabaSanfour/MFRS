@@ -4,7 +4,7 @@ import numpy as np
 
 import torch
 import torchvision
-from torch.utils.data import Dataset, DataLoader
+from torch.utils.data import Dataset, DataLoader, random_split
 from torchvision.transforms import ToTensor, Normalize
 
 import sys
@@ -92,7 +92,12 @@ def dataloader(batch_size: int, dataset: str, analysis_type: str) -> (dict, dict
                                                                              Normalize(mean=mean, std=std)])))
         valid_size = len(valid_loader)
         valid_size = int(valid_size * 0.5)  # Splitting the 'valid' set in half
-        valid_loader, test_loader = torch.utils.data.random_split(valid_loader, [valid_size, valid_size])
+        valid_dataset, test_dataset = random_split(valid_loader.dataset, [valid_size, valid_size])
+
+        # Create data loaders for validation and testing
+        valid_loader = DataLoader(valid_dataset, batch_size=batch_size, shuffle=True)
+        test_loader = DataLoader(test_dataset, batch_size=batch_size, shuffle=True)
+
     else:
         raise ValueError("Invalid dataset name")
 
