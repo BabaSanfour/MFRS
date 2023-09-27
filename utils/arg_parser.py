@@ -3,9 +3,6 @@ import argparse
 def get_training_config_parser():
     """
     Create an argparse parser for configuring model training.
-
-    Returns:
-        argparse.ArgumentParser: A parser for training configuration.
     """
     parser = argparse.ArgumentParser(description="Model evaluation on datasets.")
 
@@ -14,25 +11,24 @@ def get_training_config_parser():
         "--dataset",
         type=str,
         default="celebA",
-        help="Dataset to use (default: %(default)s)."
+        help="Dataset to use."
     )
     data.add_argument(
         "--analysis_type",
         type=str,
         help="Analysis type for the dataset."
     )
-
     data.add_argument(
         "--batch_size",
         type=int,
         default=32,
-        help="Batch size (default: %(default)s)."
+        help="Batch size."
     )
     data.add_argument(
         "--num_classes",
         type=int,
         default=1000,
-        help="Number of classes (default: %(default)s).",
+        help="Number of classes."
     )
 
     model = parser.add_argument_group("Model")
@@ -44,44 +40,39 @@ def get_training_config_parser():
             "inception_v3", "FaceNet", "SphereFace",
         ],
         default="resnet50",
-        help="Name of the model to run (default: %(default)s).",
+        help="Name of the model to run."
     )
     model.add_argument(
         "--n_input_channels",
         type=int,
         choices=[1, 3],
         default=1,
-        help="Number of input channels (1 for grayscale, 3 for RGB, default: %(default)s).",
+        help="Number of input channels (1 for grayscale, 3 for RGB)."
     )
-
     model.add_argument(
         "--pretrained",
         dest="pretrained", 
         action="store_true",
         help="If we want to use pretrained weights.",
     )
-
     model.add_argument(
         "--no-pretrained", 
         dest="pretrained", 
         action="store_false",
         help="Without pretrained weights."
     )
-
     model.add_argument(
         "--transfer",
         dest="transfer", 
         action="store_true",
         help="If we want to transfer from 3D first layer to 1D.",
     )
-
     model.add_argument(
         "--no-transfer", 
         dest="transfer", 
-        action="store_true",
+        action="store_false",
         help="If we do not want to transfer from 3D first layer to 1D.",
     )
-
     model.add_argument(
         "--in_weights",
         type=str,
@@ -94,51 +85,57 @@ def get_training_config_parser():
         default=None,
         help="Output weights file to save the trained model.",
     )
+    model.add_argument(
+        '--activ_type', 
+        type=str, 
+        default= "trained",
+        help='Activations type: trained, untrained...'
+    )
 
     optimization = parser.add_argument_group("Optimization")
     optimization.add_argument(
         "--num_epochs",
         type=int,
         default=50,
-        help="Number of epochs for training (default: %(default)s).",
+        help="Number of epochs for training."
     )
     optimization.add_argument(
         "--optimizer",
         type=str,
         default="momentum",
         choices=["sgd", "momentum", "adam", "adamw"],
-        help="Optimizer choice (default: %(default)s).",
+        help="Optimizer choice."
     )
     optimization.add_argument(
         "--lr",
         type=float,
         default=1e-2,
         choices=[1e-1, 1e-2, 1e-3],
-        help="Learning rate for Adam optimizer (default: %(default)s).",
+        help="Learning rate for optimizer."
     )
     optimization.add_argument(
         "--momentum",
         type=float,
         default=0.9,
-        help="Momentum for SGD optimizer (default: %(default)s).",
+        help="Momentum for SGD optimizer."
     )
     optimization.add_argument(
         "--weight_decay",
         type=float,
-        default=5e-4,
-        help="Weight decay (default: %(default)s).",
+        default=1e-4,
+        help="Weight decay."
     )
     optimization.add_argument(
         "--step_size",
         type=int,
         default=10,
-        help="Step size (default: %(default)s).",
+        help="Step size."
     )
     optimization.add_argument(
         "--gamma",
         type=int,
         default=0.1,
-        help="Gamma value (default: %(default)s).",
+        help="Gamma value."
     )
 
     exp = parser.add_argument_group("Experiment config")
@@ -146,35 +143,32 @@ def get_training_config_parser():
         "--seed",
         type=int,
         default=42,
-        help="Random seed for repeatability (default: %(default)s).",
+        help="Random seed for repeatability."
     )
 
     return parser
 
 
 def get_similarity_parser():
+    """
+    Create an argparse parser for configuring similarity analysis.
+    """
+
     parser = argparse.ArgumentParser(description='Compute similarity values for a model')
+
     activ = parser.add_argument_group("Activations")
     activ.add_argument(
-        '--cons',
-        type=int,
-        default=300,
-        help='Number of images to use as stimuli'
-    )
-    activ.add_argument(
-        '--stimuli_file_name',
-        type=str, 
-        default="FamUnfam",
-        help='File name for stimuli images'
-    )
-    activ.add_argument(
-        '--band',
-        type=str, 
-        default=None,
-        help='Name of power band'
+        '--modality',
+        type=str,
+        choices=[ 
+            "brain", "ANN",
+            ],
+        default="brain",
+        help='Modality to use for RDM computation'
     )
 
-    activ.add_argument(
+    ann = parser.add_argument_group("ANN")
+    ann.add_argument(
         "--model_name",
         type=str,
         choices=[ 
@@ -183,73 +177,78 @@ def get_similarity_parser():
                  "inception_v3", "FaceNet", "SphereFace",
                  ],
         default="resnet50",
-        help="name of the model to run (default: %(default)s).",
+        help="name of the model to run."
     )
-    parser.add_argument(
-        '--weights', 
+    ann.add_argument(
+        '--ann_analysis_type', 
         type=str, 
-        help='Path to the model weights file'
+        choices= [
+            "with-meg_pretrained", "without-meg_pretrained", "None"
+        ],
+        default = "None",
+        help='For which analysis type to compute RDMs'
     )
-    parser.add_argument(
-        '--method', 
+    ann.add_argument(
+        '--activation_type', 
         type=str, 
-        choices = ["all", "index", "list", "type"],
-        default = "list",
-        help='Method to use for activation extraction'
-    )
-    parser.add_argument(
-        '--save',
-        default = True, 
-        action='store_true', 
-        help='Save the extracted activations to disk'
-    )
-    parser.add_argument(
-        '--activ_type', 
-        type=str, 
+        choices= [
+            "trained", "untrained",
+        ],
         default= "trained",
-        help='Activations type: trained, untrained...'
+        help='Activations type: trained, untrained
     )
-    parser.add_argument(
-        '--analysis_type', 
+
+    brain = parser.add_argument_group("Brain Data")
+    brain.add_argument(
+        '--subject', 
+        type=int, 
+        default= 1,
+        help='Subject id'
+    )
+    brain.add_argument(
+        '--brain_analysis_type',
         type=str, 
-        default= "basic",
-        choices = ["basic", "across_time"],
-        help='Type of MEG RDMs...'
+        choices= [ 
+            "avg", "raw"
+        ],
+        default= "avg",
+        help='Brain analysis type: avg, raw.'
     )
-    parser.add_argument(
+    brain.add_argument(
         '--time_window', 
         type=int, 
-        default= 5,
+        default= 50,
         help='Time window for across time RDM computing...'
     )
 
     return parser
 
+
 def source_rescontruction_parser():
+    """
+    Create an argparse parser for configuring source reconstrcution.
+    """
     parser = argparse.ArgumentParser(description="Source Reconstruction.")
 
-    source = parser.add_argument_group("SR")
+    source = parser.add_argument_group("Source Data")
     source.add_argument(
         "--subject", 
         type=int, 
         default=1, 
-        help="Subject id (default: %(default)s)."
+        help="Subject id."
     )
-
     source.add_argument(
         "--method", 
         type=str, 
         default="MNE", 
-        help="Source Estimation method (default: %(default)s)."
+        help="Source Estimation method."
     )
-
     source.add_argument(
         "--overwrite",
         dest="overwrite", 
         action="store_true",
         help="If we want to overwrite existing files.",
     )
-
     source.add_argument(
         "--no-overwrite", 
         dest="overwrite", 
@@ -264,5 +263,3 @@ def source_rescontruction_parser():
     )
 
     return parser
-
-
