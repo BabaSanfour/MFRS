@@ -39,6 +39,8 @@ reject_tmax = 0.8
 random_state = 42
 smooth = 10
 fsaverage_vertices = [np.arange(10242), np.arange(10242)]
+ctc = os.path.join(os.path.dirname(__file__), 'ct_sparse.fif')
+cal = os.path.join(os.path.dirname(__file__), 'sss_cal.dat')
 
 # Mapping between filenames and subjects/conditions
 map_subjects = {
