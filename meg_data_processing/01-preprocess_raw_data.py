@@ -40,6 +40,17 @@ def run_maxwell_filter(subject_id: int) -> None:
             raw_in = os.path.join(study_path, 'ds000117', subject, 
                                 'ses-meg/meg', f'sub-{subject_id:02d}_ses-meg_task-facerecognition_run-{run:02d}_meg.fif')
             raw = mne.io.read_raw_fif(raw_in, verbose=False)
+            raw.set_channel_types({
+                    'EEG061': 'eog',
+                    'EEG062': 'eog',
+                    'EEG063': 'ecg',
+                    'EEG064': 'misc'
+                })  # EEG064 free floating el.
+            raw.rename_channels({
+                'EEG061': 'EOG061',
+                'EEG062': 'EOG062',
+                'EEG063': 'ECG063'
+            })
             raw.fix_mag_coil_types()
 
             # Read bad channels from the MaxFilter log.
@@ -82,7 +93,40 @@ def run_maxwell_filter(subject_id: int) -> None:
                 None, 90, l_trans_bandwidth='auto', h_trans_bandwidth='auto',
                 filter_length='auto', phase='zero', fir_window='hamming',
                 fir_design='firwin', n_jobs=-1, picks=picks_meg)
+            picks_eog = mne.pick_types(raw.info, meg=False, eog=True)
+            raw_sss.filter(
+                1, None, picks=picks_eog, l_trans_bandwidth='auto',
+                filter_length='auto', phase='zero', fir_window='hann',
+                fir_design='firwin')
             raw_sss.save(raw_out, overwrite=True)
+
+def run_ica(subject_id: int) -> None:
+    """
+    Apply ICA to MEG data for a specific subject.
+    Args:
+        subject_id (int): Subject ID.
+
+    Returns:
+        None
+    """
+    subject = f"sub-{subject_id:02d}"
+    logger.info(f"Processing subject: {subject}")
+    ica_name = os.path.join(meg_dir, subject, 'run_concat-ica.fif')
+    raws = list()
+    for run in range(1, 7):
+        raw_in = os.path.join(meg_dir, subject, f'run_{run:02d}_filt_raw.fif')
+        raws.append(mne.io.read_raw_fif(raw_in))
+    n_components=0.999
+    raw = mne.concatenate_raws(raws)
+    ica = mne.preprocessing.ICA(method='fastica', n_components=n_components)
+    picks = mne.pick_types(raw.info, meg=True, eeg=False, eog=False,
+                        stim=False, exclude='bads')
+    ica.fit(raw, picks=picks, reject=dict(grad=4000e-13, mag=4e-12),
+            decim=11)
+    logger.info(f" Fit {ica.n_components_} components (explaining at least {100 * n_components:.1f}% of the variance)")
+    logger.info("Saving ICA solution...")
+    ica.save(ica_name)
+
 
 if __name__ == "__main__":
 
@@ -92,3 +136,10 @@ if __name__ == "__main__":
     parallel(run_func(subject_id) for subject_id in list(range(1, 17)))
 
     logger.info("Maxwell filtering completed for all subjects.")
+
+    logger.info("Running ICA for all subjects...")
+
+    parallel, run_func, _ = parallel_func(run_ica, n_jobs=-1)
+    parallel(run_func(subject_id) for subject_id in list(range(1, 17)))
+
+    logger.info("ICA completed for all subjects.")
