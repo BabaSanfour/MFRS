@@ -5,6 +5,7 @@ import numpy as np
 from pandas import read_csv
 import logging
 from mne.parallel import parallel_func
+from autoreject import get_rejection_threshold
 
 import sys
 sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
@@ -180,6 +181,7 @@ def run_epochs(subject_id: int, fmin: float = 0.5, fmax: float = 4, frequency_ba
         raw_list.append(raw)
 
     raw, events = mne.concatenate_raws(raw_list, events_list=events_list)
+    raw.set_eeg_reference(projection=True)
     del raw_list
 
     with open(os.path.join(meg_dir, "mega_events_disregarded.json"), "r") as mega_json_file:
@@ -194,13 +196,57 @@ def run_epochs(subject_id: int, fmin: float = 0.5, fmax: float = 4, frequency_ba
         logger.info('Applying hilbert transform')
         raw.apply_hilbert(envelope=True)
 
-    picks = mne.pick_types(raw.info, meg=True, eeg=False, stim=False, eog=False, exclude=())
+    picks = mne.pick_types(raw.info, meg=True, eeg=True, stim=False, eog=True, exclude=())
 
     logger.info('Epoching')
     events_id = [event[2] for event in events]
     epochs = mne.Epochs(raw, events, events_id, -0.2, 0.8, proj=True,
                         picks=picks, baseline=(-0.2, 0.0), preload=True,
                         reject=None, reject_tmax=reject_tmax, on_missing='warn')
+
+    logger.info('ICA')
+    ica_name = os.path.join(meg_dir, subject, 'run_concat-ica.fif')
+    ica_out_name = os.path.join(meg_dir, subject, 'run_concat-ica-epo.fif')
+    ica = mne.preprocessing.read_ica(ica_name)
+    ica.exclude = []
+    ecg_epochs = mne.preprocessing.create_ecg_epochs(raw, tmin=-.3, tmax=.3, preload=False)
+    eog_epochs = mne.preprocessing.create_eog_epochs(raw, tmin=-.5, tmax=.5, preload=False)
+    del raw
+
+    n_max_ecg = 3  # use max 3 components
+    ecg_epochs.decimate(5)
+    ecg_epochs.load_data()
+    ecg_epochs.apply_baseline((None, None))
+    ecg_inds, scores_ecg = ica.find_bads_ecg(ecg_epochs, method='ctps',
+                                             threshold=0.8)
+
+    logger.info(f"Found {len(ecg_inds)} ECG indices")
+    ica.exclude.extend(ecg_inds[:n_max_ecg])
+    ecg_epochs.average().save(os.path.join(meg_dir, subject, 'ecg-ave.fif'), overwrite=True)
+    np.save(os.path.join(meg_dir, subject, 'ecg-scores.npy'), scores_ecg)
+    del ecg_epochs
+
+    n_max_eog = 3  # use max 3 components
+    eog_epochs.decimate(5)
+    eog_epochs.load_data()
+    eog_epochs.apply_baseline((None, None))
+    eog_inds, scores_eog = ica.find_bads_eog(eog_epochs)
+
+
+    logger.info(f"Found {len(eog_inds)} EOG indices")
+    ica.exclude.extend(eog_inds[:n_max_eog])
+    eog_epochs.average().save(os.path.join(data_path, 'eog-ave.fif'), overwrite=True)
+    np.save(os.path.join(data_path, 'eog-scores.npy'), scores_eog)
+    del eog_epochs    
+
+    ica.save(ica_out_name)
+    epochs.load_data()
+    ica.apply(epochs)
+
+    logger.info('Rejecting bad epochs')
+    reject = get_rejection_threshold(epochs.copy().crop(None, reject_tmax))
+    epochs.drop_bad(reject=reject)
+    logger.info('  Dropped %0.1f%% of epochs' % (epochs.drop_log_stats(),))
 
     logger.info('Writing to disk')
     if frequency_band is not None:
@@ -212,17 +258,17 @@ def run_epochs(subject_id: int, fmin: float = 0.5, fmax: float = 4, frequency_ba
 
 if __name__ == '__main__':
     # Get events
-    logger.info("Running event processing for all subjects...")
-    parallel, run_func, _ = parallel_func(run_events, n_jobs=-1)
-    parallel(run_func(subject_id) for subject_id in range(1, 17))
+    # logger.info("Running event processing for all subjects...")
+    # parallel, run_func, _ = parallel_func(run_events, n_jobs=-1)
+    # parallel(run_func(subject_id) for subject_id in range(1, 17))
 
-    # Get all disregarded events
-    logger.info("Regrouping disregarded events...")
-    regroup_disregarded_events()
+    # # Get all disregarded events
+    # logger.info("Regrouping disregarded events...")
+    # regroup_disregarded_events()
 
     # # Create epochs
     logger.info("Running epoching for all subjects...")
-    parallel, run_func, _ = parallel_func(run_epochs, n_jobs=-1)
+    parallel, run_func, _ = parallel_func(run_epochs, n_jobs=4)
     parallel(run_func(subject_id) for subject_id in range(1, 17))
 
 
