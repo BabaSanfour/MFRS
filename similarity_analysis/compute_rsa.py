@@ -28,21 +28,18 @@ if __name__ == '__main__':
         for i in range(1,17):
             sub_rdm_path = os.path.join(rdms_folder, f"sub-{i:02d}_avg_rdm.npy")
             sub_rdm = rdm_instance.load(sub_rdm_path)
-            if i ==14:
-                brain_activity.append(sub_rdm)
-            else:
-                brain_activity.append(np.transpose(sub_rdm, (1, 0, 2, 3)))
+            brain_activity.append(sub_rdm)
         brain_activity = np.stack(brain_activity, axis=0)
         brain_activity = np.mean(brain_activity, axis=0)
-        brain_activity = brain_activity[:, :, 0:125, 0:125]
+        brain_activity = brain_activity[:, :, :130, :130]
         logger.info(f"Brain activity loaded successfully!")
         logger.info(f"loading {args.model_name} model RDM...")
         model_rdm_path = os.path.join(rdms_folder, f"{args.model_name}_{args.ann_analysis_type}_rdm_{args.activation_type}.npy")
         model_rdm = rdm_instance.load(model_rdm_path)
-        model_rdm = model_rdm[:, 0:125, 0:125]
+        model_rdm = model_rdm[:, :130, :130]
         logger.info(f"{args.model_name} model RDM loaded successfully!")
         logger.info(f"Computing similarity score...")
-        sim = rsa_instance.boostrap(brain_activity, model_rdm)
+        sim = rsa_instance.score(brain_activity, model_rdm)
         rsa_instance.save(sim, os.path.join(similarity_folder, f"avg_{args.model_name}_{args.ann_analysis_type}_rdm_{args.activation_type}.npy"))
         logger.info(f"Similarity score computed and saved successfully!")
     elif args.brain_analysis_type == "raw":
