@@ -18,7 +18,7 @@ from utils.arg_parser import source_rescontruction_parser
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-def setup_filenames(subject: str, spacing: str) -> dict:
+def setup_filenames(subject: str, spacing: str, meg_picks: str = True) -> dict:
     """
     Set up filenames for various files related to source reconstruction.
 
@@ -28,26 +28,29 @@ def setup_filenames(subject: str, spacing: str) -> dict:
         Subject identifier.
     spacing : str
         The spacing to be used for source space.
+    meg_picks : str or bool
 
     Returns:
     --------
     filenames : dict
         Dictionary containing file paths for various related files.
     """
+    if meg_picks==True:
+        meg_picks="meg"
     filenames = {
         'trans': os.path.join(subjects_dir, f'{subject}/{subject}-trans.fif'),
         'src': os.path.join(subjects_dir, subject, 'bem', f'{subject}-{spacing}-src.fif'),
         'bem': os.path.join(subjects_dir, subject, 'bem', f'{subject}-5120-bem-sol.fif'),
         'epo': os.path.join(meg_dir, subject, f'{subject}-epo.fif'),
-        'fwd': os.path.join(meg_dir, subject, f'{subject}-meg-eeg-{spacing}-fwd.fif'),
+        'fwd': os.path.join(meg_dir, subject, f'{subject}-{meg_picks}-eeg-{spacing}-fwd.fif'),
         'cov': os.path.join(meg_dir, subject, f'{subject}-cov.fif'),
-        'inv': os.path.join(meg_dir, subject, f'{subject}-meg-{spacing}-inv.fif'),
+        'inv': os.path.join(meg_dir, subject, f'{subject}-{meg_picks}-{spacing}-inv.fif'),
         'stc': os.path.join(meg_dir, subject, 'src'),
         'mrph': os.path.join(meg_dir, subject, 'morph'),
-        'avg_tcs': os.path.join(meg_dir, subject, f'{subject}-meg-ROI-avg-time-courses.pkl'),
-        'raw_tcs': os.path.join(meg_dir, subject, f'{subject}-meg-ROI-raw-time-courses.pkl'),
-        'trans_avg_tcs': os.path.join(meg_dir, subject, f'{subject}-meg-ROI-trans-avg-time-courses.pkl'),
-        'trans_raw_tcs': os.path.join(meg_dir, subject, f'{subject}-meg-ROI-trans-raw-time-courses.pkl')
+        'avg_tcs': os.path.join(meg_dir, subject, f'{subject}-{meg_picks}-ROI-avg-time-courses.pkl'),
+        'raw_tcs': os.path.join(meg_dir, subject, f'{subject}-{meg_picks}-ROI-raw-time-courses.pkl'),
+        'trans_avg_tcs': os.path.join(meg_dir, subject, f'{subject}-{meg_picks}-ROI-trans-avg-time-courses.pkl'),
+        'trans_raw_tcs': os.path.join(meg_dir, subject, f'{subject}-{meg_picks}-ROI-trans-raw-time-courses.pkl')
     }
     return filenames
 
@@ -59,12 +62,13 @@ def main():
     parser = source_rescontruction_parser()
     args = parser.parse_args()
     subject = f"sub-{args.subject:02d}"
-    filenames = setup_filenames(subject, spacing)
+    filenames = setup_filenames(subject, spacing, args.meg_picks)
 
     if not os.path.isfile(filenames['trans']) or args.overwrite:
         coreg = compute_coregistration(filenames['trans'], subject, args.overwrite)
 
     epochs = mne.read_epochs(filenames['epo'], preload=True)
+    epochs = epochs.pick_types(meg=args.meg_picks, eeg=False, eog=False, ecg=False, stim=False)
 
     if not os.path.isfile(filenames['cov']) or args.overwrite:
         cov = compute_cov(filenames['cov'], epochs, args.overwrite)
@@ -74,7 +78,8 @@ def main():
 
     if not os.path.isfile(filenames['fwd']) or args.overwrite:
         fwd = compute_forward_solution(filenames['fwd'], filenames['src'], filenames['epo'],
-                                       filenames['trans'], filenames['bem'], mindist, args.overwrite)
+                                       filenames['trans'], filenames['bem'], mindist, 
+                                       args.overwrite, args.meg_picks)
     else:
         logger.info("Loading forward solution")
         fwd = mne.read_forward_solution(filenames['fwd'])
@@ -212,8 +217,8 @@ def compute_cov(fname_cov: str, epochs: mne.Epochs, overwrite: bool = False,
 
 
 def compute_forward_solution(fname_fwd: str, fname_src: str, fname_epo: str,
-                             fname_trans: str, fname_bem: str, mindist: float,
-                             overwrite: bool) -> mne.Forward:
+                             fname_trans: str, fname_bem: str, mindist: float, 
+                             overwrite: bool, meg_picks: str = True) -> mne.Forward:
     """
     Compute the forward solution for MEG source estimation.
 
@@ -228,6 +233,7 @@ def compute_forward_solution(fname_fwd: str, fname_src: str, fname_epo: str,
         fname_bem (str): The path to the BEM file.
         mindist (float): The minimum distance between sources and sensors.
         overwrite (bool): Whether to overwrite existing forward solution file.
+        meg_picks (str or bool): "mag", "grad", "plana1", "planar2" or True to include all. Defaults to True.
 
     Returns:
         mne.Forward: The computed forward solution.
@@ -245,7 +251,7 @@ def compute_forward_solution(fname_fwd: str, fname_src: str, fname_epo: str,
     
     # Compute the forward solution using the specified parameters
     fwd = mne.make_forward_solution(info, fname_trans, fname_src, fname_bem,
-                                    meg=True, eeg=False, mindist=mindist)
+                                    meg=meg_picks, eeg=False, mindist=mindist)
     
     # Save the computed forward solution to a file
     mne.write_forward_solution(fname_fwd, fwd, overwrite=overwrite)
