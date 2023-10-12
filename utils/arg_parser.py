@@ -261,5 +261,11 @@ def source_rescontruction_parser():
         default="Fam",
         help='File name for stimuli images'
     )
+    source.add_argument(
+        '--meg_picks',
+        type=str, 
+        default="grad",
+        help='Type of MEG sensors to use'
+    )
 
     return parser
