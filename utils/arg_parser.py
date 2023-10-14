@@ -220,6 +220,12 @@ def get_similarity_parser():
         default= 50,
         help='Time window for across time RDM computing...'
     )
+    brain.add_argument(
+        '--meg_picks',
+        type=str, 
+        default="grad",
+        help='Type of MEG sensors to use'
+    )
 
     return parser
 
