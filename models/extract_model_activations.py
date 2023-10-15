@@ -12,6 +12,7 @@ sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 from utils.config import activations_folder
 from utils.arg_parser import get_training_config_parser
 from utils.load_data import Stimuliloader
+from utils.load_weights import load_weights
 
 from inception import inception_v3, InceptionA, InceptionC, InceptionB, Inception3, InceptionE, InceptionD
 from cornet_s import cornet_s
@@ -66,7 +67,8 @@ def get_activation_hook(name: str):
 def model_activations(model: nn.Module,
     data: torch.Tensor,
     weights: Union[str, None] = None,
-    file_name: Union[str, None] = None
+    file_name: Union[str, None] = None,
+    transfer: bool = False
 ) -> dict:
     """
     Get a dictionary with the activations of selected layers for a given input tensor.
@@ -77,6 +79,7 @@ def model_activations(model: nn.Module,
         weights (str): The path to the trained model weights. If set to None, the model will use random weights.
         file_name (str, optional): The name of the file to save the activations to.
             This parameter is only used if 'save' is set to True.
+        transfer (bool, optional): Indicates whether transfer first layer.
 
     Returns:
         dict: A dictionary with layer names as keys and their activations as values.
@@ -84,11 +87,10 @@ def model_activations(model: nn.Module,
               number of examples in the input tensor, and 'N_neurons_in_layer' is the number of neurons in the
               corresponding layer.
     """
-    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
     # Load model weights if provided
     if weights and weights != 'None':
-        model.load_state_dict(torch.load(weights, map_location=device))
+        model = load_weights(model, transfer, weights)
     else:
         logger.warning("Failed to load model weights. Continuing with random weights.")
 
@@ -114,7 +116,8 @@ def extract_activations(
     analysis_type: str,
     model: nn.Module,
     weights: str,
-    activ_type: str = "trained"
+    activ_type: str = "trained",
+    transfer: bool = False
 ) -> Dict[str, np.ndarray]:
     """
     Extracts the activations of the specified layers for the given stimuli using the specified model.
@@ -125,6 +128,7 @@ def extract_activations(
         model (nn.Module): The model.
         weights (str): The path to the model weights.
         activ_type (str, optional): Trained or untrained model.
+        transfer (bool, optional): Indicates whether transfer first layer.
 
     Returns:
         dict: A dictionary containing the activations of the specified layers for the given stimuli.
@@ -139,7 +143,7 @@ def extract_activations(
             activations = pickle.load(file)
     else:
         logger.info(f"Activations file ( {model_name}) for {analysis_type} does not exist. Creating it...")
-        activations = model_activations(model, images, weights, file_name=activations_file)
+        activations = model_activations(model, images, weights, file_name=activations_file, transfer=transfer)
         logger.info(f"Activations file ({model_name}) for {analysis_type} created.")
 
     return activations
@@ -168,7 +172,7 @@ if __name__ == '__main__':
         "SphereFace": SphereFace
     }[model_name]
 
-    model = model_cls(False, 1000, args.n_input_channels)
+    model = model_cls(False, args.num_classes, args.n_input_channels)
 
     # Call extract_activations
-    activations = extract_activations(model_name, args.analysis_type, model, args.in_weights, args.activ_type)
+    activations = extract_activations(model_name, args.analysis_type, model, args.in_weights, args.activ_type, args.transfer)
