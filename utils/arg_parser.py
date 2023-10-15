@@ -183,7 +183,8 @@ def get_similarity_parser():
         '--ann_analysis_type', 
         type=str, 
         choices= [
-            "with-meg_pretrained", "without-meg_pretrained", "None"
+            "with-meg_pretrained", "without-meg_pretrained", "None",
+            "random_faces", "meg_stimuli_faces"
         ],
         default = "None",
         help='For which analysis type to compute RDMs'
@@ -192,7 +193,7 @@ def get_similarity_parser():
         '--activation_type', 
         type=str, 
         choices= [
-            "trained", "untrained",
+            "trained", "untrained", "imagenet"
         ],
         default= "trained",
         help='Activations type: trained, untrained'
