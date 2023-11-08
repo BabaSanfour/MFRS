@@ -227,6 +227,24 @@ def get_similarity_parser():
         default="grad",
         help='Type of MEG sensors to use'
     )
+    brain.add_argument(
+        '--stimuli_file_name',
+        type=str,
+        default="fam",
+        help='File name for stimuli images'
+    )
+    brain.add_argument(
+        '--time_segment',
+        type=int,
+        default=550,
+        help='Time segment to compute RDM of brain activity'
+    )
+    brain.add_argument(
+        '--sliding_window',
+        type=int,
+        default=50,
+        help='Sliding window to compute RDM of brain activity'
+    )
 
     return parser
 
