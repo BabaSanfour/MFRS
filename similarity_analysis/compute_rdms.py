@@ -40,7 +40,7 @@ if __name__ == '__main__':
             brain_activity = pickle.load(pickle_file)
         if args.brain_analysis_type == "avg":
             logger.info(f"Calculating temporal brain RDMs for subject {args.subject:02d}...")
-            rdm.save(rdm.temp_brain_rdms_parallel(brain_activity), os.path.join(rdms_folder, f"{subject}_{args.meg_picks}_{args.brain_analysis_type}_rdm.npy"))
+            rdm.save(rdm.temp_brain_rdms_parallel(brain_activity, args.time_segment, args.sliding_window), os.path.join(rdms_folder, f"{subject}_{args.meg_picks}_{args.brain_analysis_type}_rdm_{args.time_segment}_{args.sliding_window}.npy"))
         elif args.brain_analysis_type == "raw":
             if not os.path.isdir(os.path.join(rdms_folder, subject)):
                 os.mkdir(os.path.join(rdms_folder, subject))

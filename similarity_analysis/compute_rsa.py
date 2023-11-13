@@ -21,31 +21,46 @@ if __name__ == '__main__':
     args = parser.parse_args()
     rsa_instance = RSA(428)
     rdm_instance = RDM(428)
-    slicing_indices = {
+    slicing_indices_meg = {
         "fam": (slice(None), slice(None), slice(130), slice(130)),
         "unfamiliar": (slice(None), slice(None), slice(130, 280), slice(130, 280)),
         "scrambled": (slice(None), slice(None), slice(280, None), slice(280, None))
     }
 
+    slicing_indices_model = {
+        "fam": (slice(None), slice(130), slice(130)),
+        "unfamiliar": (slice(None), slice(130, 280), slice(130, 280)),
+        "scrambled": (slice(None), slice(280, None), slice(280, None))
+    }
+
     if args.brain_analysis_type == "avg":
         logger.info(f"Loading brain activity...")
         brain_activity = []
+        rdm_path = os.path.join(rdms_folder, f"{args.meg_picks}_avg_rdm_{args.time_segment}_{args.sliding_window}.npy")
+        # if os.path.exists(rdm_path):
+        #     logger.info(f"RDM for {args.meg_picks} already exists. Loading...")
+        #     brain_activity = rdm_instance.load(rdm_path)
+        # else:
+        logger.info(f"RDM for {args.meg_picks}, {args.time_segment}, {args.sliding_window} not found. Computing...")
         for i in range(1,17):
-            sub_rdm_path = os.path.join(rdms_folder, f"sub-{i:02d}_avg_rdm_{args.time_segment}_{args.sliding_window}.npy")
+            sub_rdm_path = os.path.join(rdms_folder, f"sub-{i:02d}_{args.meg_picks}_avg_rdm_{args.time_segment}_{args.sliding_window}.npy")
+            if not os.path.exists(sub_rdm_path):
+                continue
+                # raise ValueError(f"RDM for subject {i:02d} not found. Please compute it first.")
             sub_rdm = rdm_instance.load(sub_rdm_path)
             brain_activity.append(sub_rdm)
         brain_activity = np.stack(brain_activity, axis=0)
         brain_activity = np.mean(brain_activity, axis=0)
-        brain_activity = brain_activity[slicing_indices[args.stimuli_file_name]]
+        brain_activity = brain_activity[slicing_indices_meg[args.stimuli_file_name]]
         logger.info(f"Brain activity loaded successfully!")
         logger.info(f"loading {args.model_name} model RDM...")
         model_rdm_path = os.path.join(rdms_folder, f"{args.model_name}_{args.ann_analysis_type}_rdm_{args.activation_type}.npy")
         model_rdm = rdm_instance.load(model_rdm_path)
-        model_rdm = model_rdm[slicing_indices[args.stimuli_file_name]]
+        model_rdm = model_rdm[slicing_indices_model[args.stimuli_file_name]]
         logger.info(f"{args.model_name} model RDM loaded successfully!")
         logger.info(f"Computing similarity score...")
         sim = rsa_instance.score(brain_activity, model_rdm)
-        rsa_instance.save(sim, os.path.join(similarity_folder, f"avg_{args.model_name}_{args.ann_analysis_type}_rdm_{args.activation_type}_{args.stimuli_file_name}_{args.time_segment}_{args.sliding_window}.npy"))
+        rsa_instance.save(sim, os.path.join(similarity_folder, f"avg_{args.model_name}_{args.ann_analysis_type}_{args.meg_picks}_rdm_{args.activation_type}_{args.stimuli_file_name}_{args.time_segment}_{args.sliding_window}.npy"))
         logger.info(f"Similarity score computed and saved successfully!")
     elif args.brain_analysis_type == "raw":
         if not os.path.isdir(os.path.join(rdms_folder, subject)):
