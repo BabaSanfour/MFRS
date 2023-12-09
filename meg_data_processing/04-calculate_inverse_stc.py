@@ -68,7 +68,7 @@ def main():
         coreg = compute_coregistration(filenames['trans'], subject, args.overwrite)
 
     epochs = mne.read_epochs(filenames['epo'], preload=True)
-    epochs = epochs.pick_types(meg=args.meg_picks, eeg=False, eog=False, ecg=False, stim=False)
+    epochs = epochs.pick_types(meg=True, eeg=False, eog=False, ecg=False, stim=False)
 
     if not os.path.isfile(filenames['cov']) or args.overwrite:
         cov = compute_cov(filenames['cov'], epochs, args.overwrite)
@@ -114,11 +114,11 @@ def main():
             time_courses_dict = pickle.load(file)
         transform_data(filenames['trans_avg_tcs'], time_courses_dict, "mean")
 
-    if not os.path.isfile(filenames['raw_tcs']):# or args.overwrite:
+    if not os.path.isfile(filenames['raw_tcs']) or args.overwrite:
         logger.info("Loading morphed source estimates")
         morph_files = sorted(glob.glob(os.path.join(filenames['mrph'], f'*{args.method}*.h5')))
         morphed = [mne.read_source_estimate(file_path) for file_path in morph_files]
-        morphed = extract_source_estimates_by_ROIs(filenames['raw_tcs'], morphed, "raw")
+        morphed = extract_source_estimates_by_ROIs(filenames['raw_tcs'], morphed, None)
         del morphed
         
     if not os.path.isfile(filenames['trans_raw_tcs']) or args.overwrite:
