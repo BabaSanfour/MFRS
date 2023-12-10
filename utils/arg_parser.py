@@ -245,6 +245,12 @@ def get_similarity_parser():
         default=50,
         help='Sliding window to compute RDM of brain activity'
     )
+    brain.add_argument(
+        '--region_index',
+        type=int,
+        default=0,
+        help='Region index to compute RDM of brain activity'
+    )
 
     return parser
 

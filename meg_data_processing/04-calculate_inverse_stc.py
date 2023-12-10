@@ -159,7 +159,7 @@ def compute_coregistration(fname_trans: str, subject: str, overwrite: bool = Fal
     fname_raw = os.path.join(study_path, f"ds000117/{subject}/ses-meg/meg",
                              f"{subject}_ses-meg_task-facerecognition_run-01_meg.fif")
     
-    # Read MEG info
+    # Read MEG infoinfo
     info = mne.io.read_info(fname_raw)
     
     # Create a Coregistration object and perform initial ICP fitting
