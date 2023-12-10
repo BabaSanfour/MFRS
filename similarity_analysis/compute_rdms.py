@@ -1,6 +1,8 @@
 import os
 import json
 import pickle
+import time
+from datetime import datetime 
 import numpy as np
 import logging
 
@@ -44,14 +46,22 @@ if __name__ == '__main__':
         elif args.brain_analysis_type == "raw":
             if not os.path.isdir(os.path.join(rdms_folder, subject)):
                 os.mkdir(os.path.join(rdms_folder, subject))
-            for region, region_activity in brain_activity.items():
+            list_of_regions = list(brain_activity.keys())
+            list_of_regions.remove("unknown-lh")
+            list_of_regions.remove("unknown-rh")
+            region = list_of_regions[args.region_index]
+            region_activity = brain_activity[region]
+            del brain_activity
+            if os.path.exists(os.path.join(rdms_folder, subject, f"{subject}_{region}_{args.brain_analysis_type}_rdm.npy")):
+                logger.info(f"RDM movie for {region} already exists. Skipping...")
+            else:
                 logger.info(f"Calculating brain RDM movie for subject {args.subject:02d} for {region}...")
-                if os.path.exists(os.path.join(rdms_folder, subject, f"{subject}_{region}_{args.brain_analysis_type}_rdm.npy")):
-                    logger.info(f"RDM movie for {region} already exists. Skipping...")
-                    continue
+                start_time = time.time()
                 rdm.save(rdm.brain_rdm_movie_parallel({region: region_activity}), os.path.join(rdms_folder, subject, f"{subject}_{region}_{args.brain_analysis_type}_rdm.npy"))
+                end_time = time.time()
+                time_taken = datetime.utcfromtimestamp(end_time - start_time).strftime("%H:%M:%S")
                 logger.info(f"RDM movie for {region} computed and saved successfully!")
-
+                logger.info(f"Time taken: {time_taken}")
         else :
             raise ValueError("Brain analysis type not recognized. Please choose between 'avg' and 'raw'")
         logger.info("RDMs computed and saved successfully!")
