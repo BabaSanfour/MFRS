@@ -1,15 +1,15 @@
 [![GitHub languages](https://img.shields.io/github/languages/count/BabaSanfour/MFRS)](https://github.com/BabaSanfour/MFRS)
 [![GitHub top language](https://img.shields.io/github/languages/top/YourUsername/YourRepository)](https://github.com/YourUsername/YourRepository)
 
-[![GitHub stars](https://img.shields.io/github/stars/YourUsername/YourRepository)](https://github.com/YourUsername/YourRepository/stargazers)
-[![GitHub forks](https://img.shields.io/github/forks/YourUsername/YourRepository)](https://github.com/YourUsername/YourRepository/network)
-[![GitHub issues](https://img.shields.io/github/issues/YourUsername/YourRepository)](https://github.com/YourUsername/YourRepository/issues)
-[![GitHub pull requests](https://img.shields.io/github/issues-pr/YourUsername/YourRepository)](https://github.com/YourUsername/YourRepository/pulls)
+[![GitHub stars](https://img.shields.io/github/stars/BabaSanfour/MFRS)](https://github.com/BabaSanfour/MFRS/stargazers)
+[![GitHub forks](https://img.shields.io/github/forks/BabaSanfour/MFRS)](https://github.com/BabaSanfour/MFRS/network)
+[![GitHub issues](https://img.shields.io/github/issues/BabaSanfour/MFRS)](https://github.com/BabaSanfour/MFRS/issues)
+[![GitHub pull requests](https://img.shields.io/github/issues-pr/BabaSanfour/MFRS)](https://github.com/BabaSanfour/MFRS/pulls)
 
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://opensource.org/licenses/MIT)
-[![Last commit](https://img.shields.io/github/last-commit/YourUsername/YourRepository)](https://github.com/YourUsername/YourRepository/commits/main)
-[![GitHub contributors](https://img.shields.io/github/contributors/YourUsername/YourRepository)](https://github.com/YourUsername/YourRepository/graphs/contributors)
-[![GitHub commit activity](https://img.shields.io/github/commit-activity/m/YourUsername/YourRepository)](https://github.com/YourUsername/YourRepository/commits/main)
+[![Last commit](https://img.shields.io/github/last-commit/BabaSanfour/MFRS)](https://github.com/YourUsername/BabaSanfour/MFRS/main)
+[![GitHub contributors](https://img.shields.io/github/contributors/BabaSanfour/MFRS)](https://github.com/BabaSanfour/MFRS/graphs/contributors)
+[![GitHub commit activity](https://img.shields.io/github/commit-activity/m/BabaSanfour/MFRS)](https://github.com/BabaSanfour/MFRS/commits/main)
 
 # Project Overview
 
