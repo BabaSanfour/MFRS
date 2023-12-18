@@ -1,6 +1,11 @@
 # Similarity Analysis
 
-This folder contains source code for performing Similarity Analysis on brain data and model activations. The analysis involves computing Representational Dissimilarity Matrices (RDMs), performing Representational Similarity Analyses (RSAs), estimating noise ceilings, and running experiments.
+This folder contains source code for performing Similarity Analysis on brain data and model activations. The analysis involves computing Representational Dissimilarity Matrices (RDMs), performing Representational Similarity Analyses (RSAs), estimating noise ceilings, and running experiments. 
+
+- RDMs quantify the dissimilarity or similarity between the neural representations of different stimuli or conditions. Each element of an RDM represents the dissimilarity between the neural response patterns corresponding to a pair of stimuli.
+- RSA involves comparing the structure of neural representations across different conditions or models. By correlating RDMs, RSA quantifies the similarity between the underlying representations, providing insights into the organization of information in the brain.
+- NC is a crucial concept in neuroscience that helps assess the upper limit of similarity between neural representations. It accounts for the inherent variability or noise present in the data. When conducting similarity analyses, it's essential to consider that not all variability can be attributed to meaningful differences between conditions or models.
+
 
 ## Source Code
 
@@ -17,6 +22,12 @@ This folder contains source code for performing Similarity Analysis on brain dat
 
 3. [Noise Ceilings (NCs)](src/noise_ceiling.py):
     - This module computes noise ceilings using bootstrapping or leave-one-out methods.
+        * Bootstrapping Method:
+            - The similarity analysis is performed on each resampled dataset to create a distribution of similarity scores.
+            - The mean and standard deviation of this distribution represent the noise ceiling.
+        * Leave-One-Out Method:
+            - This method systematically leaves out one subject at a time and computes the similarity analysis.
+            - The average similarity across all iterations serves as an estimate of the noise ceiling.
 
 ### Main Folder
 
