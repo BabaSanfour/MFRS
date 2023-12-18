@@ -12,7 +12,7 @@ sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 from src.rdm import RDM
 from src.noise_ceiling import noise_ceiling
 from utils.arg_parser import get_similarity_parser
-from utils.config import rdms_folder
+from utils.config import rdms_folder, similarity_folder
 
 
 if __name__ == '__main__':
@@ -26,22 +26,22 @@ if __name__ == '__main__':
         "unfamiliar": (slice(None), slice(None), slice(None), slice(130, 280), slice(130, 280)),
         "scrambled": (slice(None), slice(None), slice(None), slice(280, None), slice(280, None))
     }
-
-    brain_activity = []
-    for subject in range(1, 17):
-        logger.info(f"Loading brain activity for subject {subject:02d}...")
-        sub_rdm_path = os.path.join(rdms_folder, f"sub-{subject:02d}_{args.meg_picks}_{args.brain_analysis_type}_rdm_{args.time_segment}_{args.time_window}.npy")
-        if not os.path.exists(sub_rdm_path):
-            raise ValueError(f"RDM for subject {subject:02d} not found. Please compute it first.")
-        sub_rdm = rdm_instance.load(sub_rdm_path)
-        brain_activity.append(sub_rdm)
-    brain_activity = np.stack(brain_activity, axis=0)
-    logger.info(f"Brain activity loaded successfully!")
-    logger.info(f"Computing noise ceiling...")
     for key in slicing_indices_meg.keys():
-        activity = brain_activity[slicing_indices_meg[key]]
-        noise_ceiling_instance = noise_ceiling(activity)
+        brain_activity = []
+        for subject in range(1, 17):
+            logger.info(f"Loading brain activity for subject {subject:02d}...")
+            sub_rdm_path = os.path.join(rdms_folder, f"sub-{subject:02d}_{args.meg_picks}_{args.brain_analysis_type}_rdm_{args.time_segment}_{args.time_window}.npy")
+            if not os.path.exists(sub_rdm_path):
+                raise ValueError(f"RDM for subject {subject:02d} not found. Please compute it first.")
+            sub_rdm = rdm_instance.load(sub_rdm_path)
+            brain_activity.append(sub_rdm)
+        brain_activity = np.stack(brain_activity, axis=0)
+        logger.info(f"Brain activity loaded successfully!")
+        brain_activity = brain_activity[slicing_indices_meg[key]]
+        noise_ceiling_instance = noise_ceiling(brain_activity)
+        del brain_activity
+        logger.info(f"Computing noise ceiling...")
         upper_noise_ceiling, lower_noise_ceiling = noise_ceiling_instance[args.noise_ceiling_type]
-        np.save(os.path.join(rdms_folder, f"{args.meg_picks}_{key}_upper_noise_ceiling_{args.time_segment}_{args.time_window}.npy"), upper_noise_ceiling)
-        np.save(os.path.join(rdms_folder, f"{args.meg_picks}_{key}_lower_noise_ceiling_{args.time_segment}_{args.time_window}.npy"), lower_noise_ceiling)
+        np.save(os.path.join(similarity_folder, f"{args.meg_picks}_{key}_upper_noise_ceiling_{args.time_segment}_{args.time_window}.npy"), upper_noise_ceiling)
+        np.save(os.path.join(similarity_folder, f"{args.meg_picks}_{key}_lower_noise_ceiling_{args.time_segment}_{args.time_window}.npy"), lower_noise_ceiling)
     logger.info(f"Noise ceiling computed successfully!")
