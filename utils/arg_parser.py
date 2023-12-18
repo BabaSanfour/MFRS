@@ -251,6 +251,23 @@ def get_similarity_parser():
         default=0,
         help='Region index to compute RDM of brain activity'
     )
+    
+    stats = parser.add_argument_group("Stats")
+    stats.add_argument(
+        '--similarity_measure', 
+        type=str, 
+        default="spearman",
+        help='Similarity measure to use'
+    )
+    stats.add_argument(
+        '--noise_ceiling_type',
+        type=str,
+        choices= [
+            "bootstrap", "loo"
+        ],
+        default= "loo",
+        help='Noise ceiling type: bootstrap, loo.'
+    )
 
     return parser
 
