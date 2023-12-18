@@ -56,27 +56,6 @@ for i in range(1, 151):
     conditions_mapping[f"meg/u{i:03d}.bmp"] = str(i + 150)
     conditions_mapping[f"meg/s{i:03d}.bmp"] = str(i + 300)
 
-# Plotting parameters and functions
-def set_matplotlib_defaults():
-    import matplotlib.pyplot as plt
-    fontsize = 8
-    params = {'axes.labelsize': fontsize,
-              'legend.fontsize': fontsize,
-              'xtick.labelsize': fontsize,
-              'ytick.labelsize': fontsize,
-              'axes.titlesize': fontsize + 2,
-              'figure.max_open_warning': 200,
-              'axes.spines.top': False,
-              'axes.spines.right': False,
-              'axes.grid': True,
-              'lines.linewidth': 1,
-              }
-    import matplotlib
-    if LooseVersion(matplotlib.__version__) >= '2':
-        params['font.size'] = fontsize
-    else:
-        params['text.fontsize'] = fontsize
-    plt.rcParams.update(params)
 
 annot_kwargs = dict(fontsize=12, fontweight='bold',
                     xycoords="axes fraction", ha='right', va='center')
