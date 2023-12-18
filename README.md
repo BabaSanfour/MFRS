@@ -1,4 +1,15 @@
 [![GitHub languages](https://img.shields.io/github/languages/count/BabaSanfour/MFRS)](https://github.com/BabaSanfour/MFRS)
+[![GitHub top language](https://img.shields.io/github/languages/top/YourUsername/YourRepository)](https://github.com/YourUsername/YourRepository)
+
+[![GitHub stars](https://img.shields.io/github/stars/YourUsername/YourRepository)](https://github.com/YourUsername/YourRepository/stargazers)
+[![GitHub forks](https://img.shields.io/github/forks/YourUsername/YourRepository)](https://github.com/YourUsername/YourRepository/network)
+[![GitHub issues](https://img.shields.io/github/issues/YourUsername/YourRepository)](https://github.com/YourUsername/YourRepository/issues)
+[![GitHub pull requests](https://img.shields.io/github/issues-pr/YourUsername/YourRepository)](https://github.com/YourUsername/YourRepository/pulls)
+
+[![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://opensource.org/licenses/MIT)
+[![Last commit](https://img.shields.io/github/last-commit/YourUsername/YourRepository)](https://github.com/YourUsername/YourRepository/commits/main)
+[![GitHub contributors](https://img.shields.io/github/contributors/YourUsername/YourRepository)](https://github.com/YourUsername/YourRepository/graphs/contributors)
+[![GitHub commit activity](https://img.shields.io/github/commit-activity/m/YourUsername/YourRepository)](https://github.com/YourUsername/YourRepository/commits/main)
 
 # Project Overview
 
