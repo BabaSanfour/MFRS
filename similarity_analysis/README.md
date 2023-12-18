@@ -6,16 +6,16 @@ This folder contains source code for performing Similarity Analysis on brain dat
 
 ### `src` Subfolder
 
-1. [Representational Dissimilarity Matrices (RDMs)](/src/rdm.py):
+1. [Representational Dissimilarity Matrices (RDMs)](src/rdm.py):
 
     - This module provides functions to compute RDMs for MEG data and layers' activations. It offers flexibility to compute RDMs in sensor or source space. Two methods are available for MEG data:
         * Compute RDMs for a specified time segment (e.g., 500ms). Optionally, apply a time window to compute RDMs for different time segments (e.g., 500ms with a time window of 50ms).
         * Compute an RDM for each time point by collapsing the sensors or voxels of a region. Parallel processing is available to expedite the computation.
 
-2. [Representational Similarity Analyses (RSAs)](/src/rsa.py):
+2. [Representational Similarity Analyses (RSAs)](src/rsa.py):
     - This module calculates similarity scores between brain RDMs and layers' RDMs.
 
-3. [Noise Ceilings (NCs)](/src/noise_ceiling.py):
+3. [Noise Ceilings (NCs)](src/noise_ceiling.py):
     - This module computes noise ceilings using bootstrapping or leave-one-out methods.
 
 ### Main Folder
