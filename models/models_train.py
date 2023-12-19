@@ -2,8 +2,9 @@ import os
 import time
 import torch
 import wandb
-import warnings
+import random
 import logging
+import numpy as np
 from typing import Optional, Any, Dict
 from torch import nn
 from torch.optim import Optimizer
@@ -200,6 +201,14 @@ if __name__ == '__main__':
     args = parser.parse_args()
     start = time.time()
 
+    random.seed(args.seed)
+    torch.manual_seed(args.seed)
+    torch.cuda.manual_seed(args.seed)
+    torch.cuda.manual_seed_all(args.seed)
+    torch.backends.cudnn.deterministic = True
+    torch.backends.cudnn.benchmark = False
+    np.random.seed(args.seed)
+
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
     start = time.time()
@@ -241,7 +250,7 @@ if __name__ == '__main__':
 
     exp_lr_scheduler = torch.optim.lr_scheduler.StepLR(optimizer_ft, args.step_size, args.gamma)
 
-    experiment_name = f"final_{args.model}_{args.num_classes}"
+    experiment_name = f"final_{args.model}_{args.num_classes}_{args.seed}"
 
     model_ft = train_model(model, criterion, optimizer_ft, exp_lr_scheduler, args.num_epochs, dataset_loader, dataset_sizes, wandb)
     acc = test_model(model_ft, dataset_loader, dataset_sizes)
@@ -253,4 +262,4 @@ if __name__ == '__main__':
     logger.info('Training ended in %s h %s m %s s' % (time_training // 3600, (time_training % 3600) // 60, time_training % 60))
 
     # Save weights after training
-    save_network_weights(model_ft, args.out_weights)
+    save_network_weights(model_ft, f"{args.out_weights}_{args.seed}.pth")

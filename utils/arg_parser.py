@@ -143,7 +143,7 @@ def get_training_config_parser():
         "--seed",
         type=int,
         default=42,
-        help="Random seed for repeatability."
+        help="Random seed for reproducibility."
     )
 
     return parser
