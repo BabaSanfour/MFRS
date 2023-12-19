@@ -44,4 +44,5 @@ if __name__ == '__main__':
         upper_noise_ceiling, lower_noise_ceiling = noise_ceiling_instance[args.noise_ceiling_type]
         np.save(os.path.join(similarity_folder, f"{args.meg_picks}_{key}_upper_noise_ceiling_{args.time_segment}_{args.time_window}.npy"), upper_noise_ceiling)
         np.save(os.path.join(similarity_folder, f"{args.meg_picks}_{key}_lower_noise_ceiling_{args.time_segment}_{args.time_window}.npy"), lower_noise_ceiling)
+        del upper_noise_ceiling, lower_noise_ceiling
     logger.info(f"Noise ceiling computed successfully!")
