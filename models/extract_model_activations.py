@@ -117,6 +117,7 @@ def extract_activations(
     model: nn.Module,
     weights: str,
     activ_type: str = "trained",
+    seed: int = 0,
     transfer: bool = False
 ) -> Dict[str, np.ndarray]:
     """
@@ -128,6 +129,7 @@ def extract_activations(
         model (nn.Module): The model.
         weights (str): The path to the model weights.
         activ_type (str, optional): Trained or untrained model.
+        seed (int, optional): The seed to used for training.
         transfer (bool, optional): Indicates whether transfer first layer.
 
     Returns:
@@ -135,7 +137,7 @@ def extract_activations(
     """
     images = Stimuliloader(450, "Stimuli")
     images = next(iter(images))
-    activations_file = os.path.join(activations_folder, f"{model_name}_{analysis_type}_activations_{activ_type}.pkl")
+    activations_file = os.path.join(activations_folder, f"{model_name}_{analysis_type}_activations_{activ_type}_{seed}.pkl")
 
     if os.path.isfile(activations_file):
         logger.info(f"Activations file ({model_name}) for {analysis_type} already exists!!!")
@@ -175,4 +177,4 @@ if __name__ == '__main__':
     model = model_cls(False, args.num_classes, args.n_input_channels)
 
     # Call extract_activations
-    activations = extract_activations(model_name, args.analysis_type, model, args.in_weights, args.activ_type, args.transfer)
+    activations = extract_activations(model_name, args.analysis_type, model, args.in_weights, args.activ_type, args.seed, args.transfer)

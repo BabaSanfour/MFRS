@@ -198,6 +198,18 @@ def get_similarity_parser():
         default= "trained",
         help='Activations type: trained, untrained'
     )
+    ann.add_argument(
+        '--seed',
+        type=int,
+        default=42,
+        help='Random seed for reproducibility'
+    )
+    ann.add_argument(
+        '--index',
+        type=int,
+        default=0,
+        help='Index to compute RDMs'
+    )
 
     brain = parser.add_argument_group("Brain Data")
     brain.add_argument(

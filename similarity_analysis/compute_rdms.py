@@ -22,9 +22,11 @@ if __name__ == '__main__':
     args = parser.parse_args()
     rdm = RDM(428)
     if args.modality == "ANN":
-        with open(os.path.join(activations_folder, f"{args.model_name}_{args.ann_analysis_type}_activations_{args.activation_type}.pkl"), 'rb') as pickle_file:
+        with open(os.path.join(activations_folder, f"{args.model_name}_{args.ann_analysis_type}_activations_{args.activation_type}_{args.seed}.pkl"), 'rb') as pickle_file:
             activations = pickle.load(pickle_file)
 
+        selected_key = list(activations.keys())[args.index]
+        activations = {selected_key: activations[selected_key]}
         with open(os.path.join(meg_dir, "mega_events_disregarded.json"), 'rb') as json_file:
             events = json.load(json_file)
         events_to_remove = np.array(events['all']).astype(int)
@@ -32,9 +34,9 @@ if __name__ == '__main__':
         for layer_name, layer_activations in activations.items():
             updated_layer_activations = layer_activations[mask]
             activations[layer_name] = updated_layer_activations
-
-        logger.info(f"Calculating RDMs for {args.model_name} model, {args.ann_analysis_type} analysis, {args.activation_type} activations...")
-        rdm.save(rdm.model_rdms_parallel(activations), os.path.join(rdms_folder, f"{args.model_name}_{args.ann_analysis_type}_rdm_{args.activation_type}.npy"))
+        
+        logger.info(f"Calculating RDMs of layer {args.index} seed {args.seed} of {args.model_name} model, {args.ann_analysis_type} analysis, {args.activation_type} activations...")
+        rdm.save(rdm.model_rdms_parallel(activations), os.path.join(rdms_folder, f"{int(args.index):03d}_{args.model_name}_{args.ann_analysis_type}_rdm_{args.activation_type}_{args.seed}.npy"))
         logger.info("RDMs computed and saved successfully!")
     elif args.modality == "brain":
         subject = f"sub-{args.subject:02d}"
