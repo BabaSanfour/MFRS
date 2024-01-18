@@ -71,7 +71,7 @@ if __name__ == '__main__':
         list_of_regions.remove("unknown-rh")
         region = list_of_regions[args.region_index]
         logger.info(f"Calculating brain Similarity Scores movie for region {region}...")
-        brain_rdm = []
+        brain_rdm = np.zeros((1, 1101, 428, 428), dtype=np.float32)
         rdm_path = os.path.join(rdms_folder, f"{region}_raw_rdm.npy")
         if os.path.exists(rdm_path):
             logger.info(f"RDM for region {region} already exists. Loading...")
@@ -82,10 +82,9 @@ if __name__ == '__main__':
                 sub_rdm_path = os.path.join(rdms_folder, f"sub-{i:02d}", f"sub-{i:02d}_{region}_raw_rdm.npy")
                 if not os.path.exists(sub_rdm_path):
                     raise ValueError(f"RDM for subject {i:02d}, region {region} not found. Please compute it first.")
-                sub_rdm = rdm_instance.load(sub_rdm_path)
-                brain_rdm.append(sub_rdm)
-            brain_rdm = np.stack(brain_rdm, axis=0)
-            brain_rdm = np.mean(brain_rdm, axis=0)
+                brain_rdm += rdm_instance.load(sub_rdm_path)
+                logger.info(f"RDM for subject {i:02d} loaded successfully!")
+            brain_rdm = brain_rdm / 16
             rdm_instance.save(brain_rdm, rdm_path)
         brain_rdm = brain_rdm[slicing_indices_meg[args.stimuli_file_name]]
         logger.info(f"brain rdm loaded successfully!")
