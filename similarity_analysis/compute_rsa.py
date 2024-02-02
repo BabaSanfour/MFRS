@@ -95,7 +95,9 @@ if __name__ == '__main__':
         logger.info(f"{args.model_name} model RDM loaded successfully!")
         logger.info(f"Computing similarity score...")
         sim = rsa_instance.score(brain_rdm, model_rdm)
-        rsa_instance.save(sim, os.path.join(similarity_folder, f"raw_{args.model_name}_{args.ann_analysis_type}_{region}_rdm_{args.activation_type}_{args.stimuli_file_name}.npy"))
+        if not os.path.isdir(os.path.join(similarity_folder, f"{args.model_name}_{args.ann_analysis_type}_{args.activation_type}_{args.stimuli_file_name}")):
+            os.makedirs(os.path.join(similarity_folder, f"{args.model_name}_{args.ann_analysis_type}_{args.activation_type}_{args.stimuli_file_name}"))
+        rsa_instance.save(sim, os.path.join(similarity_folder, f"{args.model_name}_{args.ann_analysis_type}_{args.activation_type}_{args.stimuli_file_name}",f"raw_{args.model_name}_{args.ann_analysis_type}_{region}_rdm_{args.activation_type}_{args.stimuli_file_name}.npy"))
         logger.info(f"Similarity score computed and saved successfully!")
 
     else:
