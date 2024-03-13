@@ -328,4 +328,17 @@ def source_rescontruction_parser():
         help='Type of MEG sensors to use'
     )
 
+    source.add_argument(
+        '--freq_bands',
+        type=dict,
+        default={
+            "theta": (4, 8), 
+            "alpha": (8, 12), 
+            "beta": (12, 30), 
+            "gamma": (30, 55), 
+            "high-gamma": (55, 90)
+        },
+        help='Frequency bands for hilbert transform'
+    )
+
     return parser
