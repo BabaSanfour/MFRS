@@ -43,8 +43,8 @@ def make_array(data_folder: str) -> tuple:
     # Extract all the folder names (IDs)
     samples_pathes = sorted(
         [
-            os.path.join(dir, sname)
-            for sname in os.listdir(dir)
+            os.path.join(data_path, sname)
+            for sname in os.listdir(data_path)
         ]
     )
 
@@ -52,8 +52,8 @@ def make_array(data_folder: str) -> tuple:
     for id_folder in loop_generator:
         pictures_pathes = sorted(
             [
-                os.path.join(id_folder, sname)
-                for sname in os.listdir(id_folder)
+                os.path.join(id_folder, data_folder, sname)
+                for sname in os.listdir(os.path.join(id_folder, data_folder))
             ]
         )
 
