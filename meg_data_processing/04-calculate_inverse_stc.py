@@ -162,7 +162,19 @@ def main():
                 time_courses_dict = pickle.load(file)
             transform_data(filenames[f'hilbert_{freq_band}_trans_avg_stc'], time_courses_dict, "mean")
             del time_courses_dict
-        
+
+        if not os.path.isfile(filenames[f'hilbert_{freq_band}_raw_stc']) or args.overwrite:
+            logger.info("Loading hilbert transformed source estimates")
+            hilbert_files = sorted(glob.glob(os.path.join(filenames['hilbert'], freq_band,f'*{freq_band}_hilbert*.h5')))
+            hilbert_stcs = [mne.read_source_estimate(file_path) for file_path in hilbert_files]
+            extract_source_estimates_by_ROIs(filenames[f'hilbert_{freq_band}_raw_stc'], hilbert_stcs, None)
+            del hilbert_stcs
+
+        if not os.path.isfile(filenames[f'hilbert_{freq_band}_trans_raw_stc']) or args.overwrite:
+            with open(filenames[f'hilbert_{freq_band}_raw_stc'], 'rb') as file:
+                time_courses_dict = pickle.load(file)
+            transform_data(filenames[f'hilbert_{freq_band}_trans_raw_stc'], time_courses_dict, None)
+            del time_courses_dict
 
 
 def compute_coregistration(fname_trans: str, subject: str, overwrite: bool = False) -> mne.coreg.Coregistration:
@@ -475,7 +487,7 @@ def extract_source_estimates_by_ROIs(fname_avg_time_courses: str, morphed: list,
     Note:
     - The function calculates the average time course within predefined ROIs for each source estimate.
     """
-    logger.info("Averaging source estimates by ROIs")
+    logger.info("Extracting source estimates by ROIs")
     
     # Read label list from fsaverage parcellation
     label_list = mne.read_labels_from_annot("fsaverage", parc="aparc_sub", subjects_dir=subjects_dir)
