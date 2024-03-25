@@ -29,6 +29,16 @@ from utils.config import weights_path
 logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
 logger = logging.getLogger(__name__)
 
+def init_weights_randomly(model):
+    for m in model.modules():
+        if isinstance(m, (nn.Conv2d, nn.Linear)):
+            nn.init.normal_(m.weight.data, mean=0.0, std=0.02)
+            if m.bias is not None:
+                nn.init.constant_(m.bias.data, 0)
+        elif isinstance(m, nn.BatchNorm2d):
+            nn.init.constant_(m.weight.data, 1)
+            nn.init.constant_(m.bias.data, 0)
+
 
 def train_model(model: nn.Module, criterion, optimizer: Optimizer, scheduler: _LRScheduler, num_epochs: int, 
                 dataset_loader: Dict[str, DataLoader], dataset_sizes: Dict[str, int], wandb: Optional[Any] = None) -> nn.Module:
@@ -237,6 +247,9 @@ if __name__ == '__main__':
     # Initialize the model
     model = model_cls(args.pretrained, args.num_classes, args.n_input_channels, args.transfer, args.in_weights)
     model.to(device)
+
+    init_weights_randomly(model)
+
 
     # Choose optimizer based on args.optimizer
     if args.optimizer == "adamw":
