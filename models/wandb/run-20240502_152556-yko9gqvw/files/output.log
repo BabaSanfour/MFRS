@@ -1,0 +1,21 @@
+Max label in batch: 4237
+Training data shape: torch.Size([16, 3, 224, 224])
+Max label in batch: 4434
+Inside training loop - inputs shape: torch.Size([16, 3, 224, 224])
+Current batch labels: tensor([2416, 1674, 1534, 2070, 2510, 4434, 3171, 1666, 3306, 3221,   72, 2302,
+        1443,  840, 1199, 3830])
+Max label in batch: 4434, Min label in batch: 72
+2024-05-02 15:25:59,938 - INFO - Epoch 1/2
+2024-05-02 15:25:59,938 - INFO - ----------
+Traceback (most recent call last):
+  File "C:\Users\marie\Desktop\Sanfour\MFRS\models\models_train.py", line 343, in <module>
+    model_ft = train_model(model,criterion_cosf,optimizer_ft, exp_lr_scheduler, args.num_epochs, dataset_loader, dataset_sizes, wandb)
+  File "C:\Users\marie\Desktop\Sanfour\MFRS\models\models_train.py", line 113, in train_model
+    logits, features = model(inputs)#ena badalt
+ValueError: too many values to unpack (expected 2)
+Traceback (most recent call last):
+  File "C:\Users\marie\Desktop\Sanfour\MFRS\models\models_train.py", line 343, in <module>
+    model_ft = train_model(model,criterion_cosf,optimizer_ft, exp_lr_scheduler, args.num_epochs, dataset_loader, dataset_sizes, wandb)
+  File "C:\Users\marie\Desktop\Sanfour\MFRS\models\models_train.py", line 113, in train_model
+    logits, features = model(inputs)#ena badalt
+ValueError: too many values to unpack (expected 2)

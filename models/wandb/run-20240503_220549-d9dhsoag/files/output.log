@@ -1,0 +1,22 @@
+2024-05-03 22:05:52,697 - INFO - Epoch 1/2
+2024-05-03 22:05:52,697 - INFO - ----------
+Traceback (most recent call last):
+  File "C:\Users\marie\Desktop\Sanfour\MFRS\models\models_train.py", line 290, in <module>
+    model_ft = train_model(model,optimizer_ft, exp_lr_scheduler, args.num_epochs, loss_func,  dataset_loader, dataset_sizes, wandb)
+  File "C:\Users\marie\Desktop\Sanfour\MFRS\models\models_train.py", line 100, in train_model
+    loss = loss_func(logits, labels, features)# if args.loss_function == 'center_loss' else loss_func(logits, labels)
+  File "C:\Users\marie\AppData\Roaming\Python\Python39\site-packages\torch\nn\modules\module.py", line 1511, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "C:\Users\marie\AppData\Roaming\Python\Python39\site-packages\torch\nn\modules\module.py", line 1520, in _call_impl
+    return forward_call(*args, **kwargs)
+TypeError: forward() takes 3 positional arguments but 4 were given
+Traceback (most recent call last):
+  File "C:\Users\marie\Desktop\Sanfour\MFRS\models\models_train.py", line 290, in <module>
+    model_ft = train_model(model,optimizer_ft, exp_lr_scheduler, args.num_epochs, loss_func,  dataset_loader, dataset_sizes, wandb)
+  File "C:\Users\marie\Desktop\Sanfour\MFRS\models\models_train.py", line 100, in train_model
+    loss = loss_func(logits, labels, features)# if args.loss_function == 'center_loss' else loss_func(logits, labels)
+  File "C:\Users\marie\AppData\Roaming\Python\Python39\site-packages\torch\nn\modules\module.py", line 1511, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "C:\Users\marie\AppData\Roaming\Python\Python39\site-packages\torch\nn\modules\module.py", line 1520, in _call_impl
+    return forward_call(*args, **kwargs)
+TypeError: forward() takes 3 positional arguments but 4 were given

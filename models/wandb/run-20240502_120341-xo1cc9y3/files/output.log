@@ -1,0 +1,45 @@
+2024-05-02 12:03:44,473 - INFO - Epoch 1/2
+2024-05-02 12:03:44,473 - INFO - ----------
+Max label in batch: 4452
+Training data shape: torch.Size([16, 3, 224, 224])
+Max label in batch: 3836
+Inside training loop - inputs shape: torch.Size([16, 3, 224, 224])
+Current batch labels: tensor([ 640, 2538, 1505, 3752, 1591, 1553, 1908, 3836,  360, 2120, 1359, 3306,
+         323, 3474, 2727, 1483])
+Max label in batch: 3836, Min label in batch: 323
+Traceback (most recent call last):
+  File "C:\Users\marie\Desktop\Sanfour\MFRS\models\models_train.py", line 343, in <module>
+    model_ft = train_model(model,criterion_cosf,optimizer_ft, exp_lr_scheduler, args.num_epochs, dataset_loader, dataset_sizes, wandb)
+  File "C:\Users\marie\Desktop\Sanfour\MFRS\models\models_train.py", line 113, in train_model
+    logits, features = model(inputs)#ena badalt
+  File "C:\Users\marie\AppData\Roaming\Python\Python39\site-packages\torch\nn\modules\module.py", line 1511, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "C:\Users\marie\AppData\Roaming\Python\Python39\site-packages\torch\nn\modules\module.py", line 1520, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "C:\Users\marie\Desktop\Sanfour\MFRS\models\FaceNet.py", line 271, in forward
+    logits = self.logits(x)#ena bdalt
+  File "C:\Users\marie\AppData\Roaming\Python\Python39\site-packages\torch\nn\modules\module.py", line 1511, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "C:\Users\marie\AppData\Roaming\Python\Python39\site-packages\torch\nn\modules\module.py", line 1520, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "C:\Users\marie\AppData\Roaming\Python\Python39\site-packages\torch\nn\modules\linear.py", line 116, in forward
+    return F.linear(input, self.weight, self.bias)
+RuntimeError: mat1 and mat2 shapes cannot be multiplied (28672x1 and 512x5000)
+Traceback (most recent call last):
+  File "C:\Users\marie\Desktop\Sanfour\MFRS\models\models_train.py", line 343, in <module>
+    model_ft = train_model(model,criterion_cosf,optimizer_ft, exp_lr_scheduler, args.num_epochs, dataset_loader, dataset_sizes, wandb)
+  File "C:\Users\marie\Desktop\Sanfour\MFRS\models\models_train.py", line 113, in train_model
+    logits, features = model(inputs)#ena badalt
+  File "C:\Users\marie\AppData\Roaming\Python\Python39\site-packages\torch\nn\modules\module.py", line 1511, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "C:\Users\marie\AppData\Roaming\Python\Python39\site-packages\torch\nn\modules\module.py", line 1520, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "C:\Users\marie\Desktop\Sanfour\MFRS\models\FaceNet.py", line 271, in forward
+    logits = self.logits(x)#ena bdalt
+  File "C:\Users\marie\AppData\Roaming\Python\Python39\site-packages\torch\nn\modules\module.py", line 1511, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "C:\Users\marie\AppData\Roaming\Python\Python39\site-packages\torch\nn\modules\module.py", line 1520, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "C:\Users\marie\AppData\Roaming\Python\Python39\site-packages\torch\nn\modules\linear.py", line 116, in forward
+    return F.linear(input, self.weight, self.bias)
+RuntimeError: mat1 and mat2 shapes cannot be multiplied (28672x1 and 512x5000)

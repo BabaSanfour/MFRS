@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "C:\Users\marie\Desktop\Sanfour\MFRS\models\models_train.py", line 252, in <module>
+    model = model_cls(args.pretrained, args.cd , args.n_input_channels, args.transfer, args.in_weights)
+AttributeError: 'Namespace' object has no attribute 'cd'
+Traceback (most recent call last):
+  File "C:\Users\marie\Desktop\Sanfour\MFRS\models\models_train.py", line 252, in <module>
+    model = model_cls(args.pretrained, args.cd , args.n_input_channels, args.transfer, args.in_weights)
+AttributeError: 'Namespace' object has no attribute 'cd'

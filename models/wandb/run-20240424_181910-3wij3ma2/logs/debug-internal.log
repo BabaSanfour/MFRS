@@ -1,0 +1,303 @@
+2024-04-24 18:19:10,729 INFO    StreamThr :53188 [internal.py:wandb_internal():86] W&B internal server running at pid: 53188, started at: 2024-04-24 18:19:10.729404
+2024-04-24 18:19:10,729 DEBUG   HandlerThread:53188 [handler.py:handle_request():144] handle_request: status
+2024-04-24 18:19:10,729 INFO    WriterThread:53188 [datastore.py:open_for_write():85] open: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240424_181910-3wij3ma2\run-3wij3ma2.wandb
+2024-04-24 18:19:10,737 DEBUG   SenderThread:53188 [sender.py:send():379] send: header
+2024-04-24 18:19:10,770 DEBUG   SenderThread:53188 [sender.py:send():379] send: run
+2024-04-24 18:19:11,053 INFO    SenderThread:53188 [dir_watcher.py:__init__():211] watching files in: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240424_181910-3wij3ma2\files
+2024-04-24 18:19:11,053 INFO    SenderThread:53188 [sender.py:_start_run_threads():1121] run started: 3wij3ma2 with start time 1713997150.729404
+2024-04-24 18:19:11,053 DEBUG   SenderThread:53188 [sender.py:send_request():406] send_request: summary_record
+2024-04-24 18:19:11,053 INFO    SenderThread:53188 [sender.py:_save_file():1375] saving file wandb-summary.json with policy end
+2024-04-24 18:19:11,059 DEBUG   HandlerThread:53188 [handler.py:handle_request():144] handle_request: check_version
+2024-04-24 18:19:11,059 DEBUG   SenderThread:53188 [sender.py:send_request():406] send_request: check_version
+2024-04-24 18:19:11,199 DEBUG   HandlerThread:53188 [handler.py:handle_request():144] handle_request: run_start
+2024-04-24 18:19:12,069 INFO    Thread-16 :53188 [dir_watcher.py:_on_file_created():271] file/dir created: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240424_181910-3wij3ma2\files\wandb-summary.json
+2024-04-24 18:19:12,854 DEBUG   HandlerThread:53188 [system_info.py:__init__():31] System info init
+2024-04-24 18:19:12,854 DEBUG   HandlerThread:53188 [system_info.py:__init__():46] System info init done
+2024-04-24 18:19:12,854 INFO    HandlerThread:53188 [system_monitor.py:start():181] Starting system monitor
+2024-04-24 18:19:12,854 INFO    SystemMonitor:53188 [system_monitor.py:_start():145] Starting system asset monitoring threads
+2024-04-24 18:19:12,854 INFO    HandlerThread:53188 [system_monitor.py:probe():201] Collecting system info
+2024-04-24 18:19:12,864 INFO    SystemMonitor:53188 [interfaces.py:start():190] Started cpu monitoring
+2024-04-24 18:19:12,864 INFO    SystemMonitor:53188 [interfaces.py:start():190] Started disk monitoring
+2024-04-24 18:19:12,864 INFO    SystemMonitor:53188 [interfaces.py:start():190] Started gpu monitoring
+2024-04-24 18:19:12,879 INFO    SystemMonitor:53188 [interfaces.py:start():190] Started memory monitoring
+2024-04-24 18:19:12,881 INFO    SystemMonitor:53188 [interfaces.py:start():190] Started network monitoring
+2024-04-24 18:19:12,894 DEBUG   HandlerThread:53188 [system_info.py:probe():195] Probing system
+2024-04-24 18:19:12,894 DEBUG   HandlerThread:53188 [system_info.py:_probe_git():180] Probing git
+2024-04-24 18:19:12,944 DEBUG   HandlerThread:53188 [system_info.py:_probe_git():188] Probing git done
+2024-04-24 18:19:12,944 DEBUG   HandlerThread:53188 [system_info.py:probe():240] Probing system done
+2024-04-24 18:19:12,944 DEBUG   HandlerThread:53188 [system_monitor.py:probe():210] {'os': 'Windows-10-10.0.22631-SP0', 'python': '3.9.9', 'heartbeatAt': '2024-04-24T22:19:12.894237', 'startedAt': '2024-04-24T22:19:10.723629', 'docker': None, 'cuda': None, 'args': ('--dataset', 'VGGFace', '--model', 'FaceNet', '--batch_size', '32', '--lr', '0.1', '--optimizer', 'sgd'), 'state': 'running', 'program': 'C:\\Users\\marie\\Desktop\\Sanfour\\MFRS\\models\\models_train.py', 'codePath': 'models\\models_train.py', 'git': {'remote': 'https://github.com/BabaSanfour/MFRS.git', 'commit': 'e637c4f6aef437030500c2f41513aaee275c977f'}, 'email': None, 'root': 'C:/Users/marie/Desktop/Sanfour/MFRS', 'host': 'LAPTOP-CTGDVKVN', 'username': 'marie', 'executable': 'C:\\Program Files\\Python39\\python.exe', 'cpu_count': 8, 'cpu_count_logical': 16, 'cpu_freq': {'current': 3040.0, 'min': 0.0, 'max': 3801.0}, 'cpu_freq_per_core': [{'current': 3040.0, 'min': 0.0, 'max': 3801.0}], 'disk': {'total': 474.71581649780273, 'used': 451.1939468383789}, 'gpu': 'NVIDIA GeForce RTX 3050 6GB Laptop GPU', 'gpu_count': 1, 'gpu_devices': [{'name': 'NVIDIA GeForce RTX 3050 6GB Laptop GPU', 'memory_total': 6442450944}], 'memory': {'total': 15.189807891845703}}
+2024-04-24 18:19:12,949 INFO    HandlerThread:53188 [system_monitor.py:probe():211] Finished collecting system info
+2024-04-24 18:19:12,949 INFO    HandlerThread:53188 [system_monitor.py:probe():214] Publishing system info
+2024-04-24 18:19:12,949 DEBUG   HandlerThread:53188 [system_info.py:_save_pip():51] Saving list of pip packages installed into the current environment
+2024-04-24 18:19:12,949 DEBUG   HandlerThread:53188 [system_info.py:_save_pip():67] Saving pip packages done
+2024-04-24 18:19:12,949 INFO    HandlerThread:53188 [system_monitor.py:probe():216] Finished publishing system info
+2024-04-24 18:19:12,953 DEBUG   SenderThread:53188 [sender.py:send():379] send: files
+2024-04-24 18:19:12,953 INFO    SenderThread:53188 [sender.py:_save_file():1375] saving file wandb-metadata.json with policy now
+2024-04-24 18:19:12,959 DEBUG   HandlerThread:53188 [handler.py:handle_request():144] handle_request: stop_status
+2024-04-24 18:19:12,959 DEBUG   SenderThread:53188 [sender.py:send_request():406] send_request: stop_status
+2024-04-24 18:19:13,051 DEBUG   SenderThread:53188 [sender.py:send():379] send: telemetry
+2024-04-24 18:19:13,070 INFO    Thread-16 :53188 [dir_watcher.py:_on_file_created():271] file/dir created: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240424_181910-3wij3ma2\files\requirements.txt
+2024-04-24 18:19:13,070 INFO    Thread-16 :53188 [dir_watcher.py:_on_file_created():271] file/dir created: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240424_181910-3wij3ma2\files\wandb-metadata.json
+2024-04-24 18:19:13,364 INFO    wandb-upload_0:53188 [upload_job.py:push():131] Uploaded file C:\Users\marie\AppData\Local\Temp\tmpr_z0gn_awandb\reqnra5z-wandb-metadata.json
+2024-04-24 18:19:14,075 INFO    Thread-16 :53188 [dir_watcher.py:_on_file_created():271] file/dir created: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240424_181910-3wij3ma2\files\output.log
+2024-04-24 18:19:14,926 ERROR   gpu       :53188 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-24 18:19:14,926 ERROR   gpu       :53188 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-24 18:19:15,457 ERROR   gpu       :53188 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-24 18:19:15,457 ERROR   gpu       :53188 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-24 18:19:16,082 INFO    Thread-16 :53188 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240424_181910-3wij3ma2\files\output.log
+2024-04-24 18:19:16,468 DEBUG   HandlerThread:53188 [handler.py:handle_request():144] handle_request: status_report
+2024-04-24 18:19:17,462 ERROR   gpu       :53188 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-24 18:19:17,463 ERROR   gpu       :53188 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-24 18:19:18,010 ERROR   gpu       :53188 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-24 18:19:18,011 ERROR   gpu       :53188 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-24 18:19:18,093 INFO    Thread-16 :53188 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240424_181910-3wij3ma2\files\output.log
+2024-04-24 18:19:20,012 ERROR   gpu       :53188 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-24 18:19:20,013 ERROR   gpu       :53188 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-24 18:19:20,110 INFO    Thread-16 :53188 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240424_181910-3wij3ma2\files\output.log
+2024-04-24 18:19:20,553 ERROR   gpu       :53188 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-24 18:19:20,553 ERROR   gpu       :53188 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-24 18:19:22,124 INFO    Thread-16 :53188 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240424_181910-3wij3ma2\files\output.log
+2024-04-24 18:19:22,379 DEBUG   HandlerThread:53188 [handler.py:handle_request():144] handle_request: status_report
+2024-04-24 18:19:22,567 ERROR   gpu       :53188 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-24 18:19:22,567 ERROR   gpu       :53188 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-24 18:19:23,100 ERROR   gpu       :53188 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-24 18:19:23,100 ERROR   gpu       :53188 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-24 18:19:24,138 INFO    Thread-16 :53188 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240424_181910-3wij3ma2\files\output.log
+2024-04-24 18:19:25,119 ERROR   gpu       :53188 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-24 18:19:25,119 ERROR   gpu       :53188 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-24 18:19:25,666 ERROR   gpu       :53188 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-24 18:19:25,666 ERROR   gpu       :53188 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-24 18:19:26,160 INFO    Thread-16 :53188 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240424_181910-3wij3ma2\files\output.log
+2024-04-24 18:19:27,680 ERROR   gpu       :53188 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-24 18:19:27,680 ERROR   gpu       :53188 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-24 18:19:27,975 DEBUG   HandlerThread:53188 [handler.py:handle_request():144] handle_request: stop_status
+2024-04-24 18:19:27,975 DEBUG   SenderThread:53188 [sender.py:send_request():406] send_request: stop_status
+2024-04-24 18:19:28,075 DEBUG   HandlerThread:53188 [handler.py:handle_request():144] handle_request: status_report
+2024-04-24 18:19:28,181 INFO    Thread-16 :53188 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240424_181910-3wij3ma2\files\output.log
+2024-04-24 18:19:28,205 ERROR   gpu       :53188 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-24 18:19:28,210 ERROR   gpu       :53188 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-24 18:19:30,211 ERROR   gpu       :53188 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-24 18:19:30,211 ERROR   gpu       :53188 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-24 18:19:30,214 INFO    Thread-16 :53188 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240424_181910-3wij3ma2\files\output.log
+2024-04-24 18:19:30,763 ERROR   gpu       :53188 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-24 18:19:30,763 ERROR   gpu       :53188 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-24 18:19:32,243 INFO    Thread-16 :53188 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240424_181910-3wij3ma2\files\output.log
+2024-04-24 18:19:32,768 ERROR   gpu       :53188 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-24 18:19:32,768 ERROR   gpu       :53188 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-24 18:19:33,290 ERROR   gpu       :53188 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-24 18:19:33,290 ERROR   gpu       :53188 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-24 18:19:33,670 DEBUG   HandlerThread:53188 [handler.py:handle_request():144] handle_request: status_report
+2024-04-24 18:19:34,279 INFO    Thread-16 :53188 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240424_181910-3wij3ma2\files\output.log
+2024-04-24 18:19:35,295 ERROR   gpu       :53188 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-24 18:19:35,295 ERROR   gpu       :53188 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-24 18:19:35,820 ERROR   gpu       :53188 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-24 18:19:35,820 ERROR   gpu       :53188 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-24 18:19:36,301 INFO    Thread-16 :53188 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240424_181910-3wij3ma2\files\output.log
+2024-04-24 18:19:37,330 INFO    Thread-16 :53188 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240424_181910-3wij3ma2\files\output.log
+2024-04-24 18:19:37,831 ERROR   gpu       :53188 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-24 18:19:37,831 ERROR   gpu       :53188 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-24 18:19:38,371 ERROR   gpu       :53188 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-24 18:19:38,371 ERROR   gpu       :53188 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-24 18:19:39,360 INFO    Thread-16 :53188 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240424_181910-3wij3ma2\files\output.log
+2024-04-24 18:19:39,401 DEBUG   HandlerThread:53188 [handler.py:handle_request():144] handle_request: status_report
+2024-04-24 18:19:40,377 ERROR   gpu       :53188 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-24 18:19:40,377 ERROR   gpu       :53188 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-24 18:19:40,911 ERROR   gpu       :53188 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-24 18:19:40,911 ERROR   gpu       :53188 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-24 18:19:41,384 INFO    Thread-16 :53188 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240424_181910-3wij3ma2\files\output.log
+2024-04-24 18:19:42,926 ERROR   gpu       :53188 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-24 18:19:42,926 ERROR   gpu       :53188 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-24 18:19:42,974 DEBUG   HandlerThread:53188 [handler.py:handle_request():144] handle_request: stop_status
+2024-04-24 18:19:42,974 DEBUG   SenderThread:53188 [sender.py:send_request():406] send_request: stop_status
+2024-04-24 18:19:43,423 INFO    Thread-16 :53188 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240424_181910-3wij3ma2\files\output.log
+2024-04-24 18:19:43,459 ERROR   gpu       :53188 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-24 18:19:43,459 ERROR   gpu       :53188 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-24 18:19:45,221 DEBUG   HandlerThread:53188 [handler.py:handle_request():144] handle_request: status_report
+2024-04-24 18:19:45,451 INFO    Thread-16 :53188 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240424_181910-3wij3ma2\files\config.yaml
+2024-04-24 18:19:45,451 INFO    Thread-16 :53188 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240424_181910-3wij3ma2\files\output.log
+2024-04-24 18:19:45,467 ERROR   gpu       :53188 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-24 18:19:45,467 ERROR   gpu       :53188 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-24 18:19:46,006 ERROR   gpu       :53188 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-24 18:19:46,010 ERROR   gpu       :53188 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-24 18:19:47,481 INFO    Thread-16 :53188 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240424_181910-3wij3ma2\files\output.log
+2024-04-24 18:19:49,511 INFO    Thread-16 :53188 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240424_181910-3wij3ma2\files\output.log
+2024-04-24 18:19:50,365 DEBUG   HandlerThread:53188 [handler.py:handle_request():144] handle_request: status_report
+2024-04-24 18:19:51,556 INFO    Thread-16 :53188 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240424_181910-3wij3ma2\files\output.log
+2024-04-24 18:19:53,591 INFO    Thread-16 :53188 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240424_181910-3wij3ma2\files\output.log
+2024-04-24 18:19:54,698 ERROR   gpu       :53188 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-24 18:19:54,698 ERROR   gpu       :53188 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-24 18:19:55,222 ERROR   gpu       :53188 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-24 18:19:55,222 ERROR   gpu       :53188 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-24 18:19:56,093 DEBUG   HandlerThread:53188 [handler.py:handle_request():144] handle_request: status_report
+2024-04-24 18:19:57,234 ERROR   gpu       :53188 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-24 18:19:57,234 ERROR   gpu       :53188 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-24 18:19:57,651 INFO    Thread-16 :53188 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240424_181910-3wij3ma2\files\output.log
+2024-04-24 18:19:57,760 ERROR   gpu       :53188 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-24 18:19:57,760 ERROR   gpu       :53188 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-24 18:19:57,984 DEBUG   HandlerThread:53188 [handler.py:handle_request():144] handle_request: stop_status
+2024-04-24 18:19:57,985 DEBUG   SenderThread:53188 [sender.py:send_request():406] send_request: stop_status
+2024-04-24 18:19:59,682 INFO    Thread-16 :53188 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240424_181910-3wij3ma2\files\output.log
+2024-04-24 18:19:59,776 ERROR   gpu       :53188 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-24 18:19:59,777 ERROR   gpu       :53188 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-24 18:20:00,324 ERROR   gpu       :53188 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-24 18:20:00,327 ERROR   gpu       :53188 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-24 18:20:01,712 INFO    Thread-16 :53188 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240424_181910-3wij3ma2\files\output.log
+2024-04-24 18:20:02,009 DEBUG   HandlerThread:53188 [handler.py:handle_request():144] handle_request: status_report
+2024-04-24 18:20:02,337 ERROR   gpu       :53188 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-24 18:20:02,337 ERROR   gpu       :53188 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-24 18:20:02,862 ERROR   gpu       :53188 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-24 18:20:02,867 ERROR   gpu       :53188 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-24 18:20:03,733 INFO    Thread-16 :53188 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240424_181910-3wij3ma2\files\output.log
+2024-04-24 18:20:04,877 ERROR   gpu       :53188 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-24 18:20:04,877 ERROR   gpu       :53188 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-24 18:20:05,442 ERROR   gpu       :53188 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-24 18:20:05,442 ERROR   gpu       :53188 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-24 18:20:05,755 INFO    Thread-16 :53188 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240424_181910-3wij3ma2\files\output.log
+2024-04-24 18:20:07,453 ERROR   gpu       :53188 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-24 18:20:07,454 ERROR   gpu       :53188 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-24 18:20:07,794 INFO    Thread-16 :53188 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240424_181910-3wij3ma2\files\output.log
+2024-04-24 18:20:07,875 DEBUG   HandlerThread:53188 [handler.py:handle_request():144] handle_request: status_report
+2024-04-24 18:20:07,987 ERROR   gpu       :53188 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-24 18:20:07,987 ERROR   gpu       :53188 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-24 18:20:09,829 INFO    Thread-16 :53188 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240424_181910-3wij3ma2\files\output.log
+2024-04-24 18:20:09,991 ERROR   gpu       :53188 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-24 18:20:09,991 ERROR   gpu       :53188 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-24 18:20:10,524 ERROR   gpu       :53188 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-24 18:20:10,530 ERROR   gpu       :53188 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-24 18:20:11,860 INFO    Thread-16 :53188 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240424_181910-3wij3ma2\files\output.log
+2024-04-24 18:20:12,222 DEBUG   SenderThread:53188 [sender.py:send():379] send: exit
+2024-04-24 18:20:12,222 INFO    SenderThread:53188 [sender.py:send_exit():584] handling exit code: 1
+2024-04-24 18:20:12,222 INFO    SenderThread:53188 [sender.py:send_exit():586] handling runtime: 61
+2024-04-24 18:20:12,223 INFO    SenderThread:53188 [sender.py:_save_file():1375] saving file wandb-summary.json with policy end
+2024-04-24 18:20:12,223 INFO    SenderThread:53188 [sender.py:send_exit():592] send defer
+2024-04-24 18:20:12,224 DEBUG   HandlerThread:53188 [handler.py:handle_request():144] handle_request: defer
+2024-04-24 18:20:12,224 INFO    HandlerThread:53188 [handler.py:handle_request_defer():170] handle defer: 0
+2024-04-24 18:20:12,224 DEBUG   SenderThread:53188 [sender.py:send_request():406] send_request: defer
+2024-04-24 18:20:12,224 INFO    SenderThread:53188 [sender.py:send_request_defer():608] handle sender defer: 0
+2024-04-24 18:20:12,224 INFO    SenderThread:53188 [sender.py:transition_state():612] send defer: 1
+2024-04-24 18:20:12,224 DEBUG   HandlerThread:53188 [handler.py:handle_request():144] handle_request: defer
+2024-04-24 18:20:12,224 INFO    HandlerThread:53188 [handler.py:handle_request_defer():170] handle defer: 1
+2024-04-24 18:20:12,224 DEBUG   SenderThread:53188 [sender.py:send_request():406] send_request: defer
+2024-04-24 18:20:12,224 INFO    SenderThread:53188 [sender.py:send_request_defer():608] handle sender defer: 1
+2024-04-24 18:20:12,224 INFO    SenderThread:53188 [sender.py:transition_state():612] send defer: 2
+2024-04-24 18:20:12,224 DEBUG   HandlerThread:53188 [handler.py:handle_request():144] handle_request: defer
+2024-04-24 18:20:12,225 INFO    HandlerThread:53188 [handler.py:handle_request_defer():170] handle defer: 2
+2024-04-24 18:20:12,225 INFO    HandlerThread:53188 [system_monitor.py:finish():190] Stopping system monitor
+2024-04-24 18:20:12,225 DEBUG   SystemMonitor:53188 [system_monitor.py:_start():159] Starting system metrics aggregation loop
+2024-04-24 18:20:12,225 DEBUG   SystemMonitor:53188 [system_monitor.py:_start():166] Finished system metrics aggregation loop
+2024-04-24 18:20:12,225 DEBUG   SystemMonitor:53188 [system_monitor.py:_start():170] Publishing last batch of metrics
+2024-04-24 18:20:12,237 INFO    HandlerThread:53188 [interfaces.py:finish():202] Joined cpu monitor
+2024-04-24 18:20:12,237 INFO    HandlerThread:53188 [interfaces.py:finish():202] Joined disk monitor
+2024-04-24 18:20:12,795 INFO    HandlerThread:53188 [interfaces.py:finish():202] Joined gpu monitor
+2024-04-24 18:20:12,795 INFO    HandlerThread:53188 [interfaces.py:finish():202] Joined memory monitor
+2024-04-24 18:20:12,795 INFO    HandlerThread:53188 [interfaces.py:finish():202] Joined network monitor
+2024-04-24 18:20:12,795 DEBUG   SenderThread:53188 [sender.py:send_request():406] send_request: defer
+2024-04-24 18:20:12,795 INFO    SenderThread:53188 [sender.py:send_request_defer():608] handle sender defer: 2
+2024-04-24 18:20:12,795 INFO    SenderThread:53188 [sender.py:transition_state():612] send defer: 3
+2024-04-24 18:20:12,795 DEBUG   SenderThread:53188 [sender.py:send():379] send: stats
+2024-04-24 18:20:12,805 DEBUG   HandlerThread:53188 [handler.py:handle_request():144] handle_request: defer
+2024-04-24 18:20:12,805 INFO    HandlerThread:53188 [handler.py:handle_request_defer():170] handle defer: 3
+2024-04-24 18:20:12,805 DEBUG   SenderThread:53188 [sender.py:send_request():406] send_request: defer
+2024-04-24 18:20:12,805 INFO    SenderThread:53188 [sender.py:send_request_defer():608] handle sender defer: 3
+2024-04-24 18:20:12,805 INFO    SenderThread:53188 [sender.py:transition_state():612] send defer: 4
+2024-04-24 18:20:12,805 DEBUG   HandlerThread:53188 [handler.py:handle_request():144] handle_request: defer
+2024-04-24 18:20:12,805 INFO    HandlerThread:53188 [handler.py:handle_request_defer():170] handle defer: 4
+2024-04-24 18:20:12,805 DEBUG   SenderThread:53188 [sender.py:send_request():406] send_request: defer
+2024-04-24 18:20:12,805 INFO    SenderThread:53188 [sender.py:send_request_defer():608] handle sender defer: 4
+2024-04-24 18:20:12,805 INFO    SenderThread:53188 [sender.py:transition_state():612] send defer: 5
+2024-04-24 18:20:12,805 DEBUG   HandlerThread:53188 [handler.py:handle_request():144] handle_request: defer
+2024-04-24 18:20:12,805 INFO    HandlerThread:53188 [handler.py:handle_request_defer():170] handle defer: 5
+2024-04-24 18:20:12,805 DEBUG   SenderThread:53188 [sender.py:send():379] send: summary
+2024-04-24 18:20:12,807 INFO    SenderThread:53188 [sender.py:_save_file():1375] saving file wandb-summary.json with policy end
+2024-04-24 18:20:12,807 DEBUG   SenderThread:53188 [sender.py:send_request():406] send_request: defer
+2024-04-24 18:20:12,807 INFO    SenderThread:53188 [sender.py:send_request_defer():608] handle sender defer: 5
+2024-04-24 18:20:12,807 INFO    SenderThread:53188 [sender.py:transition_state():612] send defer: 6
+2024-04-24 18:20:12,807 DEBUG   HandlerThread:53188 [handler.py:handle_request():144] handle_request: defer
+2024-04-24 18:20:12,807 INFO    HandlerThread:53188 [handler.py:handle_request_defer():170] handle defer: 6
+2024-04-24 18:20:12,807 DEBUG   SenderThread:53188 [sender.py:send_request():406] send_request: defer
+2024-04-24 18:20:12,807 INFO    SenderThread:53188 [sender.py:send_request_defer():608] handle sender defer: 6
+2024-04-24 18:20:12,807 INFO    SenderThread:53188 [sender.py:transition_state():612] send defer: 7
+2024-04-24 18:20:12,807 DEBUG   HandlerThread:53188 [handler.py:handle_request():144] handle_request: status_report
+2024-04-24 18:20:12,807 DEBUG   HandlerThread:53188 [handler.py:handle_request():144] handle_request: defer
+2024-04-24 18:20:12,807 INFO    HandlerThread:53188 [handler.py:handle_request_defer():170] handle defer: 7
+2024-04-24 18:20:12,807 DEBUG   SenderThread:53188 [sender.py:send_request():406] send_request: defer
+2024-04-24 18:20:12,807 INFO    SenderThread:53188 [sender.py:send_request_defer():608] handle sender defer: 7
+2024-04-24 18:20:12,865 INFO    Thread-16 :53188 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240424_181910-3wij3ma2\files\wandb-summary.json
+2024-04-24 18:20:13,250 DEBUG   HandlerThread:53188 [handler.py:handle_request():144] handle_request: poll_exit
+2024-04-24 18:20:13,880 INFO    Thread-16 :53188 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240424_181910-3wij3ma2\files\output.log
+2024-04-24 18:20:15,473 INFO    SenderThread:53188 [sender.py:transition_state():612] send defer: 8
+2024-04-24 18:20:15,475 DEBUG   SenderThread:53188 [sender.py:send_request():406] send_request: poll_exit
+2024-04-24 18:20:15,475 DEBUG   HandlerThread:53188 [handler.py:handle_request():144] handle_request: defer
+2024-04-24 18:20:15,475 INFO    HandlerThread:53188 [handler.py:handle_request_defer():170] handle defer: 8
+2024-04-24 18:20:15,475 DEBUG   SenderThread:53188 [sender.py:send_request():406] send_request: defer
+2024-04-24 18:20:15,475 INFO    SenderThread:53188 [sender.py:send_request_defer():608] handle sender defer: 8
+2024-04-24 18:20:15,475 INFO    SenderThread:53188 [job_builder.py:build():281] Attempting to build job artifact
+2024-04-24 18:20:15,475 INFO    SenderThread:53188 [job_builder.py:_get_source_type():400] is repo sourced job
+2024-04-24 18:20:15,475 INFO    SenderThread:53188 [job_builder.py:build():374] adding wandb-job metadata file
+2024-04-24 18:20:15,489 INFO    SenderThread:53188 [sender.py:transition_state():612] send defer: 9
+2024-04-24 18:20:15,489 DEBUG   HandlerThread:53188 [handler.py:handle_request():144] handle_request: defer
+2024-04-24 18:20:15,489 DEBUG   SenderThread:53188 [sender.py:send():379] send: artifact
+2024-04-24 18:20:15,489 INFO    HandlerThread:53188 [handler.py:handle_request_defer():170] handle defer: 9
+2024-04-24 18:20:15,795 INFO    SenderThread:53188 [sender.py:send_artifact():1475] sent artifact job-https___github.com_BabaSanfour_MFRS.git_models_models_train.py - {'id': 'QXJ0aWZhY3Q6Nzk4MDc1OTM1', 'digest': 'bc18fe5ebf429598881f60fbcf4719f0', 'state': 'COMMITTED', 'aliases': [{'artifactCollectionName': 'job-https___github.com_BabaSanfour_MFRS.git_models_models_train.py', 'alias': 'latest'}, {'artifactCollectionName': 'job-https___github.com_BabaSanfour_MFRS.git_models_models_train.py', 'alias': 'v2'}], 'artifactSequence': {'id': 'QXJ0aWZhY3RDb2xsZWN0aW9uOjE2MjI4OTA0OA==', 'latestArtifact': {'id': 'QXJ0aWZhY3Q6Nzk4MDc1OTM1', 'versionIndex': 2}}, 'version': 'v2'}
+2024-04-24 18:20:15,795 DEBUG   SenderThread:53188 [sender.py:send_request():406] send_request: defer
+2024-04-24 18:20:15,795 INFO    SenderThread:53188 [sender.py:send_request_defer():608] handle sender defer: 9
+2024-04-24 18:20:15,795 INFO    SenderThread:53188 [dir_watcher.py:finish():358] shutting down directory watcher
+2024-04-24 18:20:15,896 INFO    SenderThread:53188 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240424_181910-3wij3ma2\files\output.log
+2024-04-24 18:20:15,896 INFO    SenderThread:53188 [dir_watcher.py:finish():388] scan: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240424_181910-3wij3ma2\files
+2024-04-24 18:20:15,896 INFO    SenderThread:53188 [dir_watcher.py:finish():402] scan save: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240424_181910-3wij3ma2\files\config.yaml config.yaml
+2024-04-24 18:20:15,896 INFO    SenderThread:53188 [dir_watcher.py:finish():402] scan save: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240424_181910-3wij3ma2\files\output.log output.log
+2024-04-24 18:20:15,896 INFO    SenderThread:53188 [dir_watcher.py:finish():402] scan save: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240424_181910-3wij3ma2\files\requirements.txt requirements.txt
+2024-04-24 18:20:15,896 INFO    SenderThread:53188 [dir_watcher.py:finish():402] scan save: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240424_181910-3wij3ma2\files\wandb-metadata.json wandb-metadata.json
+2024-04-24 18:20:15,896 INFO    SenderThread:53188 [dir_watcher.py:finish():402] scan save: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240424_181910-3wij3ma2\files\wandb-summary.json wandb-summary.json
+2024-04-24 18:20:15,896 INFO    SenderThread:53188 [sender.py:transition_state():612] send defer: 10
+2024-04-24 18:20:15,896 DEBUG   HandlerThread:53188 [handler.py:handle_request():144] handle_request: defer
+2024-04-24 18:20:15,896 INFO    HandlerThread:53188 [handler.py:handle_request_defer():170] handle defer: 10
+2024-04-24 18:20:15,896 DEBUG   SenderThread:53188 [sender.py:send_request():406] send_request: defer
+2024-04-24 18:20:15,896 INFO    SenderThread:53188 [sender.py:send_request_defer():608] handle sender defer: 10
+2024-04-24 18:20:15,896 INFO    SenderThread:53188 [file_pusher.py:finish():159] shutting down file pusher
+2024-04-24 18:20:16,135 INFO    wandb-upload_0:53188 [upload_job.py:push():131] Uploaded file C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240424_181910-3wij3ma2\files\config.yaml
+2024-04-24 18:20:16,205 INFO    wandb-upload_1:53188 [upload_job.py:push():131] Uploaded file C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240424_181910-3wij3ma2\files\output.log
+2024-04-24 18:20:16,235 INFO    wandb-upload_3:53188 [upload_job.py:push():131] Uploaded file C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240424_181910-3wij3ma2\files\wandb-summary.json
+2024-04-24 18:20:16,235 INFO    wandb-upload_2:53188 [upload_job.py:push():131] Uploaded file C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240424_181910-3wij3ma2\files\requirements.txt
+2024-04-24 18:20:16,450 INFO    Thread-15 :53188 [sender.py:transition_state():612] send defer: 11
+2024-04-24 18:20:16,450 DEBUG   HandlerThread:53188 [handler.py:handle_request():144] handle_request: defer
+2024-04-24 18:20:16,450 INFO    HandlerThread:53188 [handler.py:handle_request_defer():170] handle defer: 11
+2024-04-24 18:20:16,450 DEBUG   SenderThread:53188 [sender.py:send_request():406] send_request: defer
+2024-04-24 18:20:16,450 INFO    SenderThread:53188 [sender.py:send_request_defer():608] handle sender defer: 11
+2024-04-24 18:20:16,450 INFO    SenderThread:53188 [file_pusher.py:join():164] waiting for file pusher
+2024-04-24 18:20:16,450 INFO    SenderThread:53188 [sender.py:transition_state():612] send defer: 12
+2024-04-24 18:20:16,450 DEBUG   HandlerThread:53188 [handler.py:handle_request():144] handle_request: defer
+2024-04-24 18:20:16,450 INFO    HandlerThread:53188 [handler.py:handle_request_defer():170] handle defer: 12
+2024-04-24 18:20:16,450 DEBUG   SenderThread:53188 [sender.py:send_request():406] send_request: defer
+2024-04-24 18:20:16,450 INFO    SenderThread:53188 [sender.py:send_request_defer():608] handle sender defer: 12
+2024-04-24 18:20:16,450 INFO    SenderThread:53188 [file_stream.py:finish():593] file stream finish called
+2024-04-24 18:20:16,659 INFO    SenderThread:53188 [file_stream.py:finish():597] file stream finish is done
+2024-04-24 18:20:16,660 INFO    SenderThread:53188 [sender.py:transition_state():612] send defer: 13
+2024-04-24 18:20:16,660 DEBUG   HandlerThread:53188 [handler.py:handle_request():144] handle_request: defer
+2024-04-24 18:20:16,660 INFO    HandlerThread:53188 [handler.py:handle_request_defer():170] handle defer: 13
+2024-04-24 18:20:16,660 DEBUG   SenderThread:53188 [sender.py:send_request():406] send_request: defer
+2024-04-24 18:20:16,660 INFO    SenderThread:53188 [sender.py:send_request_defer():608] handle sender defer: 13
+2024-04-24 18:20:16,660 INFO    SenderThread:53188 [sender.py:transition_state():612] send defer: 14
+2024-04-24 18:20:16,660 DEBUG   HandlerThread:53188 [handler.py:handle_request():144] handle_request: defer
+2024-04-24 18:20:16,661 DEBUG   SenderThread:53188 [sender.py:send():379] send: final
+2024-04-24 18:20:16,661 INFO    HandlerThread:53188 [handler.py:handle_request_defer():170] handle defer: 14
+2024-04-24 18:20:16,661 DEBUG   SenderThread:53188 [sender.py:send():379] send: footer
+2024-04-24 18:20:16,661 DEBUG   SenderThread:53188 [sender.py:send_request():406] send_request: defer
+2024-04-24 18:20:16,661 INFO    SenderThread:53188 [sender.py:send_request_defer():608] handle sender defer: 14
+2024-04-24 18:20:16,661 DEBUG   HandlerThread:53188 [handler.py:handle_request():144] handle_request: poll_exit
+2024-04-24 18:20:16,661 DEBUG   HandlerThread:53188 [handler.py:handle_request():144] handle_request: server_info
+2024-04-24 18:20:16,661 DEBUG   HandlerThread:53188 [handler.py:handle_request():144] handle_request: get_summary
+2024-04-24 18:20:16,661 DEBUG   SenderThread:53188 [sender.py:send_request():406] send_request: poll_exit
+2024-04-24 18:20:16,661 DEBUG   HandlerThread:53188 [handler.py:handle_request():144] handle_request: sampled_history
+2024-04-24 18:20:16,661 DEBUG   SenderThread:53188 [sender.py:send_request():406] send_request: server_info
+2024-04-24 18:20:16,661 DEBUG   HandlerThread:53188 [handler.py:handle_request():144] handle_request: job_info
+2024-04-24 18:20:16,745 DEBUG   SenderThread:53188 [sender.py:send_request():406] send_request: job_info
+2024-04-24 18:20:16,745 INFO    MainThread:53188 [wandb_run.py:_footer_history_summary_info():3481] rendering history
+2024-04-24 18:20:16,745 INFO    MainThread:53188 [wandb_run.py:_footer_history_summary_info():3513] rendering summary
+2024-04-24 18:20:16,745 INFO    MainThread:53188 [wandb_run.py:_footer_sync_info():3440] logging synced files
+2024-04-24 18:20:16,745 DEBUG   HandlerThread:53188 [handler.py:handle_request():144] handle_request: shutdown
+2024-04-24 18:20:16,745 INFO    HandlerThread:53188 [handler.py:finish():861] shutting down handler
+2024-04-24 18:20:17,667 INFO    WriterThread:53188 [datastore.py:close():294] close: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240424_181910-3wij3ma2\run-3wij3ma2.wandb
+2024-04-24 18:20:17,747 INFO    SenderThread:53188 [sender.py:finish():1552] shutting down sender
+2024-04-24 18:20:17,747 INFO    SenderThread:53188 [file_pusher.py:finish():159] shutting down file pusher
+2024-04-24 18:20:17,747 INFO    SenderThread:53188 [file_pusher.py:join():164] waiting for file pusher

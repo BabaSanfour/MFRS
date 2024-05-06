@@ -1,0 +1,62 @@
+
+Sample shape before transform: (224, 224, 3)
+Traceback (most recent call last):
+  File "C:\Users\marie\Desktop\Sanfour\MFRS\models\models_train.py", line 301, in <module>
+    model_ft = train_model(model, criterion, optimizer_ft, exp_lr_scheduler, args.num_epochs, dataset_loader, dataset_sizes, wandb)
+  File "C:\Users\marie\Desktop\Sanfour\MFRS\models\models_train.py", line 67, in train_model
+    for inputs, labels in dataset_loader["train"]:
+  File "C:\Users\marie\AppData\Roaming\Python\Python39\site-packages\torch\utils\data\dataloader.py", line 631, in __next__
+    data = self._next_data()
+  File "C:\Users\marie\AppData\Roaming\Python\Python39\site-packages\torch\utils\data\dataloader.py", line 675, in _next_data
+    data = self._dataset_fetcher.fetch(index)  # may raise StopIteration
+  File "C:\Users\marie\AppData\Roaming\Python\Python39\site-packages\torch\utils\data\_utils\fetch.py", line 51, in fetch
+    data = [self.dataset[idx] for idx in possibly_batched_index]
+  File "C:\Users\marie\AppData\Roaming\Python\Python39\site-packages\torch\utils\data\_utils\fetch.py", line 51, in <listcomp>
+    data = [self.dataset[idx] for idx in possibly_batched_index]
+  File "C:\Users\marie\Desktop\Sanfour\MFRS\models\..\utils\load_data.py", line 57, in __getitem__
+    sample = self.transform(sample)
+  File "C:\Users\marie\AppData\Roaming\Python\Python39\site-packages\torchvision\transforms\transforms.py", line 95, in __call__
+    img = t(img)
+  File "C:\Users\marie\AppData\Roaming\Python\Python39\site-packages\torch\nn\modules\module.py", line 1511, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "C:\Users\marie\AppData\Roaming\Python\Python39\site-packages\torch\nn\modules\module.py", line 1520, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "C:\Users\marie\AppData\Roaming\Python\Python39\site-packages\torchvision\transforms\transforms.py", line 354, in forward
+    return F.resize(img, self.size, self.interpolation, self.max_size, self.antialias)
+  File "C:\Users\marie\AppData\Roaming\Python\Python39\site-packages\torchvision\transforms\functional.py", line 455, in resize
+    _, image_height, image_width = get_dimensions(img)
+  File "C:\Users\marie\AppData\Roaming\Python\Python39\site-packages\torchvision\transforms\functional.py", line 79, in get_dimensions
+    return F_pil.get_dimensions(img)
+  File "C:\Users\marie\AppData\Roaming\Python\Python39\site-packages\torchvision\transforms\_functional_pil.py", line 31, in get_dimensions
+    raise TypeError(f"Unexpected type {type(img)}")
+TypeError: Unexpected type <class 'numpy.ndarray'>
+Traceback (most recent call last):
+  File "C:\Users\marie\Desktop\Sanfour\MFRS\models\models_train.py", line 301, in <module>
+    model_ft = train_model(model, criterion, optimizer_ft, exp_lr_scheduler, args.num_epochs, dataset_loader, dataset_sizes, wandb)
+  File "C:\Users\marie\Desktop\Sanfour\MFRS\models\models_train.py", line 67, in train_model
+    for inputs, labels in dataset_loader["train"]:
+  File "C:\Users\marie\AppData\Roaming\Python\Python39\site-packages\torch\utils\data\dataloader.py", line 631, in __next__
+    data = self._next_data()
+  File "C:\Users\marie\AppData\Roaming\Python\Python39\site-packages\torch\utils\data\dataloader.py", line 675, in _next_data
+    data = self._dataset_fetcher.fetch(index)  # may raise StopIteration
+  File "C:\Users\marie\AppData\Roaming\Python\Python39\site-packages\torch\utils\data\_utils\fetch.py", line 51, in fetch
+    data = [self.dataset[idx] for idx in possibly_batched_index]
+  File "C:\Users\marie\AppData\Roaming\Python\Python39\site-packages\torch\utils\data\_utils\fetch.py", line 51, in <listcomp>
+    data = [self.dataset[idx] for idx in possibly_batched_index]
+  File "C:\Users\marie\Desktop\Sanfour\MFRS\models\..\utils\load_data.py", line 57, in __getitem__
+    sample = self.transform(sample)
+  File "C:\Users\marie\AppData\Roaming\Python\Python39\site-packages\torchvision\transforms\transforms.py", line 95, in __call__
+    img = t(img)
+  File "C:\Users\marie\AppData\Roaming\Python\Python39\site-packages\torch\nn\modules\module.py", line 1511, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "C:\Users\marie\AppData\Roaming\Python\Python39\site-packages\torch\nn\modules\module.py", line 1520, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "C:\Users\marie\AppData\Roaming\Python\Python39\site-packages\torchvision\transforms\transforms.py", line 354, in forward
+    return F.resize(img, self.size, self.interpolation, self.max_size, self.antialias)
+  File "C:\Users\marie\AppData\Roaming\Python\Python39\site-packages\torchvision\transforms\functional.py", line 455, in resize
+    _, image_height, image_width = get_dimensions(img)
+  File "C:\Users\marie\AppData\Roaming\Python\Python39\site-packages\torchvision\transforms\functional.py", line 79, in get_dimensions
+    return F_pil.get_dimensions(img)
+  File "C:\Users\marie\AppData\Roaming\Python\Python39\site-packages\torchvision\transforms\_functional_pil.py", line 31, in get_dimensions
+    raise TypeError(f"Unexpected type {type(img)}")
+TypeError: Unexpected type <class 'numpy.ndarray'>

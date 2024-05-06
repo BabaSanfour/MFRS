@@ -1,0 +1,22 @@
+2024-05-05 01:08:33,374 - INFO - Epoch 1/2
+2024-05-05 01:08:33,374 - INFO - ----------
+2024-05-05 01:11:20,062 - INFO - Epoch 0/1 Train Loss: 9.6896 train_acc: 0.0000%
+2024-05-05 01:12:57,124 - INFO - Validation Loss: 9.3163 Acc: 0.0000%
+2024-05-05 01:12:57,124 - INFO - Epoch 2/2
+2024-05-05 01:12:57,124 - INFO - ----------
+2024-05-05 01:15:42,335 - INFO - Epoch 1/1 Train Loss: 9.2590 train_acc: 0.2604%
+2024-05-05 01:17:00,081 - INFO - Validation Loss: 9.7393 Acc: 0.0000%
+2024-05-05 01:17:00,081 - INFO - Training complete in 0.0 h 8.0 m 26.70722794532776 s
+2024-05-05 01:17:00,081 - INFO - Best val Acc: 0.00%
+Traceback (most recent call last):
+  File "C:\Users\marie\Desktop\Sanfour\MFRS\models\models_train.py", line 305, in <module>
+    acc = test_model(model_ft, dataset_loader, dataset_sizes,loss_func)
+  File "C:\Users\marie\Desktop\Sanfour\MFRS\models\models_train.py", line 209, in test_model
+    avg_test_accuracy_topk = (100.0 * correct_topk_predictions / dataset_sizes["test"]).to("cpu").numpy().item()
+AttributeError: 'float' object has no attribute 'to'
+Traceback (most recent call last):
+  File "C:\Users\marie\Desktop\Sanfour\MFRS\models\models_train.py", line 305, in <module>
+    acc = test_model(model_ft, dataset_loader, dataset_sizes,loss_func)
+  File "C:\Users\marie\Desktop\Sanfour\MFRS\models\models_train.py", line 209, in test_model
+    avg_test_accuracy_topk = (100.0 * correct_topk_predictions / dataset_sizes["test"]).to("cpu").numpy().item()
+AttributeError: 'float' object has no attribute 'to'

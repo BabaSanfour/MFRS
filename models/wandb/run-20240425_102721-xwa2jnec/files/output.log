@@ -1,0 +1,46 @@
+
+Sample shape before transform: torch.Size([224, 224, 3])
+Traceback (most recent call last):
+  File "C:\Users\marie\Desktop\Sanfour\MFRS\models\models_train.py", line 278, in <module>
+    model_ft = train_model(model, criterion, optimizer_ft, exp_lr_scheduler, args.num_epochs, dataset_loader, dataset_sizes, wandb)
+  File "C:\Users\marie\Desktop\Sanfour\MFRS\models\models_train.py", line 67, in train_model
+    for inputs, labels in dataset_loader["train"]:
+  File "C:\Users\marie\AppData\Roaming\Python\Python39\site-packages\torch\utils\data\dataloader.py", line 631, in __next__
+    data = self._next_data()
+  File "C:\Users\marie\AppData\Roaming\Python\Python39\site-packages\torch\utils\data\dataloader.py", line 675, in _next_data
+    data = self._dataset_fetcher.fetch(index)  # may raise StopIteration
+  File "C:\Users\marie\AppData\Roaming\Python\Python39\site-packages\torch\utils\data\_utils\fetch.py", line 51, in fetch
+    data = [self.dataset[idx] for idx in possibly_batched_index]
+  File "C:\Users\marie\AppData\Roaming\Python\Python39\site-packages\torch\utils\data\_utils\fetch.py", line 51, in <listcomp>
+    data = [self.dataset[idx] for idx in possibly_batched_index]
+  File "C:\Users\marie\Desktop\Sanfour\MFRS\models\..\utils\load_data.py", line 54, in __getitem__
+    sample = self.transform(sample)
+  File "C:\Users\marie\AppData\Roaming\Python\Python39\site-packages\torchvision\transforms\transforms.py", line 95, in __call__
+    img = t(img)
+  File "C:\Users\marie\AppData\Roaming\Python\Python39\site-packages\torchvision\transforms\transforms.py", line 137, in __call__
+    return F.to_tensor(pic)
+  File "C:\Users\marie\AppData\Roaming\Python\Python39\site-packages\torchvision\transforms\functional.py", line 141, in to_tensor
+    raise TypeError(f"pic should be PIL Image or ndarray. Got {type(pic)}")
+TypeError: pic should be PIL Image or ndarray. Got <class 'torch.Tensor'>
+Traceback (most recent call last):
+  File "C:\Users\marie\Desktop\Sanfour\MFRS\models\models_train.py", line 278, in <module>
+    model_ft = train_model(model, criterion, optimizer_ft, exp_lr_scheduler, args.num_epochs, dataset_loader, dataset_sizes, wandb)
+  File "C:\Users\marie\Desktop\Sanfour\MFRS\models\models_train.py", line 67, in train_model
+    for inputs, labels in dataset_loader["train"]:
+  File "C:\Users\marie\AppData\Roaming\Python\Python39\site-packages\torch\utils\data\dataloader.py", line 631, in __next__
+    data = self._next_data()
+  File "C:\Users\marie\AppData\Roaming\Python\Python39\site-packages\torch\utils\data\dataloader.py", line 675, in _next_data
+    data = self._dataset_fetcher.fetch(index)  # may raise StopIteration
+  File "C:\Users\marie\AppData\Roaming\Python\Python39\site-packages\torch\utils\data\_utils\fetch.py", line 51, in fetch
+    data = [self.dataset[idx] for idx in possibly_batched_index]
+  File "C:\Users\marie\AppData\Roaming\Python\Python39\site-packages\torch\utils\data\_utils\fetch.py", line 51, in <listcomp>
+    data = [self.dataset[idx] for idx in possibly_batched_index]
+  File "C:\Users\marie\Desktop\Sanfour\MFRS\models\..\utils\load_data.py", line 54, in __getitem__
+    sample = self.transform(sample)
+  File "C:\Users\marie\AppData\Roaming\Python\Python39\site-packages\torchvision\transforms\transforms.py", line 95, in __call__
+    img = t(img)
+  File "C:\Users\marie\AppData\Roaming\Python\Python39\site-packages\torchvision\transforms\transforms.py", line 137, in __call__
+    return F.to_tensor(pic)
+  File "C:\Users\marie\AppData\Roaming\Python\Python39\site-packages\torchvision\transforms\functional.py", line 141, in to_tensor
+    raise TypeError(f"pic should be PIL Image or ndarray. Got {type(pic)}")
+TypeError: pic should be PIL Image or ndarray. Got <class 'torch.Tensor'>

@@ -1,0 +1,42 @@
+2024-04-21 19:20:36,943 INFO    StreamThr :58788 [internal.py:wandb_internal():86] W&B internal server running at pid: 58788, started at: 2024-04-21 19:20:36.943014
+2024-04-21 19:20:36,943 DEBUG   HandlerThread:58788 [handler.py:handle_request():144] handle_request: status
+2024-04-21 19:20:36,953 INFO    WriterThread:58788 [datastore.py:open_for_write():85] open: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240421_192036-l7ul7b1u\run-l7ul7b1u.wandb
+2024-04-21 19:20:36,954 DEBUG   SenderThread:58788 [sender.py:send():379] send: header
+2024-04-21 19:20:37,002 DEBUG   SenderThread:58788 [sender.py:send():379] send: run
+2024-04-21 19:20:37,231 INFO    SenderThread:58788 [dir_watcher.py:__init__():211] watching files in: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240421_192036-l7ul7b1u\files
+2024-04-21 19:20:37,231 INFO    SenderThread:58788 [sender.py:_start_run_threads():1121] run started: l7ul7b1u with start time 1713741636.943013
+2024-04-21 19:20:37,231 DEBUG   SenderThread:58788 [sender.py:send_request():406] send_request: summary_record
+2024-04-21 19:20:37,231 INFO    SenderThread:58788 [sender.py:_save_file():1375] saving file wandb-summary.json with policy end
+2024-04-21 19:20:37,236 DEBUG   HandlerThread:58788 [handler.py:handle_request():144] handle_request: check_version
+2024-04-21 19:20:37,236 DEBUG   SenderThread:58788 [sender.py:send_request():406] send_request: check_version
+2024-04-21 19:20:37,322 DEBUG   HandlerThread:58788 [handler.py:handle_request():144] handle_request: run_start
+2024-04-21 19:20:37,352 DEBUG   HandlerThread:58788 [system_info.py:__init__():31] System info init
+2024-04-21 19:20:37,352 DEBUG   HandlerThread:58788 [system_info.py:__init__():46] System info init done
+2024-04-21 19:20:37,352 INFO    HandlerThread:58788 [system_monitor.py:start():181] Starting system monitor
+2024-04-21 19:20:37,352 INFO    SystemMonitor:58788 [system_monitor.py:_start():145] Starting system asset monitoring threads
+2024-04-21 19:20:37,352 INFO    HandlerThread:58788 [system_monitor.py:probe():201] Collecting system info
+2024-04-21 19:20:37,366 INFO    SystemMonitor:58788 [interfaces.py:start():190] Started cpu monitoring
+2024-04-21 19:20:37,366 INFO    SystemMonitor:58788 [interfaces.py:start():190] Started disk monitoring
+2024-04-21 19:20:37,366 INFO    SystemMonitor:58788 [interfaces.py:start():190] Started gpu monitoring
+2024-04-21 19:20:37,377 INFO    SystemMonitor:58788 [interfaces.py:start():190] Started memory monitoring
+2024-04-21 19:20:37,391 INFO    SystemMonitor:58788 [interfaces.py:start():190] Started network monitoring
+2024-04-21 19:20:37,402 DEBUG   HandlerThread:58788 [system_info.py:probe():195] Probing system
+2024-04-21 19:20:37,402 DEBUG   HandlerThread:58788 [system_info.py:_probe_git():180] Probing git
+2024-04-21 19:20:37,472 DEBUG   HandlerThread:58788 [system_info.py:_probe_git():188] Probing git done
+2024-04-21 19:20:37,472 DEBUG   HandlerThread:58788 [system_info.py:probe():240] Probing system done
+2024-04-21 19:20:37,472 DEBUG   HandlerThread:58788 [system_monitor.py:probe():210] {'os': 'Windows-10-10.0.22631-SP0', 'python': '3.9.9', 'heartbeatAt': '2024-04-21T23:20:37.402082', 'startedAt': '2024-04-21T23:20:36.941960', 'docker': None, 'cuda': None, 'args': ('--dataset', 'VGGFace', '--model', 'FaceNet', '--batch_size', '256', '--lr', '0.1', '--optimizer', 'sgd'), 'state': 'running', 'program': 'C:\\Users\\marie\\Desktop\\Sanfour\\MFRS\\models\\models_train.py', 'codePath': 'models\\models_train.py', 'git': {'remote': 'https://github.com/BabaSanfour/MFRS.git', 'commit': 'e637c4f6aef437030500c2f41513aaee275c977f'}, 'email': None, 'root': 'C:/Users/marie/Desktop/Sanfour/MFRS', 'host': 'LAPTOP-CTGDVKVN', 'username': 'marie', 'executable': 'C:\\Program Files\\Python39\\python.exe', 'cpu_count': 8, 'cpu_count_logical': 16, 'cpu_freq': {'current': 3040.0, 'min': 0.0, 'max': 3801.0}, 'cpu_freq_per_core': [{'current': 3040.0, 'min': 0.0, 'max': 3801.0}], 'disk': {'total': 474.71581649780273, 'used': 354.02570724487305}, 'gpu': 'NVIDIA GeForce RTX 3050 6GB Laptop GPU', 'gpu_count': 1, 'gpu_devices': [{'name': 'NVIDIA GeForce RTX 3050 6GB Laptop GPU', 'memory_total': 6442450944}], 'memory': {'total': 15.189807891845703}}
+2024-04-21 19:20:37,472 INFO    HandlerThread:58788 [system_monitor.py:probe():211] Finished collecting system info
+2024-04-21 19:20:37,472 INFO    HandlerThread:58788 [system_monitor.py:probe():214] Publishing system info
+2024-04-21 19:20:37,472 DEBUG   HandlerThread:58788 [system_info.py:_save_pip():51] Saving list of pip packages installed into the current environment
+2024-04-21 19:20:37,472 DEBUG   HandlerThread:58788 [system_info.py:_save_pip():67] Saving pip packages done
+2024-04-21 19:20:37,472 INFO    HandlerThread:58788 [system_monitor.py:probe():216] Finished publishing system info
+2024-04-21 19:20:37,481 DEBUG   SenderThread:58788 [sender.py:send():379] send: files
+2024-04-21 19:20:37,481 INFO    SenderThread:58788 [sender.py:_save_file():1375] saving file wandb-metadata.json with policy now
+2024-04-21 19:20:37,481 DEBUG   HandlerThread:58788 [handler.py:handle_request():144] handle_request: stop_status
+2024-04-21 19:20:37,481 DEBUG   SenderThread:58788 [sender.py:send_request():406] send_request: stop_status
+2024-04-21 19:20:37,642 DEBUG   SenderThread:58788 [sender.py:send():379] send: telemetry
+2024-04-21 19:20:37,932 INFO    wandb-upload_0:58788 [upload_job.py:push():131] Uploaded file C:\Users\marie\AppData\Local\Temp\tmpnpu7l_l8wandb\4hwwxudt-wandb-metadata.json
+2024-04-21 19:20:38,241 INFO    Thread-16 :58788 [dir_watcher.py:_on_file_created():271] file/dir created: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240421_192036-l7ul7b1u\files\wandb-summary.json
+2024-04-21 19:20:38,241 INFO    Thread-16 :58788 [dir_watcher.py:_on_file_created():271] file/dir created: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240421_192036-l7ul7b1u\files\requirements.txt
+2024-04-21 19:20:38,241 INFO    Thread-16 :58788 [dir_watcher.py:_on_file_created():271] file/dir created: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240421_192036-l7ul7b1u\files\output.log
+2024-04-21 19:20:38,241 INFO    Thread-16 :58788 [dir_watcher.py:_on_file_created():271] file/dir created: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240421_192036-l7ul7b1u\files\wandb-metadata.json

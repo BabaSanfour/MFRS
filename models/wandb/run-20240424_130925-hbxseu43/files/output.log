@@ -1,0 +1,22 @@
+2024-04-24 13:09:28,328 - INFO - Epoch 1/2
+2024-04-24 13:09:28,328 - INFO - ----------
+Traceback (most recent call last):
+  File "C:\Users\marie\Desktop\Sanfour\MFRS\models\models_train.py", line 272, in <module>
+    model_ft = train_model(model, criterion, optimizer_ft, exp_lr_scheduler, args.num_epochs, dataset_loader, dataset_sizes, wandb)
+  File "C:\Users\marie\Desktop\Sanfour\MFRS\models\models_train.py", line 94, in train_model
+    loss.backward()  # Backpropagation
+  File "C:\Users\marie\AppData\Roaming\Python\Python39\site-packages\torch\_tensor.py", line 522, in backward
+    torch.autograd.backward(
+  File "C:\Users\marie\AppData\Roaming\Python\Python39\site-packages\torch\autograd\__init__.py", line 266, in backward
+    Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass
+KeyboardInterrupt
+Traceback (most recent call last):
+  File "C:\Users\marie\Desktop\Sanfour\MFRS\models\models_train.py", line 272, in <module>
+    model_ft = train_model(model, criterion, optimizer_ft, exp_lr_scheduler, args.num_epochs, dataset_loader, dataset_sizes, wandb)
+  File "C:\Users\marie\Desktop\Sanfour\MFRS\models\models_train.py", line 94, in train_model
+    loss.backward()  # Backpropagation
+  File "C:\Users\marie\AppData\Roaming\Python\Python39\site-packages\torch\_tensor.py", line 522, in backward
+    torch.autograd.backward(
+  File "C:\Users\marie\AppData\Roaming\Python\Python39\site-packages\torch\autograd\__init__.py", line 266, in backward
+    Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass
+KeyboardInterrupt

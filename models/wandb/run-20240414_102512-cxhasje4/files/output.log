@@ -1,0 +1,50 @@
+2024-04-14 10:25:15,244 - INFO - Epoch 1/50
+2024-04-14 10:25:15,244 - INFO - ----------
+Traceback (most recent call last):
+  File "C:\Users\marie\Desktop\Sanfour\MFRS\models\models_train.py", line 268, in <module>
+    model_ft = train_model(model, criterion, optimizer_ft, exp_lr_scheduler, args.num_epochs, dataset_loader, dataset_sizes, wandb)
+  File "C:\Users\marie\Desktop\Sanfour\MFRS\models\models_train.py", line 80, in train_model
+    for inputs, labels in dataset_loader["train"]:
+  File "C:\Users\marie\AppData\Roaming\Python\Python39\site-packages\torch\utils\data\dataloader.py", line 439, in __iter__
+    return self._get_iterator()
+  File "C:\Users\marie\AppData\Roaming\Python\Python39\site-packages\torch\utils\data\dataloader.py", line 387, in _get_iterator
+    return _MultiProcessingDataLoaderIter(self)
+  File "C:\Users\marie\AppData\Roaming\Python\Python39\site-packages\torch\utils\data\dataloader.py", line 1040, in __init__
+    w.start()
+  File "C:\Program Files\Python39\lib\multiprocessing\process.py", line 121, in start
+    self._popen = self._Popen(self)
+  File "C:\Program Files\Python39\lib\multiprocessing\context.py", line 224, in _Popen
+    return _default_context.get_context().Process._Popen(process_obj)
+  File "C:\Program Files\Python39\lib\multiprocessing\context.py", line 327, in _Popen
+    return Popen(process_obj)
+  File "C:\Program Files\Python39\lib\multiprocessing\popen_spawn_win32.py", line 93, in __init__
+    reduction.dump(process_obj, to_child)
+  File "C:\Program Files\Python39\lib\multiprocessing\reduction.py", line 60, in dump
+    ForkingPickler(file, protocol).dump(obj)
+  File "C:\Users\marie\AppData\Roaming\Python\Python39\site-packages\h5py\_hl\base.py", line 368, in __getnewargs__
+    raise TypeError("h5py objects cannot be pickled")
+TypeError: h5py objects cannot be pickled
+Traceback (most recent call last):
+  File "C:\Users\marie\Desktop\Sanfour\MFRS\models\models_train.py", line 268, in <module>
+    model_ft = train_model(model, criterion, optimizer_ft, exp_lr_scheduler, args.num_epochs, dataset_loader, dataset_sizes, wandb)
+  File "C:\Users\marie\Desktop\Sanfour\MFRS\models\models_train.py", line 80, in train_model
+    for inputs, labels in dataset_loader["train"]:
+  File "C:\Users\marie\AppData\Roaming\Python\Python39\site-packages\torch\utils\data\dataloader.py", line 439, in __iter__
+    return self._get_iterator()
+  File "C:\Users\marie\AppData\Roaming\Python\Python39\site-packages\torch\utils\data\dataloader.py", line 387, in _get_iterator
+    return _MultiProcessingDataLoaderIter(self)
+  File "C:\Users\marie\AppData\Roaming\Python\Python39\site-packages\torch\utils\data\dataloader.py", line 1040, in __init__
+    w.start()
+  File "C:\Program Files\Python39\lib\multiprocessing\process.py", line 121, in start
+    self._popen = self._Popen(self)
+  File "C:\Program Files\Python39\lib\multiprocessing\context.py", line 224, in _Popen
+    return _default_context.get_context().Process._Popen(process_obj)
+  File "C:\Program Files\Python39\lib\multiprocessing\context.py", line 327, in _Popen
+    return Popen(process_obj)
+  File "C:\Program Files\Python39\lib\multiprocessing\popen_spawn_win32.py", line 93, in __init__
+    reduction.dump(process_obj, to_child)
+  File "C:\Program Files\Python39\lib\multiprocessing\reduction.py", line 60, in dump
+    ForkingPickler(file, protocol).dump(obj)
+  File "C:\Users\marie\AppData\Roaming\Python\Python39\site-packages\h5py\_hl\base.py", line 368, in __getnewargs__
+    raise TypeError("h5py objects cannot be pickled")
+TypeError: h5py objects cannot be pickled

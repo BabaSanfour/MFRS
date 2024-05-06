@@ -1,0 +1,210 @@
+2024-04-30 18:54:01,186 - INFO - Epoch 1/2
+2024-04-30 18:54:01,186 - INFO - ----------
+Max label in batch: 4570
+Inside training loop - inputs shape: torch.Size([16, 3, 224, 224])
+Current batch labels: tensor([4385,  545, 3835, 1354, 2181,  985, 4461,  200, 3120,  969, 4089, 4570,
+         675, 4317, 1531, 2644])
+Max label in batch: 4570, Min label in batch: 200
+Max label in batch: 4570
+Max label in batch: 4314
+Inside training loop - inputs shape: torch.Size([16, 3, 224, 224])
+Current batch labels: tensor([3552,  323, 1229, 4113, 1892,  336, 1430, 1973, 2009, 1045, 2017, 4314,
+        1793, 2020, 1942, 3556])
+Max label in batch: 4314, Min label in batch: 323
+Max label in batch: 4314
+Max label in batch: 4030
+Inside training loop - inputs shape: torch.Size([16, 3, 224, 224])
+Current batch labels: tensor([1153, 2460, 4030, 1632, 1521, 2960,  144,  397, 2353, 3836, 2072, 1483,
+        3631, 2461, 3186, 2594])
+Max label in batch: 4030, Min label in batch: 144
+Max label in batch: 4030
+Max label in batch: 4286
+Inside training loop - inputs shape: torch.Size([16, 3, 224, 224])
+Current batch labels: tensor([4226, 2567, 3999,  144, 3212,  176, 3057, 3127,  585, 3681,  891, 2487,
+        3451, 3243, 4286, 4073])
+Max label in batch: 4286, Min label in batch: 144
+Max label in batch: 4286
+Max label in batch: 4102
+Inside training loop - inputs shape: torch.Size([16, 3, 224, 224])
+Current batch labels: tensor([2800,  593, 1607, 4102,  906, 3799,  123, 1908, 3086, 3919, 3046, 3362,
+        1496, 3837, 2065, 1479])
+Max label in batch: 4102, Min label in batch: 123
+Max label in batch: 4102
+Max label in batch: 4549
+Inside training loop - inputs shape: torch.Size([16, 3, 224, 224])
+Current batch labels: tensor([1646,  207, 1820, 2396, 2832, 2145, 3740, 1152, 2145,  556, 4549, 1229,
+        3091,  447,  520, 3845])
+Max label in batch: 4549, Min label in batch: 207
+Max label in batch: 4549
+Max label in batch: 4288
+Inside training loop - inputs shape: torch.Size([16, 3, 224, 224])
+Current batch labels: tensor([1699, 1838, 3294, 2278,  987, 4124,  766,  447, 1121, 2832, 4288, 3464,
+        4003, 4266, 3984, 2716])
+Max label in batch: 4288, Min label in batch: 447
+Max label in batch: 4288
+Max label in batch: 4434
+Inside training loop - inputs shape: torch.Size([16, 3, 224, 224])
+Current batch labels: tensor([  86, 4085, 4088, 2070, 2674, 1147, 2997, 2590, 1516, 2968,  350, 2584,
+         202, 3704, 4434,    7])
+Max label in batch: 4434, Min label in batch: 7
+Max label in batch: 4434
+Max label in batch: 4572
+Inside training loop - inputs shape: torch.Size([16, 3, 224, 224])
+Current batch labels: tensor([2774,  304, 2800, 2072, 1705, 3125, 4572, 1858,  379, 4359, 1548, 2269,
+         191, 2067, 2317, 2634])
+Max label in batch: 4572, Min label in batch: 191
+Max label in batch: 4572
+Max label in batch: 4441
+Inside training loop - inputs shape: torch.Size([16, 3, 224, 224])
+Current batch labels: tensor([2495,  645, 2888, 4441,  721, 3981,  626,  199,  350, 2356,  445, 2291,
+        2204, 1147,   86,  344])
+Max label in batch: 4441, Min label in batch: 86
+Max label in batch: 4441
+Max label in batch: 3893
+Inside training loop - inputs shape: torch.Size([16, 3, 224, 224])
+Current batch labels: tensor([1607, 2952, 1592, 1817, 3131, 2152, 2812, 1698, 3306, 1304, 3041, 3371,
+        3893, 1341, 3761, 1556])
+Max label in batch: 3893, Min label in batch: 1304
+Max label in batch: 3893
+Max label in batch: 4351
+Inside training loop - inputs shape: torch.Size([16, 3, 224, 224])
+Current batch labels: tensor([4351,  670, 3619,   72, 1642, 1919, 4281, 4145, 3051, 1701,  309, 1674,
+         761, 2662, 3685, 3084])
+Max label in batch: 4351, Min label in batch: 72
+Max label in batch: 4351
+Max label in batch: 3720
+Inside training loop - inputs shape: torch.Size([16, 3, 224, 224])
+Current batch labels: tensor([ 475,  724, 2867, 3693, 2754,  360, 3419, 1153, 3720,  645, 3105,  167,
+        3131, 2727, 2573, 3675])
+Max label in batch: 3720, Min label in batch: 167
+Max label in batch: 3720
+Max label in batch: 4280
+Inside training loop - inputs shape: torch.Size([16, 3, 224, 224])
+Current batch labels: tensor([1646, 3494, 2845, 3081, 1760, 2035, 2328, 4280, 2110, 2126, 1835, 3568,
+        3474, 3457, 4025, 2479])
+Max label in batch: 4280, Min label in batch: 1646
+Max label in batch: 4280
+Max label in batch: 4174
+Inside training loop - inputs shape: torch.Size([16, 3, 224, 224])
+Current batch labels: tensor([2511, 4174,  692, 3261, 2740, 2746, 3120, 1045,   94, 2120, 3924, 3105,
+        1548,   73, 3863, 4051])
+Max label in batch: 4174, Min label in batch: 73
+Max label in batch: 4174
+Max label in batch: 4568
+Inside training loop - inputs shape: torch.Size([16, 3, 224, 224])
+Current batch labels: tensor([3017,  824, 3675, 4568, 1527,    1, 3360, 4330,  787, 4302,  266,  132,
+        1174,  726, 4507,  462])
+Max label in batch: 4568, Min label in batch: 1
+Max label in batch: 4568
+Max label in batch: 4519
+Inside training loop - inputs shape: torch.Size([16, 3, 224, 224])
+Current batch labels: tensor([1553, 3297, 4068,  799, 3886, 4519, 3318, 2213,  967, 4025, 2538, 2181,
+        1591, 1464, 2599,  690])
+Max label in batch: 4519, Min label in batch: 690
+Max label in batch: 4519
+Max label in batch: 4573
+Inside training loop - inputs shape: torch.Size([16, 3, 224, 224])
+Current batch labels: tensor([ 501, 4573,  556, 1608, 4279, 3752, 2704, 1515, 2522, 3371, 2254, 3977,
+        3487, 3086, 4549, 2752])
+Max label in batch: 4573, Min label in batch: 501
+Max label in batch: 4573
+Max label in batch: 3836
+Inside training loop - inputs shape: torch.Size([16, 3, 224, 224])
+Current batch labels: tensor([ 733,  113, 2282, 1074, 1791,  723, 3171,  870, 1074, 3533,  692, 2629,
+        2238, 3117, 3836,  860])
+Max label in batch: 3836, Min label in batch: 113
+Max label in batch: 3836
+Max label in batch: 4286
+Inside training loop - inputs shape: torch.Size([16, 3, 224, 224])
+Current batch labels: tensor([1607, 1554, 4217, 1296, 1565, 2510, 1844,  313, 1476,  484, 2583,  967,
+        4286, 4273, 3262, 1230])
+Max label in batch: 4286, Min label in batch: 313
+Max label in batch: 4286
+Max label in batch: 4500
+Inside training loop - inputs shape: torch.Size([16, 3, 224, 224])
+Current batch labels: tensor([2652, 4500,  149,  787, 1306, 3493,  113, 1749, 1313,  138, 3961,  724,
+        2990,  640, 4272, 4124])
+Max label in batch: 4500, Min label in batch: 113
+Max label in batch: 4500
+Max label in batch: 4537
+Inside training loop - inputs shape: torch.Size([16, 3, 224, 224])
+Current batch labels: tensor([3729, 1967, 2193, 2035,  787, 1218, 4537, 3555,   31, 2119, 1483, 4073,
+        2699, 1819, 2229, 3616])
+Max label in batch: 4537, Min label in batch: 31
+Max label in batch: 4537
+Max label in batch: 4566
+Inside training loop - inputs shape: torch.Size([16, 3, 224, 224])
+Current batch labels: tensor([  30, 3302,  556, 2658, 1674, 2302, 2278, 1080, 3685,  626, 4314, 4566,
+        1698,  342, 2020, 3287])
+Max label in batch: 4566, Min label in batch: 30
+Max label in batch: 4566
+Max label in batch: 4358
+Inside training loop - inputs shape: torch.Size([16, 3, 224, 224])
+Current batch labels: tensor([3986,  392, 4266, 2328, 3577, 1129, 3106,   81, 1631,  559,  733, 1291,
+        4358, 3407, 3782, 3786])
+Max label in batch: 4358, Min label in batch: 81
+Max label in batch: 4358
+Max label in batch: 4284
+Inside training loop - inputs shape: torch.Size([16, 3, 224, 224])
+Current batch labels: tensor([1173, 3782, 3577, 2594, 4081,   72, 3711, 4284,  583, 1448, 3836, 1505,
+        2317, 1819, 3046, 4047])
+Max label in batch: 4284, Min label in batch: 72
+Max label in batch: 4284
+Max label in batch: 4244
+Inside training loop - inputs shape: torch.Size([16, 3, 224, 224])
+Current batch labels: tensor([3999, 2014, 4226, 3848, 3731, 2738, 3163, 1526, 4244,  840, 3407, 3674,
+        3333, 1511,    7,  640])
+Max label in batch: 4244, Min label in batch: 7
+Max label in batch: 4244
+Max label in batch: 4358
+Inside training loop - inputs shape: torch.Size([16, 3, 224, 224])
+Current batch labels: tensor([4176, 3660, 3209, 4358, 1677, 2010, 1640, 1031,  428, 4052, 1149, 2954,
+        3186, 3105, 2017, 3530])
+Max label in batch: 4358, Min label in batch: 428
+Max label in batch: 4358
+Max label in batch: 4437
+Inside training loop - inputs shape: torch.Size([16, 3, 224, 224])
+Current batch labels: tensor([ 603, 1806, 2960, 3762, 1698,   77, 1883, 3667, 4248, 1326, 1439, 1232,
+          75, 4437,  719, 4149])
+Max label in batch: 4437, Min label in batch: 75
+Max label in batch: 4437
+Max label in batch: 4244
+Inside training loop - inputs shape: torch.Size([16, 3, 224, 224])
+Current batch labels: tensor([4143, 4244,  437, 4062, 1942, 2652, 2302, 1539, 2287, 2993, 3888, 2508,
+        1791, 2948,  639, 3314])
+Max label in batch: 4244, Min label in batch: 437
+Max label in batch: 4244
+Max label in batch: 4587
+Inside training loop - inputs shape: torch.Size([16, 3, 224, 224])
+Current batch labels: tensor([1662, 3567,  445, 1443, 1291, 4264, 3808, 1619, 4587, 4496, 1247, 2699,
+        1502, 1319, 1511, 1640])
+Max label in batch: 4587, Min label in batch: 445
+Max label in batch: 4587
+Traceback (most recent call last):
+  File "C:\Users\marie\Desktop\Sanfour\MFRS\models\models_train.py", line 323, in <module>
+    model_ft = train_model(model, criterion_ce, criterion_center, center_loss_weight, optimizer_ft, exp_lr_scheduler, args.num_epochs, dataset_loader, dataset_sizes, wandb)
+  File "C:\Users\marie\Desktop\Sanfour\MFRS\models\models_train.py", line 117, in train_model
+    loss_ce = criterion_ce(logits, labels) #ena badalt
+  File "C:\Users\marie\AppData\Roaming\Python\Python39\site-packages\torch\nn\modules\module.py", line 1511, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "C:\Users\marie\AppData\Roaming\Python\Python39\site-packages\torch\nn\modules\module.py", line 1520, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "C:\Users\marie\AppData\Roaming\Python\Python39\site-packages\torch\nn\modules\loss.py", line 1179, in forward
+    return F.cross_entropy(input, target, weight=self.weight,
+  File "C:\Users\marie\AppData\Roaming\Python\Python39\site-packages\torch\nn\functional.py", line 3059, in cross_entropy
+    return torch._C._nn.cross_entropy_loss(input, target, weight, _Reduction.get_enum(reduction), ignore_index, label_smoothing)
+IndexError: Target 4587 is out of bounds.
+Traceback (most recent call last):
+  File "C:\Users\marie\Desktop\Sanfour\MFRS\models\models_train.py", line 323, in <module>
+    model_ft = train_model(model, criterion_ce, criterion_center, center_loss_weight, optimizer_ft, exp_lr_scheduler, args.num_epochs, dataset_loader, dataset_sizes, wandb)
+  File "C:\Users\marie\Desktop\Sanfour\MFRS\models\models_train.py", line 117, in train_model
+    loss_ce = criterion_ce(logits, labels) #ena badalt
+  File "C:\Users\marie\AppData\Roaming\Python\Python39\site-packages\torch\nn\modules\module.py", line 1511, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "C:\Users\marie\AppData\Roaming\Python\Python39\site-packages\torch\nn\modules\module.py", line 1520, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "C:\Users\marie\AppData\Roaming\Python\Python39\site-packages\torch\nn\modules\loss.py", line 1179, in forward
+    return F.cross_entropy(input, target, weight=self.weight,
+  File "C:\Users\marie\AppData\Roaming\Python\Python39\site-packages\torch\nn\functional.py", line 3059, in cross_entropy
+    return torch._C._nn.cross_entropy_loss(input, target, weight, _Reduction.get_enum(reduction), ignore_index, label_smoothing)
+IndexError: Target 4587 is out of bounds.

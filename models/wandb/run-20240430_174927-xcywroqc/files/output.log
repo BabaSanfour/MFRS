@@ -1,0 +1,56 @@
+Training data shape: torch.Size([16, 3, 224, 224])
+Inside training loop - inputs shape: torch.Size([16, 3, 224, 224])
+2024-04-30 17:49:30,966 - INFO - Epoch 1/2
+2024-04-30 17:49:30,966 - INFO - ----------
+Traceback (most recent call last):
+  File "C:\Users\marie\Desktop\Sanfour\MFRS\models\models_train.py", line 316, in <module>
+    model_ft = train_model(model, criterion_ce, criterion_center, center_loss_weight, optimizer_ft, exp_lr_scheduler, args.num_epochs, dataset_loader, dataset_sizes, wandb)
+  File "C:\Users\marie\Desktop\Sanfour\MFRS\models\models_train.py", line 110, in train_model
+    logits, features = model(inputs)#ena badalt
+  File "C:\Users\marie\AppData\Roaming\Python\Python39\site-packages\torch\nn\modules\module.py", line 1511, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "C:\Users\marie\AppData\Roaming\Python\Python39\site-packages\torch\nn\modules\module.py", line 1520, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "C:\Users\marie\Desktop\Sanfour\MFRS\models\FaceNet.py", line 259, in forward
+    x = self.conv2d_4b(x)
+  File "C:\Users\marie\AppData\Roaming\Python\Python39\site-packages\torch\nn\modules\module.py", line 1511, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "C:\Users\marie\AppData\Roaming\Python\Python39\site-packages\torch\nn\modules\module.py", line 1520, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "C:\Users\marie\Desktop\Sanfour\MFRS\models\FaceNet.py", line 30, in forward
+    x = self.conv(x)
+  File "C:\Users\marie\AppData\Roaming\Python\Python39\site-packages\torch\nn\modules\module.py", line 1511, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "C:\Users\marie\AppData\Roaming\Python\Python39\site-packages\torch\nn\modules\module.py", line 1520, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "C:\Users\marie\AppData\Roaming\Python\Python39\site-packages\torch\nn\modules\conv.py", line 460, in forward
+    return self._conv_forward(input, self.weight, self.bias)
+  File "C:\Users\marie\AppData\Roaming\Python\Python39\site-packages\torch\nn\modules\conv.py", line 456, in _conv_forward
+    return F.conv2d(input, weight, bias, self.stride,
+RuntimeError: Given groups=1, weight of size [256, 192, 3, 3], expected input[16, 3, 224, 224] to have 192 channels, but got 3 channels instead
+Traceback (most recent call last):
+  File "C:\Users\marie\Desktop\Sanfour\MFRS\models\models_train.py", line 316, in <module>
+    model_ft = train_model(model, criterion_ce, criterion_center, center_loss_weight, optimizer_ft, exp_lr_scheduler, args.num_epochs, dataset_loader, dataset_sizes, wandb)
+  File "C:\Users\marie\Desktop\Sanfour\MFRS\models\models_train.py", line 110, in train_model
+    logits, features = model(inputs)#ena badalt
+  File "C:\Users\marie\AppData\Roaming\Python\Python39\site-packages\torch\nn\modules\module.py", line 1511, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "C:\Users\marie\AppData\Roaming\Python\Python39\site-packages\torch\nn\modules\module.py", line 1520, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "C:\Users\marie\Desktop\Sanfour\MFRS\models\FaceNet.py", line 259, in forward
+    x = self.conv2d_4b(x)
+  File "C:\Users\marie\AppData\Roaming\Python\Python39\site-packages\torch\nn\modules\module.py", line 1511, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "C:\Users\marie\AppData\Roaming\Python\Python39\site-packages\torch\nn\modules\module.py", line 1520, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "C:\Users\marie\Desktop\Sanfour\MFRS\models\FaceNet.py", line 30, in forward
+    x = self.conv(x)
+  File "C:\Users\marie\AppData\Roaming\Python\Python39\site-packages\torch\nn\modules\module.py", line 1511, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "C:\Users\marie\AppData\Roaming\Python\Python39\site-packages\torch\nn\modules\module.py", line 1520, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "C:\Users\marie\AppData\Roaming\Python\Python39\site-packages\torch\nn\modules\conv.py", line 460, in forward
+    return self._conv_forward(input, self.weight, self.bias)
+  File "C:\Users\marie\AppData\Roaming\Python\Python39\site-packages\torch\nn\modules\conv.py", line 456, in _conv_forward
+    return F.conv2d(input, weight, bias, self.stride,
+RuntimeError: Given groups=1, weight of size [256, 192, 3, 3], expected input[16, 3, 224, 224] to have 192 channels, but got 3 channels instead

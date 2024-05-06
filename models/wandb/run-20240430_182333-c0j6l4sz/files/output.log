@@ -1,0 +1,18 @@
+2024-04-30 18:23:37,519 - INFO - Epoch 1/2
+2024-04-30 18:23:37,519 - INFO - ----------
+Training data shape: torch.Size([16, 3, 224, 224])
+Max label in batch: 4106
+Inside training loop - inputs shape: torch.Size([16, 3, 224, 224])
+Traceback (most recent call last):
+  File "C:\Users\marie\Desktop\Sanfour\MFRS\models\models_train.py", line 318, in <module>
+    model_ft = train_model(model, criterion_ce, criterion_center, center_loss_weight, optimizer_ft, exp_lr_scheduler, args.num_epochs, dataset_loader, dataset_sizes, wandb)
+  File "C:\Users\marie\Desktop\Sanfour\MFRS\models\models_train.py", line 119, in train_model
+    n_correct += (torch.max(outputs, 1)[1].view(labels.data.size()) == labels.data).sum().item()
+UnboundLocalError: local variable 'outputs' referenced before assignment
+Traceback (most recent call last):
+  File "C:\Users\marie\Desktop\Sanfour\MFRS\models\models_train.py", line 318, in <module>
+    model_ft = train_model(model, criterion_ce, criterion_center, center_loss_weight, optimizer_ft, exp_lr_scheduler, args.num_epochs, dataset_loader, dataset_sizes, wandb)
+  File "C:\Users\marie\Desktop\Sanfour\MFRS\models\models_train.py", line 119, in train_model
+    n_correct += (torch.max(outputs, 1)[1].view(labels.data.size()) == labels.data).sum().item()
+UnboundLocalError: local variable 'outputs' referenced before assignment
+Max label in batch: 4106

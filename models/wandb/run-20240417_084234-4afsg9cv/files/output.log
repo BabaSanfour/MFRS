@@ -1,0 +1,23 @@
+2024-04-17 08:42:37,723 - INFO - Epoch 1/50
+2024-04-17 08:42:37,723 - INFO - ----------
+Error in sys.excepthook:
+Traceback (most recent call last):
+  File "C:\Program Files\Python39\lib\linecache.py", line 46, in getlines
+    return updatecache(filename, module_globals)
+  File "C:\Program Files\Python39\lib\linecache.py", line 136, in updatecache
+    with tokenize.open(fullname) as fp:
+  File "C:\Program Files\Python39\lib\tokenize.py", line 392, in open
+    buffer = _builtin_open(filename, 'rb')
+KeyboardInterrupt
+Original exception was:
+Traceback (most recent call last):
+  File "C:\Users\marie\Desktop\Sanfour\MFRS\models\models_train.py", line 272, in <module>
+    model_ft = train_model(model, criterion, optimizer_ft, exp_lr_scheduler, args.num_epochs, dataset_loader, dataset_sizes, wandb)
+  File "C:\Users\marie\Desktop\Sanfour\MFRS\models\models_train.py", line 90, in train_model
+    outputs = model(inputs)  # Forward pass
+  File "C:\Users\marie\AppData\Roaming\Python\Python39\site-packages\torch\nn\modules\module.py", line 1511, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "C:\Users\marie\AppData\Roaming\Python\Python39\site-packages\torch\nn\modules\module.py", line 1520, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "C:\Users\marie\Desktop\Sanfour\MFRS\models\resnet.py", line 260, in forward
+    return self._forward_impl(x)

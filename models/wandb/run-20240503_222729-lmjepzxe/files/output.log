@@ -1,0 +1,206 @@
+2024-05-03 22:27:32,172 - INFO - Epoch 1/2
+2024-05-03 22:27:32,172 - INFO - ----------
+Logits shape: torch.Size([32, 10000])
+Labels shape: torch.Size([32])
+Features shape: torch.Size([32, 512])
+2024-05-03 22:27:40,341 - INFO - Epoch 0/1 Train Loss: 0.8990 Acc: 0.0000
+Logits shape: torch.Size([32, 10000])
+Labels shape: torch.Size([32])
+Features shape: torch.Size([32, 512])
+2024-05-03 22:27:47,405 - INFO - Epoch 0/1 Train Loss: 1.7877 Acc: 0.0000
+Logits shape: torch.Size([32, 10000])
+Labels shape: torch.Size([32])
+Features shape: torch.Size([32, 512])
+2024-05-03 22:27:54,334 - INFO - Epoch 0/1 Train Loss: 2.6793 Acc: 0.0000
+Logits shape: torch.Size([32, 10000])
+Labels shape: torch.Size([32])
+Features shape: torch.Size([32, 512])
+2024-05-03 22:28:01,322 - INFO - Epoch 0/1 Train Loss: 3.5759 Acc: 0.0000
+Logits shape: torch.Size([32, 10000])
+Labels shape: torch.Size([32])
+Features shape: torch.Size([32, 512])
+2024-05-03 22:28:08,210 - INFO - Epoch 0/1 Train Loss: 4.4751 Acc: 0.0000
+Logits shape: torch.Size([32, 10000])
+Labels shape: torch.Size([32])
+Features shape: torch.Size([32, 512])
+2024-05-03 22:28:15,269 - INFO - Epoch 0/1 Train Loss: 5.3574 Acc: 0.0000
+Logits shape: torch.Size([32, 10000])
+Labels shape: torch.Size([32])
+Features shape: torch.Size([32, 512])
+2024-05-03 22:28:22,241 - INFO - Epoch 0/1 Train Loss: 6.2472 Acc: 0.0000
+Logits shape: torch.Size([32, 10000])
+Labels shape: torch.Size([32])
+Features shape: torch.Size([32, 512])
+2024-05-03 22:28:29,331 - INFO - Epoch 0/1 Train Loss: 7.1427 Acc: 0.0000
+Logits shape: torch.Size([32, 10000])
+Labels shape: torch.Size([32])
+Features shape: torch.Size([32, 512])
+2024-05-03 22:28:36,791 - INFO - Epoch 0/1 Train Loss: 8.0393 Acc: 0.0000
+Logits shape: torch.Size([32, 10000])
+Labels shape: torch.Size([32])
+Features shape: torch.Size([32, 512])
+2024-05-03 22:28:44,082 - INFO - Epoch 0/1 Train Loss: 8.9425 Acc: 0.0000
+Logits shape: torch.Size([32, 10000])
+Labels shape: torch.Size([32])
+Features shape: torch.Size([32, 512])
+2024-05-03 22:28:51,132 - INFO - Epoch 0/1 Train Loss: 9.8252 Acc: 0.0000
+Logits shape: torch.Size([32, 10000])
+Labels shape: torch.Size([32])
+Features shape: torch.Size([32, 512])
+2024-05-03 22:28:58,193 - INFO - Epoch 0/1 Train Loss: 10.7217 Acc: 0.0000
+Logits shape: torch.Size([32, 10000])
+Labels shape: torch.Size([32])
+Features shape: torch.Size([32, 512])
+2024-05-03 22:29:05,333 - INFO - Epoch 0/1 Train Loss: 11.6289 Acc: 0.0000
+Logits shape: torch.Size([32, 10000])
+Labels shape: torch.Size([32])
+Features shape: torch.Size([32, 512])
+2024-05-03 22:29:12,403 - INFO - Epoch 0/1 Train Loss: 12.5178 Acc: 0.0000
+Logits shape: torch.Size([32, 10000])
+Labels shape: torch.Size([32])
+Features shape: torch.Size([32, 512])
+2024-05-03 22:29:19,520 - INFO - Epoch 0/1 Train Loss: 13.4143 Acc: 0.0000
+Logits shape: torch.Size([32, 10000])
+Labels shape: torch.Size([32])
+Features shape: torch.Size([32, 512])
+2024-05-03 22:29:26,676 - INFO - Epoch 0/1 Train Loss: 14.3031 Acc: 0.0000
+Logits shape: torch.Size([32, 10000])
+Labels shape: torch.Size([32])
+Features shape: torch.Size([32, 512])
+2024-05-03 22:29:33,674 - INFO - Epoch 0/1 Train Loss: 15.2014 Acc: 0.0000
+Logits shape: torch.Size([32, 10000])
+Labels shape: torch.Size([32])
+Features shape: torch.Size([32, 512])
+2024-05-03 22:29:40,635 - INFO - Epoch 0/1 Train Loss: 16.0852 Acc: 0.0000
+Logits shape: torch.Size([32, 10000])
+Labels shape: torch.Size([32])
+Features shape: torch.Size([32, 512])
+2024-05-03 22:29:47,836 - INFO - Epoch 0/1 Train Loss: 16.9754 Acc: 0.0000
+Logits shape: torch.Size([32, 10000])
+Labels shape: torch.Size([32])
+Features shape: torch.Size([32, 512])
+2024-05-03 22:29:55,076 - INFO - Epoch 0/1 Train Loss: 17.8672 Acc: 0.0000
+Logits shape: torch.Size([32, 10000])
+Labels shape: torch.Size([32])
+Features shape: torch.Size([32, 512])
+2024-05-03 22:30:02,167 - INFO - Epoch 0/1 Train Loss: 18.7550 Acc: 0.0000
+Logits shape: torch.Size([32, 10000])
+Labels shape: torch.Size([32])
+Features shape: torch.Size([32, 512])
+2024-05-03 22:30:09,110 - INFO - Epoch 0/1 Train Loss: 19.6485 Acc: 0.0000
+Logits shape: torch.Size([32, 10000])
+Labels shape: torch.Size([32])
+Features shape: torch.Size([32, 512])
+2024-05-03 22:30:16,184 - INFO - Epoch 0/1 Train Loss: 20.5359 Acc: 0.0000
+Logits shape: torch.Size([32, 10000])
+Labels shape: torch.Size([32])
+Features shape: torch.Size([32, 512])
+2024-05-03 22:30:23,332 - INFO - Epoch 0/1 Train Loss: 21.4331 Acc: 0.0000
+2024-05-03 22:31:41,743 - INFO - Validation Loss: 20.2103 Acc: 0.0000
+2024-05-03 22:31:42,482 - INFO - Epoch 2/2
+2024-05-03 22:31:42,482 - INFO - ----------
+Logits shape: torch.Size([32, 10000])
+Labels shape: torch.Size([32])
+Features shape: torch.Size([32, 512])
+2024-05-03 22:31:49,452 - INFO - Epoch 1/1 Train Loss: 0.8607 Acc: 0.0000
+Logits shape: torch.Size([32, 10000])
+Labels shape: torch.Size([32])
+Features shape: torch.Size([32, 512])
+2024-05-03 22:31:56,392 - INFO - Epoch 1/1 Train Loss: 1.7286 Acc: 0.0000
+Logits shape: torch.Size([32, 10000])
+Labels shape: torch.Size([32])
+Features shape: torch.Size([32, 512])
+2024-05-03 22:32:03,273 - INFO - Epoch 1/1 Train Loss: 2.5989 Acc: 0.0000
+Logits shape: torch.Size([32, 10000])
+Labels shape: torch.Size([32])
+Features shape: torch.Size([32, 512])
+2024-05-03 22:32:10,034 - INFO - Epoch 1/1 Train Loss: 3.4637 Acc: 0.0000
+Logits shape: torch.Size([32, 10000])
+Labels shape: torch.Size([32])
+Features shape: torch.Size([32, 512])
+2024-05-03 22:32:16,844 - INFO - Epoch 1/1 Train Loss: 4.3424 Acc: 0.0000
+Logits shape: torch.Size([32, 10000])
+Labels shape: torch.Size([32])
+Features shape: torch.Size([32, 512])
+2024-05-03 22:32:23,679 - INFO - Epoch 1/1 Train Loss: 5.2093 Acc: 0.0000
+Logits shape: torch.Size([32, 10000])
+Labels shape: torch.Size([32])
+Features shape: torch.Size([32, 512])
+2024-05-03 22:32:30,545 - INFO - Epoch 1/1 Train Loss: 6.0809 Acc: 0.0000
+Logits shape: torch.Size([32, 10000])
+Labels shape: torch.Size([32])
+Features shape: torch.Size([32, 512])
+2024-05-03 22:32:37,405 - INFO - Epoch 1/1 Train Loss: 6.9638 Acc: 0.0000
+Logits shape: torch.Size([32, 10000])
+Labels shape: torch.Size([32])
+Features shape: torch.Size([32, 512])
+2024-05-03 22:32:44,255 - INFO - Epoch 1/1 Train Loss: 7.8442 Acc: 0.0000
+Logits shape: torch.Size([32, 10000])
+Labels shape: torch.Size([32])
+Features shape: torch.Size([32, 512])
+2024-05-03 22:32:51,281 - INFO - Epoch 1/1 Train Loss: 8.7139 Acc: 0.0000
+Logits shape: torch.Size([32, 10000])
+Labels shape: torch.Size([32])
+Features shape: torch.Size([32, 512])
+2024-05-03 22:32:58,321 - INFO - Epoch 1/1 Train Loss: 9.5926 Acc: 0.0000
+Logits shape: torch.Size([32, 10000])
+Labels shape: torch.Size([32])
+Features shape: torch.Size([32, 512])
+2024-05-03 22:33:05,297 - INFO - Epoch 1/1 Train Loss: 10.4587 Acc: 0.0000
+Logits shape: torch.Size([32, 10000])
+Labels shape: torch.Size([32])
+Features shape: torch.Size([32, 512])
+2024-05-03 22:33:12,207 - INFO - Epoch 1/1 Train Loss: 11.3277 Acc: 0.0000
+Logits shape: torch.Size([32, 10000])
+Labels shape: torch.Size([32])
+Features shape: torch.Size([32, 512])
+2024-05-03 22:33:19,237 - INFO - Epoch 1/1 Train Loss: 12.2016 Acc: 0.0000
+Logits shape: torch.Size([32, 10000])
+Labels shape: torch.Size([32])
+Features shape: torch.Size([32, 512])
+2024-05-03 22:33:26,171 - INFO - Epoch 1/1 Train Loss: 13.0757 Acc: 0.0000
+Logits shape: torch.Size([32, 10000])
+Labels shape: torch.Size([32])
+Features shape: torch.Size([32, 512])
+2024-05-03 22:33:33,178 - INFO - Epoch 1/1 Train Loss: 13.9508 Acc: 0.0000
+Logits shape: torch.Size([32, 10000])
+Labels shape: torch.Size([32])
+Features shape: torch.Size([32, 512])
+2024-05-03 22:33:40,184 - INFO - Epoch 1/1 Train Loss: 14.8218 Acc: 0.0000
+Logits shape: torch.Size([32, 10000])
+Labels shape: torch.Size([32])
+Features shape: torch.Size([32, 512])
+2024-05-03 22:33:47,214 - INFO - Epoch 1/1 Train Loss: 15.6968 Acc: 0.0000
+Logits shape: torch.Size([32, 10000])
+Labels shape: torch.Size([32])
+Features shape: torch.Size([32, 512])
+2024-05-03 22:33:54,139 - INFO - Epoch 1/1 Train Loss: 16.5770 Acc: 0.0000
+Logits shape: torch.Size([32, 10000])
+Labels shape: torch.Size([32])
+Features shape: torch.Size([32, 512])
+2024-05-03 22:34:01,177 - INFO - Epoch 1/1 Train Loss: 17.4375 Acc: 0.0000
+Logits shape: torch.Size([32, 10000])
+Labels shape: torch.Size([32])
+Features shape: torch.Size([32, 512])
+2024-05-03 22:34:08,256 - INFO - Epoch 1/1 Train Loss: 18.3149 Acc: 0.0000
+Logits shape: torch.Size([32, 10000])
+Labels shape: torch.Size([32])
+Features shape: torch.Size([32, 512])
+2024-05-03 22:34:15,270 - INFO - Epoch 1/1 Train Loss: 19.1852 Acc: 0.0000
+Logits shape: torch.Size([32, 10000])
+Labels shape: torch.Size([32])
+Features shape: torch.Size([32, 512])
+2024-05-03 22:34:22,186 - INFO - Epoch 1/1 Train Loss: 20.0641 Acc: 0.0000
+Logits shape: torch.Size([32, 10000])
+Labels shape: torch.Size([32])
+Features shape: torch.Size([32, 512])
+2024-05-03 22:34:29,061 - INFO - Epoch 1/1 Train Loss: 20.9361 Acc: 0.0000
+2024-05-03 22:35:46,216 - INFO - Validation Loss: 20.1498 Acc: 0.0000
+2024-05-03 22:35:46,216 - INFO - Training complete in 0.0 h 8.0 m 14.044034957885742 s
+2024-05-03 22:35:46,216 - INFO - Best val Acc: 0.00%
+2024-05-03 22:37:02,790 - INFO - Test Loss: 20.8789, Test Accuracy: 0.0000
+2024-05-03 22:37:02,790 - INFO - Test Loss: 20.88
+2024-05-03 22:37:02,790 - INFO - Test Accuracy (Top1): 0.00%
+2024-05-03 22:37:02,790 - INFO - Training complete.
+2024-05-03 22:37:02,790 - INFO - Training ended in 0.0 h 9.0 m 36.26165771484375 s
+2024-05-03 22:37:02,977 - INFO - Model weights saved to None_42.pth

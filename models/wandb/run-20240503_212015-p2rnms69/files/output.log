@@ -1,0 +1,116 @@
+2024-05-03 21:20:17,854 - INFO - Epoch 1/2
+2024-05-03 21:20:17,854 - INFO - ----------
+2024-05-03 21:20:20,514 - INFO - Epoch 0/1 Train Loss: 1.1043 Acc: 0.0000
+2024-05-03 21:20:22,837 - INFO - Epoch 0/1 Train Loss: 3.1253 Acc: 0.0000
+2024-05-03 21:20:25,164 - INFO - Epoch 0/1 Train Loss: 3.9026 Acc: 0.0000
+2024-05-03 21:20:27,474 - INFO - Epoch 0/1 Train Loss: 4.6490 Acc: 0.0000
+2024-05-03 21:20:29,824 - INFO - Epoch 0/1 Train Loss: 5.3662 Acc: 0.0000
+2024-05-03 21:20:32,204 - INFO - Epoch 0/1 Train Loss: 6.0766 Acc: 0.0000
+2024-05-03 21:20:34,544 - INFO - Epoch 0/1 Train Loss: 6.7757 Acc: 0.0000
+2024-05-03 21:20:36,862 - INFO - Epoch 0/1 Train Loss: 7.4842 Acc: 0.0000
+2024-05-03 21:20:39,180 - INFO - Epoch 0/1 Train Loss: 8.2014 Acc: 0.0000
+2024-05-03 21:20:41,575 - INFO - Epoch 0/1 Train Loss: 8.9005 Acc: 0.0000
+2024-05-03 21:20:43,909 - INFO - Epoch 0/1 Train Loss: 9.5989 Acc: 0.0000
+2024-05-03 21:20:46,355 - INFO - Epoch 0/1 Train Loss: 10.2981 Acc: 0.0000
+2024-05-03 21:20:48,939 - INFO - Epoch 0/1 Train Loss: 11.0039 Acc: 0.0000
+2024-05-03 21:20:52,021 - INFO - Epoch 0/1 Train Loss: 11.7102 Acc: 0.0000
+2024-05-03 21:20:55,847 - INFO - Epoch 0/1 Train Loss: 12.4174 Acc: 0.0000
+2024-05-03 21:20:59,436 - INFO - Epoch 0/1 Train Loss: 13.1116 Acc: 0.0000
+2024-05-03 21:21:03,058 - INFO - Epoch 0/1 Train Loss: 13.8157 Acc: 0.0000
+2024-05-03 21:21:06,641 - INFO - Epoch 0/1 Train Loss: 14.5033 Acc: 0.0000
+2024-05-03 21:21:10,248 - INFO - Epoch 0/1 Train Loss: 15.2037 Acc: 0.0000
+2024-05-03 21:21:13,792 - INFO - Epoch 0/1 Train Loss: 15.9086 Acc: 0.0000
+2024-05-03 21:21:17,404 - INFO - Epoch 0/1 Train Loss: 16.6029 Acc: 0.0000
+2024-05-03 21:21:20,990 - INFO - Epoch 0/1 Train Loss: 17.2845 Acc: 0.0000
+2024-05-03 21:21:24,513 - INFO - Epoch 0/1 Train Loss: 17.9763 Acc: 0.0000
+2024-05-03 21:21:28,121 - INFO - Epoch 0/1 Train Loss: 18.6733 Acc: 0.0000
+2024-05-03 21:21:31,842 - INFO - Epoch 0/1 Train Loss: 19.3601 Acc: 0.0013
+2024-05-03 21:21:35,418 - INFO - Epoch 0/1 Train Loss: 20.0501 Acc: 0.0013
+2024-05-03 21:21:38,994 - INFO - Epoch 0/1 Train Loss: 20.7475 Acc: 0.0013
+2024-05-03 21:21:42,571 - INFO - Epoch 0/1 Train Loss: 21.4398 Acc: 0.0013
+2024-05-03 21:21:46,158 - INFO - Epoch 0/1 Train Loss: 22.1189 Acc: 0.0013
+2024-05-03 21:21:49,750 - INFO - Epoch 0/1 Train Loss: 22.8148 Acc: 0.0013
+2024-05-03 21:21:52,794 - INFO - Epoch 0/1 Train Loss: 23.5083 Acc: 0.0013
+2024-05-03 21:21:55,103 - INFO - Epoch 0/1 Train Loss: 24.1984 Acc: 0.0013
+2024-05-03 21:21:57,680 - INFO - Epoch 0/1 Train Loss: 24.8756 Acc: 0.0013
+2024-05-03 21:21:59,985 - INFO - Epoch 0/1 Train Loss: 25.5605 Acc: 0.0013
+2024-05-03 21:22:02,280 - INFO - Epoch 0/1 Train Loss: 26.2489 Acc: 0.0013
+2024-05-03 21:22:04,612 - INFO - Epoch 0/1 Train Loss: 26.9326 Acc: 0.0013
+2024-05-03 21:22:06,989 - INFO - Epoch 0/1 Train Loss: 27.6239 Acc: 0.0013
+2024-05-03 21:22:09,382 - INFO - Epoch 0/1 Train Loss: 28.3065 Acc: 0.0013
+2024-05-03 21:22:11,869 - INFO - Epoch 0/1 Train Loss: 28.9962 Acc: 0.0013
+2024-05-03 21:22:15,420 - INFO - Epoch 0/1 Train Loss: 29.6757 Acc: 0.0013
+2024-05-03 21:22:19,000 - INFO - Epoch 0/1 Train Loss: 30.3636 Acc: 0.0013
+2024-05-03 21:22:22,737 - INFO - Epoch 0/1 Train Loss: 31.0449 Acc: 0.0013
+2024-05-03 21:22:26,431 - INFO - Epoch 0/1 Train Loss: 31.7370 Acc: 0.0013
+2024-05-03 21:22:29,291 - INFO - Epoch 0/1 Train Loss: 32.4215 Acc: 0.0013
+2024-05-03 21:22:31,697 - INFO - Epoch 0/1 Train Loss: 33.0984 Acc: 0.0013
+2024-05-03 21:22:34,111 - INFO - Epoch 0/1 Train Loss: 33.7786 Acc: 0.0013
+2024-05-03 21:22:36,466 - INFO - Epoch 0/1 Train Loss: 34.4682 Acc: 0.0013
+2024-05-03 21:22:38,905 - INFO - Epoch 0/1 Train Loss: 35.1649 Acc: 0.0013
+2024-05-03 21:23:31,675 - INFO - Validation Loss: 31.6134 Acc: 0.0016
+2024-05-03 21:23:31,948 - INFO - Epoch 2/2
+2024-05-03 21:23:31,948 - INFO - ----------
+2024-05-03 21:23:34,453 - INFO - Epoch 1/1 Train Loss: 0.6847 Acc: 0.0000
+2024-05-03 21:23:36,831 - INFO - Epoch 1/1 Train Loss: 1.3555 Acc: 0.0000
+2024-05-03 21:23:39,227 - INFO - Epoch 1/1 Train Loss: 2.0593 Acc: 0.0000
+2024-05-03 21:23:41,566 - INFO - Epoch 1/1 Train Loss: 2.7350 Acc: 0.0000
+2024-05-03 21:23:43,935 - INFO - Epoch 1/1 Train Loss: 3.4149 Acc: 0.0000
+2024-05-03 21:23:46,365 - INFO - Epoch 1/1 Train Loss: 4.1180 Acc: 0.0000
+2024-05-03 21:23:48,756 - INFO - Epoch 1/1 Train Loss: 4.7920 Acc: 0.0000
+2024-05-03 21:23:51,127 - INFO - Epoch 1/1 Train Loss: 5.4791 Acc: 0.0000
+2024-05-03 21:23:53,520 - INFO - Epoch 1/1 Train Loss: 6.1492 Acc: 0.0000
+2024-05-03 21:23:55,866 - INFO - Epoch 1/1 Train Loss: 6.8311 Acc: 0.0000
+2024-05-03 21:23:58,211 - INFO - Epoch 1/1 Train Loss: 7.5037 Acc: 0.0000
+2024-05-03 21:24:00,531 - INFO - Epoch 1/1 Train Loss: 8.1765 Acc: 0.0000
+2024-05-03 21:24:02,924 - INFO - Epoch 1/1 Train Loss: 8.8578 Acc: 0.0000
+2024-05-03 21:24:05,271 - INFO - Epoch 1/1 Train Loss: 9.5443 Acc: 0.0000
+2024-05-03 21:24:07,631 - INFO - Epoch 1/1 Train Loss: 10.2250 Acc: 0.0000
+2024-05-03 21:24:10,032 - INFO - Epoch 1/1 Train Loss: 10.9042 Acc: 0.0000
+2024-05-03 21:24:12,347 - INFO - Epoch 1/1 Train Loss: 11.6079 Acc: 0.0000
+2024-05-03 21:24:14,727 - INFO - Epoch 1/1 Train Loss: 12.3015 Acc: 0.0000
+2024-05-03 21:24:17,051 - INFO - Epoch 1/1 Train Loss: 12.9838 Acc: 0.0000
+2024-05-03 21:24:19,422 - INFO - Epoch 1/1 Train Loss: 13.6646 Acc: 0.0000
+2024-05-03 21:24:21,779 - INFO - Epoch 1/1 Train Loss: 14.3409 Acc: 0.0000
+2024-05-03 21:24:24,113 - INFO - Epoch 1/1 Train Loss: 15.0258 Acc: 0.0000
+2024-05-03 21:24:26,519 - INFO - Epoch 1/1 Train Loss: 15.7119 Acc: 0.0000
+2024-05-03 21:24:28,884 - INFO - Epoch 1/1 Train Loss: 16.3845 Acc: 0.0000
+2024-05-03 21:24:31,240 - INFO - Epoch 1/1 Train Loss: 17.0626 Acc: 0.0000
+2024-05-03 21:24:33,608 - INFO - Epoch 1/1 Train Loss: 17.7488 Acc: 0.0000
+2024-05-03 21:24:35,951 - INFO - Epoch 1/1 Train Loss: 18.4162 Acc: 0.0000
+2024-05-03 21:24:38,326 - INFO - Epoch 1/1 Train Loss: 19.0925 Acc: 0.0000
+2024-05-03 21:24:40,671 - INFO - Epoch 1/1 Train Loss: 19.7545 Acc: 0.0000
+2024-05-03 21:24:43,052 - INFO - Epoch 1/1 Train Loss: 20.4367 Acc: 0.0000
+2024-05-03 21:24:45,449 - INFO - Epoch 1/1 Train Loss: 21.1199 Acc: 0.0000
+2024-05-03 21:24:47,829 - INFO - Epoch 1/1 Train Loss: 21.8103 Acc: 0.0000
+2024-05-03 21:24:50,240 - INFO - Epoch 1/1 Train Loss: 22.4797 Acc: 0.0000
+2024-05-03 21:24:52,594 - INFO - Epoch 1/1 Train Loss: 23.1513 Acc: 0.0000
+2024-05-03 21:24:54,962 - INFO - Epoch 1/1 Train Loss: 23.8217 Acc: 0.0000
+2024-05-03 21:24:57,320 - INFO - Epoch 1/1 Train Loss: 24.4962 Acc: 0.0000
+2024-05-03 21:24:59,700 - INFO - Epoch 1/1 Train Loss: 25.1776 Acc: 0.0000
+2024-05-03 21:25:02,051 - INFO - Epoch 1/1 Train Loss: 25.8554 Acc: 0.0000
+2024-05-03 21:25:04,434 - INFO - Epoch 1/1 Train Loss: 26.5287 Acc: 0.0000
+2024-05-03 21:25:06,841 - INFO - Epoch 1/1 Train Loss: 27.2042 Acc: 0.0000
+2024-05-03 21:25:09,221 - INFO - Epoch 1/1 Train Loss: 27.8708 Acc: 0.0000
+2024-05-03 21:25:11,583 - INFO - Epoch 1/1 Train Loss: 28.5322 Acc: 0.0000
+2024-05-03 21:25:13,949 - INFO - Epoch 1/1 Train Loss: 29.2073 Acc: 0.0000
+2024-05-03 21:25:16,306 - INFO - Epoch 1/1 Train Loss: 29.8795 Acc: 0.0000
+2024-05-03 21:25:18,667 - INFO - Epoch 1/1 Train Loss: 30.5624 Acc: 0.0013
+2024-05-03 21:25:21,013 - INFO - Epoch 1/1 Train Loss: 31.2396 Acc: 0.0013
+2024-05-03 21:25:23,361 - INFO - Epoch 1/1 Train Loss: 31.9130 Acc: 0.0013
+2024-05-03 21:25:25,706 - INFO - Epoch 1/1 Train Loss: 32.6039 Acc: 0.0013
+2024-05-03 21:26:18,969 - INFO - Validation Loss: 31.6310 Acc: 0.0032
+2024-05-03 21:26:18,969 - INFO - Training complete in 0.0 h 6.0 m 1.1148121356964111 s
+2024-05-03 21:26:18,969 - INFO - Best val Acc: 0.00%
+Traceback (most recent call last):
+  File "C:\Users\marie\Desktop\Sanfour\MFRS\models\models_train.py", line 304, in <module>
+    acc = test_model(model_ft, dataset_loader, dataset_sizes,loss_func)
+  File "C:\Users\marie\Desktop\Sanfour\MFRS\models\models_train.py", line 178, in test_model
+    if args.loss_function == 'center_loss':
+AttributeError: 'function' object has no attribute 'loss_function'
+Traceback (most recent call last):
+  File "C:\Users\marie\Desktop\Sanfour\MFRS\models\models_train.py", line 304, in <module>
+    acc = test_model(model_ft, dataset_loader, dataset_sizes,loss_func)
+  File "C:\Users\marie\Desktop\Sanfour\MFRS\models\models_train.py", line 178, in test_model
+    if args.loss_function == 'center_loss':
+AttributeError: 'function' object has no attribute 'loss_function'

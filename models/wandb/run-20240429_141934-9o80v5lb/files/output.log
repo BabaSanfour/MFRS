@@ -1,0 +1,33 @@
+2024-04-29 14:19:38,557 - INFO - Epoch 1/2
+2024-04-29 14:19:38,557 - INFO - ----------
+Training data shape: torch.Size([16, 3, 224, 224])
+Inside training loop - inputs shape: torch.Size([16, 3, 224, 224])
+C:\Users\marie\Desktop\Sanfour\MFRS\models\njareb.py:36: UserWarning: This overload of addmm_ is deprecated:
+	addmm_(Number beta, Number alpha, Tensor mat1, Tensor mat2)
+Consider using one of the following signatures instead:
+	addmm_(Tensor mat1, Tensor mat2, *, Number beta, Number alpha) (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\builder\windows\pytorch\torch\csrc\utils\python_arg_parser.cpp:1630.)
+  distmat.addmm_(1, -2, x, self.centers.t())
+Traceback (most recent call last):
+  File "C:\Users\marie\Desktop\Sanfour\MFRS\models\models_train.py", line 303, in <module>
+    model_ft = train_model(model, criterion, optimizer_ft, exp_lr_scheduler, args.num_epochs, dataset_loader, dataset_sizes, wandb)
+  File "C:\Users\marie\Desktop\Sanfour\MFRS\models\models_train.py", line 110, in train_model
+    loss = criterion(outputs, labels)  # Calculate loss
+  File "C:\Users\marie\AppData\Roaming\Python\Python39\site-packages\torch\nn\modules\module.py", line 1511, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "C:\Users\marie\AppData\Roaming\Python\Python39\site-packages\torch\nn\modules\module.py", line 1520, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "C:\Users\marie\Desktop\Sanfour\MFRS\models\njareb.py", line 36, in forward
+    distmat.addmm_(1, -2, x, self.centers.t())
+RuntimeError: mat1 and mat2 shapes cannot be multiplied (16x458 and 2x458)
+Traceback (most recent call last):
+  File "C:\Users\marie\Desktop\Sanfour\MFRS\models\models_train.py", line 303, in <module>
+    model_ft = train_model(model, criterion, optimizer_ft, exp_lr_scheduler, args.num_epochs, dataset_loader, dataset_sizes, wandb)
+  File "C:\Users\marie\Desktop\Sanfour\MFRS\models\models_train.py", line 110, in train_model
+    loss = criterion(outputs, labels)  # Calculate loss
+  File "C:\Users\marie\AppData\Roaming\Python\Python39\site-packages\torch\nn\modules\module.py", line 1511, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "C:\Users\marie\AppData\Roaming\Python\Python39\site-packages\torch\nn\modules\module.py", line 1520, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "C:\Users\marie\Desktop\Sanfour\MFRS\models\njareb.py", line 36, in forward
+    distmat.addmm_(1, -2, x, self.centers.t())
+RuntimeError: mat1 and mat2 shapes cannot be multiplied (16x458 and 2x458)

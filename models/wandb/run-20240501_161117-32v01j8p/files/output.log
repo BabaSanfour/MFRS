@@ -1,0 +1,27 @@
+2024-05-01 16:11:19,847 - INFO - Epoch 1/2
+2024-05-01 16:11:19,847 - INFO - ----------
+2024-05-01 16:12:40,027 - INFO - Train Loss: 24.42 Acc: 0.00%
+Traceback (most recent call last):
+  File "C:\Users\marie\Desktop\Sanfour\MFRS\models\models_train.py", line 342, in <module>
+    model_ft = train_model(model,criterion_cosf,optimizer_ft, exp_lr_scheduler, args.num_epochs, dataset_loader, dataset_sizes, wandb)
+  File "C:\Users\marie\Desktop\Sanfour\MFRS\models\models_train.py", line 159, in train_model
+    loss = criterion_cosf(features, labels) #second function
+  File "C:\Users\marie\AppData\Roaming\Python\Python39\site-packages\torch\nn\modules\module.py", line 1511, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "C:\Users\marie\AppData\Roaming\Python\Python39\site-packages\torch\nn\modules\module.py", line 1520, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "C:\Users\marie\Desktop\Sanfour\MFRS\models\CosFace.py", line 42, in forward
+    assert len(x) == len(labels)
+AssertionError
+Traceback (most recent call last):
+  File "C:\Users\marie\Desktop\Sanfour\MFRS\models\models_train.py", line 342, in <module>
+    model_ft = train_model(model,criterion_cosf,optimizer_ft, exp_lr_scheduler, args.num_epochs, dataset_loader, dataset_sizes, wandb)
+  File "C:\Users\marie\Desktop\Sanfour\MFRS\models\models_train.py", line 159, in train_model
+    loss = criterion_cosf(features, labels) #second function
+  File "C:\Users\marie\AppData\Roaming\Python\Python39\site-packages\torch\nn\modules\module.py", line 1511, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "C:\Users\marie\AppData\Roaming\Python\Python39\site-packages\torch\nn\modules\module.py", line 1520, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "C:\Users\marie\Desktop\Sanfour\MFRS\models\CosFace.py", line 42, in forward
+    assert len(x) == len(labels)
+AssertionError

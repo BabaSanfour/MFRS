@@ -1,0 +1,16 @@
+2024-05-04 22:06:46,377 - INFO - Epoch 1/2
+2024-05-04 22:06:46,377 - INFO - ----------
+2024-05-04 22:08:41,931 - INFO - Epoch 0/1 Train Loss: 21.1140 train_acc: 0.0000
+2024-05-04 22:09:32,999 - INFO - Validation Loss: 19.9491 Acc: 0.0000
+Traceback (most recent call last):
+  File "C:\Users\marie\Desktop\Sanfour\MFRS\models\models_train.py", line 299, in <module>
+    model_ft = train_model(model,optimizer_ft, exp_lr_scheduler, args.num_epochs, loss_func,  dataset_loader, dataset_sizes, wandb)
+  File "C:\Users\marie\Desktop\Sanfour\MFRS\models\models_train.py", line 159, in train_model
+    wandb.log({"Epoch": epoch, "Train Loss": epoch_loss, "Train Acc": epoch_acc, "Val Loss": val_loss, "Val Acc": val_acc})
+NameError: name 'epoch_loss' is not defined
+Traceback (most recent call last):
+  File "C:\Users\marie\Desktop\Sanfour\MFRS\models\models_train.py", line 299, in <module>
+    model_ft = train_model(model,optimizer_ft, exp_lr_scheduler, args.num_epochs, loss_func,  dataset_loader, dataset_sizes, wandb)
+  File "C:\Users\marie\Desktop\Sanfour\MFRS\models\models_train.py", line 159, in train_model
+    wandb.log({"Epoch": epoch, "Train Loss": epoch_loss, "Train Acc": epoch_acc, "Val Loss": val_loss, "Val Acc": val_acc})
+NameError: name 'epoch_loss' is not defined

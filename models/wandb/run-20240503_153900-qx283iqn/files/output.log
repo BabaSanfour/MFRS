@@ -1,0 +1,16 @@
+Traceback (most recent call last):
+  File "C:\Users\marie\Desktop\Sanfour\MFRS\models\models_train.py", line 331, in <module>
+    model_ft = train_model(model,optimizer_ft, exp_lr_scheduler, args.num_epochs,args.loss_function,args.center_loss_weight, args.s, args.m, dataset_loader, dataset_sizes, wandb)
+  File "C:\Users\marie\Desktop\Sanfour\MFRS\models\models_train.py", line 74, in train_model
+    criterion = MLoss(in_features=512, out_features=model.num_classe, loss_type=loss_type, s=s, m=m)
+  File "C:\Users\marie\AppData\Roaming\Python\Python39\site-packages\torch\nn\modules\module.py", line 1688, in __getattr__
+    raise AttributeError(f"'{type(self).__name__}' object has no attribute '{name}'")
+AttributeError: 'InceptionResnetV1' object has no attribute 'num_classe'
+Traceback (most recent call last):
+  File "C:\Users\marie\Desktop\Sanfour\MFRS\models\models_train.py", line 331, in <module>
+    model_ft = train_model(model,optimizer_ft, exp_lr_scheduler, args.num_epochs,args.loss_function,args.center_loss_weight, args.s, args.m, dataset_loader, dataset_sizes, wandb)
+  File "C:\Users\marie\Desktop\Sanfour\MFRS\models\models_train.py", line 74, in train_model
+    criterion = MLoss(in_features=512, out_features=model.num_classe, loss_type=loss_type, s=s, m=m)
+  File "C:\Users\marie\AppData\Roaming\Python\Python39\site-packages\torch\nn\modules\module.py", line 1688, in __getattr__
+    raise AttributeError(f"'{type(self).__name__}' object has no attribute '{name}'")
+AttributeError: 'InceptionResnetV1' object has no attribute 'num_classe'

@@ -1,0 +1,89 @@
+2024-04-24 18:35:32,541 - INFO - Epoch 1/2
+2024-04-24 18:35:32,541 - INFO - ----------
+Training data shape: torch.Size([32, 3, 224, 224])
+Inside training loop - inputs shape: torch.Size([32, 3, 224, 224])
+Inside training loop - inputs shape: torch.Size([32, 3, 224, 224])
+Inside training loop - inputs shape: torch.Size([32, 3, 224, 224])
+Inside training loop - inputs shape: torch.Size([32, 3, 224, 224])
+Inside training loop - inputs shape: torch.Size([32, 3, 224, 224])
+Inside training loop - inputs shape: torch.Size([32, 3, 224, 224])
+Inside training loop - inputs shape: torch.Size([32, 3, 224, 224])
+Inside training loop - inputs shape: torch.Size([32, 3, 224, 224])
+Inside training loop - inputs shape: torch.Size([32, 3, 224, 224])
+Inside training loop - inputs shape: torch.Size([32, 3, 224, 224])
+Inside training loop - inputs shape: torch.Size([32, 3, 224, 224])
+Inside training loop - inputs shape: torch.Size([32, 3, 224, 224])
+Inside training loop - inputs shape: torch.Size([32, 3, 224, 224])
+Inside training loop - inputs shape: torch.Size([32, 3, 224, 224])
+Inside training loop - inputs shape: torch.Size([32, 3, 224, 224])
+Inside training loop - inputs shape: torch.Size([32, 3, 224, 224])
+Inside training loop - inputs shape: torch.Size([32, 3, 224, 224])
+Inside training loop - inputs shape: torch.Size([32, 3, 224, 224])
+Inside training loop - inputs shape: torch.Size([32, 3, 224, 224])
+Inside training loop - inputs shape: torch.Size([32, 3, 224, 224])
+Inside training loop - inputs shape: torch.Size([32, 3, 224, 224])
+Inside training loop - inputs shape: torch.Size([32, 3, 224, 224])
+Inside training loop - inputs shape: torch.Size([32, 3, 224, 224])
+Inside training loop - inputs shape: torch.Size([32, 3, 224, 224])
+Inside training loop - inputs shape: torch.Size([32, 3, 224, 224])
+Inside training loop - inputs shape: torch.Size([32, 3, 224, 224])
+Inside training loop - inputs shape: torch.Size([32, 3, 224, 224])
+Inside training loop - inputs shape: torch.Size([32, 3, 224, 224])
+Inside training loop - inputs shape: torch.Size([8, 3, 224, 224])
+2024-04-24 18:36:57,091 - INFO - Train Loss: 8.54 Acc: 0.00%
+Traceback (most recent call last):
+  File "C:\Users\marie\Desktop\Sanfour\MFRS\models\models_train.py", line 278, in <module>
+    model_ft = train_model(model, criterion, optimizer_ft, exp_lr_scheduler, args.num_epochs, dataset_loader, dataset_sizes, wandb)
+  File "C:\Users\marie\Desktop\Sanfour\MFRS\models\models_train.py", line 119, in train_model
+    for inputs, labels in dataset_loader["valid"]:
+  File "C:\Users\marie\AppData\Roaming\Python\Python39\site-packages\torch\utils\data\dataloader.py", line 631, in __next__
+    data = self._next_data()
+  File "C:\Users\marie\AppData\Roaming\Python\Python39\site-packages\torch\utils\data\dataloader.py", line 675, in _next_data
+    data = self._dataset_fetcher.fetch(index)  # may raise StopIteration
+  File "C:\Users\marie\AppData\Roaming\Python\Python39\site-packages\torch\utils\data\_utils\fetch.py", line 51, in fetch
+    data = [self.dataset[idx] for idx in possibly_batched_index]
+  File "C:\Users\marie\AppData\Roaming\Python\Python39\site-packages\torch\utils\data\_utils\fetch.py", line 51, in <listcomp>
+    data = [self.dataset[idx] for idx in possibly_batched_index]
+  File "C:\Users\marie\Desktop\Sanfour\MFRS\models\..\utils\load_data.py", line 52, in __getitem__
+    sample = self.transform(sample)
+  File "C:\Users\marie\AppData\Roaming\Python\Python39\site-packages\torchvision\transforms\transforms.py", line 95, in __call__
+    img = t(img)
+  File "C:\Users\marie\AppData\Roaming\Python\Python39\site-packages\torch\nn\modules\module.py", line 1511, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "C:\Users\marie\AppData\Roaming\Python\Python39\site-packages\torch\nn\modules\module.py", line 1520, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "C:\Users\marie\AppData\Roaming\Python\Python39\site-packages\torchvision\transforms\transforms.py", line 277, in forward
+    return F.normalize(tensor, self.mean, self.std, self.inplace)
+  File "C:\Users\marie\AppData\Roaming\Python\Python39\site-packages\torchvision\transforms\functional.py", line 349, in normalize
+    return F_t.normalize(tensor, mean=mean, std=std, inplace=inplace)
+  File "C:\Users\marie\AppData\Roaming\Python\Python39\site-packages\torchvision\transforms\_functional_tensor.py", line 926, in normalize
+    return tensor.sub_(mean).div_(std)
+RuntimeError: The size of tensor a (224) must match the size of tensor b (3) at non-singleton dimension 2
+Traceback (most recent call last):
+  File "C:\Users\marie\Desktop\Sanfour\MFRS\models\models_train.py", line 278, in <module>
+    model_ft = train_model(model, criterion, optimizer_ft, exp_lr_scheduler, args.num_epochs, dataset_loader, dataset_sizes, wandb)
+  File "C:\Users\marie\Desktop\Sanfour\MFRS\models\models_train.py", line 119, in train_model
+    for inputs, labels in dataset_loader["valid"]:
+  File "C:\Users\marie\AppData\Roaming\Python\Python39\site-packages\torch\utils\data\dataloader.py", line 631, in __next__
+    data = self._next_data()
+  File "C:\Users\marie\AppData\Roaming\Python\Python39\site-packages\torch\utils\data\dataloader.py", line 675, in _next_data
+    data = self._dataset_fetcher.fetch(index)  # may raise StopIteration
+  File "C:\Users\marie\AppData\Roaming\Python\Python39\site-packages\torch\utils\data\_utils\fetch.py", line 51, in fetch
+    data = [self.dataset[idx] for idx in possibly_batched_index]
+  File "C:\Users\marie\AppData\Roaming\Python\Python39\site-packages\torch\utils\data\_utils\fetch.py", line 51, in <listcomp>
+    data = [self.dataset[idx] for idx in possibly_batched_index]
+  File "C:\Users\marie\Desktop\Sanfour\MFRS\models\..\utils\load_data.py", line 52, in __getitem__
+    sample = self.transform(sample)
+  File "C:\Users\marie\AppData\Roaming\Python\Python39\site-packages\torchvision\transforms\transforms.py", line 95, in __call__
+    img = t(img)
+  File "C:\Users\marie\AppData\Roaming\Python\Python39\site-packages\torch\nn\modules\module.py", line 1511, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "C:\Users\marie\AppData\Roaming\Python\Python39\site-packages\torch\nn\modules\module.py", line 1520, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "C:\Users\marie\AppData\Roaming\Python\Python39\site-packages\torchvision\transforms\transforms.py", line 277, in forward
+    return F.normalize(tensor, self.mean, self.std, self.inplace)
+  File "C:\Users\marie\AppData\Roaming\Python\Python39\site-packages\torchvision\transforms\functional.py", line 349, in normalize
+    return F_t.normalize(tensor, mean=mean, std=std, inplace=inplace)
+  File "C:\Users\marie\AppData\Roaming\Python\Python39\site-packages\torchvision\transforms\_functional_tensor.py", line 926, in normalize
+    return tensor.sub_(mean).div_(std)
+RuntimeError: The size of tensor a (224) must match the size of tensor b (3) at non-singleton dimension 2

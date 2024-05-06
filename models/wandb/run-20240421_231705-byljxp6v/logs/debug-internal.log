@@ -1,0 +1,217 @@
+2024-04-21 23:17:05,268 INFO    StreamThr :23356 [internal.py:wandb_internal():86] W&B internal server running at pid: 23356, started at: 2024-04-21 23:17:05.260405
+2024-04-21 23:17:05,268 DEBUG   HandlerThread:23356 [handler.py:handle_request():144] handle_request: status
+2024-04-21 23:17:05,275 INFO    WriterThread:23356 [datastore.py:open_for_write():85] open: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240421_231705-byljxp6v\run-byljxp6v.wandb
+2024-04-21 23:17:05,275 DEBUG   SenderThread:23356 [sender.py:send():379] send: header
+2024-04-21 23:17:05,346 DEBUG   SenderThread:23356 [sender.py:send():379] send: run
+2024-04-21 23:17:05,624 INFO    SenderThread:23356 [dir_watcher.py:__init__():211] watching files in: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240421_231705-byljxp6v\files
+2024-04-21 23:17:05,624 INFO    SenderThread:23356 [sender.py:_start_run_threads():1121] run started: byljxp6v with start time 1713755825.268882
+2024-04-21 23:17:05,624 DEBUG   SenderThread:23356 [sender.py:send_request():406] send_request: summary_record
+2024-04-21 23:17:05,624 INFO    SenderThread:23356 [sender.py:_save_file():1375] saving file wandb-summary.json with policy end
+2024-04-21 23:17:05,638 DEBUG   HandlerThread:23356 [handler.py:handle_request():144] handle_request: check_version
+2024-04-21 23:17:05,638 DEBUG   SenderThread:23356 [sender.py:send_request():406] send_request: check_version
+2024-04-21 23:17:05,735 DEBUG   HandlerThread:23356 [handler.py:handle_request():144] handle_request: run_start
+2024-04-21 23:17:06,636 INFO    Thread-16 :23356 [dir_watcher.py:_on_file_created():271] file/dir created: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240421_231705-byljxp6v\files\wandb-summary.json
+2024-04-21 23:17:07,576 DEBUG   HandlerThread:23356 [system_info.py:__init__():31] System info init
+2024-04-21 23:17:07,576 DEBUG   HandlerThread:23356 [system_info.py:__init__():46] System info init done
+2024-04-21 23:17:07,576 INFO    HandlerThread:23356 [system_monitor.py:start():181] Starting system monitor
+2024-04-21 23:17:07,576 INFO    SystemMonitor:23356 [system_monitor.py:_start():145] Starting system asset monitoring threads
+2024-04-21 23:17:07,576 INFO    HandlerThread:23356 [system_monitor.py:probe():201] Collecting system info
+2024-04-21 23:17:07,581 INFO    SystemMonitor:23356 [interfaces.py:start():190] Started cpu monitoring
+2024-04-21 23:17:07,581 INFO    SystemMonitor:23356 [interfaces.py:start():190] Started disk monitoring
+2024-04-21 23:17:07,588 INFO    SystemMonitor:23356 [interfaces.py:start():190] Started gpu monitoring
+2024-04-21 23:17:07,602 INFO    SystemMonitor:23356 [interfaces.py:start():190] Started memory monitoring
+2024-04-21 23:17:07,616 DEBUG   HandlerThread:23356 [system_info.py:probe():195] Probing system
+2024-04-21 23:17:07,616 INFO    SystemMonitor:23356 [interfaces.py:start():190] Started network monitoring
+2024-04-21 23:17:07,623 DEBUG   HandlerThread:23356 [system_info.py:_probe_git():180] Probing git
+2024-04-21 23:17:07,728 DEBUG   HandlerThread:23356 [system_info.py:_probe_git():188] Probing git done
+2024-04-21 23:17:07,731 DEBUG   HandlerThread:23356 [system_info.py:probe():240] Probing system done
+2024-04-21 23:17:07,731 DEBUG   HandlerThread:23356 [system_monitor.py:probe():210] {'os': 'Windows-10-10.0.22631-SP0', 'python': '3.9.9', 'heartbeatAt': '2024-04-22T03:17:07.621925', 'startedAt': '2024-04-22T03:17:05.257762', 'docker': None, 'cuda': None, 'args': ('--dataset', 'VGGFace', '--model', 'FaceNet', '--batch_size', '256', '--lr', '0.1', '--optimizer', 'sgd'), 'state': 'running', 'program': 'C:\\Users\\marie\\Desktop\\Sanfour\\MFRS\\models\\models_train.py', 'codePath': 'models\\models_train.py', 'git': {'remote': 'https://github.com/BabaSanfour/MFRS.git', 'commit': 'e637c4f6aef437030500c2f41513aaee275c977f'}, 'email': None, 'root': 'C:/Users/marie/Desktop/Sanfour/MFRS', 'host': 'LAPTOP-CTGDVKVN', 'username': 'marie', 'executable': 'C:\\Program Files\\Python39\\python.exe', 'cpu_count': 8, 'cpu_count_logical': 16, 'cpu_freq': {'current': 2516.0, 'min': 0.0, 'max': 3801.0}, 'cpu_freq_per_core': [{'current': 2516.0, 'min': 0.0, 'max': 3801.0}], 'disk': {'total': 474.71581649780273, 'used': 351.6338882446289}, 'gpu': 'NVIDIA GeForce RTX 3050 6GB Laptop GPU', 'gpu_count': 1, 'gpu_devices': [{'name': 'NVIDIA GeForce RTX 3050 6GB Laptop GPU', 'memory_total': 6442450944}], 'memory': {'total': 15.189807891845703}}
+2024-04-21 23:17:07,731 INFO    HandlerThread:23356 [system_monitor.py:probe():211] Finished collecting system info
+2024-04-21 23:17:07,731 INFO    HandlerThread:23356 [system_monitor.py:probe():214] Publishing system info
+2024-04-21 23:17:07,731 DEBUG   HandlerThread:23356 [system_info.py:_save_pip():51] Saving list of pip packages installed into the current environment
+2024-04-21 23:17:07,733 DEBUG   HandlerThread:23356 [system_info.py:_save_pip():67] Saving pip packages done
+2024-04-21 23:17:07,734 INFO    HandlerThread:23356 [system_monitor.py:probe():216] Finished publishing system info
+2024-04-21 23:17:07,741 DEBUG   SenderThread:23356 [sender.py:send():379] send: files
+2024-04-21 23:17:07,741 INFO    SenderThread:23356 [sender.py:_save_file():1375] saving file wandb-metadata.json with policy now
+2024-04-21 23:17:07,748 DEBUG   HandlerThread:23356 [handler.py:handle_request():144] handle_request: stop_status
+2024-04-21 23:17:07,748 DEBUG   SenderThread:23356 [sender.py:send_request():406] send_request: stop_status
+2024-04-21 23:17:07,900 DEBUG   SenderThread:23356 [sender.py:send():379] send: telemetry
+2024-04-21 23:17:08,199 INFO    wandb-upload_0:23356 [upload_job.py:push():131] Uploaded file C:\Users\marie\AppData\Local\Temp\tmpke3cg1u3wandb\8hhum5is-wandb-metadata.json
+2024-04-21 23:17:08,652 INFO    Thread-16 :23356 [dir_watcher.py:_on_file_created():271] file/dir created: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240421_231705-byljxp6v\files\output.log
+2024-04-21 23:17:08,652 INFO    Thread-16 :23356 [dir_watcher.py:_on_file_created():271] file/dir created: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240421_231705-byljxp6v\files\wandb-metadata.json
+2024-04-21 23:17:08,652 INFO    Thread-16 :23356 [dir_watcher.py:_on_file_created():271] file/dir created: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240421_231705-byljxp6v\files\requirements.txt
+2024-04-21 23:17:09,652 ERROR   gpu       :23356 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-21 23:17:09,652 ERROR   gpu       :23356 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-21 23:17:10,196 ERROR   gpu       :23356 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-21 23:17:10,197 ERROR   gpu       :23356 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-21 23:17:10,458 DEBUG   HandlerThread:23356 [handler.py:handle_request():144] handle_request: status_report
+2024-04-21 23:17:10,659 INFO    Thread-16 :23356 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240421_231705-byljxp6v\files\output.log
+2024-04-21 23:17:12,198 ERROR   gpu       :23356 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-21 23:17:12,199 ERROR   gpu       :23356 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-21 23:17:12,721 ERROR   gpu       :23356 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-21 23:17:12,721 ERROR   gpu       :23356 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-21 23:17:14,726 ERROR   gpu       :23356 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-21 23:17:14,726 ERROR   gpu       :23356 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-21 23:17:15,281 ERROR   gpu       :23356 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-21 23:17:15,282 ERROR   gpu       :23356 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-21 23:17:15,476 DEBUG   HandlerThread:23356 [handler.py:handle_request():144] handle_request: status_report
+2024-04-21 23:17:17,286 ERROR   gpu       :23356 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-21 23:17:17,286 ERROR   gpu       :23356 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-21 23:17:17,846 ERROR   gpu       :23356 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-21 23:17:17,846 ERROR   gpu       :23356 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-21 23:17:19,851 ERROR   gpu       :23356 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-21 23:17:19,851 ERROR   gpu       :23356 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-21 23:17:20,523 DEBUG   HandlerThread:23356 [handler.py:handle_request():144] handle_request: status_report
+2024-04-21 23:17:22,727 ERROR   gpu       :23356 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-21 23:17:22,727 ERROR   gpu       :23356 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-21 23:17:22,774 DEBUG   HandlerThread:23356 [handler.py:handle_request():144] handle_request: stop_status
+2024-04-21 23:17:22,775 DEBUG   SenderThread:23356 [sender.py:send_request():406] send_request: stop_status
+2024-04-21 23:17:26,191 DEBUG   HandlerThread:23356 [handler.py:handle_request():144] handle_request: status_report
+2024-04-21 23:17:31,472 DEBUG   HandlerThread:23356 [handler.py:handle_request():144] handle_request: status_report
+2024-04-21 23:17:33,551 ERROR   gpu       :23356 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-21 23:17:33,599 ERROR   gpu       :23356 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-21 23:17:35,662 ERROR   gpu       :23356 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-21 23:17:35,663 ERROR   gpu       :23356 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-21 23:17:36,501 DEBUG   HandlerThread:23356 [handler.py:handle_request():144] handle_request: status_report
+2024-04-21 23:17:37,036 INFO    Thread-16 :23356 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240421_231705-byljxp6v\files\config.yaml
+2024-04-21 23:17:37,718 ERROR   gpu       :23356 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-21 23:17:37,779 DEBUG   HandlerThread:23356 [handler.py:handle_request():144] handle_request: stop_status
+2024-04-21 23:17:37,779 DEBUG   SenderThread:23356 [sender.py:send_request():406] send_request: stop_status
+2024-04-21 23:17:38,281 DEBUG   SenderThread:23356 [sender.py:send():379] send: exit
+2024-04-21 23:17:38,290 INFO    SenderThread:23356 [sender.py:send_exit():584] handling exit code: 1
+2024-04-21 23:17:38,290 INFO    SenderThread:23356 [sender.py:send_exit():586] handling runtime: 32
+2024-04-21 23:17:38,291 INFO    SenderThread:23356 [sender.py:_save_file():1375] saving file wandb-summary.json with policy end
+2024-04-21 23:17:38,291 INFO    SenderThread:23356 [sender.py:send_exit():592] send defer
+2024-04-21 23:17:38,291 DEBUG   HandlerThread:23356 [handler.py:handle_request():144] handle_request: defer
+2024-04-21 23:17:38,291 INFO    HandlerThread:23356 [handler.py:handle_request_defer():170] handle defer: 0
+2024-04-21 23:17:38,291 DEBUG   SenderThread:23356 [sender.py:send_request():406] send_request: defer
+2024-04-21 23:17:38,291 INFO    SenderThread:23356 [sender.py:send_request_defer():608] handle sender defer: 0
+2024-04-21 23:17:38,291 INFO    SenderThread:23356 [sender.py:transition_state():612] send defer: 1
+2024-04-21 23:17:38,291 DEBUG   HandlerThread:23356 [handler.py:handle_request():144] handle_request: defer
+2024-04-21 23:17:38,291 INFO    HandlerThread:23356 [handler.py:handle_request_defer():170] handle defer: 1
+2024-04-21 23:17:38,291 DEBUG   SenderThread:23356 [sender.py:send_request():406] send_request: defer
+2024-04-21 23:17:38,291 INFO    SenderThread:23356 [sender.py:send_request_defer():608] handle sender defer: 1
+2024-04-21 23:17:38,291 INFO    SenderThread:23356 [sender.py:transition_state():612] send defer: 2
+2024-04-21 23:17:38,291 DEBUG   HandlerThread:23356 [handler.py:handle_request():144] handle_request: defer
+2024-04-21 23:17:38,291 INFO    HandlerThread:23356 [handler.py:handle_request_defer():170] handle defer: 2
+2024-04-21 23:17:38,291 INFO    HandlerThread:23356 [system_monitor.py:finish():190] Stopping system monitor
+2024-04-21 23:17:38,291 DEBUG   SystemMonitor:23356 [system_monitor.py:_start():159] Starting system metrics aggregation loop
+2024-04-21 23:17:38,291 INFO    HandlerThread:23356 [interfaces.py:finish():202] Joined cpu monitor
+2024-04-21 23:17:38,291 DEBUG   SystemMonitor:23356 [system_monitor.py:_start():166] Finished system metrics aggregation loop
+2024-04-21 23:17:38,291 INFO    HandlerThread:23356 [interfaces.py:finish():202] Joined disk monitor
+2024-04-21 23:17:38,291 DEBUG   SystemMonitor:23356 [system_monitor.py:_start():170] Publishing last batch of metrics
+2024-04-21 23:17:39,043 INFO    Thread-16 :23356 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240421_231705-byljxp6v\files\wandb-summary.json
+2024-04-21 23:17:40,050 INFO    Thread-16 :23356 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240421_231705-byljxp6v\files\output.log
+2024-04-21 23:17:41,105 ERROR   gpu       :23356 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-21 23:17:41,202 INFO    HandlerThread:23356 [interfaces.py:finish():202] Joined gpu monitor
+2024-04-21 23:17:41,202 INFO    HandlerThread:23356 [interfaces.py:finish():202] Joined memory monitor
+2024-04-21 23:17:41,202 INFO    HandlerThread:23356 [interfaces.py:finish():202] Joined network monitor
+2024-04-21 23:17:41,202 DEBUG   HandlerThread:23356 [handler.py:handle_request():144] handle_request: poll_exit
+2024-04-21 23:17:41,202 DEBUG   SenderThread:23356 [sender.py:send_request():406] send_request: defer
+2024-04-21 23:17:41,202 INFO    SenderThread:23356 [sender.py:send_request_defer():608] handle sender defer: 2
+2024-04-21 23:17:41,202 INFO    SenderThread:23356 [sender.py:transition_state():612] send defer: 3
+2024-04-21 23:17:41,202 DEBUG   SenderThread:23356 [sender.py:send():379] send: stats
+2024-04-21 23:17:41,202 DEBUG   HandlerThread:23356 [handler.py:handle_request():144] handle_request: defer
+2024-04-21 23:17:41,216 DEBUG   SenderThread:23356 [sender.py:send_request():406] send_request: poll_exit
+2024-04-21 23:17:41,216 INFO    HandlerThread:23356 [handler.py:handle_request_defer():170] handle defer: 3
+2024-04-21 23:17:41,222 DEBUG   SenderThread:23356 [sender.py:send_request():406] send_request: defer
+2024-04-21 23:17:41,222 INFO    SenderThread:23356 [sender.py:send_request_defer():608] handle sender defer: 3
+2024-04-21 23:17:41,222 INFO    SenderThread:23356 [sender.py:transition_state():612] send defer: 4
+2024-04-21 23:17:41,223 DEBUG   HandlerThread:23356 [handler.py:handle_request():144] handle_request: defer
+2024-04-21 23:17:41,223 INFO    HandlerThread:23356 [handler.py:handle_request_defer():170] handle defer: 4
+2024-04-21 23:17:41,223 DEBUG   SenderThread:23356 [sender.py:send_request():406] send_request: defer
+2024-04-21 23:17:41,223 INFO    SenderThread:23356 [sender.py:send_request_defer():608] handle sender defer: 4
+2024-04-21 23:17:41,223 INFO    SenderThread:23356 [sender.py:transition_state():612] send defer: 5
+2024-04-21 23:17:41,223 DEBUG   HandlerThread:23356 [handler.py:handle_request():144] handle_request: defer
+2024-04-21 23:17:41,223 INFO    HandlerThread:23356 [handler.py:handle_request_defer():170] handle defer: 5
+2024-04-21 23:17:41,223 DEBUG   SenderThread:23356 [sender.py:send():379] send: summary
+2024-04-21 23:17:41,223 INFO    SenderThread:23356 [sender.py:_save_file():1375] saving file wandb-summary.json with policy end
+2024-04-21 23:17:41,223 DEBUG   SenderThread:23356 [sender.py:send_request():406] send_request: defer
+2024-04-21 23:17:41,223 INFO    SenderThread:23356 [sender.py:send_request_defer():608] handle sender defer: 5
+2024-04-21 23:17:41,223 INFO    SenderThread:23356 [sender.py:transition_state():612] send defer: 6
+2024-04-21 23:17:41,223 DEBUG   HandlerThread:23356 [handler.py:handle_request():144] handle_request: defer
+2024-04-21 23:17:41,223 INFO    HandlerThread:23356 [handler.py:handle_request_defer():170] handle defer: 6
+2024-04-21 23:17:41,223 DEBUG   SenderThread:23356 [sender.py:send_request():406] send_request: defer
+2024-04-21 23:17:41,223 INFO    SenderThread:23356 [sender.py:send_request_defer():608] handle sender defer: 6
+2024-04-21 23:17:41,223 INFO    SenderThread:23356 [sender.py:transition_state():612] send defer: 7
+2024-04-21 23:17:41,223 DEBUG   HandlerThread:23356 [handler.py:handle_request():144] handle_request: status_report
+2024-04-21 23:17:41,223 DEBUG   HandlerThread:23356 [handler.py:handle_request():144] handle_request: defer
+2024-04-21 23:17:41,223 INFO    HandlerThread:23356 [handler.py:handle_request_defer():170] handle defer: 7
+2024-04-21 23:17:41,223 DEBUG   SenderThread:23356 [sender.py:send_request():406] send_request: defer
+2024-04-21 23:17:41,223 INFO    SenderThread:23356 [sender.py:send_request_defer():608] handle sender defer: 7
+2024-04-21 23:17:41,897 INFO    SenderThread:23356 [sender.py:transition_state():612] send defer: 8
+2024-04-21 23:17:41,897 DEBUG   HandlerThread:23356 [handler.py:handle_request():144] handle_request: defer
+2024-04-21 23:17:41,897 INFO    HandlerThread:23356 [handler.py:handle_request_defer():170] handle defer: 8
+2024-04-21 23:17:41,897 DEBUG   SenderThread:23356 [sender.py:send_request():406] send_request: defer
+2024-04-21 23:17:41,897 INFO    SenderThread:23356 [sender.py:send_request_defer():608] handle sender defer: 8
+2024-04-21 23:17:41,897 INFO    SenderThread:23356 [job_builder.py:build():281] Attempting to build job artifact
+2024-04-21 23:17:41,897 INFO    SenderThread:23356 [job_builder.py:_get_source_type():400] is repo sourced job
+2024-04-21 23:17:42,009 INFO    SenderThread:23356 [job_builder.py:build():374] adding wandb-job metadata file
+2024-04-21 23:17:42,043 INFO    SenderThread:23356 [sender.py:transition_state():612] send defer: 9
+2024-04-21 23:17:42,043 DEBUG   HandlerThread:23356 [handler.py:handle_request():144] handle_request: defer
+2024-04-21 23:17:42,043 DEBUG   SenderThread:23356 [sender.py:send():379] send: artifact
+2024-04-21 23:17:42,043 INFO    HandlerThread:23356 [handler.py:handle_request_defer():170] handle defer: 9
+2024-04-21 23:17:42,067 INFO    Thread-16 :23356 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240421_231705-byljxp6v\files\output.log
+2024-04-21 23:17:42,067 INFO    Thread-16 :23356 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240421_231705-byljxp6v\files\wandb-summary.json
+2024-04-21 23:17:42,355 INFO    SenderThread:23356 [sender.py:send_artifact():1475] sent artifact job-https___github.com_BabaSanfour_MFRS.git_models_models_train.py - {'id': 'QXJ0aWZhY3Q6Nzk4MDc1OTM1', 'digest': 'bc18fe5ebf429598881f60fbcf4719f0', 'state': 'COMMITTED', 'aliases': [{'artifactCollectionName': 'job-https___github.com_BabaSanfour_MFRS.git_models_models_train.py', 'alias': 'latest'}, {'artifactCollectionName': 'job-https___github.com_BabaSanfour_MFRS.git_models_models_train.py', 'alias': 'v2'}], 'artifactSequence': {'id': 'QXJ0aWZhY3RDb2xsZWN0aW9uOjE2MjI4OTA0OA==', 'latestArtifact': {'id': 'QXJ0aWZhY3Q6Nzk4MDc1OTM1', 'versionIndex': 2}}, 'version': 'v2'}
+2024-04-21 23:17:42,355 DEBUG   SenderThread:23356 [sender.py:send_request():406] send_request: defer
+2024-04-21 23:17:42,355 INFO    SenderThread:23356 [sender.py:send_request_defer():608] handle sender defer: 9
+2024-04-21 23:17:42,355 INFO    SenderThread:23356 [dir_watcher.py:finish():358] shutting down directory watcher
+2024-04-21 23:17:43,071 INFO    SenderThread:23356 [dir_watcher.py:finish():388] scan: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240421_231705-byljxp6v\files
+2024-04-21 23:17:43,071 INFO    SenderThread:23356 [dir_watcher.py:finish():402] scan save: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240421_231705-byljxp6v\files\config.yaml config.yaml
+2024-04-21 23:17:43,071 INFO    SenderThread:23356 [dir_watcher.py:finish():402] scan save: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240421_231705-byljxp6v\files\output.log output.log
+2024-04-21 23:17:43,071 INFO    SenderThread:23356 [dir_watcher.py:finish():402] scan save: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240421_231705-byljxp6v\files\requirements.txt requirements.txt
+2024-04-21 23:17:43,077 INFO    SenderThread:23356 [dir_watcher.py:finish():402] scan save: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240421_231705-byljxp6v\files\wandb-metadata.json wandb-metadata.json
+2024-04-21 23:17:43,078 INFO    SenderThread:23356 [dir_watcher.py:finish():402] scan save: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240421_231705-byljxp6v\files\wandb-summary.json wandb-summary.json
+2024-04-21 23:17:43,078 INFO    SenderThread:23356 [sender.py:transition_state():612] send defer: 10
+2024-04-21 23:17:43,078 DEBUG   HandlerThread:23356 [handler.py:handle_request():144] handle_request: defer
+2024-04-21 23:17:43,078 INFO    HandlerThread:23356 [handler.py:handle_request_defer():170] handle defer: 10
+2024-04-21 23:17:43,078 DEBUG   SenderThread:23356 [sender.py:send_request():406] send_request: defer
+2024-04-21 23:17:43,084 INFO    SenderThread:23356 [sender.py:send_request_defer():608] handle sender defer: 10
+2024-04-21 23:17:43,084 INFO    SenderThread:23356 [file_pusher.py:finish():159] shutting down file pusher
+2024-04-21 23:17:43,306 INFO    wandb-upload_0:23356 [upload_job.py:push():131] Uploaded file C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240421_231705-byljxp6v\files\config.yaml
+2024-04-21 23:17:43,376 INFO    wandb-upload_1:23356 [upload_job.py:push():131] Uploaded file C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240421_231705-byljxp6v\files\output.log
+2024-04-21 23:17:43,431 INFO    wandb-upload_3:23356 [upload_job.py:push():131] Uploaded file C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240421_231705-byljxp6v\files\wandb-summary.json
+2024-04-21 23:17:43,460 INFO    wandb-upload_2:23356 [upload_job.py:push():131] Uploaded file C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240421_231705-byljxp6v\files\requirements.txt
+2024-04-21 23:17:43,668 INFO    Thread-15 :23356 [sender.py:transition_state():612] send defer: 11
+2024-04-21 23:17:43,668 DEBUG   HandlerThread:23356 [handler.py:handle_request():144] handle_request: defer
+2024-04-21 23:17:43,669 INFO    HandlerThread:23356 [handler.py:handle_request_defer():170] handle defer: 11
+2024-04-21 23:17:43,669 DEBUG   SenderThread:23356 [sender.py:send_request():406] send_request: defer
+2024-04-21 23:17:43,669 INFO    SenderThread:23356 [sender.py:send_request_defer():608] handle sender defer: 11
+2024-04-21 23:17:43,669 INFO    SenderThread:23356 [file_pusher.py:join():164] waiting for file pusher
+2024-04-21 23:17:43,669 INFO    SenderThread:23356 [sender.py:transition_state():612] send defer: 12
+2024-04-21 23:17:43,669 DEBUG   HandlerThread:23356 [handler.py:handle_request():144] handle_request: defer
+2024-04-21 23:17:43,669 INFO    HandlerThread:23356 [handler.py:handle_request_defer():170] handle defer: 12
+2024-04-21 23:17:43,669 DEBUG   SenderThread:23356 [sender.py:send_request():406] send_request: defer
+2024-04-21 23:17:43,669 INFO    SenderThread:23356 [sender.py:send_request_defer():608] handle sender defer: 12
+2024-04-21 23:17:43,669 INFO    SenderThread:23356 [file_stream.py:finish():593] file stream finish called
+2024-04-21 23:17:43,747 INFO    SenderThread:23356 [file_stream.py:finish():597] file stream finish is done
+2024-04-21 23:17:43,747 INFO    SenderThread:23356 [sender.py:transition_state():612] send defer: 13
+2024-04-21 23:17:43,747 DEBUG   HandlerThread:23356 [handler.py:handle_request():144] handle_request: defer
+2024-04-21 23:17:43,747 INFO    HandlerThread:23356 [handler.py:handle_request_defer():170] handle defer: 13
+2024-04-21 23:17:43,747 DEBUG   SenderThread:23356 [sender.py:send_request():406] send_request: defer
+2024-04-21 23:17:43,747 INFO    SenderThread:23356 [sender.py:send_request_defer():608] handle sender defer: 13
+2024-04-21 23:17:43,747 INFO    SenderThread:23356 [sender.py:transition_state():612] send defer: 14
+2024-04-21 23:17:43,747 DEBUG   HandlerThread:23356 [handler.py:handle_request():144] handle_request: defer
+2024-04-21 23:17:43,747 INFO    HandlerThread:23356 [handler.py:handle_request_defer():170] handle defer: 14
+2024-04-21 23:17:43,750 DEBUG   SenderThread:23356 [sender.py:send():379] send: final
+2024-04-21 23:17:43,751 DEBUG   SenderThread:23356 [sender.py:send():379] send: footer
+2024-04-21 23:17:43,751 DEBUG   SenderThread:23356 [sender.py:send_request():406] send_request: defer
+2024-04-21 23:17:43,751 INFO    SenderThread:23356 [sender.py:send_request_defer():608] handle sender defer: 14
+2024-04-21 23:17:43,751 DEBUG   HandlerThread:23356 [handler.py:handle_request():144] handle_request: poll_exit
+2024-04-21 23:17:43,751 DEBUG   HandlerThread:23356 [handler.py:handle_request():144] handle_request: server_info
+2024-04-21 23:17:43,751 DEBUG   HandlerThread:23356 [handler.py:handle_request():144] handle_request: get_summary
+2024-04-21 23:17:43,751 DEBUG   SenderThread:23356 [sender.py:send_request():406] send_request: poll_exit
+2024-04-21 23:17:43,751 DEBUG   HandlerThread:23356 [handler.py:handle_request():144] handle_request: sampled_history
+2024-04-21 23:17:43,751 DEBUG   SenderThread:23356 [sender.py:send_request():406] send_request: server_info
+2024-04-21 23:17:43,751 DEBUG   HandlerThread:23356 [handler.py:handle_request():144] handle_request: job_info
+2024-04-21 23:17:43,817 DEBUG   SenderThread:23356 [sender.py:send_request():406] send_request: job_info
+2024-04-21 23:17:43,817 INFO    MainThread:23356 [wandb_run.py:_footer_history_summary_info():3481] rendering history
+2024-04-21 23:17:43,817 INFO    MainThread:23356 [wandb_run.py:_footer_history_summary_info():3513] rendering summary
+2024-04-21 23:17:43,817 INFO    MainThread:23356 [wandb_run.py:_footer_sync_info():3440] logging synced files
+2024-04-21 23:17:43,817 DEBUG   HandlerThread:23356 [handler.py:handle_request():144] handle_request: shutdown
+2024-04-21 23:17:43,817 INFO    HandlerThread:23356 [handler.py:finish():861] shutting down handler
+2024-04-21 23:17:44,756 INFO    WriterThread:23356 [datastore.py:close():294] close: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240421_231705-byljxp6v\run-byljxp6v.wandb
+2024-04-21 23:17:44,827 INFO    SenderThread:23356 [sender.py:finish():1552] shutting down sender
+2024-04-21 23:17:44,827 INFO    SenderThread:23356 [file_pusher.py:finish():159] shutting down file pusher
+2024-04-21 23:17:44,827 INFO    SenderThread:23356 [file_pusher.py:join():164] waiting for file pusher

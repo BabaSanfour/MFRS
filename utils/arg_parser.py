@@ -21,13 +21,13 @@ def get_training_config_parser():
     data.add_argument(
         "--batch_size",
         type=int,
-        default=32,
+        default=4,
         help="Batch size."
     )
     data.add_argument(
         "--num_classes",
         type=int,
-        default=1000,
+        default=10000,
         help="Number of classes."
     )
 
@@ -46,7 +46,7 @@ def get_training_config_parser():
         "--n_input_channels",
         type=int,
         choices=[1, 3],
-        default=1,
+        default=3,
         help="Number of input channels (1 for grayscale, 3 for RGB)."
     )
     model.add_argument(
@@ -96,7 +96,7 @@ def get_training_config_parser():
     optimization.add_argument(
         "--num_epochs",
         type=int,
-        default=50,
+        default=2,
         help="Number of epochs for training."
     )
     optimization.add_argument(
@@ -145,6 +145,43 @@ def get_training_config_parser():
         default=42,
         help="Random seed for reproducibility."
     )
+
+    loss = parser.add_argument_group("loss")
+
+    loss.add_argument(
+        "--loss_function",
+        choices=["center_loss", "arcface", "cosface", "sphereface"],
+        help="Loss function to use."
+
+    )
+
+    scaleparam = parser.add_argument_group("scaleparam ")
+
+    scaleparam.add_argument(
+        "--s",
+        type=float,
+        default=30.0,
+        help="Scale parameter for angular losses."
+
+    )
+
+    marginParam = parser.add_argument_group("marginParam")
+
+    marginParam.add_argument(
+
+        "--m",
+        type=float,
+        default=0.5,
+        help="Margin parameter for angular losses."
+
+    )
+    center_loss_weight = parser.add_argument_group("center_loss_weight")
+
+    parser.add_argument(
+        "--center_loss_weight",
+          type=float, default=1, help="Weight for center loss if used with cross entropy.")
+
+
 
     return parser
 

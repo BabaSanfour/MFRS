@@ -1,0 +1,1138 @@
+2024-04-30 18:56:29,872 INFO    StreamThr :165440 [internal.py:wandb_internal():86] W&B internal server running at pid: 165440, started at: 2024-04-30 18:56:29.872725
+2024-04-30 18:56:29,877 DEBUG   HandlerThread:165440 [handler.py:handle_request():144] handle_request: status
+2024-04-30 18:56:29,878 INFO    WriterThread:165440 [datastore.py:open_for_write():85] open: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240430_185629-v9zui1yx\run-v9zui1yx.wandb
+2024-04-30 18:56:29,881 DEBUG   SenderThread:165440 [sender.py:send():379] send: header
+2024-04-30 18:56:29,917 DEBUG   SenderThread:165440 [sender.py:send():379] send: run
+2024-04-30 18:56:30,176 DEBUG   HandlerThread:165440 [handler.py:handle_request():144] handle_request: check_version
+2024-04-30 18:56:30,189 INFO    SenderThread:165440 [dir_watcher.py:__init__():211] watching files in: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240430_185629-v9zui1yx\files
+2024-04-30 18:56:30,189 INFO    SenderThread:165440 [sender.py:_start_run_threads():1121] run started: v9zui1yx with start time 1714517789.872724
+2024-04-30 18:56:30,191 DEBUG   SenderThread:165440 [sender.py:send_request():406] send_request: summary_record
+2024-04-30 18:56:30,191 INFO    SenderThread:165440 [sender.py:_save_file():1375] saving file wandb-summary.json with policy end
+2024-04-30 18:56:30,191 DEBUG   SenderThread:165440 [sender.py:send_request():406] send_request: check_version
+2024-04-30 18:56:30,324 DEBUG   HandlerThread:165440 [handler.py:handle_request():144] handle_request: run_start
+2024-04-30 18:56:31,201 INFO    Thread-16 :165440 [dir_watcher.py:_on_file_created():271] file/dir created: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240430_185629-v9zui1yx\files\wandb-summary.json
+2024-04-30 18:56:32,059 DEBUG   HandlerThread:165440 [system_info.py:__init__():31] System info init
+2024-04-30 18:56:32,059 DEBUG   HandlerThread:165440 [system_info.py:__init__():46] System info init done
+2024-04-30 18:56:32,059 INFO    HandlerThread:165440 [system_monitor.py:start():181] Starting system monitor
+2024-04-30 18:56:32,059 INFO    SystemMonitor:165440 [system_monitor.py:_start():145] Starting system asset monitoring threads
+2024-04-30 18:56:32,059 INFO    HandlerThread:165440 [system_monitor.py:probe():201] Collecting system info
+2024-04-30 18:56:32,091 INFO    SystemMonitor:165440 [interfaces.py:start():190] Started cpu monitoring
+2024-04-30 18:56:32,091 INFO    SystemMonitor:165440 [interfaces.py:start():190] Started disk monitoring
+2024-04-30 18:56:32,096 INFO    SystemMonitor:165440 [interfaces.py:start():190] Started gpu monitoring
+2024-04-30 18:56:32,122 INFO    SystemMonitor:165440 [interfaces.py:start():190] Started memory monitoring
+2024-04-30 18:56:32,252 INFO    SystemMonitor:165440 [interfaces.py:start():190] Started network monitoring
+2024-04-30 18:56:32,252 DEBUG   HandlerThread:165440 [system_info.py:probe():195] Probing system
+2024-04-30 18:56:32,255 DEBUG   HandlerThread:165440 [system_info.py:_probe_git():180] Probing git
+2024-04-30 18:56:32,344 DEBUG   HandlerThread:165440 [system_info.py:_probe_git():188] Probing git done
+2024-04-30 18:56:32,344 DEBUG   HandlerThread:165440 [system_info.py:probe():240] Probing system done
+2024-04-30 18:56:32,344 DEBUG   HandlerThread:165440 [system_monitor.py:probe():210] {'os': 'Windows-10-10.0.22631-SP0', 'python': '3.9.9', 'heartbeatAt': '2024-04-30T22:56:32.252827', 'startedAt': '2024-04-30T22:56:29.840063', 'docker': None, 'cuda': None, 'args': ('--dataset', 'VGGFace', '--model', 'FaceNet', '--batch_size', '16', '--lr', '0.1', '--optimizer', 'sgd'), 'state': 'running', 'program': 'C:\\Users\\marie\\Desktop\\Sanfour\\MFRS\\models\\models_train.py', 'codePath': 'models\\models_train.py', 'git': {'remote': 'https://github.com/BabaSanfour/MFRS.git', 'commit': 'e637c4f6aef437030500c2f41513aaee275c977f'}, 'email': None, 'root': 'C:/Users/marie/Desktop/Sanfour/MFRS', 'host': 'LAPTOP-CTGDVKVN', 'username': 'marie', 'executable': 'C:\\Program Files\\Python39\\python.exe', 'cpu_count': 8, 'cpu_count_logical': 16, 'cpu_freq': {'current': 2516.0, 'min': 0.0, 'max': 3801.0}, 'cpu_freq_per_core': [{'current': 2516.0, 'min': 0.0, 'max': 3801.0}], 'disk': {'total': 474.71581649780273, 'used': 376.1512870788574}, 'gpu': 'NVIDIA GeForce RTX 3050 6GB Laptop GPU', 'gpu_count': 1, 'gpu_devices': [{'name': 'NVIDIA GeForce RTX 3050 6GB Laptop GPU', 'memory_total': 6442450944}], 'memory': {'total': 15.189807891845703}}
+2024-04-30 18:56:32,344 INFO    HandlerThread:165440 [system_monitor.py:probe():211] Finished collecting system info
+2024-04-30 18:56:32,344 INFO    HandlerThread:165440 [system_monitor.py:probe():214] Publishing system info
+2024-04-30 18:56:32,344 DEBUG   HandlerThread:165440 [system_info.py:_save_pip():51] Saving list of pip packages installed into the current environment
+2024-04-30 18:56:32,348 DEBUG   HandlerThread:165440 [system_info.py:_save_pip():67] Saving pip packages done
+2024-04-30 18:56:32,375 INFO    HandlerThread:165440 [system_monitor.py:probe():216] Finished publishing system info
+2024-04-30 18:56:32,375 DEBUG   SenderThread:165440 [sender.py:send():379] send: files
+2024-04-30 18:56:32,375 INFO    SenderThread:165440 [sender.py:_save_file():1375] saving file wandb-metadata.json with policy now
+2024-04-30 18:56:32,388 DEBUG   HandlerThread:165440 [handler.py:handle_request():144] handle_request: stop_status
+2024-04-30 18:56:32,389 DEBUG   SenderThread:165440 [sender.py:send_request():406] send_request: stop_status
+2024-04-30 18:56:32,452 DEBUG   SenderThread:165440 [sender.py:send():379] send: telemetry
+2024-04-30 18:56:32,828 INFO    wandb-upload_0:165440 [upload_job.py:push():131] Uploaded file C:\Users\marie\AppData\Local\Temp\tmpokm0wjt6wandb\g979cckp-wandb-metadata.json
+2024-04-30 18:56:33,213 INFO    Thread-16 :165440 [dir_watcher.py:_on_file_created():271] file/dir created: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240430_185629-v9zui1yx\files\requirements.txt
+2024-04-30 18:56:33,213 INFO    Thread-16 :165440 [dir_watcher.py:_on_file_created():271] file/dir created: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240430_185629-v9zui1yx\files\wandb-metadata.json
+2024-04-30 18:56:33,213 INFO    Thread-16 :165440 [dir_watcher.py:_on_file_created():271] file/dir created: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240430_185629-v9zui1yx\files\output.log
+2024-04-30 18:56:34,317 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 18:56:34,317 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 18:56:34,839 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 18:56:34,839 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 18:56:35,232 INFO    Thread-16 :165440 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240430_185629-v9zui1yx\files\output.log
+2024-04-30 18:56:35,726 DEBUG   HandlerThread:165440 [handler.py:handle_request():144] handle_request: status_report
+2024-04-30 18:56:36,234 INFO    Thread-16 :165440 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240430_185629-v9zui1yx\files\output.log
+2024-04-30 18:56:36,852 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 18:56:36,852 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 18:56:37,364 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 18:56:37,364 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 18:56:38,250 INFO    Thread-16 :165440 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240430_185629-v9zui1yx\files\output.log
+2024-04-30 18:56:39,367 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 18:56:39,367 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 18:56:39,875 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 18:56:39,875 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 18:56:40,258 INFO    Thread-16 :165440 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240430_185629-v9zui1yx\files\output.log
+2024-04-30 18:56:41,421 DEBUG   HandlerThread:165440 [handler.py:handle_request():144] handle_request: status_report
+2024-04-30 18:56:41,890 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 18:56:41,890 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 18:56:42,269 INFO    Thread-16 :165440 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240430_185629-v9zui1yx\files\output.log
+2024-04-30 18:56:42,394 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 18:56:42,394 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 18:56:44,291 INFO    Thread-16 :165440 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240430_185629-v9zui1yx\files\output.log
+2024-04-30 18:56:44,416 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 18:56:44,416 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 18:56:44,926 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 18:56:44,926 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 18:56:46,388 INFO    Thread-16 :165440 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240430_185629-v9zui1yx\files\output.log
+2024-04-30 18:56:46,428 DEBUG   HandlerThread:165440 [handler.py:handle_request():144] handle_request: status_report
+2024-04-30 18:56:46,954 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 18:56:46,954 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 18:56:47,394 DEBUG   HandlerThread:165440 [handler.py:handle_request():144] handle_request: stop_status
+2024-04-30 18:56:47,394 DEBUG   SenderThread:165440 [sender.py:send_request():406] send_request: stop_status
+2024-04-30 18:56:47,465 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 18:56:47,465 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 18:56:48,495 INFO    Thread-16 :165440 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240430_185629-v9zui1yx\files\output.log
+2024-04-30 18:56:49,465 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 18:56:49,465 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 18:56:49,960 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 18:56:49,960 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 18:56:50,531 INFO    Thread-16 :165440 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240430_185629-v9zui1yx\files\output.log
+2024-04-30 18:56:51,968 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 18:56:51,968 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 18:56:52,032 DEBUG   HandlerThread:165440 [handler.py:handle_request():144] handle_request: status_report
+2024-04-30 18:56:52,463 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 18:56:52,463 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 18:56:52,570 INFO    Thread-16 :165440 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240430_185629-v9zui1yx\files\output.log
+2024-04-30 18:56:54,483 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 18:56:54,483 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 18:56:54,593 INFO    Thread-16 :165440 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240430_185629-v9zui1yx\files\output.log
+2024-04-30 18:56:54,978 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 18:56:54,978 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 18:56:56,633 INFO    Thread-16 :165440 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240430_185629-v9zui1yx\files\output.log
+2024-04-30 18:56:56,988 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 18:56:56,996 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 18:56:57,490 DEBUG   HandlerThread:165440 [handler.py:handle_request():144] handle_request: status_report
+2024-04-30 18:56:57,506 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 18:56:57,506 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 18:56:58,671 INFO    Thread-16 :165440 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240430_185629-v9zui1yx\files\output.log
+2024-04-30 18:56:59,514 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 18:56:59,514 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 18:57:00,023 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 18:57:00,023 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 18:57:00,701 INFO    Thread-16 :165440 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240430_185629-v9zui1yx\files\output.log
+2024-04-30 18:57:02,407 DEBUG   HandlerThread:165440 [handler.py:handle_request():144] handle_request: stop_status
+2024-04-30 18:57:02,408 DEBUG   SenderThread:165440 [sender.py:send_request():406] send_request: stop_status
+2024-04-30 18:57:02,582 DEBUG   HandlerThread:165440 [handler.py:handle_request():144] handle_request: status_report
+2024-04-30 18:57:02,739 INFO    Thread-16 :165440 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240430_185629-v9zui1yx\files\config.yaml
+2024-04-30 18:57:02,739 INFO    Thread-16 :165440 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240430_185629-v9zui1yx\files\output.log
+2024-04-30 18:57:04,059 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 18:57:04,059 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 18:57:04,578 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 18:57:04,578 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 18:57:04,781 INFO    Thread-16 :165440 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240430_185629-v9zui1yx\files\output.log
+2024-04-30 18:57:06,600 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 18:57:06,600 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 18:57:06,769 INFO    Thread-16 :165440 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240430_185629-v9zui1yx\files\output.log
+2024-04-30 18:57:07,110 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 18:57:07,110 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 18:57:08,042 DEBUG   HandlerThread:165440 [handler.py:handle_request():144] handle_request: status_report
+2024-04-30 18:57:08,789 INFO    Thread-16 :165440 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240430_185629-v9zui1yx\files\output.log
+2024-04-30 18:57:10,857 INFO    Thread-16 :165440 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240430_185629-v9zui1yx\files\output.log
+2024-04-30 18:57:11,890 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 18:57:11,890 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 18:57:12,407 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 18:57:12,407 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 18:57:12,882 INFO    Thread-16 :165440 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240430_185629-v9zui1yx\files\output.log
+2024-04-30 18:57:13,563 DEBUG   HandlerThread:165440 [handler.py:handle_request():144] handle_request: status_report
+2024-04-30 18:57:14,424 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 18:57:14,424 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 18:57:14,919 INFO    Thread-16 :165440 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240430_185629-v9zui1yx\files\output.log
+2024-04-30 18:57:14,935 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 18:57:14,935 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 18:57:16,970 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 18:57:16,970 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 18:57:16,970 INFO    Thread-16 :165440 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240430_185629-v9zui1yx\files\output.log
+2024-04-30 18:57:17,402 DEBUG   HandlerThread:165440 [handler.py:handle_request():144] handle_request: stop_status
+2024-04-30 18:57:17,402 DEBUG   SenderThread:165440 [sender.py:send_request():406] send_request: stop_status
+2024-04-30 18:57:17,464 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 18:57:17,464 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 18:57:18,576 DEBUG   HandlerThread:165440 [handler.py:handle_request():144] handle_request: status_report
+2024-04-30 18:57:18,991 INFO    Thread-16 :165440 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240430_185629-v9zui1yx\files\output.log
+2024-04-30 18:57:19,487 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 18:57:19,487 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 18:57:19,982 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 18:57:19,982 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 18:57:21,042 INFO    Thread-16 :165440 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240430_185629-v9zui1yx\files\output.log
+2024-04-30 18:57:21,999 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 18:57:21,999 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 18:57:22,495 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 18:57:22,495 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 18:57:23,070 INFO    Thread-16 :165440 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240430_185629-v9zui1yx\files\output.log
+2024-04-30 18:57:24,208 DEBUG   HandlerThread:165440 [handler.py:handle_request():144] handle_request: status_report
+2024-04-30 18:57:24,505 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 18:57:24,505 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 18:57:25,015 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 18:57:25,015 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 18:57:25,144 INFO    Thread-16 :165440 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240430_185629-v9zui1yx\files\output.log
+2024-04-30 18:57:27,022 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 18:57:27,022 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 18:57:27,165 INFO    Thread-16 :165440 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240430_185629-v9zui1yx\files\output.log
+2024-04-30 18:57:27,524 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 18:57:27,524 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 18:57:29,186 INFO    Thread-16 :165440 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240430_185629-v9zui1yx\files\output.log
+2024-04-30 18:57:29,531 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 18:57:29,531 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 18:57:29,657 DEBUG   HandlerThread:165440 [handler.py:handle_request():144] handle_request: status_report
+2024-04-30 18:57:30,047 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 18:57:30,047 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 18:57:30,192 INFO    Thread-16 :165440 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240430_185629-v9zui1yx\files\output.log
+2024-04-30 18:57:32,067 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 18:57:32,067 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 18:57:32,223 INFO    Thread-16 :165440 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240430_185629-v9zui1yx\files\output.log
+2024-04-30 18:57:32,255 DEBUG   SystemMonitor:165440 [system_monitor.py:_start():159] Starting system metrics aggregation loop
+2024-04-30 18:57:32,256 DEBUG   SenderThread:165440 [sender.py:send():379] send: stats
+2024-04-30 18:57:32,422 DEBUG   HandlerThread:165440 [handler.py:handle_request():144] handle_request: stop_status
+2024-04-30 18:57:32,433 DEBUG   SenderThread:165440 [sender.py:send_request():406] send_request: stop_status
+2024-04-30 18:57:32,571 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 18:57:32,571 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 18:57:34,248 INFO    Thread-16 :165440 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240430_185629-v9zui1yx\files\output.log
+2024-04-30 18:57:34,593 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 18:57:34,593 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 18:57:34,712 DEBUG   HandlerThread:165440 [handler.py:handle_request():144] handle_request: status_report
+2024-04-30 18:57:35,116 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 18:57:35,116 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 18:57:36,293 INFO    Thread-16 :165440 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240430_185629-v9zui1yx\files\output.log
+2024-04-30 18:57:37,124 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 18:57:37,124 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 18:57:37,633 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 18:57:37,649 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 18:57:38,317 INFO    Thread-16 :165440 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240430_185629-v9zui1yx\files\output.log
+2024-04-30 18:57:39,665 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 18:57:39,665 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 18:57:40,174 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 18:57:40,174 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 18:57:40,315 DEBUG   HandlerThread:165440 [handler.py:handle_request():144] handle_request: status_report
+2024-04-30 18:57:40,362 INFO    Thread-16 :165440 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240430_185629-v9zui1yx\files\output.log
+2024-04-30 18:57:42,188 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 18:57:42,188 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 18:57:42,409 INFO    Thread-16 :165440 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240430_185629-v9zui1yx\files\output.log
+2024-04-30 18:57:42,688 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 18:57:42,701 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 18:57:44,426 INFO    Thread-16 :165440 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240430_185629-v9zui1yx\files\output.log
+2024-04-30 18:57:44,709 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 18:57:44,709 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 18:57:45,205 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 18:57:45,205 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 18:57:45,787 DEBUG   HandlerThread:165440 [handler.py:handle_request():144] handle_request: status_report
+2024-04-30 18:57:46,444 INFO    Thread-16 :165440 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240430_185629-v9zui1yx\files\output.log
+2024-04-30 18:57:47,430 DEBUG   HandlerThread:165440 [handler.py:handle_request():144] handle_request: stop_status
+2024-04-30 18:57:47,431 DEBUG   SenderThread:165440 [sender.py:send_request():406] send_request: stop_status
+2024-04-30 18:57:48,461 INFO    Thread-16 :165440 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240430_185629-v9zui1yx\files\output.log
+2024-04-30 18:57:49,382 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 18:57:49,382 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 18:57:49,877 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 18:57:49,877 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 18:57:50,496 INFO    Thread-16 :165440 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240430_185629-v9zui1yx\files\output.log
+2024-04-30 18:57:51,779 DEBUG   HandlerThread:165440 [handler.py:handle_request():144] handle_request: status_report
+2024-04-30 18:57:51,889 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 18:57:51,889 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 18:57:52,385 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 18:57:52,385 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 18:57:52,541 INFO    Thread-16 :165440 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240430_185629-v9zui1yx\files\output.log
+2024-04-30 18:57:54,399 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 18:57:54,399 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 18:57:54,587 INFO    Thread-16 :165440 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240430_185629-v9zui1yx\files\output.log
+2024-04-30 18:57:54,898 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 18:57:54,898 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 18:57:56,631 INFO    Thread-16 :165440 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240430_185629-v9zui1yx\files\output.log
+2024-04-30 18:57:56,906 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 18:57:56,906 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 18:57:57,259 DEBUG   HandlerThread:165440 [handler.py:handle_request():144] handle_request: status_report
+2024-04-30 18:57:57,413 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 18:57:57,413 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 18:57:58,667 INFO    Thread-16 :165440 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240430_185629-v9zui1yx\files\output.log
+2024-04-30 18:57:59,422 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 18:57:59,422 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 18:57:59,934 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 18:57:59,934 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 18:58:00,754 INFO    Thread-16 :165440 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240430_185629-v9zui1yx\files\output.log
+2024-04-30 18:58:01,940 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 18:58:01,940 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 18:58:02,257 DEBUG   SenderThread:165440 [sender.py:send():379] send: stats
+2024-04-30 18:58:02,309 DEBUG   HandlerThread:165440 [handler.py:handle_request():144] handle_request: status_report
+2024-04-30 18:58:02,441 DEBUG   HandlerThread:165440 [handler.py:handle_request():144] handle_request: stop_status
+2024-04-30 18:58:02,441 DEBUG   SenderThread:165440 [sender.py:send_request():406] send_request: stop_status
+2024-04-30 18:58:02,454 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 18:58:02,454 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 18:58:02,845 INFO    Thread-16 :165440 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240430_185629-v9zui1yx\files\output.log
+2024-04-30 18:58:04,909 INFO    Thread-16 :165440 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240430_185629-v9zui1yx\files\output.log
+2024-04-30 18:58:06,467 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 18:58:06,467 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 18:58:07,002 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 18:58:07,002 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 18:58:07,002 INFO    Thread-16 :165440 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240430_185629-v9zui1yx\files\output.log
+2024-04-30 18:58:08,142 DEBUG   HandlerThread:165440 [handler.py:handle_request():144] handle_request: status_report
+2024-04-30 18:58:09,055 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 18:58:09,055 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 18:58:09,055 INFO    Thread-16 :165440 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240430_185629-v9zui1yx\files\output.log
+2024-04-30 18:58:09,570 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 18:58:09,570 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 18:58:11,102 INFO    Thread-16 :165440 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240430_185629-v9zui1yx\files\output.log
+2024-04-30 18:58:11,577 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 18:58:11,577 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 18:58:12,105 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 18:58:12,105 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 18:58:13,202 INFO    Thread-16 :165440 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240430_185629-v9zui1yx\files\output.log
+2024-04-30 18:58:14,067 DEBUG   HandlerThread:165440 [handler.py:handle_request():144] handle_request: status_report
+2024-04-30 18:58:14,124 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 18:58:14,124 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 18:58:14,633 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 18:58:14,633 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 18:58:16,644 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 18:58:16,644 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 18:58:17,154 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 18:58:17,158 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 18:58:17,345 INFO    Thread-16 :165440 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240430_185629-v9zui1yx\files\output.log
+2024-04-30 18:58:17,451 DEBUG   HandlerThread:165440 [handler.py:handle_request():144] handle_request: stop_status
+2024-04-30 18:58:17,452 DEBUG   SenderThread:165440 [sender.py:send_request():406] send_request: stop_status
+2024-04-30 18:58:19,343 DEBUG   HandlerThread:165440 [handler.py:handle_request():144] handle_request: status_report
+2024-04-30 18:58:21,162 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 18:58:21,162 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 18:58:21,510 INFO    Thread-16 :165440 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240430_185629-v9zui1yx\files\output.log
+2024-04-30 18:58:21,664 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 18:58:21,664 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 18:58:24,576 INFO    Thread-16 :165440 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240430_185629-v9zui1yx\files\output.log
+2024-04-30 18:58:25,122 DEBUG   HandlerThread:165440 [handler.py:handle_request():144] handle_request: status_report
+2024-04-30 18:58:26,427 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 18:58:26,427 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 18:58:26,629 INFO    Thread-16 :165440 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240430_185629-v9zui1yx\files\output.log
+2024-04-30 18:58:26,940 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 18:58:26,963 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 18:58:28,706 INFO    Thread-16 :165440 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240430_185629-v9zui1yx\files\output.log
+2024-04-30 18:58:28,973 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 18:58:28,974 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 18:58:29,468 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 18:58:29,468 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 18:58:30,443 DEBUG   HandlerThread:165440 [handler.py:handle_request():144] handle_request: status_report
+2024-04-30 18:58:30,759 INFO    Thread-16 :165440 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240430_185629-v9zui1yx\files\output.log
+2024-04-30 18:58:31,481 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 18:58:31,481 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 18:58:32,004 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 18:58:32,004 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 18:58:32,272 DEBUG   SenderThread:165440 [sender.py:send():379] send: stats
+2024-04-30 18:58:32,452 DEBUG   HandlerThread:165440 [handler.py:handle_request():144] handle_request: stop_status
+2024-04-30 18:58:32,452 DEBUG   SenderThread:165440 [sender.py:send_request():406] send_request: stop_status
+2024-04-30 18:58:33,847 INFO    Thread-16 :165440 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240430_185629-v9zui1yx\files\output.log
+2024-04-30 18:58:34,018 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 18:58:34,018 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 18:58:34,527 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 18:58:34,527 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 18:58:34,859 INFO    Thread-16 :165440 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240430_185629-v9zui1yx\files\output.log
+2024-04-30 18:58:36,434 DEBUG   HandlerThread:165440 [handler.py:handle_request():144] handle_request: status_report
+2024-04-30 18:58:36,530 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 18:58:36,530 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 18:58:36,921 INFO    Thread-16 :165440 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240430_185629-v9zui1yx\files\output.log
+2024-04-30 18:58:37,027 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 18:58:37,027 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 18:58:38,994 INFO    Thread-16 :165440 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240430_185629-v9zui1yx\files\output.log
+2024-04-30 18:58:39,044 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 18:58:39,044 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 18:58:39,548 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 18:58:39,550 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 18:58:41,072 INFO    Thread-16 :165440 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240430_185629-v9zui1yx\files\output.log
+2024-04-30 18:58:41,554 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 18:58:41,555 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 18:58:41,742 DEBUG   HandlerThread:165440 [handler.py:handle_request():144] handle_request: status_report
+2024-04-30 18:58:42,101 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 18:58:42,134 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 18:58:43,141 INFO    Thread-16 :165440 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240430_185629-v9zui1yx\files\output.log
+2024-04-30 18:58:44,199 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 18:58:44,199 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 18:58:44,715 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 18:58:44,715 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 18:58:45,208 INFO    Thread-16 :165440 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240430_185629-v9zui1yx\files\output.log
+2024-04-30 18:58:46,721 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 18:58:46,721 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 18:58:47,146 DEBUG   HandlerThread:165440 [handler.py:handle_request():144] handle_request: status_report
+2024-04-30 18:58:47,221 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 18:58:47,221 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 18:58:47,270 INFO    Thread-16 :165440 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240430_185629-v9zui1yx\files\output.log
+2024-04-30 18:58:47,457 DEBUG   HandlerThread:165440 [handler.py:handle_request():144] handle_request: stop_status
+2024-04-30 18:58:47,458 DEBUG   SenderThread:165440 [sender.py:send_request():406] send_request: stop_status
+2024-04-30 18:58:49,235 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 18:58:49,235 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 18:58:49,348 INFO    Thread-16 :165440 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240430_185629-v9zui1yx\files\output.log
+2024-04-30 18:58:49,735 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 18:58:49,735 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 18:58:51,749 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 18:58:51,749 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 18:58:52,249 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 18:58:52,249 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 18:58:52,486 DEBUG   HandlerThread:165440 [handler.py:handle_request():144] handle_request: status_report
+2024-04-30 18:58:53,493 INFO    Thread-16 :165440 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240430_185629-v9zui1yx\files\output.log
+2024-04-30 18:58:54,255 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 18:58:54,255 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 18:58:54,775 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 18:58:54,775 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 18:58:55,547 INFO    Thread-16 :165440 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240430_185629-v9zui1yx\files\output.log
+2024-04-30 18:58:56,784 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 18:58:56,784 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 18:58:57,305 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 18:58:57,305 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 18:58:57,627 INFO    Thread-16 :165440 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240430_185629-v9zui1yx\files\output.log
+2024-04-30 18:58:58,093 DEBUG   HandlerThread:165440 [handler.py:handle_request():144] handle_request: status_report
+2024-04-30 18:58:59,310 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 18:58:59,310 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 18:58:59,680 INFO    Thread-16 :165440 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240430_185629-v9zui1yx\files\output.log
+2024-04-30 18:58:59,824 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 18:58:59,824 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 18:59:00,730 INFO    Thread-16 :165440 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240430_185629-v9zui1yx\files\output.log
+2024-04-30 18:59:02,282 DEBUG   SenderThread:165440 [sender.py:send():379] send: stats
+2024-04-30 18:59:02,476 DEBUG   HandlerThread:165440 [handler.py:handle_request():144] handle_request: stop_status
+2024-04-30 18:59:02,501 DEBUG   SenderThread:165440 [sender.py:send_request():406] send_request: stop_status
+2024-04-30 18:59:02,817 INFO    Thread-16 :165440 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240430_185629-v9zui1yx\files\output.log
+2024-04-30 18:59:03,599 DEBUG   HandlerThread:165440 [handler.py:handle_request():144] handle_request: status_report
+2024-04-30 18:59:04,569 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 18:59:04,569 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 18:59:04,880 INFO    Thread-16 :165440 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240430_185629-v9zui1yx\files\output.log
+2024-04-30 18:59:05,076 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 18:59:05,076 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 18:59:06,939 INFO    Thread-16 :165440 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240430_185629-v9zui1yx\files\output.log
+2024-04-30 18:59:07,080 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 18:59:07,080 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 18:59:07,596 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 18:59:07,596 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 18:59:08,991 DEBUG   HandlerThread:165440 [handler.py:handle_request():144] handle_request: status_report
+2024-04-30 18:59:08,991 INFO    Thread-16 :165440 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240430_185629-v9zui1yx\files\output.log
+2024-04-30 18:59:09,599 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 18:59:09,600 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 18:59:10,097 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 18:59:10,097 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 18:59:11,054 INFO    Thread-16 :165440 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240430_185629-v9zui1yx\files\output.log
+2024-04-30 18:59:12,115 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 18:59:12,115 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 18:59:12,640 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 18:59:12,640 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 18:59:13,106 INFO    Thread-16 :165440 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240430_185629-v9zui1yx\files\output.log
+2024-04-30 18:59:14,246 DEBUG   HandlerThread:165440 [handler.py:handle_request():144] handle_request: status_report
+2024-04-30 18:59:14,641 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 18:59:14,641 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 18:59:15,173 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 18:59:15,177 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 18:59:15,177 INFO    Thread-16 :165440 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240430_185629-v9zui1yx\files\output.log
+2024-04-30 18:59:17,240 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 18:59:17,240 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 18:59:17,240 INFO    Thread-16 :165440 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240430_185629-v9zui1yx\files\output.log
+2024-04-30 18:59:17,476 DEBUG   HandlerThread:165440 [handler.py:handle_request():144] handle_request: stop_status
+2024-04-30 18:59:17,477 DEBUG   SenderThread:165440 [sender.py:send_request():406] send_request: stop_status
+2024-04-30 18:59:17,742 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 18:59:17,742 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 18:59:19,297 INFO    Thread-16 :165440 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240430_185629-v9zui1yx\files\output.log
+2024-04-30 18:59:19,620 DEBUG   HandlerThread:165440 [handler.py:handle_request():144] handle_request: status_report
+2024-04-30 18:59:19,758 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 18:59:19,758 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 18:59:20,262 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 18:59:20,262 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 18:59:21,360 INFO    Thread-16 :165440 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240430_185629-v9zui1yx\files\output.log
+2024-04-30 18:59:22,271 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 18:59:22,271 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 18:59:22,770 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 18:59:22,770 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 18:59:23,417 INFO    Thread-16 :165440 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240430_185629-v9zui1yx\files\output.log
+2024-04-30 18:59:24,773 DEBUG   HandlerThread:165440 [handler.py:handle_request():144] handle_request: status_report
+2024-04-30 18:59:24,773 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 18:59:24,773 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 18:59:25,283 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 18:59:25,283 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 18:59:27,293 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 18:59:27,293 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 18:59:27,544 INFO    Thread-16 :165440 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240430_185629-v9zui1yx\files\output.log
+2024-04-30 18:59:27,807 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 18:59:27,807 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 18:59:29,602 INFO    Thread-16 :165440 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240430_185629-v9zui1yx\files\output.log
+2024-04-30 18:59:29,810 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 18:59:29,810 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 18:59:30,288 DEBUG   HandlerThread:165440 [handler.py:handle_request():144] handle_request: status_report
+2024-04-30 18:59:30,312 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 18:59:30,312 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 18:59:31,689 INFO    Thread-16 :165440 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240430_185629-v9zui1yx\files\output.log
+2024-04-30 18:59:32,290 DEBUG   SenderThread:165440 [sender.py:send():379] send: stats
+2024-04-30 18:59:32,315 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 18:59:32,315 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 18:59:32,483 DEBUG   HandlerThread:165440 [handler.py:handle_request():144] handle_request: stop_status
+2024-04-30 18:59:32,484 DEBUG   SenderThread:165440 [sender.py:send_request():406] send_request: stop_status
+2024-04-30 18:59:32,816 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 18:59:32,816 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 18:59:33,769 INFO    Thread-16 :165440 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240430_185629-v9zui1yx\files\output.log
+2024-04-30 18:59:34,818 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 18:59:34,818 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 18:59:35,324 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 18:59:35,324 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 18:59:35,558 DEBUG   HandlerThread:165440 [handler.py:handle_request():144] handle_request: status_report
+2024-04-30 18:59:35,818 INFO    Thread-16 :165440 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240430_185629-v9zui1yx\files\output.log
+2024-04-30 18:59:37,338 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 18:59:37,339 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 18:59:37,863 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 18:59:37,898 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 18:59:37,898 INFO    Thread-16 :165440 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240430_185629-v9zui1yx\files\output.log
+2024-04-30 18:59:38,913 INFO    Thread-16 :165440 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240430_185629-v9zui1yx\files\output.log
+2024-04-30 18:59:40,988 INFO    Thread-16 :165440 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240430_185629-v9zui1yx\files\output.log
+2024-04-30 18:59:40,996 DEBUG   HandlerThread:165440 [handler.py:handle_request():144] handle_request: status_report
+2024-04-30 18:59:42,683 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 18:59:42,683 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 18:59:43,035 INFO    Thread-16 :165440 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240430_185629-v9zui1yx\files\output.log
+2024-04-30 18:59:43,181 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 18:59:43,181 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 18:59:45,102 INFO    Thread-16 :165440 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240430_185629-v9zui1yx\files\output.log
+2024-04-30 18:59:45,192 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 18:59:45,192 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 18:59:45,700 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 18:59:45,700 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 18:59:46,269 DEBUG   HandlerThread:165440 [handler.py:handle_request():144] handle_request: status_report
+2024-04-30 18:59:47,160 INFO    Thread-16 :165440 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240430_185629-v9zui1yx\files\output.log
+2024-04-30 18:59:47,474 DEBUG   HandlerThread:165440 [handler.py:handle_request():144] handle_request: stop_status
+2024-04-30 18:59:47,474 DEBUG   SenderThread:165440 [sender.py:send_request():406] send_request: stop_status
+2024-04-30 18:59:47,707 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 18:59:47,707 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 18:59:48,208 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 18:59:48,209 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 18:59:49,221 INFO    Thread-16 :165440 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240430_185629-v9zui1yx\files\output.log
+2024-04-30 18:59:50,266 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 18:59:50,266 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 18:59:50,784 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 18:59:50,784 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 18:59:51,279 INFO    Thread-16 :165440 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240430_185629-v9zui1yx\files\output.log
+2024-04-30 18:59:51,666 DEBUG   HandlerThread:165440 [handler.py:handle_request():144] handle_request: status_report
+2024-04-30 18:59:52,801 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 18:59:52,801 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 18:59:53,312 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 18:59:53,319 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 18:59:53,339 INFO    Thread-16 :165440 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240430_185629-v9zui1yx\files\output.log
+2024-04-30 18:59:55,326 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 18:59:55,326 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 18:59:55,836 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 18:59:55,836 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 18:59:56,305 DEBUG   HandlerThread:165440 [handler.py:handle_request():144] handle_request: partial_history
+2024-04-30 18:59:56,305 DEBUG   SenderThread:165440 [sender.py:send():379] send: history
+2024-04-30 18:59:56,305 DEBUG   SenderThread:165440 [sender.py:send_request():406] send_request: summary_record
+2024-04-30 18:59:56,309 INFO    SenderThread:165440 [sender.py:_save_file():1375] saving file wandb-summary.json with policy end
+2024-04-30 18:59:56,452 INFO    Thread-16 :165440 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240430_185629-v9zui1yx\files\wandb-summary.json
+2024-04-30 18:59:57,319 DEBUG   HandlerThread:165440 [handler.py:handle_request():144] handle_request: status_report
+2024-04-30 18:59:57,464 INFO    Thread-16 :165440 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240430_185629-v9zui1yx\files\output.log
+2024-04-30 18:59:57,838 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 18:59:57,838 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 18:59:58,366 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 18:59:58,366 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 18:59:58,511 INFO    Thread-16 :165440 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240430_185629-v9zui1yx\files\output.log
+2024-04-30 18:59:59,526 INFO    Thread-16 :165440 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240430_185629-v9zui1yx\files\output.log
+2024-04-30 19:00:00,367 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 19:00:00,368 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 19:00:00,864 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 19:00:00,864 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 19:00:01,578 INFO    Thread-16 :165440 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240430_185629-v9zui1yx\files\output.log
+2024-04-30 19:00:02,299 DEBUG   SenderThread:165440 [sender.py:send():379] send: stats
+2024-04-30 19:00:02,485 DEBUG   HandlerThread:165440 [handler.py:handle_request():144] handle_request: stop_status
+2024-04-30 19:00:02,486 DEBUG   SenderThread:165440 [sender.py:send_request():406] send_request: stop_status
+2024-04-30 19:00:02,753 DEBUG   HandlerThread:165440 [handler.py:handle_request():144] handle_request: status_report
+2024-04-30 19:00:02,867 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 19:00:02,867 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 19:00:03,381 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 19:00:03,381 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 19:00:03,651 INFO    Thread-16 :165440 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240430_185629-v9zui1yx\files\output.log
+2024-04-30 19:00:05,386 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 19:00:05,387 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 19:00:05,940 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 19:00:05,940 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 19:00:07,765 INFO    Thread-16 :165440 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240430_185629-v9zui1yx\files\output.log
+2024-04-30 19:00:07,975 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 19:00:07,975 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 19:00:08,481 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 19:00:08,489 DEBUG   HandlerThread:165440 [handler.py:handle_request():144] handle_request: status_report
+2024-04-30 19:00:08,490 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 19:00:10,511 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 19:00:10,511 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 19:00:11,028 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 19:00:11,028 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 19:00:11,886 INFO    Thread-16 :165440 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240430_185629-v9zui1yx\files\output.log
+2024-04-30 19:00:13,042 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 19:00:13,043 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 19:00:13,580 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 19:00:13,580 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 19:00:13,975 DEBUG   HandlerThread:165440 [handler.py:handle_request():144] handle_request: status_report
+2024-04-30 19:00:16,021 INFO    Thread-16 :165440 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240430_185629-v9zui1yx\files\output.log
+2024-04-30 19:00:17,485 DEBUG   HandlerThread:165440 [handler.py:handle_request():144] handle_request: stop_status
+2024-04-30 19:00:17,485 DEBUG   SenderThread:165440 [sender.py:send_request():406] send_request: stop_status
+2024-04-30 19:00:19,114 INFO    Thread-16 :165440 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240430_185629-v9zui1yx\files\output.log
+2024-04-30 19:00:19,699 DEBUG   HandlerThread:165440 [handler.py:handle_request():144] handle_request: status_report
+2024-04-30 19:00:20,347 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 19:00:20,347 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 19:00:20,872 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 19:00:20,873 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 19:00:21,177 INFO    Thread-16 :165440 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240430_185629-v9zui1yx\files\output.log
+2024-04-30 19:00:22,888 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 19:00:22,888 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 19:00:23,249 INFO    Thread-16 :165440 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240430_185629-v9zui1yx\files\output.log
+2024-04-30 19:00:23,410 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 19:00:23,410 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 19:00:24,845 DEBUG   HandlerThread:165440 [handler.py:handle_request():144] handle_request: status_report
+2024-04-30 19:00:25,315 INFO    Thread-16 :165440 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240430_185629-v9zui1yx\files\output.log
+2024-04-30 19:00:25,425 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 19:00:25,425 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 19:00:25,926 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 19:00:25,926 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 19:00:27,368 INFO    Thread-16 :165440 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240430_185629-v9zui1yx\files\output.log
+2024-04-30 19:00:27,931 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 19:00:27,931 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 19:00:28,435 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 19:00:28,435 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 19:00:29,451 INFO    Thread-16 :165440 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240430_185629-v9zui1yx\files\output.log
+2024-04-30 19:00:30,353 DEBUG   HandlerThread:165440 [handler.py:handle_request():144] handle_request: status_report
+2024-04-30 19:00:30,440 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 19:00:30,440 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 19:00:30,941 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 19:00:30,941 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 19:00:31,523 INFO    Thread-16 :165440 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240430_185629-v9zui1yx\files\output.log
+2024-04-30 19:00:32,300 DEBUG   SenderThread:165440 [sender.py:send():379] send: stats
+2024-04-30 19:00:32,504 DEBUG   HandlerThread:165440 [handler.py:handle_request():144] handle_request: stop_status
+2024-04-30 19:00:32,504 DEBUG   SenderThread:165440 [sender.py:send_request():406] send_request: stop_status
+2024-04-30 19:00:32,952 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 19:00:32,952 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 19:00:33,463 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 19:00:33,463 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 19:00:33,605 INFO    Thread-16 :165440 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240430_185629-v9zui1yx\files\output.log
+2024-04-30 19:00:35,397 DEBUG   HandlerThread:165440 [handler.py:handle_request():144] handle_request: status_report
+2024-04-30 19:00:35,478 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 19:00:35,478 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 19:00:35,666 INFO    Thread-16 :165440 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240430_185629-v9zui1yx\files\output.log
+2024-04-30 19:00:35,989 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 19:00:35,989 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 19:00:37,737 INFO    Thread-16 :165440 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240430_185629-v9zui1yx\files\output.log
+2024-04-30 19:00:38,003 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 19:00:38,003 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 19:00:38,499 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 19:00:38,514 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 19:00:39,801 INFO    Thread-16 :165440 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240430_185629-v9zui1yx\files\output.log
+2024-04-30 19:00:40,524 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 19:00:40,548 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 19:00:40,987 DEBUG   HandlerThread:165440 [handler.py:handle_request():144] handle_request: status_report
+2024-04-30 19:00:41,051 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 19:00:41,051 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 19:00:41,850 INFO    Thread-16 :165440 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240430_185629-v9zui1yx\files\output.log
+2024-04-30 19:00:43,884 INFO    Thread-16 :165440 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240430_185629-v9zui1yx\files\output.log
+2024-04-30 19:00:45,059 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 19:00:45,059 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 19:00:45,553 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 19:00:45,553 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 19:00:45,929 INFO    Thread-16 :165440 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240430_185629-v9zui1yx\files\output.log
+2024-04-30 19:00:46,440 DEBUG   HandlerThread:165440 [handler.py:handle_request():144] handle_request: status_report
+2024-04-30 19:00:47,529 DEBUG   HandlerThread:165440 [handler.py:handle_request():144] handle_request: stop_status
+2024-04-30 19:00:47,529 DEBUG   SenderThread:165440 [sender.py:send_request():406] send_request: stop_status
+2024-04-30 19:00:47,983 INFO    Thread-16 :165440 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240430_185629-v9zui1yx\files\output.log
+2024-04-30 19:00:49,584 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 19:00:49,584 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 19:00:50,038 INFO    Thread-16 :165440 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240430_185629-v9zui1yx\files\output.log
+2024-04-30 19:00:50,094 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 19:00:50,094 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 19:00:51,548 DEBUG   HandlerThread:165440 [handler.py:handle_request():144] handle_request: status_report
+2024-04-30 19:00:52,094 INFO    Thread-16 :165440 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240430_185629-v9zui1yx\files\output.log
+2024-04-30 19:00:52,110 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 19:00:52,110 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 19:00:52,604 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 19:00:52,604 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 19:00:54,168 INFO    Thread-16 :165440 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240430_185629-v9zui1yx\files\output.log
+2024-04-30 19:00:56,231 INFO    Thread-16 :165440 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240430_185629-v9zui1yx\files\output.log
+2024-04-30 19:00:57,236 DEBUG   HandlerThread:165440 [handler.py:handle_request():144] handle_request: status_report
+2024-04-30 19:00:57,299 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 19:00:57,299 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 19:00:57,793 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 19:00:57,793 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 19:00:58,353 INFO    Thread-16 :165440 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240430_185629-v9zui1yx\files\output.log
+2024-04-30 19:00:59,365 INFO    Thread-16 :165440 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240430_185629-v9zui1yx\files\output.log
+2024-04-30 19:00:59,806 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 19:00:59,806 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 19:01:00,300 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 19:01:00,300 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 19:01:01,425 INFO    Thread-16 :165440 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240430_185629-v9zui1yx\files\output.log
+2024-04-30 19:01:02,307 DEBUG   SenderThread:165440 [sender.py:send():379] send: stats
+2024-04-30 19:01:02,307 DEBUG   HandlerThread:165440 [handler.py:handle_request():144] handle_request: status_report
+2024-04-30 19:01:02,322 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 19:01:02,322 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 19:01:02,543 DEBUG   HandlerThread:165440 [handler.py:handle_request():144] handle_request: stop_status
+2024-04-30 19:01:02,543 DEBUG   SenderThread:165440 [sender.py:send_request():406] send_request: stop_status
+2024-04-30 19:01:02,818 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 19:01:02,818 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 19:01:03,483 INFO    Thread-16 :165440 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240430_185629-v9zui1yx\files\output.log
+2024-04-30 19:01:04,842 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 19:01:04,842 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 19:01:05,356 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 19:01:05,356 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 19:01:05,531 INFO    Thread-16 :165440 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240430_185629-v9zui1yx\files\output.log
+2024-04-30 19:01:07,371 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 19:01:07,371 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 19:01:07,582 INFO    Thread-16 :165440 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240430_185629-v9zui1yx\files\output.log
+2024-04-30 19:01:07,676 DEBUG   HandlerThread:165440 [handler.py:handle_request():144] handle_request: status_report
+2024-04-30 19:01:07,881 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 19:01:07,881 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 19:01:09,628 INFO    Thread-16 :165440 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240430_185629-v9zui1yx\files\output.log
+2024-04-30 19:01:11,698 INFO    Thread-16 :165440 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240430_185629-v9zui1yx\files\output.log
+2024-04-30 19:01:11,896 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 19:01:11,897 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 19:01:12,397 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 19:01:12,397 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 19:01:13,282 DEBUG   HandlerThread:165440 [handler.py:handle_request():144] handle_request: status_report
+2024-04-30 19:01:13,786 INFO    Thread-16 :165440 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240430_185629-v9zui1yx\files\output.log
+2024-04-30 19:01:14,419 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 19:01:14,419 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 19:01:14,924 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 19:01:14,924 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 19:01:15,842 INFO    Thread-16 :165440 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240430_185629-v9zui1yx\files\output.log
+2024-04-30 19:01:16,943 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 19:01:16,943 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 19:01:17,446 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 19:01:17,446 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 19:01:17,556 DEBUG   HandlerThread:165440 [handler.py:handle_request():144] handle_request: stop_status
+2024-04-30 19:01:17,556 DEBUG   SenderThread:165440 [sender.py:send_request():406] send_request: stop_status
+2024-04-30 19:01:17,906 INFO    Thread-16 :165440 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240430_185629-v9zui1yx\files\output.log
+2024-04-30 19:01:18,725 DEBUG   HandlerThread:165440 [handler.py:handle_request():144] handle_request: status_report
+2024-04-30 19:01:19,463 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 19:01:19,463 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 19:01:19,972 INFO    Thread-16 :165440 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240430_185629-v9zui1yx\files\output.log
+2024-04-30 19:01:19,972 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 19:01:19,972 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 19:01:21,976 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 19:01:21,976 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 19:01:22,008 INFO    Thread-16 :165440 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240430_185629-v9zui1yx\files\output.log
+2024-04-30 19:01:22,477 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 19:01:22,477 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 19:01:23,775 DEBUG   HandlerThread:165440 [handler.py:handle_request():144] handle_request: status_report
+2024-04-30 19:01:24,055 INFO    Thread-16 :165440 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240430_185629-v9zui1yx\files\output.log
+2024-04-30 19:01:24,478 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 19:01:24,478 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 19:01:24,980 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 19:01:24,980 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 19:01:26,115 INFO    Thread-16 :165440 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240430_185629-v9zui1yx\files\output.log
+2024-04-30 19:01:26,988 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 19:01:26,988 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 19:01:27,483 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 19:01:27,483 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 19:01:28,164 INFO    Thread-16 :165440 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240430_185629-v9zui1yx\files\output.log
+2024-04-30 19:01:29,364 DEBUG   HandlerThread:165440 [handler.py:handle_request():144] handle_request: status_report
+2024-04-30 19:01:29,490 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 19:01:29,490 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 19:01:29,984 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 19:01:29,984 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 19:01:30,214 INFO    Thread-16 :165440 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240430_185629-v9zui1yx\files\output.log
+2024-04-30 19:01:32,219 INFO    Thread-16 :165440 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240430_185629-v9zui1yx\files\output.log
+2024-04-30 19:01:32,314 DEBUG   SenderThread:165440 [sender.py:send():379] send: stats
+2024-04-30 19:01:32,587 DEBUG   HandlerThread:165440 [handler.py:handle_request():144] handle_request: stop_status
+2024-04-30 19:01:32,621 DEBUG   SenderThread:165440 [sender.py:send_request():406] send_request: stop_status
+2024-04-30 19:01:34,233 INFO    Thread-16 :165440 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240430_185629-v9zui1yx\files\output.log
+2024-04-30 19:01:34,754 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 19:01:34,754 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 19:01:34,834 DEBUG   HandlerThread:165440 [handler.py:handle_request():144] handle_request: status_report
+2024-04-30 19:01:35,266 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 19:01:35,266 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 19:01:36,252 INFO    Thread-16 :165440 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240430_185629-v9zui1yx\files\output.log
+2024-04-30 19:01:38,270 INFO    Thread-16 :165440 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240430_185629-v9zui1yx\files\output.log
+2024-04-30 19:01:39,281 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 19:01:39,281 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 19:01:39,817 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 19:01:39,817 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 19:01:39,857 DEBUG   HandlerThread:165440 [handler.py:handle_request():144] handle_request: status_report
+2024-04-30 19:01:40,291 INFO    Thread-16 :165440 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240430_185629-v9zui1yx\files\output.log
+2024-04-30 19:01:41,824 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 19:01:41,824 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 19:01:42,309 INFO    Thread-16 :165440 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240430_185629-v9zui1yx\files\output.log
+2024-04-30 19:01:42,325 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 19:01:42,325 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 19:01:44,314 INFO    Thread-16 :165440 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240430_185629-v9zui1yx\files\output.log
+2024-04-30 19:01:44,345 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 19:01:44,345 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 19:01:44,848 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 19:01:44,848 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 19:01:45,461 DEBUG   HandlerThread:165440 [handler.py:handle_request():144] handle_request: status_report
+2024-04-30 19:01:46,330 INFO    Thread-16 :165440 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240430_185629-v9zui1yx\files\output.log
+2024-04-30 19:01:47,576 DEBUG   HandlerThread:165440 [handler.py:handle_request():144] handle_request: stop_status
+2024-04-30 19:01:47,576 DEBUG   SenderThread:165440 [sender.py:send_request():406] send_request: stop_status
+2024-04-30 19:01:48,346 INFO    Thread-16 :165440 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240430_185629-v9zui1yx\files\output.log
+2024-04-30 19:01:48,880 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 19:01:48,880 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 19:01:49,396 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 19:01:49,396 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 19:01:50,360 INFO    Thread-16 :165440 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240430_185629-v9zui1yx\files\output.log
+2024-04-30 19:01:50,933 DEBUG   HandlerThread:165440 [handler.py:handle_request():144] handle_request: status_report
+2024-04-30 19:01:51,404 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 19:01:51,404 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 19:01:51,911 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 19:01:51,911 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 19:01:52,375 INFO    Thread-16 :165440 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240430_185629-v9zui1yx\files\output.log
+2024-04-30 19:01:53,960 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 19:01:53,960 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 19:01:54,392 INFO    Thread-16 :165440 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240430_185629-v9zui1yx\files\output.log
+2024-04-30 19:01:54,486 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 19:01:54,486 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 19:01:55,939 DEBUG   HandlerThread:165440 [handler.py:handle_request():144] handle_request: status_report
+2024-04-30 19:01:56,404 INFO    Thread-16 :165440 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240430_185629-v9zui1yx\files\output.log
+2024-04-30 19:01:56,498 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 19:01:56,498 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 19:01:56,994 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 19:01:56,994 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 19:01:58,426 INFO    Thread-16 :165440 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240430_185629-v9zui1yx\files\output.log
+2024-04-30 19:01:59,008 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 19:01:59,008 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 19:01:59,502 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 19:01:59,502 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 19:02:00,445 INFO    Thread-16 :165440 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240430_185629-v9zui1yx\files\output.log
+2024-04-30 19:02:00,965 DEBUG   HandlerThread:165440 [handler.py:handle_request():144] handle_request: status_report
+2024-04-30 19:02:02,323 DEBUG   SenderThread:165440 [sender.py:send():379] send: stats
+2024-04-30 19:02:02,450 INFO    Thread-16 :165440 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240430_185629-v9zui1yx\files\output.log
+2024-04-30 19:02:02,602 DEBUG   HandlerThread:165440 [handler.py:handle_request():144] handle_request: stop_status
+2024-04-30 19:02:02,603 DEBUG   SenderThread:165440 [sender.py:send_request():406] send_request: stop_status
+2024-04-30 19:02:03,522 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 19:02:03,522 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 19:02:04,014 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 19:02:04,014 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 19:02:04,462 INFO    Thread-16 :165440 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240430_185629-v9zui1yx\files\output.log
+2024-04-30 19:02:06,032 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 19:02:06,032 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 19:02:06,284 DEBUG   HandlerThread:165440 [handler.py:handle_request():144] handle_request: status_report
+2024-04-30 19:02:06,481 INFO    Thread-16 :165440 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240430_185629-v9zui1yx\files\output.log
+2024-04-30 19:02:06,528 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 19:02:06,528 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 19:02:08,503 INFO    Thread-16 :165440 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240430_185629-v9zui1yx\files\output.log
+2024-04-30 19:02:10,526 INFO    Thread-16 :165440 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240430_185629-v9zui1yx\files\output.log
+2024-04-30 19:02:11,531 DEBUG   HandlerThread:165440 [handler.py:handle_request():144] handle_request: status_report
+2024-04-30 19:02:12,546 INFO    Thread-16 :165440 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240430_185629-v9zui1yx\files\output.log
+2024-04-30 19:02:13,305 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 19:02:13,305 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 19:02:13,804 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 19:02:13,804 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 19:02:14,617 INFO    Thread-16 :165440 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240430_185629-v9zui1yx\files\output.log
+2024-04-30 19:02:15,815 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 19:02:15,815 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 19:02:16,313 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 19:02:16,313 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 19:02:16,655 INFO    Thread-16 :165440 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240430_185629-v9zui1yx\files\output.log
+2024-04-30 19:02:16,735 DEBUG   HandlerThread:165440 [handler.py:handle_request():144] handle_request: status_report
+2024-04-30 19:02:17,623 DEBUG   HandlerThread:165440 [handler.py:handle_request():144] handle_request: stop_status
+2024-04-30 19:02:17,623 DEBUG   SenderThread:165440 [sender.py:send_request():406] send_request: stop_status
+2024-04-30 19:02:18,322 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 19:02:18,322 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 19:02:18,718 INFO    Thread-16 :165440 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240430_185629-v9zui1yx\files\output.log
+2024-04-30 19:02:18,828 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 19:02:18,828 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 19:02:20,754 INFO    Thread-16 :165440 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240430_185629-v9zui1yx\files\output.log
+2024-04-30 19:02:20,833 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 19:02:20,833 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 19:02:21,340 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 19:02:21,340 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 19:02:21,991 DEBUG   HandlerThread:165440 [handler.py:handle_request():144] handle_request: status_report
+2024-04-30 19:02:22,813 INFO    Thread-16 :165440 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240430_185629-v9zui1yx\files\output.log
+2024-04-30 19:02:23,356 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 19:02:23,356 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 19:02:23,877 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 19:02:23,877 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 19:02:24,859 INFO    Thread-16 :165440 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240430_185629-v9zui1yx\files\output.log
+2024-04-30 19:02:25,890 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 19:02:25,890 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 19:02:26,394 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 19:02:26,394 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 19:02:26,913 INFO    Thread-16 :165440 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240430_185629-v9zui1yx\files\output.log
+2024-04-30 19:02:27,250 DEBUG   HandlerThread:165440 [handler.py:handle_request():144] handle_request: status_report
+2024-04-30 19:02:28,407 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 19:02:28,407 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 19:02:28,908 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 19:02:28,908 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 19:02:28,984 INFO    Thread-16 :165440 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240430_185629-v9zui1yx\files\output.log
+2024-04-30 19:02:30,923 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 19:02:30,923 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 19:02:31,066 INFO    Thread-16 :165440 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240430_185629-v9zui1yx\files\output.log
+2024-04-30 19:02:31,417 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 19:02:31,417 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 19:02:32,328 DEBUG   SenderThread:165440 [sender.py:send():379] send: stats
+2024-04-30 19:02:32,336 DEBUG   HandlerThread:165440 [handler.py:handle_request():144] handle_request: status_report
+2024-04-30 19:02:32,642 DEBUG   HandlerThread:165440 [handler.py:handle_request():144] handle_request: stop_status
+2024-04-30 19:02:32,643 DEBUG   SenderThread:165440 [sender.py:send_request():406] send_request: stop_status
+2024-04-30 19:02:33,131 INFO    Thread-16 :165440 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240430_185629-v9zui1yx\files\output.log
+2024-04-30 19:02:33,427 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 19:02:33,427 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 19:02:33,915 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 19:02:33,915 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 19:02:35,171 INFO    Thread-16 :165440 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240430_185629-v9zui1yx\files\output.log
+2024-04-30 19:02:37,226 INFO    Thread-16 :165440 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240430_185629-v9zui1yx\files\output.log
+2024-04-30 19:02:37,856 DEBUG   HandlerThread:165440 [handler.py:handle_request():144] handle_request: status_report
+2024-04-30 19:02:37,950 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 19:02:37,950 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 19:02:38,458 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 19:02:38,458 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 19:02:39,272 INFO    Thread-16 :165440 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240430_185629-v9zui1yx\files\output.log
+2024-04-30 19:02:40,468 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 19:02:40,468 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 19:02:40,956 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 19:02:40,972 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 19:02:41,318 INFO    Thread-16 :165440 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240430_185629-v9zui1yx\files\output.log
+2024-04-30 19:02:42,982 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 19:02:42,982 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 19:02:43,139 DEBUG   HandlerThread:165440 [handler.py:handle_request():144] handle_request: status_report
+2024-04-30 19:02:43,368 INFO    Thread-16 :165440 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240430_185629-v9zui1yx\files\output.log
+2024-04-30 19:02:43,483 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 19:02:43,484 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 19:02:44,395 INFO    Thread-16 :165440 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240430_185629-v9zui1yx\files\output.log
+2024-04-30 19:02:46,444 INFO    Thread-16 :165440 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240430_185629-v9zui1yx\files\output.log
+2024-04-30 19:02:47,651 DEBUG   HandlerThread:165440 [handler.py:handle_request():144] handle_request: stop_status
+2024-04-30 19:02:47,651 DEBUG   SenderThread:165440 [sender.py:send_request():406] send_request: stop_status
+2024-04-30 19:02:48,252 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 19:02:48,252 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 19:02:48,500 INFO    Thread-16 :165440 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240430_185629-v9zui1yx\files\output.log
+2024-04-30 19:02:48,666 DEBUG   HandlerThread:165440 [handler.py:handle_request():144] handle_request: status_report
+2024-04-30 19:02:48,750 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 19:02:48,750 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 19:02:50,555 INFO    Thread-16 :165440 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240430_185629-v9zui1yx\files\output.log
+2024-04-30 19:02:50,817 DEBUG   HandlerThread:165440 [handler.py:handle_request():144] handle_request: partial_history
+2024-04-30 19:02:50,817 DEBUG   SenderThread:165440 [sender.py:send():379] send: history
+2024-04-30 19:02:50,817 DEBUG   SenderThread:165440 [sender.py:send_request():406] send_request: summary_record
+2024-04-30 19:02:50,827 INFO    SenderThread:165440 [sender.py:_save_file():1375] saving file wandb-summary.json with policy end
+2024-04-30 19:02:51,601 INFO    Thread-16 :165440 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240430_185629-v9zui1yx\files\wandb-summary.json
+2024-04-30 19:02:52,611 INFO    Thread-16 :165440 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240430_185629-v9zui1yx\files\output.log
+2024-04-30 19:02:54,183 DEBUG   HandlerThread:165440 [handler.py:handle_request():144] handle_request: status_report
+2024-04-30 19:02:54,665 INFO    Thread-16 :165440 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240430_185629-v9zui1yx\files\output.log
+2024-04-30 19:02:54,775 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 19:02:54,775 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 19:02:55,305 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 19:02:55,305 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 19:02:56,717 INFO    Thread-16 :165440 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240430_185629-v9zui1yx\files\output.log
+2024-04-30 19:02:57,313 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 19:02:57,313 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 19:02:57,814 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 19:02:57,814 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 19:02:58,766 INFO    Thread-16 :165440 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240430_185629-v9zui1yx\files\output.log
+2024-04-30 19:02:59,406 DEBUG   HandlerThread:165440 [handler.py:handle_request():144] handle_request: status_report
+2024-04-30 19:02:59,822 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 19:02:59,822 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 19:03:00,311 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 19:03:00,311 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 19:03:00,821 INFO    Thread-16 :165440 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240430_185629-v9zui1yx\files\output.log
+2024-04-30 19:03:02,327 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 19:03:02,327 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 19:03:02,343 DEBUG   SenderThread:165440 [sender.py:send():379] send: stats
+2024-04-30 19:03:02,656 DEBUG   HandlerThread:165440 [handler.py:handle_request():144] handle_request: stop_status
+2024-04-30 19:03:02,656 DEBUG   SenderThread:165440 [sender.py:send_request():406] send_request: stop_status
+2024-04-30 19:03:02,821 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 19:03:02,821 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 19:03:02,869 INFO    Thread-16 :165440 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240430_185629-v9zui1yx\files\output.log
+2024-04-30 19:03:04,442 DEBUG   HandlerThread:165440 [handler.py:handle_request():144] handle_request: status_report
+2024-04-30 19:03:04,913 INFO    Thread-16 :165440 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240430_185629-v9zui1yx\files\output.log
+2024-04-30 19:03:06,841 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 19:03:06,841 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 19:03:06,967 INFO    Thread-16 :165440 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240430_185629-v9zui1yx\files\output.log
+2024-04-30 19:03:07,336 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 19:03:07,336 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 19:03:09,018 INFO    Thread-16 :165440 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240430_185629-v9zui1yx\files\output.log
+2024-04-30 19:03:09,347 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 19:03:09,347 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 19:03:09,816 DEBUG   HandlerThread:165440 [handler.py:handle_request():144] handle_request: status_report
+2024-04-30 19:03:09,848 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 19:03:09,848 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 19:03:11,143 INFO    Thread-16 :165440 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240430_185629-v9zui1yx\files\output.log
+2024-04-30 19:03:11,922 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 19:03:11,922 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 19:03:12,461 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 19:03:12,461 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 19:03:13,181 INFO    Thread-16 :165440 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240430_185629-v9zui1yx\files\output.log
+2024-04-30 19:03:14,485 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 19:03:14,485 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 19:03:14,979 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 19:03:14,979 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 19:03:15,231 INFO    Thread-16 :165440 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240430_185629-v9zui1yx\files\output.log
+2024-04-30 19:03:15,279 DEBUG   HandlerThread:165440 [handler.py:handle_request():144] handle_request: status_report
+2024-04-30 19:03:16,993 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 19:03:16,993 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 19:03:17,270 INFO    Thread-16 :165440 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240430_185629-v9zui1yx\files\output.log
+2024-04-30 19:03:17,496 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 19:03:17,496 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 19:03:17,669 DEBUG   HandlerThread:165440 [handler.py:handle_request():144] handle_request: stop_status
+2024-04-30 19:03:17,669 DEBUG   SenderThread:165440 [sender.py:send_request():406] send_request: stop_status
+2024-04-30 19:03:19,331 INFO    Thread-16 :165440 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240430_185629-v9zui1yx\files\output.log
+2024-04-30 19:03:19,521 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 19:03:19,521 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 19:03:20,043 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 19:03:20,043 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 19:03:20,712 DEBUG   HandlerThread:165440 [handler.py:handle_request():144] handle_request: status_report
+2024-04-30 19:03:21,417 INFO    Thread-16 :165440 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240430_185629-v9zui1yx\files\output.log
+2024-04-30 19:03:23,490 INFO    Thread-16 :165440 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240430_185629-v9zui1yx\files\output.log
+2024-04-30 19:03:24,343 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 19:03:24,343 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 19:03:24,531 INFO    Thread-16 :165440 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240430_185629-v9zui1yx\files\output.log
+2024-04-30 19:03:24,837 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 19:03:24,837 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 19:03:26,142 DEBUG   HandlerThread:165440 [handler.py:handle_request():144] handle_request: status_report
+2024-04-30 19:03:26,605 INFO    Thread-16 :165440 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240430_185629-v9zui1yx\files\output.log
+2024-04-30 19:03:26,854 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 19:03:26,854 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 19:03:27,351 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 19:03:27,351 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 19:03:28,708 INFO    Thread-16 :165440 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240430_185629-v9zui1yx\files\output.log
+2024-04-30 19:03:29,357 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 19:03:29,357 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 19:03:29,864 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 19:03:29,864 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 19:03:30,773 INFO    Thread-16 :165440 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240430_185629-v9zui1yx\files\output.log
+2024-04-30 19:03:31,564 DEBUG   HandlerThread:165440 [handler.py:handle_request():144] handle_request: status_report
+2024-04-30 19:03:31,871 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 19:03:31,871 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 19:03:32,355 DEBUG   SenderThread:165440 [sender.py:send():379] send: stats
+2024-04-30 19:03:32,371 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 19:03:32,371 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 19:03:32,684 DEBUG   HandlerThread:165440 [handler.py:handle_request():144] handle_request: stop_status
+2024-04-30 19:03:32,684 DEBUG   SenderThread:165440 [sender.py:send_request():406] send_request: stop_status
+2024-04-30 19:03:32,825 INFO    Thread-16 :165440 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240430_185629-v9zui1yx\files\output.log
+2024-04-30 19:03:34,383 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 19:03:34,383 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 19:03:34,895 INFO    Thread-16 :165440 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240430_185629-v9zui1yx\files\output.log
+2024-04-30 19:03:34,901 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 19:03:34,901 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 19:03:36,935 DEBUG   HandlerThread:165440 [handler.py:handle_request():144] handle_request: status_report
+2024-04-30 19:03:36,935 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 19:03:36,935 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 19:03:36,935 INFO    Thread-16 :165440 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240430_185629-v9zui1yx\files\output.log
+2024-04-30 19:03:37,473 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 19:03:37,474 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 19:03:38,999 INFO    Thread-16 :165440 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240430_185629-v9zui1yx\files\output.log
+2024-04-30 19:03:39,478 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 19:03:39,478 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 19:03:39,973 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 19:03:39,973 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 19:03:41,029 INFO    Thread-16 :165440 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240430_185629-v9zui1yx\files\output.log
+2024-04-30 19:03:41,995 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 19:03:41,996 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 19:03:42,308 DEBUG   HandlerThread:165440 [handler.py:handle_request():144] handle_request: status_report
+2024-04-30 19:03:42,491 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 19:03:42,491 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 19:03:43,049 INFO    Thread-16 :165440 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240430_185629-v9zui1yx\files\output.log
+2024-04-30 19:03:44,511 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 19:03:44,511 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-04-30 19:03:44,836 DEBUG   SenderThread:165440 [sender.py:send():379] send: exit
+2024-04-30 19:03:44,836 INFO    SenderThread:165440 [sender.py:send_exit():584] handling exit code: 1
+2024-04-30 19:03:44,836 INFO    SenderThread:165440 [sender.py:send_exit():586] handling runtime: 434
+2024-04-30 19:03:44,836 INFO    SenderThread:165440 [sender.py:_save_file():1375] saving file wandb-summary.json with policy end
+2024-04-30 19:03:44,851 INFO    SenderThread:165440 [sender.py:send_exit():592] send defer
+2024-04-30 19:03:44,851 DEBUG   HandlerThread:165440 [handler.py:handle_request():144] handle_request: defer
+2024-04-30 19:03:44,851 INFO    HandlerThread:165440 [handler.py:handle_request_defer():170] handle defer: 0
+2024-04-30 19:03:44,851 DEBUG   SenderThread:165440 [sender.py:send_request():406] send_request: defer
+2024-04-30 19:03:44,851 INFO    SenderThread:165440 [sender.py:send_request_defer():608] handle sender defer: 0
+2024-04-30 19:03:44,851 INFO    SenderThread:165440 [sender.py:transition_state():612] send defer: 1
+2024-04-30 19:03:44,851 DEBUG   HandlerThread:165440 [handler.py:handle_request():144] handle_request: defer
+2024-04-30 19:03:44,851 INFO    HandlerThread:165440 [handler.py:handle_request_defer():170] handle defer: 1
+2024-04-30 19:03:44,851 DEBUG   SenderThread:165440 [sender.py:send_request():406] send_request: defer
+2024-04-30 19:03:44,851 INFO    SenderThread:165440 [sender.py:send_request_defer():608] handle sender defer: 1
+2024-04-30 19:03:44,851 INFO    SenderThread:165440 [sender.py:transition_state():612] send defer: 2
+2024-04-30 19:03:44,851 DEBUG   HandlerThread:165440 [handler.py:handle_request():144] handle_request: defer
+2024-04-30 19:03:44,851 INFO    HandlerThread:165440 [handler.py:handle_request_defer():170] handle defer: 2
+2024-04-30 19:03:44,851 INFO    HandlerThread:165440 [system_monitor.py:finish():190] Stopping system monitor
+2024-04-30 19:03:44,851 DEBUG   SystemMonitor:165440 [system_monitor.py:_start():166] Finished system metrics aggregation loop
+2024-04-30 19:03:44,851 INFO    HandlerThread:165440 [interfaces.py:finish():202] Joined cpu monitor
+2024-04-30 19:03:44,851 DEBUG   SystemMonitor:165440 [system_monitor.py:_start():170] Publishing last batch of metrics
+2024-04-30 19:03:44,851 INFO    HandlerThread:165440 [interfaces.py:finish():202] Joined disk monitor
+2024-04-30 19:03:45,016 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 19:03:45,018 ERROR   gpu       :165440 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-04-30 19:03:45,101 INFO    Thread-16 :165440 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240430_185629-v9zui1yx\files\output.log
+2024-04-30 19:03:45,101 INFO    Thread-16 :165440 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240430_185629-v9zui1yx\files\wandb-summary.json
+2024-04-30 19:03:45,164 INFO    HandlerThread:165440 [interfaces.py:finish():202] Joined gpu monitor
+2024-04-30 19:03:45,164 INFO    HandlerThread:165440 [interfaces.py:finish():202] Joined memory monitor
+2024-04-30 19:03:45,164 INFO    HandlerThread:165440 [interfaces.py:finish():202] Joined network monitor
+2024-04-30 19:03:45,164 DEBUG   SenderThread:165440 [sender.py:send_request():406] send_request: defer
+2024-04-30 19:03:45,164 INFO    SenderThread:165440 [sender.py:send_request_defer():608] handle sender defer: 2
+2024-04-30 19:03:45,164 INFO    SenderThread:165440 [sender.py:transition_state():612] send defer: 3
+2024-04-30 19:03:45,164 DEBUG   SenderThread:165440 [sender.py:send():379] send: stats
+2024-04-30 19:03:45,164 DEBUG   HandlerThread:165440 [handler.py:handle_request():144] handle_request: defer
+2024-04-30 19:03:45,164 INFO    HandlerThread:165440 [handler.py:handle_request_defer():170] handle defer: 3
+2024-04-30 19:03:45,164 DEBUG   SenderThread:165440 [sender.py:send_request():406] send_request: defer
+2024-04-30 19:03:45,164 INFO    SenderThread:165440 [sender.py:send_request_defer():608] handle sender defer: 3
+2024-04-30 19:03:45,164 INFO    SenderThread:165440 [sender.py:transition_state():612] send defer: 4
+2024-04-30 19:03:45,164 DEBUG   HandlerThread:165440 [handler.py:handle_request():144] handle_request: defer
+2024-04-30 19:03:45,164 INFO    HandlerThread:165440 [handler.py:handle_request_defer():170] handle defer: 4
+2024-04-30 19:03:45,164 DEBUG   SenderThread:165440 [sender.py:send_request():406] send_request: defer
+2024-04-30 19:03:45,164 INFO    SenderThread:165440 [sender.py:send_request_defer():608] handle sender defer: 4
+2024-04-30 19:03:45,164 INFO    SenderThread:165440 [sender.py:transition_state():612] send defer: 5
+2024-04-30 19:03:45,164 DEBUG   HandlerThread:165440 [handler.py:handle_request():144] handle_request: defer
+2024-04-30 19:03:45,164 INFO    HandlerThread:165440 [handler.py:handle_request_defer():170] handle defer: 5
+2024-04-30 19:03:45,164 DEBUG   SenderThread:165440 [sender.py:send():379] send: summary
+2024-04-30 19:03:45,164 INFO    SenderThread:165440 [sender.py:_save_file():1375] saving file wandb-summary.json with policy end
+2024-04-30 19:03:45,164 DEBUG   SenderThread:165440 [sender.py:send_request():406] send_request: defer
+2024-04-30 19:03:45,180 INFO    SenderThread:165440 [sender.py:send_request_defer():608] handle sender defer: 5
+2024-04-30 19:03:45,180 INFO    SenderThread:165440 [sender.py:transition_state():612] send defer: 6
+2024-04-30 19:03:45,180 DEBUG   HandlerThread:165440 [handler.py:handle_request():144] handle_request: defer
+2024-04-30 19:03:45,180 INFO    HandlerThread:165440 [handler.py:handle_request_defer():170] handle defer: 6
+2024-04-30 19:03:45,180 DEBUG   SenderThread:165440 [sender.py:send_request():406] send_request: defer
+2024-04-30 19:03:45,180 INFO    SenderThread:165440 [sender.py:send_request_defer():608] handle sender defer: 6
+2024-04-30 19:03:45,180 INFO    SenderThread:165440 [sender.py:transition_state():612] send defer: 7
+2024-04-30 19:03:45,180 DEBUG   HandlerThread:165440 [handler.py:handle_request():144] handle_request: status_report
+2024-04-30 19:03:45,180 DEBUG   HandlerThread:165440 [handler.py:handle_request():144] handle_request: defer
+2024-04-30 19:03:45,180 INFO    HandlerThread:165440 [handler.py:handle_request_defer():170] handle defer: 7
+2024-04-30 19:03:45,180 DEBUG   SenderThread:165440 [sender.py:send_request():406] send_request: defer
+2024-04-30 19:03:45,180 INFO    SenderThread:165440 [sender.py:send_request_defer():608] handle sender defer: 7
+2024-04-30 19:03:45,867 DEBUG   HandlerThread:165440 [handler.py:handle_request():144] handle_request: poll_exit
+2024-04-30 19:03:46,095 INFO    Thread-16 :165440 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240430_185629-v9zui1yx\files\wandb-summary.json
+2024-04-30 19:03:46,873 INFO    SenderThread:165440 [sender.py:transition_state():612] send defer: 8
+2024-04-30 19:03:46,873 DEBUG   SenderThread:165440 [sender.py:send_request():406] send_request: poll_exit
+2024-04-30 19:03:46,873 DEBUG   HandlerThread:165440 [handler.py:handle_request():144] handle_request: defer
+2024-04-30 19:03:46,873 INFO    HandlerThread:165440 [handler.py:handle_request_defer():170] handle defer: 8
+2024-04-30 19:03:46,873 DEBUG   SenderThread:165440 [sender.py:send_request():406] send_request: defer
+2024-04-30 19:03:46,873 INFO    SenderThread:165440 [sender.py:send_request_defer():608] handle sender defer: 8
+2024-04-30 19:03:46,873 INFO    SenderThread:165440 [job_builder.py:build():281] Attempting to build job artifact
+2024-04-30 19:03:46,900 INFO    SenderThread:165440 [job_builder.py:_get_source_type():400] is repo sourced job
+2024-04-30 19:03:46,904 INFO    SenderThread:165440 [job_builder.py:build():374] adding wandb-job metadata file
+2024-04-30 19:03:46,968 INFO    SenderThread:165440 [sender.py:transition_state():612] send defer: 9
+2024-04-30 19:03:46,968 DEBUG   HandlerThread:165440 [handler.py:handle_request():144] handle_request: defer
+2024-04-30 19:03:46,968 INFO    HandlerThread:165440 [handler.py:handle_request_defer():170] handle defer: 9
+2024-04-30 19:03:46,968 DEBUG   SenderThread:165440 [sender.py:send():379] send: artifact
+2024-04-30 19:03:47,108 INFO    Thread-16 :165440 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240430_185629-v9zui1yx\files\output.log
+2024-04-30 19:03:47,487 INFO    wandb-upload_0:165440 [upload_job.py:push():86] Skipped uploading C:\Users\marie\AppData\Local\wandb\wandb\artifacts\staging\tmp1fuek2v9
+2024-04-30 19:03:47,799 INFO    wandb-upload_1:165440 [upload_job.py:push():89] Uploaded file C:\Users\marie\AppData\Local\wandb\wandb\artifacts\staging\tmpordzc194
+2024-04-30 19:03:48,554 INFO    SenderThread:165440 [sender.py:send_artifact():1475] sent artifact job-https___github.com_BabaSanfour_MFRS.git_models_models_train.py - {'id': 'QXJ0aWZhY3Q6ODE2NTMyMjA0', 'digest': '816ca725fa8d07fbc32864d68d164e79', 'state': 'PENDING', 'aliases': [], 'artifactSequence': {'id': 'QXJ0aWZhY3RDb2xsZWN0aW9uOjE2MjI4OTA0OA==', 'latestArtifact': {'id': 'QXJ0aWZhY3Q6ODEzNzYxMTQy', 'versionIndex': 3}}, 'version': 'latest'}
+2024-04-30 19:03:48,554 DEBUG   SenderThread:165440 [sender.py:send_request():406] send_request: defer
+2024-04-30 19:03:48,554 INFO    SenderThread:165440 [sender.py:send_request_defer():608] handle sender defer: 9
+2024-04-30 19:03:48,554 INFO    SenderThread:165440 [dir_watcher.py:finish():358] shutting down directory watcher
+2024-04-30 19:03:49,127 INFO    SenderThread:165440 [dir_watcher.py:finish():388] scan: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240430_185629-v9zui1yx\files
+2024-04-30 19:03:49,127 INFO    SenderThread:165440 [dir_watcher.py:finish():402] scan save: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240430_185629-v9zui1yx\files\config.yaml config.yaml
+2024-04-30 19:03:49,127 INFO    SenderThread:165440 [dir_watcher.py:finish():402] scan save: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240430_185629-v9zui1yx\files\output.log output.log
+2024-04-30 19:03:49,127 INFO    SenderThread:165440 [dir_watcher.py:finish():402] scan save: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240430_185629-v9zui1yx\files\requirements.txt requirements.txt
+2024-04-30 19:03:49,127 INFO    SenderThread:165440 [dir_watcher.py:finish():402] scan save: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240430_185629-v9zui1yx\files\wandb-metadata.json wandb-metadata.json
+2024-04-30 19:03:49,127 INFO    SenderThread:165440 [dir_watcher.py:finish():402] scan save: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240430_185629-v9zui1yx\files\wandb-summary.json wandb-summary.json
+2024-04-30 19:03:49,137 INFO    SenderThread:165440 [sender.py:transition_state():612] send defer: 10
+2024-04-30 19:03:49,137 DEBUG   HandlerThread:165440 [handler.py:handle_request():144] handle_request: defer
+2024-04-30 19:03:49,138 INFO    HandlerThread:165440 [handler.py:handle_request_defer():170] handle defer: 10
+2024-04-30 19:03:49,139 DEBUG   SenderThread:165440 [sender.py:send_request():406] send_request: defer
+2024-04-30 19:03:49,139 INFO    SenderThread:165440 [sender.py:send_request_defer():608] handle sender defer: 10
+2024-04-30 19:03:49,139 INFO    SenderThread:165440 [file_pusher.py:finish():159] shutting down file pusher
+2024-04-30 19:03:49,384 INFO    wandb-upload_0:165440 [upload_job.py:push():131] Uploaded file C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240430_185629-v9zui1yx\files\config.yaml
+2024-04-30 19:03:49,431 INFO    wandb-upload_2:165440 [upload_job.py:push():131] Uploaded file C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240430_185629-v9zui1yx\files\requirements.txt
+2024-04-30 19:03:49,447 INFO    wandb-upload_1:165440 [upload_job.py:push():131] Uploaded file C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240430_185629-v9zui1yx\files\output.log
+2024-04-30 19:03:49,478 INFO    wandb-upload_3:165440 [upload_job.py:push():131] Uploaded file C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240430_185629-v9zui1yx\files\wandb-summary.json
+2024-04-30 19:03:49,699 INFO    Thread-15 :165440 [sender.py:transition_state():612] send defer: 11
+2024-04-30 19:03:49,699 DEBUG   HandlerThread:165440 [handler.py:handle_request():144] handle_request: defer
+2024-04-30 19:03:49,699 INFO    HandlerThread:165440 [handler.py:handle_request_defer():170] handle defer: 11
+2024-04-30 19:03:49,699 DEBUG   SenderThread:165440 [sender.py:send_request():406] send_request: defer
+2024-04-30 19:03:49,699 INFO    SenderThread:165440 [sender.py:send_request_defer():608] handle sender defer: 11
+2024-04-30 19:03:49,699 INFO    SenderThread:165440 [file_pusher.py:join():164] waiting for file pusher
+2024-04-30 19:03:49,699 INFO    SenderThread:165440 [sender.py:transition_state():612] send defer: 12
+2024-04-30 19:03:49,699 DEBUG   HandlerThread:165440 [handler.py:handle_request():144] handle_request: defer
+2024-04-30 19:03:49,699 INFO    HandlerThread:165440 [handler.py:handle_request_defer():170] handle defer: 12
+2024-04-30 19:03:49,699 DEBUG   SenderThread:165440 [sender.py:send_request():406] send_request: defer
+2024-04-30 19:03:49,699 INFO    SenderThread:165440 [sender.py:send_request_defer():608] handle sender defer: 12
+2024-04-30 19:03:49,699 INFO    SenderThread:165440 [file_stream.py:finish():593] file stream finish called
+2024-04-30 19:03:49,942 INFO    SenderThread:165440 [file_stream.py:finish():597] file stream finish is done
+2024-04-30 19:03:49,942 INFO    SenderThread:165440 [sender.py:transition_state():612] send defer: 13
+2024-04-30 19:03:49,942 DEBUG   HandlerThread:165440 [handler.py:handle_request():144] handle_request: defer
+2024-04-30 19:03:49,942 INFO    HandlerThread:165440 [handler.py:handle_request_defer():170] handle defer: 13
+2024-04-30 19:03:49,945 DEBUG   SenderThread:165440 [sender.py:send_request():406] send_request: defer
+2024-04-30 19:03:49,945 INFO    SenderThread:165440 [sender.py:send_request_defer():608] handle sender defer: 13
+2024-04-30 19:03:49,945 INFO    SenderThread:165440 [sender.py:transition_state():612] send defer: 14
+2024-04-30 19:03:49,945 DEBUG   HandlerThread:165440 [handler.py:handle_request():144] handle_request: defer
+2024-04-30 19:03:49,945 INFO    HandlerThread:165440 [handler.py:handle_request_defer():170] handle defer: 14
+2024-04-30 19:03:49,945 DEBUG   SenderThread:165440 [sender.py:send():379] send: final
+2024-04-30 19:03:49,945 DEBUG   SenderThread:165440 [sender.py:send():379] send: footer
+2024-04-30 19:03:49,945 DEBUG   SenderThread:165440 [sender.py:send_request():406] send_request: defer
+2024-04-30 19:03:49,945 INFO    SenderThread:165440 [sender.py:send_request_defer():608] handle sender defer: 14
+2024-04-30 19:03:49,947 DEBUG   HandlerThread:165440 [handler.py:handle_request():144] handle_request: poll_exit
+2024-04-30 19:03:49,947 DEBUG   HandlerThread:165440 [handler.py:handle_request():144] handle_request: server_info
+2024-04-30 19:03:49,947 DEBUG   HandlerThread:165440 [handler.py:handle_request():144] handle_request: get_summary
+2024-04-30 19:03:49,947 DEBUG   SenderThread:165440 [sender.py:send_request():406] send_request: poll_exit
+2024-04-30 19:03:49,947 DEBUG   HandlerThread:165440 [handler.py:handle_request():144] handle_request: sampled_history
+2024-04-30 19:03:49,947 DEBUG   SenderThread:165440 [sender.py:send_request():406] send_request: server_info
+2024-04-30 19:03:49,947 DEBUG   HandlerThread:165440 [handler.py:handle_request():144] handle_request: job_info
+2024-04-30 19:03:50,014 DEBUG   SenderThread:165440 [sender.py:send_request():406] send_request: job_info
+2024-04-30 19:03:50,029 INFO    MainThread:165440 [wandb_run.py:_footer_history_summary_info():3481] rendering history
+2024-04-30 19:03:50,029 INFO    MainThread:165440 [wandb_run.py:_footer_history_summary_info():3513] rendering summary
+2024-04-30 19:03:50,029 INFO    MainThread:165440 [wandb_run.py:_footer_sync_info():3440] logging synced files
+2024-04-30 19:03:50,038 DEBUG   HandlerThread:165440 [handler.py:handle_request():144] handle_request: shutdown
+2024-04-30 19:03:50,038 INFO    HandlerThread:165440 [handler.py:finish():861] shutting down handler
+2024-04-30 19:03:50,951 INFO    WriterThread:165440 [datastore.py:close():294] close: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240430_185629-v9zui1yx\run-v9zui1yx.wandb
+2024-04-30 19:03:51,046 INFO    SenderThread:165440 [sender.py:finish():1552] shutting down sender
+2024-04-30 19:03:51,046 INFO    SenderThread:165440 [file_pusher.py:finish():159] shutting down file pusher
+2024-04-30 19:03:51,046 INFO    SenderThread:165440 [file_pusher.py:join():164] waiting for file pusher

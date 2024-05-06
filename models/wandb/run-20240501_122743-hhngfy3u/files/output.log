@@ -1,0 +1,64 @@
+
+Training with center_loss_weight = 0.1
+2024-05-01 12:27:45,571 - INFO - Epoch 1/2
+2024-05-01 12:27:45,571 - INFO - ----------
+2024-05-01 12:30:02,898 - INFO - Train Loss: 12.25 Acc: 0.00%
+2024-05-01 12:31:12,711 - INFO - Valid Loss: 9.23 Acc: 0.00%
+2024-05-01 12:31:12,712 - INFO - Epoch 2/2
+2024-05-01 12:31:12,712 - INFO - ----------
+2024-05-01 12:33:27,075 - INFO - Train Loss: 11.86 Acc: 0.26%
+2024-05-01 12:34:05,862 - INFO - Valid Loss: 26.81 Acc: 0.32%
+2024-05-01 12:34:05,862 - INFO - Training complete in 0.0 h 6.0 m 20.290764331817627 s
+2024-05-01 12:34:05,862 - INFO - Best val Acc: 0.32%
+2024-05-01 12:35:03,257 - INFO - Test Loss: 34.59
+2024-05-01 12:35:03,257 - INFO - Test Accuracy (Top1): 0.32%
+2024-05-01 12:35:03,258 - INFO - Test Accuracy (Top5): 1.43%
+2024-05-01 12:35:03,260 - INFO - Epoch 1/2
+2024-05-01 12:35:03,260 - INFO - ----------
+Finished training with center_loss_weight = 0.1, Test Accuracy: (0.31746031746031744, 1.4285714285714286)
+Training with center_loss_weight = 0.2
+2024-05-01 12:37:29,323 - INFO - Train Loss: 13.88 Acc: 0.39%
+2024-05-01 12:38:30,561 - INFO - Valid Loss: 9.85 Acc: 0.32%
+2024-05-01 12:38:30,561 - INFO - Epoch 2/2
+2024-05-01 12:38:30,561 - INFO - ----------
+2024-05-01 12:40:08,854 - INFO - Train Loss: 13.07 Acc: 0.78%
+2024-05-01 12:41:01,162 - INFO - Valid Loss: 8.87 Acc: 0.16%
+2024-05-01 12:41:01,162 - INFO - Training complete in 0.0 h 5.0 m 57.90148305892944 s
+2024-05-01 12:41:01,162 - INFO - Best val Acc: 0.32%
+2024-05-01 12:42:09,588 - INFO - Test Loss: 13.56
+2024-05-01 12:42:09,589 - INFO - Test Accuracy (Top1): 0.16%
+2024-05-01 12:42:09,589 - INFO - Test Accuracy (Top5): 1.43%
+2024-05-01 12:42:09,591 - INFO - Epoch 1/2
+2024-05-01 12:42:09,591 - INFO - ----------
+Finished training with center_loss_weight = 0.2, Test Accuracy: (0.15873015873015872, 1.4285714285714286)
+Training with center_loss_weight = 0.5
+2024-05-01 12:44:33,490 - INFO - Train Loss: 19.61 Acc: 0.39%
+2024-05-01 12:45:28,197 - INFO - Valid Loss: 8.85 Acc: 0.32%
+2024-05-01 12:45:28,197 - INFO - Epoch 2/2
+2024-05-01 12:45:28,197 - INFO - ----------
+2024-05-01 12:47:39,139 - INFO - Train Loss: 18.95 Acc: 1.69%
+2024-05-01 12:48:47,664 - INFO - Valid Loss: 8.98 Acc: 0.16%
+2024-05-01 12:48:47,665 - INFO - Training complete in 0.0 h 6.0 m 38.0738251209259 s
+2024-05-01 12:48:47,665 - INFO - Best val Acc: 0.32%
+Finished training with center_loss_weight = 0.5, Test Accuracy: (0.15873015873015872, 1.9047619047619047)
+Training with center_loss_weight = 1.0
+2024-05-01 12:49:59,541 - INFO - Test Loss: 20.64
+2024-05-01 12:49:59,541 - INFO - Test Accuracy (Top1): 0.16%
+2024-05-01 12:49:59,541 - INFO - Test Accuracy (Top5): 1.90%
+2024-05-01 12:49:59,541 - INFO - Epoch 1/2
+2024-05-01 12:49:59,541 - INFO - ----------
+2024-05-01 12:52:17,259 - INFO - Train Loss: 30.13 Acc: 1.95%
+2024-05-01 12:53:23,307 - INFO - Valid Loss: 9.27 Acc: 0.32%
+2024-05-01 12:53:23,307 - INFO - Epoch 2/2
+2024-05-01 12:53:23,307 - INFO - ----------
+2024-05-01 13:11:42,986 - INFO - Train Loss: 29.43 Acc: 3.39%
+2024-05-01 13:12:21,777 - INFO - Valid Loss: 10.42 Acc: 0.79%
+2024-05-01 13:12:21,777 - INFO - Training complete in 0.0 h 22.0 m 22.23571515083313 s
+2024-05-01 13:12:21,777 - INFO - Best val Acc: 0.79%
+Finished training with center_loss_weight = 1.0, Test Accuracy: (0.7936507936507936, 3.3333333333333335)
+2024-05-01 13:13:27,255 - INFO - Test Loss: 34.01
+2024-05-01 13:13:27,271 - INFO - Test Accuracy (Top1): 0.79%
+2024-05-01 13:13:27,271 - INFO - Test Accuracy (Top5): 3.33%
+2024-05-01 13:13:27,716 - INFO - Training complete.
+2024-05-01 13:13:27,716 - INFO - Training ended in 0.0 h 45.0 m 45.93902635574341 s
+2024-05-01 13:13:27,864 - INFO - Model weights saved to None_42.pth

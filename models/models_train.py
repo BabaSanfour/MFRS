@@ -19,6 +19,9 @@ from vgg import vgg16_bn
 from FaceNet import FaceNet
 from SphereFace import SphereFace
 
+from Centerloss import CenterLoss , MLoss
+
+
 import sys
 sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 from utils.load_data import dataloader
@@ -38,14 +41,23 @@ def init_weights_randomly(model):
         elif isinstance(m, nn.BatchNorm2d):
             nn.init.constant_(m.weight.data, 1)
             nn.init.constant_(m.bias.data, 0)
+def get_loss_function(args):
+    if args.loss_function == 'center_loss':
+        criterion_ce = nn.CrossEntropyLoss()
+        criterion_center = CenterLoss(num_classes=args.num_classes, feat_dim=512)
+        return lambda logits, labels, features: criterion_ce(logits, labels) + args.center_loss_weight * criterion_center(features, labels)
+    elif args.loss_function in ['cosface', 'arcface', 'sphereface']:
+        return MLoss(in_features=512, out_features=args.num_classes, loss_type=args.loss_function, s=args.s, m=args.m)
+    else:
+        raise ValueError("Unsupported loss function")
 
-
-def train_model(model: nn.Module, criterion, optimizer: Optimizer, scheduler: _LRScheduler, num_epochs: int, 
+def train_model(model: nn.Module, optimizer: Optimizer, scheduler: _LRScheduler, num_epochs: int, loss_func,
                 dataset_loader: Dict[str, DataLoader], dataset_sizes: Dict[str, int], wandb: Optional[Any] = None) -> nn.Module:
     """
     Train the model using the train and validation datasets.
 
     Args:
+        criterien_ce = criteien 
         model (nn.Module): The neural network model to be trained.
         criterion: The loss function.
         optimizer: The optimizer for updating model weights.
@@ -59,79 +71,86 @@ def train_model(model: nn.Module, criterion, optimizer: Optimizer, scheduler: _L
         nn.Module: The best-trained model.
     """
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    model.to(device)
+    
     best_acc = -1.0
-    list_train_loss = []
-    list_train_acc = []
-    list_val_loss = []
-    list_val_acc = []
-
+    list_train_loss = []#ena zedthom
+    list_train_acc = []#ena zedthom
+    list_val_loss = []#ena zedthom
+    list_val_acc = []#ena zedthom
     since = time.time()
     logger = logging.getLogger(__name__)
+    
 
     for epoch in range(num_epochs):
         logger.info(f'Epoch {epoch + 1}/{num_epochs}')
         logger.info('-' * 10)
-
-        n_correct = 0  # Correct predictions in the training set
+        n_correct =0 # Correct predictions in the training set
         running_loss = 0.0  # Training loss
-
         model.train()  # Set the model to training mode
+
+    # Training logic here
+
 
         for inputs, labels in dataset_loader["train"]:
             inputs = inputs.to(device)
             labels = labels.to(device)
-
+      
             optimizer.zero_grad()  # Zero the parameter gradients
 
-            outputs = model(inputs)  # Forward pass
-            n_correct += (torch.max(outputs, 1)[1].view(labels.data.size()) == labels.data).sum().item()
-            loss = criterion(outputs, labels)  # Calculate loss
+            
+            logits, features = model(inputs)
+            n_correct += (logits.argmax(dim=1).view(-1) == labels.view(-1)).sum().item() 
+            loss = loss_func(logits, labels, features)if args.loss_function == 'center_loss' else loss_func(features, labels)
 
             loss.backward()  # Backpropagation
             optimizer.step()  # Update optimizer learning rate
 
             running_loss += loss.item() * inputs.size(0)
-
         scheduler.step()  # Update learning rate
 
         train_acc = 100.0 * n_correct / dataset_sizes["train"]
         train_loss = running_loss / dataset_sizes["train"]
-        logger.info(f'Train Loss: {train_loss:.2f} Acc: {train_acc:.2f}%')
+        logger.info(f'Epoch {epoch}/{num_epochs - 1} Train Loss: {train_loss :.4f} train_acc: {train_acc:.4f}%')
         list_train_loss.append(train_loss)
         list_train_acc.append(train_acc)
+        
 
         # Evaluate performance on the validation set
         model.eval()  # Set the model to evaluation mode
 
-        n_dev_correct = 0
         running_loss = 0.0
+        n_dev_correct = 0
 
         with torch.no_grad():
             for inputs, labels in dataset_loader["valid"]:
+                
                 inputs = inputs.to(device)
                 labels = labels.to(device)
 
-                outputs = model(inputs)
-                n_dev_correct += (torch.max(outputs, 1)[1].view(labels.data.size()) == labels.data).sum().item()
+                
+                logits,features  = model(inputs) 
+                n_dev_correct += (logits.argmax(dim=1).view(-1) == labels.view(-1)).sum().item()
 
-                loss = criterion(outputs, labels)
+                loss = loss_func(logits, labels, features) if 'center' in args.loss_function else loss_func(features, labels)
                 running_loss += loss.item() * inputs.size(0)
 
+                
         valid_acc = 100.0 * n_dev_correct / dataset_sizes["valid"]
         valid_loss = running_loss / dataset_sizes["valid"]
-
+        
         list_val_loss.append(valid_loss)
         list_val_acc.append(valid_acc)
 
-        logger.info(f'Valid Loss: {valid_loss:.2f} Acc: {valid_acc:.2f}%')
-
+        logger.info(f'Validation Loss: {valid_loss:.4f} Acc: {valid_acc:.4f}%')
+        
         if valid_acc > best_acc:
             best_acc = valid_acc
             best_model = model
+           
 
         if wandb:
-            wandb.log({"Val Loss": valid_loss, "Val Acc": valid_acc, "Train Loss": train_loss, "Train Acc": train_acc})
-
+            wandb.log({"Epoch": epoch, "Train Loss": train_loss, "Train Acc": train_acc, "Val Loss": valid_loss, "Val Acc": valid_acc})
     time_elapsed = time.time() - since
     logger.info(f'Training complete in {time_elapsed // 3600} h {(time_elapsed % 3600) // 60} m {time_elapsed % 60} s')
     logger.info(f'Best val Acc: {best_acc:.2f}%')
@@ -139,7 +158,7 @@ def train_model(model: nn.Module, criterion, optimizer: Optimizer, scheduler: _L
     return best_model
 
 
-def test_model(model: nn.Module, dataset_loader: Dict[str, DataLoader], dataset_sizes: Dict[str, int]) -> [float, float]:
+def test_model(model: nn.Module, dataset_loader: Dict[str, DataLoader], dataset_sizes: Dict[str, int],loss_func) -> [float, float]:
     """
     Test the model on a test dataset.
 
@@ -154,40 +173,50 @@ def test_model(model: nn.Module, dataset_loader: Dict[str, DataLoader], dataset_
 
     model.eval()  # Set the model to evaluation mode
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    
     correct_predictions = 0
     correct_topk_predictions = 0
     test_loss = 0.0
-    criterion = nn.CrossEntropyLoss()  # Loss function
+    total_samples = 0
+    with torch.no_grad():
 
-    for inputs, labels in dataset_loader['test']:
-        inputs = inputs.to(device)
-        labels = labels.to(device)
-        outputs = model(inputs)
+        for inputs, labels in dataset_loader['test']:
+        
+            inputs = inputs.to(device)
+            labels = labels.to(device)
+        
+            logits, features = model(inputs) 
 
-        # Calculate top-5 accuracy
-        topk = 5
-        _, topk_predictions = outputs.topk(k=5, dim=1)
-        topk_predictions = topk_predictions.t()
-        labels_reshaped = labels.view(1, -1).expand_as(topk_predictions)
-        topk_correct = (topk_predictions == labels_reshaped)
-        flattened_topk_correct = topk_correct.reshape(-1).float()
-        correct_topk_predictions += flattened_topk_correct.float().sum(dim=0, keepdim=True)
+            # Calculate top-5 accuracy
+            topk = 5
+            _, topk_predictions = logits.topk(k=5, dim=1)
+            topk_predictions = topk_predictions.t()
+            correct = topk_predictions.eq(labels.view(1, -1).expand_as(topk_predictions))
+            correct_predictions += correct[:1].reshape(-1).float().sum(0, keepdim=True).item()
+            correct_topk_predictions += correct[:5].reshape(-1).float().sum(0, keepdim=True).item()
 
-        correct_predictions += (torch.max(outputs, 1)[1].view(labels.data.size()) == labels.data).sum().item()
 
-        loss = criterion(outputs, labels)
-        test_loss += loss.item() * inputs.size(0)
+            loss = loss_func(logits, labels, features) if 'center' in args.loss_function else loss_func(features, labels)
+            test_loss += loss.item() * inputs.size(0)
+            
+            total_samples += labels.size(0)
+        
+       
+    
 
     avg_test_accuracy = 100.0 * correct_predictions / dataset_sizes["test"]
-    avg_test_loss = test_loss / dataset_sizes["test"]
-    avg_test_accuracy_topk = (100.0 * correct_topk_predictions / dataset_sizes["test"]).to("cpu").numpy().item()
+    avg_test_loss=test_loss / dataset_sizes["test"]
+    avg_test_accuracy_topk = (100.0 * correct_topk_predictions / dataset_sizes["test"])
+
+    #logger.info(f'Test Loss: {avg_test_loss:.2f}, Test Accuracy: {avg_test_accuracy:.2f}, Test Acurracy(top5):{avg_test_accuracy_topk:.2f}%')
+
 
     # Log the results
-    logger.info(f'Test Loss: {avg_test_loss:.2f}')
+    logger.info(f'Test Loss: {avg_test_loss:.2f}%')
     logger.info(f'Test Accuracy (Top1): {avg_test_accuracy:.2f}%')
     logger.info(f'Test Accuracy (Top5): {avg_test_accuracy_topk:.2f}%')
 
-    return avg_test_accuracy, avg_test_accuracy_topk
+    return  avg_test_accuracy, avg_test_accuracy_topk
 
 
 def save_network_weights(model: nn.Module, weights_name: str) -> None:
@@ -223,9 +252,12 @@ if __name__ == '__main__':
 
     start = time.time()
 
-    # Loss function
-    criterion = torch.nn.CrossEntropyLoss()
     dataset_loader, dataset_sizes = dataloader(args.batch_size, args.dataset, args.analysis_type)
+
+    # Check if the validation dataset loader is correctly defined
+    if "valid" not in dataset_loader:
+        raise ValueError("Validation dataset loader is not defined.")
+
     
     # Initialize Weights and Biases
     wandb.init(
@@ -249,7 +281,10 @@ if __name__ == '__main__':
     model.to(device)
 
     init_weights_randomly(model)
+    
 
+    loss_func = get_loss_function(args)
+    
 
     # Choose optimizer based on args.optimizer
     if args.optimizer == "adamw":
@@ -264,9 +299,11 @@ if __name__ == '__main__':
     exp_lr_scheduler = torch.optim.lr_scheduler.StepLR(optimizer_ft, args.step_size, args.gamma)
 
     experiment_name = f"final_{args.model}_{args.num_classes}_{args.seed}"
-
-    model_ft = train_model(model, criterion, optimizer_ft, exp_lr_scheduler, args.num_epochs, dataset_loader, dataset_sizes, wandb)
-    acc = test_model(model_ft, dataset_loader, dataset_sizes)
+    
+        
+    model_ft = train_model(model,optimizer_ft, exp_lr_scheduler, args.num_epochs, loss_func,  dataset_loader, dataset_sizes, wandb)
+    acc = test_model(model_ft, dataset_loader, dataset_sizes,loss_func)
+        
     wandb.log({"Test Acc": acc})
 
     logger.info("Training complete.")

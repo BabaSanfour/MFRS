@@ -1,0 +1,15 @@
+2024-05-05 00:24:52,930 - INFO - Epoch 1/2
+2024-05-05 00:24:52,930 - INFO - ----------
+2024-05-05 00:26:47,817 - INFO - Epoch 0/1 Train Loss: 21.1140 train_acc: 0.0000
+Traceback (most recent call last):
+  File "C:\Users\marie\Desktop\Sanfour\MFRS\models\models_train.py", line 317, in <module>
+    model_ft = train_model(model,optimizer_ft, exp_lr_scheduler, args.num_epochs, loss_func,  dataset_loader, dataset_sizes, wandb)
+  File "C:\Users\marie\Desktop\Sanfour\MFRS\models\models_train.py", line 154, in train_model
+    val_acc = n_dev_correct.double() / dataset_sizes['valid']
+AttributeError: 'int' object has no attribute 'double'
+Traceback (most recent call last):
+  File "C:\Users\marie\Desktop\Sanfour\MFRS\models\models_train.py", line 317, in <module>
+    model_ft = train_model(model,optimizer_ft, exp_lr_scheduler, args.num_epochs, loss_func,  dataset_loader, dataset_sizes, wandb)
+  File "C:\Users\marie\Desktop\Sanfour\MFRS\models\models_train.py", line 154, in train_model
+    val_acc = n_dev_correct.double() / dataset_sizes['valid']
+AttributeError: 'int' object has no attribute 'double'

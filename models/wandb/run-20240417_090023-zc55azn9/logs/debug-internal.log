@@ -1,0 +1,76 @@
+2024-04-17 09:00:23,329 INFO    StreamThr :27428 [internal.py:wandb_internal():86] W&B internal server running at pid: 27428, started at: 2024-04-17 09:00:23.324775
+2024-04-17 09:00:23,330 DEBUG   HandlerThread:27428 [handler.py:handle_request():144] handle_request: status
+2024-04-17 09:00:23,332 INFO    WriterThread:27428 [datastore.py:open_for_write():85] open: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240417_090023-zc55azn9\run-zc55azn9.wandb
+2024-04-17 09:00:23,336 DEBUG   SenderThread:27428 [sender.py:send():379] send: header
+2024-04-17 09:00:23,397 DEBUG   SenderThread:27428 [sender.py:send():379] send: run
+2024-04-17 09:00:23,719 INFO    SenderThread:27428 [dir_watcher.py:__init__():211] watching files in: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240417_090023-zc55azn9\files
+2024-04-17 09:00:23,719 INFO    SenderThread:27428 [sender.py:_start_run_threads():1121] run started: zc55azn9 with start time 1713358823.330435
+2024-04-17 09:00:23,719 DEBUG   SenderThread:27428 [sender.py:send_request():406] send_request: summary_record
+2024-04-17 09:00:23,721 INFO    SenderThread:27428 [sender.py:_save_file():1375] saving file wandb-summary.json with policy end
+2024-04-17 09:00:23,727 DEBUG   HandlerThread:27428 [handler.py:handle_request():144] handle_request: check_version
+2024-04-17 09:00:23,727 DEBUG   SenderThread:27428 [sender.py:send_request():406] send_request: check_version
+2024-04-17 09:00:23,812 DEBUG   HandlerThread:27428 [handler.py:handle_request():144] handle_request: run_start
+2024-04-17 09:00:24,735 INFO    Thread-16 :27428 [dir_watcher.py:_on_file_created():271] file/dir created: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240417_090023-zc55azn9\files\wandb-summary.json
+2024-04-17 09:00:47,804 DEBUG   HandlerThread:27428 [system_info.py:__init__():31] System info init
+2024-04-17 09:00:47,804 DEBUG   HandlerThread:27428 [system_info.py:__init__():46] System info init done
+2024-04-17 09:00:47,804 INFO    HandlerThread:27428 [system_monitor.py:start():181] Starting system monitor
+2024-04-17 09:00:47,804 INFO    SystemMonitor:27428 [system_monitor.py:_start():145] Starting system asset monitoring threads
+2024-04-17 09:00:47,804 INFO    HandlerThread:27428 [system_monitor.py:probe():201] Collecting system info
+2024-04-17 09:00:47,817 INFO    SystemMonitor:27428 [interfaces.py:start():190] Started cpu monitoring
+2024-04-17 09:00:47,817 INFO    SystemMonitor:27428 [interfaces.py:start():190] Started disk monitoring
+2024-04-17 09:00:47,817 INFO    SystemMonitor:27428 [interfaces.py:start():190] Started gpu monitoring
+2024-04-17 09:02:20,426 INFO    SystemMonitor:27428 [interfaces.py:start():190] Started memory monitoring
+2024-04-17 09:02:20,474 INFO    SystemMonitor:27428 [interfaces.py:start():190] Started network monitoring
+2024-04-17 09:02:20,489 DEBUG   HandlerThread:27428 [system_info.py:probe():195] Probing system
+2024-04-17 09:02:20,489 DEBUG   HandlerThread:27428 [system_info.py:_probe_git():180] Probing git
+2024-04-17 09:02:20,504 ERROR   gpu       :27428 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2024-04-17 09:02:20,504 ERROR   gpu       :27428 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2024-04-17 09:02:20,684 DEBUG   HandlerThread:27428 [system_info.py:_probe_git():188] Probing git done
+2024-04-17 09:02:20,684 DEBUG   HandlerThread:27428 [system_info.py:probe():240] Probing system done
+2024-04-17 09:02:20,684 DEBUG   HandlerThread:27428 [system_monitor.py:probe():210] {'os': 'Windows-10-10.0.22631-SP0', 'python': '3.9.9', 'heartbeatAt': '2024-04-17T13:02:20.489715', 'startedAt': '2024-04-17T13:00:23.312340', 'docker': None, 'cuda': None, 'args': ('--dataset', 'imagenet', '--model', 'resnet50', '--batch_size', '256', '--lr', '0.1', '--optimizer', 'sgd'), 'state': 'running', 'program': 'C:\\Users\\marie\\Desktop\\Sanfour\\MFRS\\models\\models_train.py', 'codePath': 'models\\models_train.py', 'git': {'remote': 'https://github.com/BabaSanfour/MFRS.git', 'commit': 'e637c4f6aef437030500c2f41513aaee275c977f'}, 'email': None, 'root': 'C:/Users/marie/Desktop/Sanfour/MFRS', 'host': 'LAPTOP-CTGDVKVN', 'username': 'marie', 'executable': 'C:\\Program Files\\Python39\\python.exe', 'cpu_count': 8, 'cpu_count_logical': 16, 'cpu_freq': {'current': 2516.0, 'min': 0.0, 'max': 3801.0}, 'cpu_freq_per_core': [{'current': 2516.0, 'min': 0.0, 'max': 3801.0}], 'disk': {'total': 474.71581649780273, 'used': 353.96666717529297}, 'gpu': 'NVIDIA GeForce RTX 3050 6GB Laptop GPU', 'gpu_count': 1, 'gpu_devices': [{'name': 'NVIDIA GeForce RTX 3050 6GB Laptop GPU', 'memory_total': 6442450944}], 'memory': {'total': 15.189807891845703}}
+2024-04-17 09:02:20,684 INFO    HandlerThread:27428 [system_monitor.py:probe():211] Finished collecting system info
+2024-04-17 09:02:20,684 INFO    HandlerThread:27428 [system_monitor.py:probe():214] Publishing system info
+2024-04-17 09:02:20,684 DEBUG   HandlerThread:27428 [system_info.py:_save_pip():51] Saving list of pip packages installed into the current environment
+2024-04-17 09:02:20,684 DEBUG   HandlerThread:27428 [system_info.py:_save_pip():67] Saving pip packages done
+2024-04-17 09:02:20,684 INFO    HandlerThread:27428 [system_monitor.py:probe():216] Finished publishing system info
+2024-04-17 09:02:20,691 DEBUG   HandlerThread:27428 [handler.py:handle_request():144] handle_request: status_report
+2024-04-17 09:02:20,691 DEBUG   HandlerThread:27428 [handler.py:handle_request():144] handle_request: keepalive
+2024-04-17 09:02:20,691 DEBUG   HandlerThread:27428 [handler.py:handle_request():144] handle_request: status_report
+2024-04-17 09:02:20,691 DEBUG   HandlerThread:27428 [handler.py:handle_request():144] handle_request: keepalive
+2024-04-17 09:02:20,691 DEBUG   HandlerThread:27428 [handler.py:handle_request():144] handle_request: status_report
+2024-04-17 09:02:20,691 DEBUG   HandlerThread:27428 [handler.py:handle_request():144] handle_request: stop_status
+2024-04-17 09:02:20,691 DEBUG   SenderThread:27428 [sender.py:send_request():406] send_request: stop_status
+2024-04-17 09:02:20,819 DEBUG   SenderThread:27428 [sender.py:send():379] send: telemetry
+2024-04-17 09:02:20,819 DEBUG   SenderThread:27428 [sender.py:send():379] send: files
+2024-04-17 09:02:20,819 INFO    SenderThread:27428 [sender.py:_save_file():1375] saving file wandb-metadata.json with policy now
+2024-04-17 09:02:21,508 INFO    Thread-16 :27428 [dir_watcher.py:_on_file_created():271] file/dir created: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240417_090023-zc55azn9\files\wandb-metadata.json
+2024-04-17 09:02:21,508 INFO    Thread-16 :27428 [dir_watcher.py:_on_file_created():271] file/dir created: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240417_090023-zc55azn9\files\output.log
+2024-04-17 09:02:21,508 INFO    Thread-16 :27428 [dir_watcher.py:_on_file_created():271] file/dir created: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240417_090023-zc55azn9\files\requirements.txt
+2024-04-17 09:02:22,850 INFO    wandb-upload_0:27428 [upload_job.py:push():131] Uploaded file C:\Users\marie\AppData\Local\Temp\tmpj0a3uef9wandb\3l35y547-wandb-metadata.json
+2024-04-17 09:02:23,575 INFO    Thread-16 :27428 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240417_090023-zc55azn9\files\output.log
+2024-04-17 09:02:25,999 DEBUG   HandlerThread:27428 [handler.py:handle_request():144] handle_request: status_report
+2024-04-17 09:02:31,047 DEBUG   HandlerThread:27428 [handler.py:handle_request():144] handle_request: status_report
+2024-04-17 09:02:36,805 DEBUG   HandlerThread:27428 [handler.py:handle_request():144] handle_request: status_report
+2024-04-17 09:02:36,965 DEBUG   HandlerThread:27428 [handler.py:handle_request():144] handle_request: stop_status
+2024-04-17 09:02:37,228 DEBUG   SenderThread:27428 [sender.py:send_request():406] send_request: stop_status
+2024-04-17 09:02:42,594 DEBUG   HandlerThread:27428 [handler.py:handle_request():144] handle_request: status_report
+2024-04-17 09:02:48,026 DEBUG   HandlerThread:27428 [handler.py:handle_request():144] handle_request: status_report
+2024-04-17 09:02:52,027 DEBUG   HandlerThread:27428 [handler.py:handle_request():144] handle_request: stop_status
+2024-04-17 09:02:52,077 DEBUG   SenderThread:27428 [sender.py:send_request():406] send_request: stop_status
+2024-04-17 09:02:55,261 DEBUG   HandlerThread:27428 [handler.py:handle_request():144] handle_request: status_report
+2024-04-17 09:02:59,518 INFO    Thread-16 :27428 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240417_090023-zc55azn9\files\config.yaml
+2024-04-17 09:03:04,308 DEBUG   HandlerThread:27428 [handler.py:handle_request():144] handle_request: status_report
+2024-04-17 09:03:05,934 DEBUG   HandlerThread:27428 [handler.py:handle_request():144] handle_request: stop_status
+2024-04-17 09:03:06,449 DEBUG   SenderThread:27428 [sender.py:send_request():406] send_request: stop_status
+2024-04-17 09:03:09,597 DEBUG   HandlerThread:27428 [handler.py:handle_request():144] handle_request: status_report
+2024-04-17 09:03:14,555 DEBUG   HandlerThread:27428 [handler.py:handle_request():144] handle_request: status_report
+2024-04-17 09:03:19,709 DEBUG   HandlerThread:27428 [handler.py:handle_request():144] handle_request: status_report
+2024-04-17 09:03:20,626 DEBUG   HandlerThread:27428 [handler.py:handle_request():144] handle_request: stop_status
+2024-04-17 09:03:20,626 DEBUG   SenderThread:27428 [sender.py:send_request():406] send_request: stop_status
+2024-04-17 09:03:20,892 DEBUG   SystemMonitor:27428 [system_monitor.py:_start():159] Starting system metrics aggregation loop
+2024-04-17 09:03:23,973 DEBUG   SenderThread:27428 [sender.py:send():379] send: stats
+2024-04-17 09:03:25,475 DEBUG   HandlerThread:27428 [handler.py:handle_request():144] handle_request: status_report
+2024-04-17 09:03:30,607 DEBUG   HandlerThread:27428 [handler.py:handle_request():144] handle_request: status_report
+2024-04-17 09:03:36,502 DEBUG   HandlerThread:27428 [handler.py:handle_request():144] handle_request: stop_status
+2024-04-17 09:03:36,809 DEBUG   HandlerThread:27428 [handler.py:handle_request():144] handle_request: status_report
+2024-04-17 09:03:36,809 DEBUG   SenderThread:27428 [sender.py:send_request():406] send_request: stop_status

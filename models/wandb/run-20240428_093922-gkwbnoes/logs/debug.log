@@ -1,0 +1,28 @@
+2024-04-28 09:39:22,143 INFO    MainThread:70804 [wandb_setup.py:_flush():76] Current SDK version is 0.15.9
+2024-04-28 09:39:22,143 INFO    MainThread:70804 [wandb_setup.py:_flush():76] Configure stats pid to 70804
+2024-04-28 09:39:22,143 INFO    MainThread:70804 [wandb_setup.py:_flush():76] Loading settings from C:\Users\marie\.config\wandb\settings
+2024-04-28 09:39:22,143 INFO    MainThread:70804 [wandb_setup.py:_flush():76] Loading settings from C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\settings
+2024-04-28 09:39:22,143 INFO    MainThread:70804 [wandb_setup.py:_flush():76] Loading settings from environment variables: {}
+2024-04-28 09:39:22,143 INFO    MainThread:70804 [wandb_setup.py:_flush():76] Applying setup settings: {'_disable_service': False}
+2024-04-28 09:39:22,143 INFO    MainThread:70804 [wandb_setup.py:_flush():76] Inferring run settings from compute environment: {'program_relpath': 'models\\models_train.py', 'program': 'C:\\Users\\marie\\Desktop\\Sanfour\\MFRS\\models\\models_train.py'}
+2024-04-28 09:39:22,143 INFO    MainThread:70804 [wandb_init.py:_log_setup():524] Logging user logs to C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240428_093922-gkwbnoes\logs\debug.log
+2024-04-28 09:39:22,143 INFO    MainThread:70804 [wandb_init.py:_log_setup():525] Logging internal logs to C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240428_093922-gkwbnoes\logs\debug-internal.log
+2024-04-28 09:39:22,143 INFO    MainThread:70804 [wandb_init.py:init():564] calling init triggers
+2024-04-28 09:39:22,143 INFO    MainThread:70804 [wandb_init.py:init():571] wandb.init called with sweep_config: {}
+config: {'architecture': 'FaceNet', 'dataset': 'VGGFace', 'epochs': 2, 'num_classes': 4588}
+2024-04-28 09:39:22,143 INFO    MainThread:70804 [wandb_init.py:init():613] starting backend
+2024-04-28 09:39:22,143 INFO    MainThread:70804 [wandb_init.py:init():617] setting up manager
+2024-04-28 09:39:22,149 INFO    MainThread:70804 [backend.py:_multiprocessing_setup():106] multiprocessing start_methods=spawn, using: spawn
+2024-04-28 09:39:22,149 INFO    MainThread:70804 [wandb_init.py:init():623] backend started and connected
+2024-04-28 09:39:22,157 INFO    MainThread:70804 [wandb_init.py:init():714] updated telemetry
+2024-04-28 09:39:22,197 INFO    MainThread:70804 [wandb_init.py:init():747] communicating run to backend with 60.0 second timeout
+2024-04-28 09:39:22,467 INFO    MainThread:70804 [wandb_run.py:_on_init():2180] communicating current version
+2024-04-28 09:39:22,566 INFO    MainThread:70804 [wandb_run.py:_on_init():2189] got version response upgrade_message: "wandb version 0.16.6 is available!  To upgrade, please run:\n $ pip install wandb --upgrade"
+
+2024-04-28 09:39:22,566 INFO    MainThread:70804 [wandb_init.py:init():798] starting run threads in backend
+2024-04-28 09:39:24,469 INFO    MainThread:70804 [wandb_run.py:_console_start():2159] atexit reg
+2024-04-28 09:39:24,469 INFO    MainThread:70804 [wandb_run.py:_redirect():2014] redirect: wrap_raw
+2024-04-28 09:39:24,469 INFO    MainThread:70804 [wandb_run.py:_redirect():2079] Wrapping output streams.
+2024-04-28 09:39:24,469 INFO    MainThread:70804 [wandb_run.py:_redirect():2104] Redirects installed.
+2024-04-28 09:39:24,469 INFO    MainThread:70804 [wandb_init.py:init():839] run started, returning control to user process
+2024-04-28 09:39:29,443 WARNING MsgRouterThr:70804 [router.py:message_loop():77] message_loop has been closed

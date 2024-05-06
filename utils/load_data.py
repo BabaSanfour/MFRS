@@ -5,7 +5,7 @@ import numpy as np
 import torch
 import torchvision
 from torch.utils.data import Dataset, DataLoader, random_split
-from torchvision.transforms import ToTensor, Normalize
+from torchvision.transforms import ToTensor, Normalize, Resize
 
 import sys
 sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
@@ -88,15 +88,15 @@ def dataloader(batch_size: int, dataset: str, analysis_type: str) -> (dict, dict
         valid_filename = f"imagenet_subset_valid_{analysis_type}.h5"
         # Split 'valid' into 'valid' and 'test' for ImageNet
         valid_loader = DataLoader(HDF5Dataset(os.path.join(data_path, valid_filename),
-                                   transform=torchvision.transforms.Compose([ToTensor(),
+                                   transform=torchvision.transforms.Compose([ Resize((224,224)),ToTensor(),
                                                                              Normalize(mean=mean, std=std)])))
         valid_size = len(valid_loader)
         valid_size = int(valid_size * 0.5)  # Splitting the 'valid' set in half
         valid_dataset, test_dataset = random_split(valid_loader.dataset, [valid_size, valid_size])
 
         # Create data loaders for validation and testing
-        valid_loader = DataLoader(valid_dataset, batch_size=batch_size, shuffle=True)
-        test_loader = DataLoader(test_dataset, batch_size=batch_size, shuffle=True)
+        valid_loader = DataLoader(valid_dataset, batch_size=batch_size, shuffle=True,drop_last=True)
+        test_loader = DataLoader(test_dataset, batch_size=batch_size, shuffle=True,drop_last=True)
 
     else:
         raise ValueError("Invalid dataset name")
@@ -105,18 +105,18 @@ def dataloader(batch_size: int, dataset: str, analysis_type: str) -> (dict, dict
     train_loader = DataLoader(HDF5Dataset(os.path.join(data_path, train_filename),
                                             transform=torchvision.transforms.Compose([ToTensor(),
                                                                                     Normalize(mean=mean, std=std)])),
-                                            batch_size=batch_size, num_workers=2, shuffle=True)
+                                            batch_size=batch_size, num_workers=0, shuffle=True,drop_last=True)
 
     if dataset != "imagenet":
         valid_loader = DataLoader(HDF5Dataset(os.path.join(data_path, valid_filename),
                                           transform=torchvision.transforms.Compose([ToTensor(),
-                                                                                    Normalize(mean=[mean], std=[std])])),
-                                            batch_size=batch_size, num_workers=2, shuffle=False)
+                                                                                    Normalize(mean=mean, std=std)])),
+                                            batch_size=batch_size, num_workers=0, shuffle=False,drop_last=True)
 
         test_loader = DataLoader(HDF5Dataset(os.path.join(data_path, test_filename),
                                             transform=torchvision.transforms.Compose([ToTensor(),
                                                                                    Normalize(mean=mean, std=std)])),
-                                            batch_size=batch_size, num_workers=2, shuffle=False)
+                                            batch_size=batch_size, num_workers=0, shuffle=False,drop_last=True)
 
     # Create dictionaries for loaders and sizes
     data_loaders = {'train': train_loader, 'valid': valid_loader, 'test': test_loader}
@@ -139,8 +139,7 @@ def Stimuliloader(batch_size: int, file_name: str) -> DataLoader:
     data_file = os.path.join(data_path, f"{file_name}.h5")
     
     # Set mean and std for normalization
-    mean, std = [0.3612], [0.3056]
-
+    mean, std = (0.3612,),(0.3056,)
     # Create a stimuli dataset
     stimuli_dataset = HDF5Dataset(data_file,
                                    transform=torchvision.transforms.Compose([torchvision.transforms.ToTensor(),
@@ -151,3 +150,5 @@ def Stimuliloader(batch_size: int, file_name: str) -> DataLoader:
     stimuli_loader = DataLoader(stimuli_dataset, batch_size=batch_size, shuffle=False)
 
     return stimuli_loader
+
+    

@@ -1,0 +1,110 @@
+2024-05-03 21:51:57,745 - INFO - Epoch 1/2
+2024-05-03 21:51:57,745 - INFO - ----------
+2024-05-03 21:52:00,536 - INFO - Epoch 0/1 Train Loss: 1.1043 Acc: 0.0000
+2024-05-03 21:52:02,875 - INFO - Epoch 0/1 Train Loss: 3.1253 Acc: 0.0000
+2024-05-03 21:52:05,190 - INFO - Epoch 0/1 Train Loss: 3.9026 Acc: 0.0000
+2024-05-03 21:52:07,470 - INFO - Epoch 0/1 Train Loss: 4.6490 Acc: 0.0000
+2024-05-03 21:52:09,776 - INFO - Epoch 0/1 Train Loss: 5.3662 Acc: 0.0000
+2024-05-03 21:52:12,081 - INFO - Epoch 0/1 Train Loss: 6.0766 Acc: 0.0000
+2024-05-03 21:52:14,451 - INFO - Epoch 0/1 Train Loss: 6.7757 Acc: 0.0000
+2024-05-03 21:52:16,786 - INFO - Epoch 0/1 Train Loss: 7.4842 Acc: 0.0000
+2024-05-03 21:52:19,096 - INFO - Epoch 0/1 Train Loss: 8.2014 Acc: 0.0000
+2024-05-03 21:52:21,391 - INFO - Epoch 0/1 Train Loss: 8.9005 Acc: 0.0000
+2024-05-03 21:52:23,691 - INFO - Epoch 0/1 Train Loss: 9.5989 Acc: 0.0000
+2024-05-03 21:52:25,993 - INFO - Epoch 0/1 Train Loss: 10.2981 Acc: 0.0000
+2024-05-03 21:52:28,302 - INFO - Epoch 0/1 Train Loss: 11.0039 Acc: 0.0000
+2024-05-03 21:52:30,602 - INFO - Epoch 0/1 Train Loss: 11.7102 Acc: 0.0000
+2024-05-03 21:52:32,976 - INFO - Epoch 0/1 Train Loss: 12.4174 Acc: 0.0000
+2024-05-03 21:52:35,267 - INFO - Epoch 0/1 Train Loss: 13.1116 Acc: 0.0000
+2024-05-03 21:52:37,572 - INFO - Epoch 0/1 Train Loss: 13.8157 Acc: 0.0000
+2024-05-03 21:52:39,868 - INFO - Epoch 0/1 Train Loss: 14.5033 Acc: 0.0000
+2024-05-03 21:52:42,157 - INFO - Epoch 0/1 Train Loss: 15.2037 Acc: 0.0000
+2024-05-03 21:52:44,475 - INFO - Epoch 0/1 Train Loss: 15.9086 Acc: 0.0000
+2024-05-03 21:52:46,754 - INFO - Epoch 0/1 Train Loss: 16.6029 Acc: 0.0000
+2024-05-03 21:52:49,043 - INFO - Epoch 0/1 Train Loss: 17.2845 Acc: 0.0000
+2024-05-03 21:52:51,338 - INFO - Epoch 0/1 Train Loss: 17.9763 Acc: 0.0000
+2024-05-03 21:52:53,633 - INFO - Epoch 0/1 Train Loss: 18.6733 Acc: 0.0000
+2024-05-03 21:52:55,956 - INFO - Epoch 0/1 Train Loss: 19.3601 Acc: 0.0013
+2024-05-03 21:52:58,248 - INFO - Epoch 0/1 Train Loss: 20.0501 Acc: 0.0013
+2024-05-03 21:53:00,623 - INFO - Epoch 0/1 Train Loss: 20.7475 Acc: 0.0013
+2024-05-03 21:53:02,984 - INFO - Epoch 0/1 Train Loss: 21.4398 Acc: 0.0013
+2024-05-03 21:53:05,279 - INFO - Epoch 0/1 Train Loss: 22.1189 Acc: 0.0013
+2024-05-03 21:53:07,578 - INFO - Epoch 0/1 Train Loss: 22.8148 Acc: 0.0013
+2024-05-03 21:53:09,879 - INFO - Epoch 0/1 Train Loss: 23.5083 Acc: 0.0013
+2024-05-03 21:53:12,155 - INFO - Epoch 0/1 Train Loss: 24.1984 Acc: 0.0013
+2024-05-03 21:53:14,440 - INFO - Epoch 0/1 Train Loss: 24.8756 Acc: 0.0013
+2024-05-03 21:53:16,785 - INFO - Epoch 0/1 Train Loss: 25.5605 Acc: 0.0013
+2024-05-03 21:53:19,304 - INFO - Epoch 0/1 Train Loss: 26.2489 Acc: 0.0013
+2024-05-03 21:53:21,588 - INFO - Epoch 0/1 Train Loss: 26.9326 Acc: 0.0013
+2024-05-03 21:53:23,938 - INFO - Epoch 0/1 Train Loss: 27.6239 Acc: 0.0013
+2024-05-03 21:53:26,281 - INFO - Epoch 0/1 Train Loss: 28.3065 Acc: 0.0013
+2024-05-03 21:53:28,580 - INFO - Epoch 0/1 Train Loss: 28.9962 Acc: 0.0013
+2024-05-03 21:53:31,020 - INFO - Epoch 0/1 Train Loss: 29.6757 Acc: 0.0013
+2024-05-03 21:53:33,322 - INFO - Epoch 0/1 Train Loss: 30.3636 Acc: 0.0013
+2024-05-03 21:53:35,692 - INFO - Epoch 0/1 Train Loss: 31.0449 Acc: 0.0013
+2024-05-03 21:53:38,076 - INFO - Epoch 0/1 Train Loss: 31.7370 Acc: 0.0013
+2024-05-03 21:53:40,886 - INFO - Epoch 0/1 Train Loss: 32.4215 Acc: 0.0013
+2024-05-03 21:53:43,644 - INFO - Epoch 0/1 Train Loss: 33.0984 Acc: 0.0013
+2024-05-03 21:53:46,866 - INFO - Epoch 0/1 Train Loss: 33.7786 Acc: 0.0013
+2024-05-03 21:53:50,407 - INFO - Epoch 0/1 Train Loss: 34.4682 Acc: 0.0013
+2024-05-03 21:53:53,967 - INFO - Epoch 0/1 Train Loss: 35.1649 Acc: 0.0013
+2024-05-03 21:55:14,441 - INFO - Validation Loss: 31.6134 Acc: 0.0016
+2024-05-03 21:55:14,836 - INFO - Epoch 2/2
+2024-05-03 21:55:14,836 - INFO - ----------
+2024-05-03 21:55:18,497 - INFO - Epoch 1/1 Train Loss: 0.6847 Acc: 0.0000
+2024-05-03 21:55:22,143 - INFO - Epoch 1/1 Train Loss: 1.3555 Acc: 0.0000
+2024-05-03 21:55:25,772 - INFO - Epoch 1/1 Train Loss: 2.0593 Acc: 0.0000
+2024-05-03 21:55:29,442 - INFO - Epoch 1/1 Train Loss: 2.7350 Acc: 0.0000
+2024-05-03 21:55:33,185 - INFO - Epoch 1/1 Train Loss: 3.4149 Acc: 0.0000
+2024-05-03 21:55:36,826 - INFO - Epoch 1/1 Train Loss: 4.1180 Acc: 0.0000
+2024-05-03 21:55:40,448 - INFO - Epoch 1/1 Train Loss: 4.7920 Acc: 0.0000
+2024-05-03 21:55:44,103 - INFO - Epoch 1/1 Train Loss: 5.4791 Acc: 0.0000
+2024-05-03 21:55:47,803 - INFO - Epoch 1/1 Train Loss: 6.1492 Acc: 0.0000
+2024-05-03 21:55:51,353 - INFO - Epoch 1/1 Train Loss: 6.8311 Acc: 0.0000
+2024-05-03 21:55:54,995 - INFO - Epoch 1/1 Train Loss: 7.5037 Acc: 0.0000
+2024-05-03 21:55:58,619 - INFO - Epoch 1/1 Train Loss: 8.1765 Acc: 0.0000
+2024-05-03 21:56:02,304 - INFO - Epoch 1/1 Train Loss: 8.8578 Acc: 0.0000
+2024-05-03 21:56:05,859 - INFO - Epoch 1/1 Train Loss: 9.5443 Acc: 0.0000
+2024-05-03 21:56:08,602 - INFO - Epoch 1/1 Train Loss: 10.2250 Acc: 0.0000
+2024-05-03 21:56:10,935 - INFO - Epoch 1/1 Train Loss: 10.9042 Acc: 0.0000
+2024-05-03 21:56:13,211 - INFO - Epoch 1/1 Train Loss: 11.6079 Acc: 0.0000
+2024-05-03 21:56:15,554 - INFO - Epoch 1/1 Train Loss: 12.3015 Acc: 0.0000
+2024-05-03 21:56:17,838 - INFO - Epoch 1/1 Train Loss: 12.9838 Acc: 0.0000
+2024-05-03 21:56:20,170 - INFO - Epoch 1/1 Train Loss: 13.6646 Acc: 0.0000
+2024-05-03 21:56:22,460 - INFO - Epoch 1/1 Train Loss: 14.3409 Acc: 0.0000
+2024-05-03 21:56:24,745 - INFO - Epoch 1/1 Train Loss: 15.0258 Acc: 0.0000
+2024-05-03 21:56:27,050 - INFO - Epoch 1/1 Train Loss: 15.7119 Acc: 0.0000
+2024-05-03 21:56:29,356 - INFO - Epoch 1/1 Train Loss: 16.3845 Acc: 0.0000
+2024-05-03 21:56:31,610 - INFO - Epoch 1/1 Train Loss: 17.0626 Acc: 0.0000
+2024-05-03 21:56:33,900 - INFO - Epoch 1/1 Train Loss: 17.7488 Acc: 0.0000
+2024-05-03 21:56:36,196 - INFO - Epoch 1/1 Train Loss: 18.4162 Acc: 0.0000
+2024-05-03 21:56:38,500 - INFO - Epoch 1/1 Train Loss: 19.0925 Acc: 0.0000
+2024-05-03 21:56:40,821 - INFO - Epoch 1/1 Train Loss: 19.7545 Acc: 0.0000
+2024-05-03 21:56:43,126 - INFO - Epoch 1/1 Train Loss: 20.4367 Acc: 0.0000
+2024-05-03 21:56:45,422 - INFO - Epoch 1/1 Train Loss: 21.1199 Acc: 0.0000
+2024-05-03 21:56:47,716 - INFO - Epoch 1/1 Train Loss: 21.8103 Acc: 0.0000
+2024-05-03 21:56:50,051 - INFO - Epoch 1/1 Train Loss: 22.4797 Acc: 0.0000
+2024-05-03 21:56:52,337 - INFO - Epoch 1/1 Train Loss: 23.1513 Acc: 0.0000
+2024-05-03 21:56:54,642 - INFO - Epoch 1/1 Train Loss: 23.8217 Acc: 0.0000
+2024-05-03 21:56:56,964 - INFO - Epoch 1/1 Train Loss: 24.4962 Acc: 0.0000
+2024-05-03 21:56:59,272 - INFO - Epoch 1/1 Train Loss: 25.1776 Acc: 0.0000
+2024-05-03 21:57:01,659 - INFO - Epoch 1/1 Train Loss: 25.8554 Acc: 0.0000
+2024-05-03 21:57:04,002 - INFO - Epoch 1/1 Train Loss: 26.5287 Acc: 0.0000
+2024-05-03 21:57:06,297 - INFO - Epoch 1/1 Train Loss: 27.2042 Acc: 0.0000
+2024-05-03 21:57:08,593 - INFO - Epoch 1/1 Train Loss: 27.8708 Acc: 0.0000
+2024-05-03 21:57:10,908 - INFO - Epoch 1/1 Train Loss: 28.5322 Acc: 0.0000
+2024-05-03 21:57:13,233 - INFO - Epoch 1/1 Train Loss: 29.2073 Acc: 0.0000
+2024-05-03 21:57:15,543 - INFO - Epoch 1/1 Train Loss: 29.8795 Acc: 0.0000
+2024-05-03 21:57:17,868 - INFO - Epoch 1/1 Train Loss: 30.5624 Acc: 0.0013
+2024-05-03 21:57:20,163 - INFO - Epoch 1/1 Train Loss: 31.2396 Acc: 0.0013
+2024-05-03 21:57:22,479 - INFO - Epoch 1/1 Train Loss: 31.9130 Acc: 0.0013
+2024-05-03 21:57:24,774 - INFO - Epoch 1/1 Train Loss: 32.6039 Acc: 0.0013
+2024-05-03 21:58:33,125 - INFO - Validation Loss: 31.6310 Acc: 0.0032
+2024-05-03 21:58:33,125 - INFO - Training complete in 0.0 h 6.0 m 35.38548946380615 s
+2024-05-03 21:58:33,125 - INFO - Best val Acc: 0.00%
+2024-05-03 21:59:56,654 - INFO - Test Loss: 31.9352, Test Accuracy: 0.0032
+2024-05-03 21:59:56,654 - INFO - Test Loss: 31.94
+2024-05-03 21:59:56,654 - INFO - Test Accuracy (Top1): 0.00%
+2024-05-03 21:59:56,655 - INFO - Training complete.
+2024-05-03 21:59:56,655 - INFO - Training ended in 0.0 h 8.0 m 3.5926876068115234 s
+2024-05-03 21:59:56,857 - INFO - Model weights saved to None_42.pth

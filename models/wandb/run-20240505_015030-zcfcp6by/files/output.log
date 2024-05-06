@@ -1,0 +1,42 @@
+2024-05-05 01:50:32,999 - INFO - Epoch 1/2
+2024-05-05 01:50:32,999 - INFO - ----------
+Traceback (most recent call last):
+  File "C:\Users\marie\Desktop\Sanfour\MFRS\models\models_train.py", line 304, in <module>
+    model_ft = train_model(model,optimizer_ft, exp_lr_scheduler, args.num_epochs, loss_func,  dataset_loader, dataset_sizes, wandb)
+  File "C:\Users\marie\Desktop\Sanfour\MFRS\models\models_train.py", line 95, in train_model
+    for inputs, labels in dataset_loader["train"]:
+  File "C:\Users\marie\AppData\Roaming\Python\Python39\site-packages\torch\utils\data\dataloader.py", line 631, in __next__
+    data = self._next_data()
+  File "C:\Users\marie\AppData\Roaming\Python\Python39\site-packages\torch\utils\data\dataloader.py", line 675, in _next_data
+    data = self._dataset_fetcher.fetch(index)  # may raise StopIteration
+  File "C:\Users\marie\AppData\Roaming\Python\Python39\site-packages\torch\utils\data\_utils\fetch.py", line 51, in fetch
+    data = [self.dataset[idx] for idx in possibly_batched_index]
+  File "C:\Users\marie\AppData\Roaming\Python\Python39\site-packages\torch\utils\data\_utils\fetch.py", line 51, in <listcomp>
+    data = [self.dataset[idx] for idx in possibly_batched_index]
+  File "C:\Users\marie\Desktop\Sanfour\MFRS\models\..\utils\load_data.py", line 47, in __getitem__
+    input_h5 = self.file['images'][idx, :, :, :]
+  File "h5py\_objects.pyx", line 54, in h5py._objects.with_phil.wrapper
+  File "h5py\_objects.pyx", line 55, in h5py._objects.with_phil.wrapper
+  File "C:\Users\marie\AppData\Roaming\Python\Python39\site-packages\h5py\_hl\dataset.py", line 710, in __getitem__
+    return self._fast_reader.read(args)
+KeyboardInterrupt
+Traceback (most recent call last):
+  File "C:\Users\marie\Desktop\Sanfour\MFRS\models\models_train.py", line 304, in <module>
+    model_ft = train_model(model,optimizer_ft, exp_lr_scheduler, args.num_epochs, loss_func,  dataset_loader, dataset_sizes, wandb)
+  File "C:\Users\marie\Desktop\Sanfour\MFRS\models\models_train.py", line 95, in train_model
+    for inputs, labels in dataset_loader["train"]:
+  File "C:\Users\marie\AppData\Roaming\Python\Python39\site-packages\torch\utils\data\dataloader.py", line 631, in __next__
+    data = self._next_data()
+  File "C:\Users\marie\AppData\Roaming\Python\Python39\site-packages\torch\utils\data\dataloader.py", line 675, in _next_data
+    data = self._dataset_fetcher.fetch(index)  # may raise StopIteration
+  File "C:\Users\marie\AppData\Roaming\Python\Python39\site-packages\torch\utils\data\_utils\fetch.py", line 51, in fetch
+    data = [self.dataset[idx] for idx in possibly_batched_index]
+  File "C:\Users\marie\AppData\Roaming\Python\Python39\site-packages\torch\utils\data\_utils\fetch.py", line 51, in <listcomp>
+    data = [self.dataset[idx] for idx in possibly_batched_index]
+  File "C:\Users\marie\Desktop\Sanfour\MFRS\models\..\utils\load_data.py", line 47, in __getitem__
+    input_h5 = self.file['images'][idx, :, :, :]
+  File "h5py\_objects.pyx", line 54, in h5py._objects.with_phil.wrapper
+  File "h5py\_objects.pyx", line 55, in h5py._objects.with_phil.wrapper
+  File "C:\Users\marie\AppData\Roaming\Python\Python39\site-packages\h5py\_hl\dataset.py", line 710, in __getitem__
+    return self._fast_reader.read(args)
+KeyboardInterrupt

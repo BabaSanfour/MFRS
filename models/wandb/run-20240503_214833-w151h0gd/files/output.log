@@ -1,0 +1,14 @@
+2024-05-03 21:48:35,850 - INFO - Epoch 1/2
+2024-05-03 21:48:35,850 - INFO - ----------
+Traceback (most recent call last):
+  File "C:\Users\marie\Desktop\Sanfour\MFRS\models\models_train.py", line 290, in <module>
+    model_ft = train_model(model,optimizer_ft, exp_lr_scheduler, args.num_epochs, loss_func,  dataset_loader, dataset_sizes, wandb)
+  File "C:\Users\marie\Desktop\Sanfour\MFRS\models\models_train.py", line 110, in train_model
+    epoch_loss = running_loss / total_sample
+ZeroDivisionError: float division by zero
+Traceback (most recent call last):
+  File "C:\Users\marie\Desktop\Sanfour\MFRS\models\models_train.py", line 290, in <module>
+    model_ft = train_model(model,optimizer_ft, exp_lr_scheduler, args.num_epochs, loss_func,  dataset_loader, dataset_sizes, wandb)
+  File "C:\Users\marie\Desktop\Sanfour\MFRS\models\models_train.py", line 110, in train_model
+    epoch_loss = running_loss / total_sample
+ZeroDivisionError: float division by zero

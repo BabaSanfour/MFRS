@@ -1,0 +1,36 @@
+Max label in batch: 3402
+Training data shape: torch.Size([16, 3, 224, 224])
+Max label in batch: 4487
+Inside training loop - inputs shape: torch.Size([16, 3, 224, 224])
+Current batch labels: tensor([2353, 4051, 3782, 3131, 1496, 2020, 1640,  191, 2367, 3106, 1591, 4487,
+         313, 2716, 4266, 1341])
+Max label in batch: 4487, Min label in batch: 191
+2024-05-03 11:03:47,320 - INFO - Epoch 1/2
+2024-05-03 11:03:47,320 - INFO - ----------
+Features shape: torch.Size([16, 512]), Labels shape: torch.Size([16])
+Max label in batch: 4314
+Inside training loop - inputs shape: torch.Size([16, 3, 224, 224])
+Current batch labels: tensor([2674, 4033, 2181, 4226, 1479, 3761, 1153, 3362, 3713, 2328, 4314, 3731,
+        1448, 3568, 1229, 2192])
+Max label in batch: 4314, Min label in batch: 1153
+Traceback (most recent call last):
+  File "C:\Users\marie\Desktop\Sanfour\MFRS\models\models_train.py", line 343, in <module>
+    model_ft = train_model(model,criterion_cosf,optimizer_ft, exp_lr_scheduler, args.num_epochs, dataset_loader, dataset_sizes, wandb)
+  File "C:\Users\marie\Desktop\Sanfour\MFRS\models\models_train.py", line 127, in train_model
+    loss.backward()  # Backpropagation
+  File "C:\Users\marie\AppData\Roaming\Python\Python39\site-packages\torch\_tensor.py", line 522, in backward
+    torch.autograd.backward(
+  File "C:\Users\marie\AppData\Roaming\Python\Python39\site-packages\torch\autograd\__init__.py", line 266, in backward
+    Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass
+KeyboardInterrupt
+Traceback (most recent call last):
+  File "C:\Users\marie\Desktop\Sanfour\MFRS\models\models_train.py", line 343, in <module>
+    model_ft = train_model(model,criterion_cosf,optimizer_ft, exp_lr_scheduler, args.num_epochs, dataset_loader, dataset_sizes, wandb)
+  File "C:\Users\marie\Desktop\Sanfour\MFRS\models\models_train.py", line 127, in train_model
+    loss.backward()  # Backpropagation
+  File "C:\Users\marie\AppData\Roaming\Python\Python39\site-packages\torch\_tensor.py", line 522, in backward
+    torch.autograd.backward(
+  File "C:\Users\marie\AppData\Roaming\Python\Python39\site-packages\torch\autograd\__init__.py", line 266, in backward
+    Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass
+KeyboardInterrupt
+Features shape: torch.Size([16, 512]), Labels shape: torch.Size([16])
