@@ -1,0 +1,1242 @@
+2024-05-07 11:54:16,688 INFO    StreamThr :137192 [internal.py:wandb_internal():86] W&B internal server running at pid: 137192, started at: 2024-05-07 11:54:16.688852
+2024-05-07 11:54:16,692 DEBUG   HandlerThread:137192 [handler.py:handle_request():144] handle_request: status
+2024-05-07 11:54:16,695 INFO    WriterThread:137192 [datastore.py:open_for_write():85] open: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240507_115416-tfnesxq8\run-tfnesxq8.wandb
+2024-05-07 11:54:16,695 DEBUG   SenderThread:137192 [sender.py:send():379] send: header
+2024-05-07 11:54:16,793 DEBUG   SenderThread:137192 [sender.py:send():379] send: run
+2024-05-07 11:54:17,086 INFO    SenderThread:137192 [dir_watcher.py:__init__():211] watching files in: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240507_115416-tfnesxq8\files
+2024-05-07 11:54:17,086 INFO    SenderThread:137192 [sender.py:_start_run_threads():1121] run started: tfnesxq8 with start time 1715097256.688975
+2024-05-07 11:54:17,086 DEBUG   SenderThread:137192 [sender.py:send_request():406] send_request: summary_record
+2024-05-07 11:54:17,090 INFO    SenderThread:137192 [sender.py:_save_file():1375] saving file wandb-summary.json with policy end
+2024-05-07 11:54:17,090 DEBUG   HandlerThread:137192 [handler.py:handle_request():144] handle_request: check_version
+2024-05-07 11:54:17,090 DEBUG   SenderThread:137192 [sender.py:send_request():406] send_request: check_version
+2024-05-07 11:54:17,201 DEBUG   HandlerThread:137192 [handler.py:handle_request():144] handle_request: run_start
+2024-05-07 11:54:18,088 INFO    Thread-16 :137192 [dir_watcher.py:_on_file_created():271] file/dir created: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240507_115416-tfnesxq8\files\wandb-summary.json
+2024-05-07 11:54:19,022 DEBUG   HandlerThread:137192 [system_info.py:__init__():31] System info init
+2024-05-07 11:54:19,024 DEBUG   HandlerThread:137192 [system_info.py:__init__():46] System info init done
+2024-05-07 11:54:19,024 INFO    HandlerThread:137192 [system_monitor.py:start():181] Starting system monitor
+2024-05-07 11:54:19,024 INFO    SystemMonitor:137192 [system_monitor.py:_start():145] Starting system asset monitoring threads
+2024-05-07 11:54:19,024 INFO    HandlerThread:137192 [system_monitor.py:probe():201] Collecting system info
+2024-05-07 11:54:19,051 INFO    SystemMonitor:137192 [interfaces.py:start():190] Started cpu monitoring
+2024-05-07 11:54:19,051 INFO    SystemMonitor:137192 [interfaces.py:start():190] Started disk monitoring
+2024-05-07 11:54:19,051 INFO    SystemMonitor:137192 [interfaces.py:start():190] Started gpu monitoring
+2024-05-07 11:54:19,066 INFO    SystemMonitor:137192 [interfaces.py:start():190] Started memory monitoring
+2024-05-07 11:54:19,096 INFO    SystemMonitor:137192 [interfaces.py:start():190] Started network monitoring
+2024-05-07 11:54:19,116 DEBUG   HandlerThread:137192 [system_info.py:probe():195] Probing system
+2024-05-07 11:54:19,116 DEBUG   HandlerThread:137192 [system_info.py:_probe_git():180] Probing git
+2024-05-07 11:54:19,186 DEBUG   HandlerThread:137192 [system_info.py:_probe_git():188] Probing git done
+2024-05-07 11:54:19,186 DEBUG   HandlerThread:137192 [system_info.py:probe():240] Probing system done
+2024-05-07 11:54:19,186 DEBUG   HandlerThread:137192 [system_monitor.py:probe():210] {'os': 'Windows-10-10.0.22631-SP0', 'python': '3.9.9', 'heartbeatAt': '2024-05-07T15:54:19.116750', 'startedAt': '2024-05-07T15:54:16.648392', 'docker': None, 'cuda': None, 'args': ('--model', 'FaceNet', '--dataset', 'VGGFace', '--loss_function', 'center_loss', '--center_loss_weight', '0.2', '--batch_size', '16', '--lr', '0.1', '--optimizer', 'sgd'), 'state': 'running', 'program': 'C:\\Users\\marie\\Desktop\\Sanfour\\MFRS\\models\\models_train.py', 'codePath': 'models\\models_train.py', 'git': {'remote': 'https://github.com/BabaSanfour/MFRS.git', 'commit': 'eda5e1e55fd2bbd8fc71a566d0a25126cc9f37a3'}, 'email': 'Mariem.Rebaani@esprit.tn', 'root': 'C:/Users/marie/Desktop/Sanfour/MFRS', 'host': 'LAPTOP-CTGDVKVN', 'username': 'marie', 'executable': 'C:\\Program Files\\Python39\\python.exe', 'cpu_count': 8, 'cpu_count_logical': 16, 'cpu_freq': {'current': 2516.0, 'min': 0.0, 'max': 3801.0}, 'cpu_freq_per_core': [{'current': 2516.0, 'min': 0.0, 'max': 3801.0}], 'disk': {'total': 474.71581649780273, 'used': 357.5959663391113}, 'gpu': 'NVIDIA GeForce RTX 3050 6GB Laptop GPU', 'gpu_count': 1, 'gpu_devices': [{'name': 'NVIDIA GeForce RTX 3050 6GB Laptop GPU', 'memory_total': 6442450944}], 'memory': {'total': 15.189807891845703}}
+2024-05-07 11:54:19,186 INFO    HandlerThread:137192 [system_monitor.py:probe():211] Finished collecting system info
+2024-05-07 11:54:19,186 INFO    HandlerThread:137192 [system_monitor.py:probe():214] Publishing system info
+2024-05-07 11:54:19,186 DEBUG   HandlerThread:137192 [system_info.py:_save_pip():51] Saving list of pip packages installed into the current environment
+2024-05-07 11:54:19,196 DEBUG   HandlerThread:137192 [system_info.py:_save_pip():67] Saving pip packages done
+2024-05-07 11:54:19,196 INFO    HandlerThread:137192 [system_monitor.py:probe():216] Finished publishing system info
+2024-05-07 11:54:19,196 DEBUG   SenderThread:137192 [sender.py:send():379] send: files
+2024-05-07 11:54:19,196 INFO    SenderThread:137192 [sender.py:_save_file():1375] saving file wandb-metadata.json with policy now
+2024-05-07 11:54:19,206 DEBUG   HandlerThread:137192 [handler.py:handle_request():144] handle_request: stop_status
+2024-05-07 11:54:19,206 DEBUG   SenderThread:137192 [sender.py:send_request():406] send_request: stop_status
+2024-05-07 11:54:19,299 DEBUG   SenderThread:137192 [sender.py:send():379] send: telemetry
+2024-05-07 11:54:19,659 INFO    wandb-upload_0:137192 [upload_job.py:push():131] Uploaded file C:\Users\marie\AppData\Local\Temp\tmp_mzxwo4awandb\yh68slqj-wandb-metadata.json
+2024-05-07 11:54:20,117 INFO    Thread-16 :137192 [dir_watcher.py:_on_file_created():271] file/dir created: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240507_115416-tfnesxq8\files\wandb-metadata.json
+2024-05-07 11:54:20,117 INFO    Thread-16 :137192 [dir_watcher.py:_on_file_created():271] file/dir created: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240507_115416-tfnesxq8\files\output.log
+2024-05-07 11:54:20,117 INFO    Thread-16 :137192 [dir_watcher.py:_on_file_created():271] file/dir created: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240507_115416-tfnesxq8\files\requirements.txt
+2024-05-07 11:54:22,169 INFO    Thread-16 :137192 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240507_115416-tfnesxq8\files\output.log
+2024-05-07 11:54:22,603 DEBUG   HandlerThread:137192 [handler.py:handle_request():144] handle_request: status_report
+2024-05-07 11:54:23,213 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:54:23,213 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:54:23,727 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:54:23,733 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:54:27,617 DEBUG   HandlerThread:137192 [handler.py:handle_request():144] handle_request: status_report
+2024-05-07 11:54:27,744 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:54:27,744 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:54:28,256 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:54:28,256 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:54:30,262 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:54:30,262 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:54:30,784 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:54:30,784 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:54:32,648 DEBUG   HandlerThread:137192 [handler.py:handle_request():144] handle_request: status_report
+2024-05-07 11:54:32,798 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:54:32,798 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:54:33,318 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:54:33,318 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:54:34,213 DEBUG   HandlerThread:137192 [handler.py:handle_request():144] handle_request: stop_status
+2024-05-07 11:54:34,213 DEBUG   SenderThread:137192 [sender.py:send_request():406] send_request: stop_status
+2024-05-07 11:54:35,337 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:54:35,341 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:54:35,871 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:54:35,871 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:54:37,878 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:54:37,878 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:54:38,396 DEBUG   HandlerThread:137192 [handler.py:handle_request():144] handle_request: status_report
+2024-05-07 11:54:38,396 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:54:38,396 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:54:40,407 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:54:40,407 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:54:40,928 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:54:40,928 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:54:42,932 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:54:42,932 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:54:43,426 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:54:43,426 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:54:43,457 DEBUG   HandlerThread:137192 [handler.py:handle_request():144] handle_request: status_report
+2024-05-07 11:54:45,442 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:54:45,442 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:54:45,951 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:54:45,951 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:54:47,988 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:54:47,988 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:54:48,507 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:54:48,507 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:54:48,522 DEBUG   HandlerThread:137192 [handler.py:handle_request():144] handle_request: status_report
+2024-05-07 11:54:49,001 INFO    Thread-16 :137192 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240507_115416-tfnesxq8\files\config.yaml
+2024-05-07 11:54:49,220 DEBUG   HandlerThread:137192 [handler.py:handle_request():144] handle_request: stop_status
+2024-05-07 11:54:49,220 DEBUG   SenderThread:137192 [sender.py:send_request():406] send_request: stop_status
+2024-05-07 11:54:50,528 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:54:50,528 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:54:51,038 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:54:51,038 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:54:53,045 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:54:53,045 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:54:53,545 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:54:53,545 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:54:54,359 DEBUG   HandlerThread:137192 [handler.py:handle_request():144] handle_request: status_report
+2024-05-07 11:54:58,397 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:54:58,397 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:54:58,906 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:54:58,906 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:54:59,426 DEBUG   HandlerThread:137192 [handler.py:handle_request():144] handle_request: status_report
+2024-05-07 11:55:00,922 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:55:00,922 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:55:01,431 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:55:01,431 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:55:03,433 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:55:03,433 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:55:03,935 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:55:03,935 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:55:04,233 DEBUG   HandlerThread:137192 [handler.py:handle_request():144] handle_request: stop_status
+2024-05-07 11:55:04,233 DEBUG   SenderThread:137192 [sender.py:send_request():406] send_request: stop_status
+2024-05-07 11:55:05,336 DEBUG   HandlerThread:137192 [handler.py:handle_request():144] handle_request: status_report
+2024-05-07 11:55:05,955 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:55:05,955 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:55:06,482 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:55:06,482 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:55:08,534 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:55:08,534 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:55:09,045 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:55:09,045 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:55:10,375 DEBUG   HandlerThread:137192 [handler.py:handle_request():144] handle_request: status_report
+2024-05-07 11:55:11,056 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:55:11,056 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:55:11,569 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:55:11,569 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:55:13,581 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:55:13,581 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:55:14,091 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:55:14,091 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:55:15,416 DEBUG   HandlerThread:137192 [handler.py:handle_request():144] handle_request: status_report
+2024-05-07 11:55:16,105 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:55:16,105 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:55:16,615 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:55:16,615 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:55:18,639 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:55:18,639 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:55:19,102 DEBUG   SystemMonitor:137192 [system_monitor.py:_start():159] Starting system metrics aggregation loop
+2024-05-07 11:55:19,102 DEBUG   SenderThread:137192 [sender.py:send():379] send: stats
+2024-05-07 11:55:19,133 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:55:19,133 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:55:19,243 DEBUG   HandlerThread:137192 [handler.py:handle_request():144] handle_request: stop_status
+2024-05-07 11:55:19,243 DEBUG   SenderThread:137192 [sender.py:send_request():406] send_request: stop_status
+2024-05-07 11:55:21,148 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:55:21,148 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:55:21,384 DEBUG   HandlerThread:137192 [handler.py:handle_request():144] handle_request: status_report
+2024-05-07 11:55:21,649 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:55:21,649 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:55:23,665 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:55:23,665 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:55:24,197 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:55:24,208 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:55:26,218 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:55:26,218 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:55:26,406 DEBUG   HandlerThread:137192 [handler.py:handle_request():144] handle_request: status_report
+2024-05-07 11:55:26,730 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:55:26,746 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:55:28,761 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:55:28,761 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:55:29,263 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:55:29,263 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:55:31,272 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:55:31,272 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:55:31,460 DEBUG   HandlerThread:137192 [handler.py:handle_request():144] handle_request: status_report
+2024-05-07 11:55:31,774 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:55:31,774 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:55:34,258 DEBUG   HandlerThread:137192 [handler.py:handle_request():144] handle_request: stop_status
+2024-05-07 11:55:34,258 DEBUG   SenderThread:137192 [sender.py:send_request():406] send_request: stop_status
+2024-05-07 11:55:36,570 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:55:36,570 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:55:37,095 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:55:37,095 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:55:37,417 DEBUG   HandlerThread:137192 [handler.py:handle_request():144] handle_request: status_report
+2024-05-07 11:55:39,101 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:55:39,101 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:55:39,610 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:55:39,610 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:55:41,624 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:55:41,624 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:55:42,133 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:55:42,133 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:55:42,461 DEBUG   HandlerThread:137192 [handler.py:handle_request():144] handle_request: status_report
+2024-05-07 11:55:44,152 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:55:44,152 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:55:44,662 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:55:44,662 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:55:46,679 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:55:46,679 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:55:47,173 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:55:47,173 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:55:47,574 DEBUG   HandlerThread:137192 [handler.py:handle_request():144] handle_request: status_report
+2024-05-07 11:55:49,116 DEBUG   SenderThread:137192 [sender.py:send():379] send: stats
+2024-05-07 11:55:49,195 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:55:49,195 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:55:49,273 DEBUG   HandlerThread:137192 [handler.py:handle_request():144] handle_request: stop_status
+2024-05-07 11:55:49,273 DEBUG   SenderThread:137192 [sender.py:send_request():406] send_request: stop_status
+2024-05-07 11:55:49,716 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:55:49,716 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:55:51,732 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:55:51,732 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:55:52,245 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:55:52,245 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:55:53,367 DEBUG   HandlerThread:137192 [handler.py:handle_request():144] handle_request: status_report
+2024-05-07 11:55:54,249 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:55:54,249 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:55:54,749 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:55:54,749 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:55:56,769 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:55:56,769 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:55:57,306 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:55:57,306 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:55:58,405 DEBUG   HandlerThread:137192 [handler.py:handle_request():144] handle_request: status_report
+2024-05-07 11:55:59,317 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:55:59,317 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:55:59,841 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:55:59,841 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:56:03,427 DEBUG   HandlerThread:137192 [handler.py:handle_request():144] handle_request: status_report
+2024-05-07 11:56:03,867 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:56:03,867 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:56:04,278 DEBUG   HandlerThread:137192 [handler.py:handle_request():144] handle_request: stop_status
+2024-05-07 11:56:04,278 DEBUG   SenderThread:137192 [sender.py:send_request():406] send_request: stop_status
+2024-05-07 11:56:04,387 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:56:04,387 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:56:06,397 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:56:06,397 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:56:06,915 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:56:06,915 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:56:08,924 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:56:08,925 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:56:09,394 DEBUG   HandlerThread:137192 [handler.py:handle_request():144] handle_request: status_report
+2024-05-07 11:56:09,441 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:56:09,443 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:56:14,231 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:56:14,231 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:56:14,455 DEBUG   HandlerThread:137192 [handler.py:handle_request():144] handle_request: status_report
+2024-05-07 11:56:14,747 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:56:14,748 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:56:16,758 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:56:16,758 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:56:17,272 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:56:17,272 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:56:19,126 DEBUG   SenderThread:137192 [sender.py:send():379] send: stats
+2024-05-07 11:56:19,285 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:56:19,286 DEBUG   HandlerThread:137192 [handler.py:handle_request():144] handle_request: stop_status
+2024-05-07 11:56:19,287 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:56:19,288 DEBUG   SenderThread:137192 [sender.py:send_request():406] send_request: stop_status
+2024-05-07 11:56:19,812 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:56:19,812 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:56:20,384 DEBUG   HandlerThread:137192 [handler.py:handle_request():144] handle_request: status_report
+2024-05-07 11:56:21,817 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:56:21,817 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:56:22,336 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:56:22,336 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:56:24,341 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:56:24,341 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:56:24,859 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:56:24,859 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:56:25,422 DEBUG   HandlerThread:137192 [handler.py:handle_request():144] handle_request: status_report
+2024-05-07 11:56:26,864 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:56:26,864 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:56:27,397 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:56:27,397 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:56:29,443 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:56:29,443 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:56:29,950 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:56:29,966 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:56:30,490 DEBUG   HandlerThread:137192 [handler.py:handle_request():144] handle_request: status_report
+2024-05-07 11:56:33,977 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:56:33,977 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:56:34,292 DEBUG   HandlerThread:137192 [handler.py:handle_request():144] handle_request: stop_status
+2024-05-07 11:56:34,292 DEBUG   SenderThread:137192 [sender.py:send_request():406] send_request: stop_status
+2024-05-07 11:56:34,495 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:56:34,495 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:56:36,403 DEBUG   HandlerThread:137192 [handler.py:handle_request():144] handle_request: status_report
+2024-05-07 11:56:36,513 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:56:36,513 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:56:37,026 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:56:37,026 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:56:39,037 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:56:39,037 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:56:39,565 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:56:39,565 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:56:41,447 DEBUG   HandlerThread:137192 [handler.py:handle_request():144] handle_request: status_report
+2024-05-07 11:56:41,574 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:56:41,574 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:56:42,087 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:56:42,087 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:56:44,100 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:56:44,100 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:56:44,601 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:56:44,601 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:56:46,484 DEBUG   HandlerThread:137192 [handler.py:handle_request():144] handle_request: status_report
+2024-05-07 11:56:46,625 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:56:46,625 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:56:47,139 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:56:47,139 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:56:49,128 DEBUG   SenderThread:137192 [sender.py:send():379] send: stats
+2024-05-07 11:56:49,318 DEBUG   HandlerThread:137192 [handler.py:handle_request():144] handle_request: stop_status
+2024-05-07 11:56:49,319 DEBUG   SenderThread:137192 [sender.py:send_request():406] send_request: stop_status
+2024-05-07 11:56:51,940 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:56:51,941 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:56:52,427 DEBUG   HandlerThread:137192 [handler.py:handle_request():144] handle_request: status_report
+2024-05-07 11:56:52,458 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:56:52,458 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:56:54,474 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:56:54,474 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:56:54,992 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:56:54,992 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:56:57,012 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:56:57,012 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:56:57,451 DEBUG   HandlerThread:137192 [handler.py:handle_request():144] handle_request: status_report
+2024-05-07 11:56:57,529 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:56:57,529 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:56:59,541 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:56:59,541 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:57:00,088 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:57:00,088 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:57:02,109 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:57:02,109 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:57:02,485 DEBUG   HandlerThread:137192 [handler.py:handle_request():144] handle_request: status_report
+2024-05-07 11:57:02,635 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:57:02,635 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:57:04,327 DEBUG   HandlerThread:137192 [handler.py:handle_request():144] handle_request: stop_status
+2024-05-07 11:57:04,327 DEBUG   SenderThread:137192 [sender.py:send_request():406] send_request: stop_status
+2024-05-07 11:57:04,656 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:57:04,656 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:57:05,165 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:57:05,165 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:57:07,175 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:57:07,175 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:57:07,490 DEBUG   HandlerThread:137192 [handler.py:handle_request():144] handle_request: status_report
+2024-05-07 11:57:07,694 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:57:07,694 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:57:09,111 INFO    Thread-16 :137192 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240507_115416-tfnesxq8\files\output.log
+2024-05-07 11:57:09,704 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:57:09,704 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:57:10,207 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:57:10,207 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:57:12,225 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:57:12,225 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:57:12,662 DEBUG   HandlerThread:137192 [handler.py:handle_request():144] handle_request: status_report
+2024-05-07 11:57:12,726 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:57:12,726 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:57:14,744 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:57:14,744 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:57:15,254 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:57:15,254 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:57:17,272 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:57:17,272 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:57:17,695 DEBUG   HandlerThread:137192 [handler.py:handle_request():144] handle_request: status_report
+2024-05-07 11:57:17,773 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:57:17,773 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:57:19,136 DEBUG   SenderThread:137192 [sender.py:send():379] send: stats
+2024-05-07 11:57:19,339 DEBUG   HandlerThread:137192 [handler.py:handle_request():144] handle_request: stop_status
+2024-05-07 11:57:19,339 DEBUG   SenderThread:137192 [sender.py:send_request():406] send_request: stop_status
+2024-05-07 11:57:19,793 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:57:19,793 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:57:20,304 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:57:20,307 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:57:22,308 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:57:22,308 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:57:22,808 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:57:22,808 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:57:23,501 DEBUG   HandlerThread:137192 [handler.py:handle_request():144] handle_request: status_report
+2024-05-07 11:57:24,820 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:57:24,820 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:57:25,328 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:57:25,328 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:57:28,540 DEBUG   HandlerThread:137192 [handler.py:handle_request():144] handle_request: status_report
+2024-05-07 11:57:30,086 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:57:30,086 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:57:30,596 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:57:30,596 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:57:32,614 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:57:32,614 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:57:33,116 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:57:33,116 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:57:33,570 DEBUG   HandlerThread:137192 [handler.py:handle_request():144] handle_request: status_report
+2024-05-07 11:57:34,345 DEBUG   HandlerThread:137192 [handler.py:handle_request():144] handle_request: stop_status
+2024-05-07 11:57:34,346 DEBUG   SenderThread:137192 [sender.py:send_request():406] send_request: stop_status
+2024-05-07 11:57:35,127 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:57:35,127 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:57:35,627 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:57:35,627 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:57:37,648 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:57:37,648 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:57:38,150 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:57:38,150 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:57:39,510 DEBUG   HandlerThread:137192 [handler.py:handle_request():144] handle_request: status_report
+2024-05-07 11:57:40,169 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:57:40,169 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:57:40,671 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:57:40,671 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:57:42,697 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:57:42,697 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:57:43,199 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:57:43,199 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:57:44,531 DEBUG   HandlerThread:137192 [handler.py:handle_request():144] handle_request: status_report
+2024-05-07 11:57:45,219 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:57:45,219 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:57:45,728 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:57:45,728 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:57:47,744 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:57:47,744 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:57:48,245 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:57:48,245 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:57:49,139 DEBUG   SenderThread:137192 [sender.py:send():379] send: stats
+2024-05-07 11:57:49,358 DEBUG   HandlerThread:137192 [handler.py:handle_request():144] handle_request: stop_status
+2024-05-07 11:57:49,358 DEBUG   SenderThread:137192 [sender.py:send_request():406] send_request: stop_status
+2024-05-07 11:57:50,250 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:57:50,250 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:57:50,532 DEBUG   HandlerThread:137192 [handler.py:handle_request():144] handle_request: status_report
+2024-05-07 11:57:50,751 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:57:50,751 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:57:52,771 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:57:52,771 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:57:53,289 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:57:53,289 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:57:55,301 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:57:55,301 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:57:55,568 DEBUG   HandlerThread:137192 [handler.py:handle_request():144] handle_request: status_report
+2024-05-07 11:57:55,804 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:57:55,804 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:57:57,816 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:57:57,816 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:57:58,343 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:57:58,344 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:58:00,356 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:58:00,356 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:58:00,623 DEBUG   HandlerThread:137192 [handler.py:handle_request():144] handle_request: status_report
+2024-05-07 11:58:00,857 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:58:00,857 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:58:02,878 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:58:02,878 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:58:03,399 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:58:03,399 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:58:04,371 DEBUG   HandlerThread:137192 [handler.py:handle_request():144] handle_request: stop_status
+2024-05-07 11:58:04,371 DEBUG   SenderThread:137192 [sender.py:send_request():406] send_request: stop_status
+2024-05-07 11:58:06,488 DEBUG   HandlerThread:137192 [handler.py:handle_request():144] handle_request: status_report
+2024-05-07 11:58:08,198 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:58:08,198 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:58:08,716 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:58:08,716 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:58:10,730 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:58:10,730 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:58:11,241 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:58:11,241 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:58:11,514 DEBUG   HandlerThread:137192 [handler.py:handle_request():144] handle_request: status_report
+2024-05-07 11:58:13,247 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:58:13,247 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:58:13,767 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:58:13,767 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:58:15,771 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:58:15,771 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:58:16,274 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:58:16,274 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:58:16,540 DEBUG   HandlerThread:137192 [handler.py:handle_request():144] handle_request: status_report
+2024-05-07 11:58:18,291 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:58:18,291 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:58:18,809 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:58:18,809 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:58:19,141 DEBUG   SenderThread:137192 [sender.py:send():379] send: stats
+2024-05-07 11:58:19,375 DEBUG   HandlerThread:137192 [handler.py:handle_request():144] handle_request: stop_status
+2024-05-07 11:58:19,375 DEBUG   SenderThread:137192 [sender.py:send_request():406] send_request: stop_status
+2024-05-07 11:58:20,836 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:58:20,836 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:58:21,353 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:58:21,353 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:58:22,543 DEBUG   HandlerThread:137192 [handler.py:handle_request():144] handle_request: status_report
+2024-05-07 11:58:23,372 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:58:23,372 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:58:23,877 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:58:23,877 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:58:25,895 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:58:25,895 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:58:26,439 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:58:26,439 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:58:27,574 DEBUG   HandlerThread:137192 [handler.py:handle_request():144] handle_request: status_report
+2024-05-07 11:58:28,483 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:58:28,483 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:58:29,003 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:58:29,003 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:58:29,496 DEBUG   HandlerThread:137192 [handler.py:handle_request():144] handle_request: partial_history
+2024-05-07 11:58:29,496 DEBUG   SenderThread:137192 [sender.py:send():379] send: history
+2024-05-07 11:58:29,496 DEBUG   SenderThread:137192 [sender.py:send_request():406] send_request: summary_record
+2024-05-07 11:58:29,496 INFO    SenderThread:137192 [sender.py:_save_file():1375] saving file wandb-summary.json with policy end
+2024-05-07 11:58:30,530 INFO    Thread-16 :137192 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240507_115416-tfnesxq8\files\wandb-summary.json
+2024-05-07 11:58:31,025 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:58:31,025 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:58:31,542 INFO    Thread-16 :137192 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240507_115416-tfnesxq8\files\output.log
+2024-05-07 11:58:31,542 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:58:31,542 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:58:33,538 DEBUG   HandlerThread:137192 [handler.py:handle_request():144] handle_request: status_report
+2024-05-07 11:58:33,554 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:58:33,554 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:58:34,072 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:58:34,072 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:58:34,388 DEBUG   HandlerThread:137192 [handler.py:handle_request():144] handle_request: stop_status
+2024-05-07 11:58:34,410 DEBUG   SenderThread:137192 [sender.py:send_request():406] send_request: stop_status
+2024-05-07 11:58:36,074 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:58:36,074 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:58:36,600 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:58:36,600 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:58:38,584 DEBUG   HandlerThread:137192 [handler.py:handle_request():144] handle_request: status_report
+2024-05-07 11:58:38,615 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:58:38,615 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:58:39,140 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:58:39,140 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:58:41,150 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:58:41,150 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:58:41,668 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:58:41,668 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:58:43,613 DEBUG   HandlerThread:137192 [handler.py:handle_request():144] handle_request: status_report
+2024-05-07 11:58:46,435 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:58:46,435 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:58:46,951 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:58:46,951 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:58:48,644 DEBUG   HandlerThread:137192 [handler.py:handle_request():144] handle_request: status_report
+2024-05-07 11:58:48,956 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:58:48,956 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:58:49,141 DEBUG   SenderThread:137192 [sender.py:send():379] send: stats
+2024-05-07 11:58:49,391 DEBUG   HandlerThread:137192 [handler.py:handle_request():144] handle_request: stop_status
+2024-05-07 11:58:49,391 DEBUG   SenderThread:137192 [sender.py:send_request():406] send_request: stop_status
+2024-05-07 11:58:49,485 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:58:49,486 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:58:51,496 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:58:51,496 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:58:52,016 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:58:52,016 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:58:54,526 DEBUG   HandlerThread:137192 [handler.py:handle_request():144] handle_request: status_report
+2024-05-07 11:58:56,047 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:58:56,047 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:58:56,566 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:58:56,566 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:58:58,575 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:58:58,575 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:58:59,082 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:58:59,082 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:58:59,552 DEBUG   HandlerThread:137192 [handler.py:handle_request():144] handle_request: status_report
+2024-05-07 11:59:01,096 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:59:01,096 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:59:01,623 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:59:01,623 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:59:03,625 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:59:03,625 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:59:04,136 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:59:04,136 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:59:04,402 DEBUG   HandlerThread:137192 [handler.py:handle_request():144] handle_request: stop_status
+2024-05-07 11:59:04,402 DEBUG   SenderThread:137192 [sender.py:send_request():406] send_request: stop_status
+2024-05-07 11:59:05,492 DEBUG   HandlerThread:137192 [handler.py:handle_request():144] handle_request: status_report
+2024-05-07 11:59:06,157 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:59:06,157 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:59:06,674 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:59:06,674 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:59:08,700 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:59:08,700 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:59:09,204 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:59:09,204 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:59:10,620 DEBUG   HandlerThread:137192 [handler.py:handle_request():144] handle_request: status_report
+2024-05-07 11:59:11,219 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:59:11,219 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:59:11,739 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:59:11,739 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:59:13,761 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:59:13,761 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:59:14,282 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:59:14,282 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:59:15,649 DEBUG   HandlerThread:137192 [handler.py:handle_request():144] handle_request: status_report
+2024-05-07 11:59:16,288 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:59:16,288 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:59:16,798 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:59:16,798 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:59:18,800 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:59:18,801 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:59:19,146 DEBUG   SenderThread:137192 [sender.py:send():379] send: stats
+2024-05-07 11:59:19,345 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:59:19,346 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:59:19,405 DEBUG   HandlerThread:137192 [handler.py:handle_request():144] handle_request: stop_status
+2024-05-07 11:59:19,405 DEBUG   SenderThread:137192 [sender.py:send_request():406] send_request: stop_status
+2024-05-07 11:59:21,582 DEBUG   HandlerThread:137192 [handler.py:handle_request():144] handle_request: status_report
+2024-05-07 11:59:24,254 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:59:24,254 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:59:24,788 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:59:24,788 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:59:26,635 DEBUG   HandlerThread:137192 [handler.py:handle_request():144] handle_request: status_report
+2024-05-07 11:59:26,792 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:59:26,792 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:59:27,321 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:59:27,321 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:59:29,323 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:59:29,323 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:59:29,848 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:59:29,848 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:59:31,682 DEBUG   HandlerThread:137192 [handler.py:handle_request():144] handle_request: status_report
+2024-05-07 11:59:31,862 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:59:31,862 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:59:32,376 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:59:32,376 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:59:34,390 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:59:34,390 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:59:34,418 DEBUG   HandlerThread:137192 [handler.py:handle_request():144] handle_request: stop_status
+2024-05-07 11:59:34,418 DEBUG   SenderThread:137192 [sender.py:send_request():406] send_request: stop_status
+2024-05-07 11:59:34,899 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:59:34,899 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:59:36,911 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:59:36,911 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:59:37,425 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:59:37,425 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:59:37,563 DEBUG   HandlerThread:137192 [handler.py:handle_request():144] handle_request: status_report
+2024-05-07 11:59:39,431 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:59:39,431 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:59:39,938 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:59:39,938 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:59:41,951 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:59:41,951 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:59:42,459 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:59:42,459 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:59:42,583 DEBUG   HandlerThread:137192 [handler.py:handle_request():144] handle_request: status_report
+2024-05-07 11:59:44,466 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:59:44,466 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:59:45,000 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:59:45,000 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:59:47,007 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:59:47,007 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:59:47,528 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:59:47,528 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:59:47,632 DEBUG   HandlerThread:137192 [handler.py:handle_request():144] handle_request: status_report
+2024-05-07 11:59:49,159 DEBUG   SenderThread:137192 [sender.py:send():379] send: stats
+2024-05-07 11:59:49,423 DEBUG   HandlerThread:137192 [handler.py:handle_request():144] handle_request: stop_status
+2024-05-07 11:59:49,423 DEBUG   SenderThread:137192 [sender.py:send_request():406] send_request: stop_status
+2024-05-07 11:59:49,534 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:59:49,534 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:59:50,041 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:59:50,041 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:59:52,047 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:59:52,047 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:59:52,561 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:59:52,561 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:59:53,575 DEBUG   HandlerThread:137192 [handler.py:handle_request():144] handle_request: status_report
+2024-05-07 11:59:54,568 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:59:54,568 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:59:55,082 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:59:55,082 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:59:57,089 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:59:57,089 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 11:59:57,602 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:59:57,602 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 11:59:58,603 DEBUG   HandlerThread:137192 [handler.py:handle_request():144] handle_request: status_report
+2024-05-07 12:00:02,331 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 12:00:02,331 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 12:00:02,839 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 12:00:02,839 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 12:00:03,650 DEBUG   HandlerThread:137192 [handler.py:handle_request():144] handle_request: status_report
+2024-05-07 12:00:04,449 DEBUG   HandlerThread:137192 [handler.py:handle_request():144] handle_request: stop_status
+2024-05-07 12:00:04,449 DEBUG   SenderThread:137192 [sender.py:send_request():406] send_request: stop_status
+2024-05-07 12:00:04,846 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 12:00:04,846 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 12:00:05,360 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 12:00:05,360 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 12:00:07,372 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 12:00:07,372 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 12:00:07,879 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 12:00:07,879 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 12:00:09,637 DEBUG   HandlerThread:137192 [handler.py:handle_request():144] handle_request: status_report
+2024-05-07 12:00:09,886 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 12:00:09,886 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 12:00:10,407 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 12:00:10,407 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 12:00:12,414 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 12:00:12,414 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 12:00:12,937 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 12:00:12,937 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 12:00:14,656 DEBUG   HandlerThread:137192 [handler.py:handle_request():144] handle_request: status_report
+2024-05-07 12:00:14,948 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 12:00:14,948 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 12:00:15,455 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 12:00:15,455 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 12:00:17,461 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 12:00:17,461 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 12:00:17,968 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 12:00:17,968 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 12:00:19,164 DEBUG   SenderThread:137192 [sender.py:send():379] send: stats
+2024-05-07 12:00:19,461 DEBUG   HandlerThread:137192 [handler.py:handle_request():144] handle_request: stop_status
+2024-05-07 12:00:19,462 DEBUG   SenderThread:137192 [sender.py:send_request():406] send_request: stop_status
+2024-05-07 12:00:19,983 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 12:00:19,983 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 12:00:20,503 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 12:00:20,503 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 12:00:20,580 DEBUG   HandlerThread:137192 [handler.py:handle_request():144] handle_request: status_report
+2024-05-07 12:00:22,510 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 12:00:22,510 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 12:00:23,022 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 12:00:23,024 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 12:00:25,037 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 12:00:25,037 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 12:00:25,551 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 12:00:25,551 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 12:00:25,613 DEBUG   HandlerThread:137192 [handler.py:handle_request():144] handle_request: status_report
+2024-05-07 12:00:29,564 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 12:00:29,564 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 12:00:30,078 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 12:00:30,078 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 12:00:30,634 DEBUG   HandlerThread:137192 [handler.py:handle_request():144] handle_request: status_report
+2024-05-07 12:00:32,085 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 12:00:32,085 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 12:00:32,592 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 12:00:32,592 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 12:00:34,474 DEBUG   HandlerThread:137192 [handler.py:handle_request():144] handle_request: stop_status
+2024-05-07 12:00:34,474 DEBUG   SenderThread:137192 [sender.py:send_request():406] send_request: stop_status
+2024-05-07 12:00:34,606 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 12:00:34,606 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 12:00:35,127 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 12:00:35,128 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 12:00:36,599 DEBUG   HandlerThread:137192 [handler.py:handle_request():144] handle_request: status_report
+2024-05-07 12:00:39,926 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 12:00:39,926 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 12:00:40,439 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 12:00:40,439 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 12:00:41,642 DEBUG   HandlerThread:137192 [handler.py:handle_request():144] handle_request: status_report
+2024-05-07 12:00:42,471 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 12:00:42,471 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 12:00:42,998 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 12:00:42,998 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 12:00:45,005 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 12:00:45,005 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 12:00:45,525 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 12:00:45,525 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 12:00:46,697 DEBUG   HandlerThread:137192 [handler.py:handle_request():144] handle_request: status_report
+2024-05-07 12:00:47,536 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 12:00:47,536 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 12:00:48,063 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 12:00:48,067 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 12:00:49,170 DEBUG   SenderThread:137192 [sender.py:send():379] send: stats
+2024-05-07 12:00:49,481 DEBUG   HandlerThread:137192 [handler.py:handle_request():144] handle_request: stop_status
+2024-05-07 12:00:49,481 DEBUG   SenderThread:137192 [sender.py:send_request():406] send_request: stop_status
+2024-05-07 12:00:52,093 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 12:00:52,093 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 12:00:52,624 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 12:00:52,624 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 12:00:52,675 DEBUG   HandlerThread:137192 [handler.py:handle_request():144] handle_request: status_report
+2024-05-07 12:00:54,634 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 12:00:54,634 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 12:00:55,160 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 12:00:55,160 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 12:00:57,168 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 12:00:57,168 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 12:00:57,691 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 12:00:57,691 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 12:00:57,708 DEBUG   HandlerThread:137192 [handler.py:handle_request():144] handle_request: status_report
+2024-05-07 12:00:59,697 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 12:00:59,697 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 12:01:00,219 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 12:01:00,220 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 12:01:02,227 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 12:01:02,227 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 12:01:02,739 DEBUG   HandlerThread:137192 [handler.py:handle_request():144] handle_request: status_report
+2024-05-07 12:01:02,745 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 12:01:02,746 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 12:01:04,474 DEBUG   HandlerThread:137192 [handler.py:handle_request():144] handle_request: stop_status
+2024-05-07 12:01:04,474 DEBUG   SenderThread:137192 [sender.py:send_request():406] send_request: stop_status
+2024-05-07 12:01:04,757 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 12:01:04,757 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 12:01:05,270 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 12:01:05,270 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 12:01:07,276 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 12:01:07,276 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 12:01:07,790 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 12:01:07,790 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 12:01:08,641 DEBUG   HandlerThread:137192 [handler.py:handle_request():144] handle_request: status_report
+2024-05-07 12:01:09,794 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 12:01:09,802 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 12:01:10,303 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 12:01:10,303 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 12:01:12,321 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 12:01:12,321 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 12:01:12,825 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 12:01:12,827 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 12:01:13,687 DEBUG   HandlerThread:137192 [handler.py:handle_request():144] handle_request: status_report
+2024-05-07 12:01:17,577 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 12:01:17,577 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 12:01:18,101 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 12:01:18,101 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 12:01:18,745 DEBUG   HandlerThread:137192 [handler.py:handle_request():144] handle_request: status_report
+2024-05-07 12:01:19,185 DEBUG   SenderThread:137192 [sender.py:send():379] send: stats
+2024-05-07 12:01:19,493 DEBUG   HandlerThread:137192 [handler.py:handle_request():144] handle_request: stop_status
+2024-05-07 12:01:19,493 DEBUG   SenderThread:137192 [sender.py:send_request():406] send_request: stop_status
+2024-05-07 12:01:20,113 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 12:01:20,113 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 12:01:20,623 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 12:01:20,623 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 12:01:21,865 INFO    Thread-16 :137192 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240507_115416-tfnesxq8\files\output.log
+2024-05-07 12:01:22,625 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 12:01:22,625 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 12:01:23,147 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 12:01:23,155 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 12:01:24,733 DEBUG   HandlerThread:137192 [handler.py:handle_request():144] handle_request: status_report
+2024-05-07 12:01:25,276 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 12:01:25,284 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 12:01:25,817 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 12:01:25,817 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 12:01:27,827 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 12:01:27,827 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 12:01:28,361 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 12:01:28,361 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 12:01:29,775 DEBUG   HandlerThread:137192 [handler.py:handle_request():144] handle_request: status_report
+2024-05-07 12:01:30,372 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 12:01:30,372 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 12:01:30,894 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 12:01:30,894 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 12:01:32,916 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 12:01:32,916 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 12:01:33,431 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 12:01:33,431 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 12:01:34,498 DEBUG   HandlerThread:137192 [handler.py:handle_request():144] handle_request: stop_status
+2024-05-07 12:01:34,498 DEBUG   SenderThread:137192 [sender.py:send_request():406] send_request: stop_status
+2024-05-07 12:01:35,442 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 12:01:35,442 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 12:01:35,622 DEBUG   HandlerThread:137192 [handler.py:handle_request():144] handle_request: status_report
+2024-05-07 12:01:35,960 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 12:01:35,960 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 12:01:37,965 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 12:01:37,965 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 12:01:38,486 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 12:01:38,486 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 12:01:40,492 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 12:01:40,492 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 12:01:40,657 DEBUG   HandlerThread:137192 [handler.py:handle_request():144] handle_request: status_report
+2024-05-07 12:01:41,015 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 12:01:41,015 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 12:01:43,030 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 12:01:43,030 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 12:01:43,546 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 12:01:43,546 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 12:01:45,561 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 12:01:45,561 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 12:01:45,691 DEBUG   HandlerThread:137192 [handler.py:handle_request():144] handle_request: status_report
+2024-05-07 12:01:46,115 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 12:01:46,115 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 12:01:48,133 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 12:01:48,133 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 12:01:48,654 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 12:01:48,687 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 12:01:49,195 DEBUG   SenderThread:137192 [sender.py:send():379] send: stats
+2024-05-07 12:01:49,497 DEBUG   HandlerThread:137192 [handler.py:handle_request():144] handle_request: stop_status
+2024-05-07 12:01:49,497 DEBUG   SenderThread:137192 [sender.py:send_request():406] send_request: stop_status
+2024-05-07 12:01:50,738 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 12:01:50,738 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 12:01:51,255 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 12:01:51,255 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 12:01:51,681 DEBUG   HandlerThread:137192 [handler.py:handle_request():144] handle_request: status_report
+2024-05-07 12:01:56,064 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 12:01:56,064 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 12:01:56,590 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 12:01:56,590 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 12:01:56,718 DEBUG   HandlerThread:137192 [handler.py:handle_request():144] handle_request: status_report
+2024-05-07 12:01:58,599 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 12:01:58,599 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 12:01:59,123 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 12:01:59,123 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 12:02:01,127 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 12:02:01,127 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 12:02:01,636 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 12:02:01,636 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 12:02:01,740 DEBUG   HandlerThread:137192 [handler.py:handle_request():144] handle_request: status_report
+2024-05-07 12:02:03,643 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 12:02:03,643 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 12:02:04,137 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 12:02:04,137 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 12:02:04,512 DEBUG   HandlerThread:137192 [handler.py:handle_request():144] handle_request: stop_status
+2024-05-07 12:02:04,512 DEBUG   SenderThread:137192 [sender.py:send_request():406] send_request: stop_status
+2024-05-07 12:02:06,162 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 12:02:06,162 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 12:02:06,672 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 12:02:06,672 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 12:02:07,687 DEBUG   HandlerThread:137192 [handler.py:handle_request():144] handle_request: status_report
+2024-05-07 12:02:08,700 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 12:02:08,700 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 12:02:09,224 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 12:02:09,224 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 12:02:11,246 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 12:02:11,246 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 12:02:11,756 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 12:02:11,756 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 12:02:12,728 DEBUG   HandlerThread:137192 [handler.py:handle_request():144] handle_request: status_report
+2024-05-07 12:02:13,773 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 12:02:13,773 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 12:02:14,272 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 12:02:14,272 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 12:02:16,289 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 12:02:16,289 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 12:02:16,791 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 12:02:16,791 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 12:02:17,776 DEBUG   HandlerThread:137192 [handler.py:handle_request():144] handle_request: status_report
+2024-05-07 12:02:18,803 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 12:02:18,803 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 12:02:19,201 DEBUG   SenderThread:137192 [sender.py:send():379] send: stats
+2024-05-07 12:02:19,320 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 12:02:19,332 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 12:02:19,512 DEBUG   HandlerThread:137192 [handler.py:handle_request():144] handle_request: stop_status
+2024-05-07 12:02:19,513 DEBUG   SenderThread:137192 [sender.py:send_request():406] send_request: stop_status
+2024-05-07 12:02:21,342 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 12:02:21,342 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 12:02:21,860 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 12:02:21,865 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 12:02:23,761 DEBUG   HandlerThread:137192 [handler.py:handle_request():144] handle_request: status_report
+2024-05-07 12:02:23,866 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 12:02:23,866 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 12:02:24,386 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 12:02:24,386 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 12:02:26,395 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 12:02:26,395 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 12:02:26,891 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 12:02:26,891 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 12:02:28,789 DEBUG   HandlerThread:137192 [handler.py:handle_request():144] handle_request: status_report
+2024-05-07 12:02:28,907 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 12:02:28,907 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 12:02:29,401 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 12:02:29,401 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 12:02:33,806 DEBUG   HandlerThread:137192 [handler.py:handle_request():144] handle_request: status_report
+2024-05-07 12:02:34,212 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 12:02:34,212 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 12:02:34,509 DEBUG   HandlerThread:137192 [handler.py:handle_request():144] handle_request: stop_status
+2024-05-07 12:02:34,509 DEBUG   SenderThread:137192 [sender.py:send_request():406] send_request: stop_status
+2024-05-07 12:02:34,721 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 12:02:34,721 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 12:02:36,742 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 12:02:36,742 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 12:02:37,252 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 12:02:37,252 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 12:02:39,265 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 12:02:39,265 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 12:02:39,729 DEBUG   HandlerThread:137192 [handler.py:handle_request():144] handle_request: status_report
+2024-05-07 12:02:39,760 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 12:02:39,776 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 12:02:40,654 DEBUG   HandlerThread:137192 [handler.py:handle_request():144] handle_request: partial_history
+2024-05-07 12:02:40,654 DEBUG   SenderThread:137192 [sender.py:send():379] send: history
+2024-05-07 12:02:40,657 DEBUG   SenderThread:137192 [sender.py:send_request():406] send_request: summary_record
+2024-05-07 12:02:40,658 INFO    SenderThread:137192 [sender.py:_save_file():1375] saving file wandb-summary.json with policy end
+2024-05-07 12:02:41,541 INFO    Thread-16 :137192 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240507_115416-tfnesxq8\files\wandb-summary.json
+2024-05-07 12:02:41,776 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 12:02:41,776 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 12:02:42,270 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 12:02:42,270 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 12:02:42,554 INFO    Thread-16 :137192 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240507_115416-tfnesxq8\files\output.log
+2024-05-07 12:02:44,285 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 12:02:44,285 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 12:02:44,795 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 12:02:44,795 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 12:02:45,728 DEBUG   HandlerThread:137192 [handler.py:handle_request():144] handle_request: status_report
+2024-05-07 12:02:46,808 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 12:02:46,808 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 12:02:47,310 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 12:02:47,310 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 12:02:49,208 DEBUG   SenderThread:137192 [sender.py:send():379] send: stats
+2024-05-07 12:02:49,318 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 12:02:49,318 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 12:02:49,522 DEBUG   HandlerThread:137192 [handler.py:handle_request():144] handle_request: stop_status
+2024-05-07 12:02:49,522 DEBUG   SenderThread:137192 [sender.py:send_request():406] send_request: stop_status
+2024-05-07 12:02:49,820 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 12:02:49,820 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 12:02:51,688 DEBUG   HandlerThread:137192 [handler.py:handle_request():144] handle_request: status_report
+2024-05-07 12:02:51,829 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 12:02:51,829 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 12:02:52,341 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 12:02:52,341 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 12:02:54,355 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 12:02:54,355 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 12:02:54,864 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 12:02:54,864 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 12:02:56,714 DEBUG   HandlerThread:137192 [handler.py:handle_request():144] handle_request: status_report
+2024-05-07 12:02:56,887 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 12:02:56,887 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 12:02:57,420 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 12:02:57,420 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 12:02:59,429 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 12:02:59,429 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 12:02:59,945 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 12:02:59,945 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 12:03:01,739 DEBUG   HandlerThread:137192 [handler.py:handle_request():144] handle_request: status_report
+2024-05-07 12:03:01,959 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 12:03:01,959 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 12:03:02,468 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 12:03:02,468 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 12:03:04,481 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 12:03:04,481 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 12:03:04,528 DEBUG   HandlerThread:137192 [handler.py:handle_request():144] handle_request: stop_status
+2024-05-07 12:03:04,528 DEBUG   SenderThread:137192 [sender.py:send_request():406] send_request: stop_status
+2024-05-07 12:03:04,991 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 12:03:04,991 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 12:03:07,000 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 12:03:07,000 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 12:03:07,509 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 12:03:07,509 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 12:03:07,730 DEBUG   HandlerThread:137192 [handler.py:handle_request():144] handle_request: status_report
+2024-05-07 12:03:12,227 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 12:03:12,227 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 12:03:12,736 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 12:03:12,736 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 12:03:12,768 DEBUG   HandlerThread:137192 [handler.py:handle_request():144] handle_request: status_report
+2024-05-07 12:03:14,752 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 12:03:14,752 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 12:03:15,246 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 12:03:15,246 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 12:03:17,268 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 12:03:17,268 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 12:03:17,776 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 12:03:17,776 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 12:03:17,808 DEBUG   HandlerThread:137192 [handler.py:handle_request():144] handle_request: status_report
+2024-05-07 12:03:19,212 DEBUG   SenderThread:137192 [sender.py:send():379] send: stats
+2024-05-07 12:03:19,589 DEBUG   HandlerThread:137192 [handler.py:handle_request():144] handle_request: stop_status
+2024-05-07 12:03:19,593 DEBUG   SenderThread:137192 [sender.py:send_request():406] send_request: stop_status
+2024-05-07 12:03:19,794 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 12:03:19,794 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 12:03:20,299 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 12:03:20,299 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 12:03:22,311 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 12:03:22,311 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 12:03:22,810 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 12:03:22,810 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 12:03:23,806 DEBUG   HandlerThread:137192 [handler.py:handle_request():144] handle_request: status_report
+2024-05-07 12:03:24,827 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 12:03:24,827 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 12:03:25,343 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 12:03:25,343 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 12:03:27,349 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 12:03:27,349 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 12:03:27,872 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 12:03:27,872 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 12:03:28,864 DEBUG   HandlerThread:137192 [handler.py:handle_request():144] handle_request: status_report
+2024-05-07 12:03:29,880 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 12:03:29,880 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 12:03:30,411 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 12:03:30,411 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 12:03:32,427 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 12:03:32,427 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 12:03:32,932 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 12:03:32,952 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 12:03:33,903 DEBUG   HandlerThread:137192 [handler.py:handle_request():144] handle_request: status_report
+2024-05-07 12:03:34,569 DEBUG   HandlerThread:137192 [handler.py:handle_request():144] handle_request: stop_status
+2024-05-07 12:03:34,569 DEBUG   SenderThread:137192 [sender.py:send_request():406] send_request: stop_status
+2024-05-07 12:03:34,953 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 12:03:34,953 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 12:03:35,451 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 12:03:35,451 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 12:03:37,476 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 12:03:37,476 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 12:03:37,986 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 12:03:37,986 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 12:03:39,816 DEBUG   HandlerThread:137192 [handler.py:handle_request():144] handle_request: status_report
+2024-05-07 12:03:39,990 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 12:03:39,990 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 12:03:40,505 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 12:03:40,505 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 12:03:42,517 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 12:03:42,518 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 12:03:43,036 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 12:03:43,036 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 12:03:44,815 DEBUG   HandlerThread:137192 [handler.py:handle_request():144] handle_request: status_report
+2024-05-07 12:03:45,041 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 12:03:45,041 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 12:03:45,553 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 12:03:45,553 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 12:03:49,224 DEBUG   SenderThread:137192 [sender.py:send():379] send: stats
+2024-05-07 12:03:49,570 DEBUG   HandlerThread:137192 [handler.py:handle_request():144] handle_request: stop_status
+2024-05-07 12:03:49,570 DEBUG   SenderThread:137192 [sender.py:send_request():406] send_request: stop_status
+2024-05-07 12:03:50,280 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 12:03:50,280 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 12:03:50,718 DEBUG   HandlerThread:137192 [handler.py:handle_request():144] handle_request: status_report
+2024-05-07 12:03:50,811 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 12:03:50,811 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 12:03:52,817 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 12:03:52,817 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 12:03:53,320 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 12:03:53,320 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 12:03:55,336 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 12:03:55,336 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 12:03:55,740 DEBUG   HandlerThread:137192 [handler.py:handle_request():144] handle_request: status_report
+2024-05-07 12:03:55,834 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 12:03:55,834 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 12:03:57,859 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 12:03:57,859 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 12:03:58,380 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 12:03:58,380 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 12:04:00,383 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 12:04:00,383 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 12:04:00,771 DEBUG   HandlerThread:137192 [handler.py:handle_request():144] handle_request: status_report
+2024-05-07 12:04:00,897 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 12:04:00,898 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 12:04:02,900 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 12:04:02,900 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: Unknown Error
+2024-05-07 12:04:03,128 DEBUG   HandlerThread:137192 [handler.py:handle_request():144] handle_request: partial_history
+2024-05-07 12:04:03,128 DEBUG   SenderThread:137192 [sender.py:send():379] send: history
+2024-05-07 12:04:03,128 DEBUG   SenderThread:137192 [sender.py:send_request():406] send_request: summary_record
+2024-05-07 12:04:03,128 INFO    SenderThread:137192 [sender.py:_save_file():1375] saving file wandb-summary.json with policy end
+2024-05-07 12:04:03,214 INFO    Thread-16 :137192 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240507_115416-tfnesxq8\files\wandb-summary.json
+2024-05-07 12:04:03,214 INFO    Thread-16 :137192 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240507_115416-tfnesxq8\files\output.log
+2024-05-07 12:04:03,308 DEBUG   SenderThread:137192 [sender.py:send():379] send: exit
+2024-05-07 12:04:03,308 INFO    SenderThread:137192 [sender.py:send_exit():584] handling exit code: 0
+2024-05-07 12:04:03,308 INFO    SenderThread:137192 [sender.py:send_exit():586] handling runtime: 586
+2024-05-07 12:04:03,308 INFO    SenderThread:137192 [sender.py:_save_file():1375] saving file wandb-summary.json with policy end
+2024-05-07 12:04:03,314 INFO    SenderThread:137192 [sender.py:send_exit():592] send defer
+2024-05-07 12:04:03,314 DEBUG   HandlerThread:137192 [handler.py:handle_request():144] handle_request: defer
+2024-05-07 12:04:03,314 INFO    HandlerThread:137192 [handler.py:handle_request_defer():170] handle defer: 0
+2024-05-07 12:04:03,314 DEBUG   SenderThread:137192 [sender.py:send_request():406] send_request: defer
+2024-05-07 12:04:03,314 INFO    SenderThread:137192 [sender.py:send_request_defer():608] handle sender defer: 0
+2024-05-07 12:04:03,314 INFO    SenderThread:137192 [sender.py:transition_state():612] send defer: 1
+2024-05-07 12:04:03,314 DEBUG   HandlerThread:137192 [handler.py:handle_request():144] handle_request: defer
+2024-05-07 12:04:03,314 INFO    HandlerThread:137192 [handler.py:handle_request_defer():170] handle defer: 1
+2024-05-07 12:04:03,314 DEBUG   SenderThread:137192 [sender.py:send_request():406] send_request: defer
+2024-05-07 12:04:03,314 INFO    SenderThread:137192 [sender.py:send_request_defer():608] handle sender defer: 1
+2024-05-07 12:04:03,314 INFO    SenderThread:137192 [sender.py:transition_state():612] send defer: 2
+2024-05-07 12:04:03,314 DEBUG   HandlerThread:137192 [handler.py:handle_request():144] handle_request: defer
+2024-05-07 12:04:03,314 INFO    HandlerThread:137192 [handler.py:handle_request_defer():170] handle defer: 2
+2024-05-07 12:04:03,314 INFO    HandlerThread:137192 [system_monitor.py:finish():190] Stopping system monitor
+2024-05-07 12:04:03,314 DEBUG   SystemMonitor:137192 [system_monitor.py:_start():166] Finished system metrics aggregation loop
+2024-05-07 12:04:03,314 INFO    HandlerThread:137192 [interfaces.py:finish():202] Joined cpu monitor
+2024-05-07 12:04:03,314 DEBUG   SystemMonitor:137192 [system_monitor.py:_start():170] Publishing last batch of metrics
+2024-05-07 12:04:03,314 INFO    HandlerThread:137192 [interfaces.py:finish():202] Joined disk monitor
+2024-05-07 12:04:03,418 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 12:04:03,418 ERROR   gpu       :137192 [interfaces.py:monitor():144] Failed to sample metric: No data
+2024-05-07 12:04:03,590 INFO    HandlerThread:137192 [interfaces.py:finish():202] Joined gpu monitor
+2024-05-07 12:04:03,590 INFO    HandlerThread:137192 [interfaces.py:finish():202] Joined memory monitor
+2024-05-07 12:04:03,590 INFO    HandlerThread:137192 [interfaces.py:finish():202] Joined network monitor
+2024-05-07 12:04:03,590 DEBUG   SenderThread:137192 [sender.py:send_request():406] send_request: defer
+2024-05-07 12:04:03,590 INFO    SenderThread:137192 [sender.py:send_request_defer():608] handle sender defer: 2
+2024-05-07 12:04:03,590 INFO    SenderThread:137192 [sender.py:transition_state():612] send defer: 3
+2024-05-07 12:04:03,590 DEBUG   SenderThread:137192 [sender.py:send():379] send: stats
+2024-05-07 12:04:03,590 DEBUG   HandlerThread:137192 [handler.py:handle_request():144] handle_request: defer
+2024-05-07 12:04:03,590 INFO    HandlerThread:137192 [handler.py:handle_request_defer():170] handle defer: 3
+2024-05-07 12:04:03,590 DEBUG   SenderThread:137192 [sender.py:send_request():406] send_request: defer
+2024-05-07 12:04:03,590 INFO    SenderThread:137192 [sender.py:send_request_defer():608] handle sender defer: 3
+2024-05-07 12:04:03,590 INFO    SenderThread:137192 [sender.py:transition_state():612] send defer: 4
+2024-05-07 12:04:03,590 DEBUG   HandlerThread:137192 [handler.py:handle_request():144] handle_request: defer
+2024-05-07 12:04:03,590 INFO    HandlerThread:137192 [handler.py:handle_request_defer():170] handle defer: 4
+2024-05-07 12:04:03,590 DEBUG   SenderThread:137192 [sender.py:send_request():406] send_request: defer
+2024-05-07 12:04:03,590 INFO    SenderThread:137192 [sender.py:send_request_defer():608] handle sender defer: 4
+2024-05-07 12:04:03,590 INFO    SenderThread:137192 [sender.py:transition_state():612] send defer: 5
+2024-05-07 12:04:03,590 DEBUG   HandlerThread:137192 [handler.py:handle_request():144] handle_request: defer
+2024-05-07 12:04:03,590 INFO    HandlerThread:137192 [handler.py:handle_request_defer():170] handle defer: 5
+2024-05-07 12:04:03,590 DEBUG   SenderThread:137192 [sender.py:send():379] send: summary
+2024-05-07 12:04:03,590 INFO    SenderThread:137192 [sender.py:_save_file():1375] saving file wandb-summary.json with policy end
+2024-05-07 12:04:03,590 DEBUG   SenderThread:137192 [sender.py:send_request():406] send_request: defer
+2024-05-07 12:04:03,590 INFO    SenderThread:137192 [sender.py:send_request_defer():608] handle sender defer: 5
+2024-05-07 12:04:03,590 INFO    SenderThread:137192 [sender.py:transition_state():612] send defer: 6
+2024-05-07 12:04:03,590 DEBUG   HandlerThread:137192 [handler.py:handle_request():144] handle_request: defer
+2024-05-07 12:04:03,590 INFO    HandlerThread:137192 [handler.py:handle_request_defer():170] handle defer: 6
+2024-05-07 12:04:03,590 DEBUG   SenderThread:137192 [sender.py:send_request():406] send_request: defer
+2024-05-07 12:04:03,590 INFO    SenderThread:137192 [sender.py:send_request_defer():608] handle sender defer: 6
+2024-05-07 12:04:03,590 INFO    SenderThread:137192 [sender.py:transition_state():612] send defer: 7
+2024-05-07 12:04:03,590 DEBUG   HandlerThread:137192 [handler.py:handle_request():144] handle_request: status_report
+2024-05-07 12:04:03,590 DEBUG   HandlerThread:137192 [handler.py:handle_request():144] handle_request: defer
+2024-05-07 12:04:03,590 INFO    HandlerThread:137192 [handler.py:handle_request_defer():170] handle defer: 7
+2024-05-07 12:04:03,590 DEBUG   SenderThread:137192 [sender.py:send_request():406] send_request: defer
+2024-05-07 12:04:03,590 INFO    SenderThread:137192 [sender.py:send_request_defer():608] handle sender defer: 7
+2024-05-07 12:04:04,224 INFO    Thread-16 :137192 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240507_115416-tfnesxq8\files\wandb-summary.json
+2024-05-07 12:04:04,323 DEBUG   HandlerThread:137192 [handler.py:handle_request():144] handle_request: poll_exit
+2024-05-07 12:04:04,373 INFO    SenderThread:137192 [sender.py:transition_state():612] send defer: 8
+2024-05-07 12:04:04,373 DEBUG   SenderThread:137192 [sender.py:send_request():406] send_request: poll_exit
+2024-05-07 12:04:04,373 DEBUG   HandlerThread:137192 [handler.py:handle_request():144] handle_request: defer
+2024-05-07 12:04:04,373 INFO    HandlerThread:137192 [handler.py:handle_request_defer():170] handle defer: 8
+2024-05-07 12:04:04,373 DEBUG   SenderThread:137192 [sender.py:send_request():406] send_request: defer
+2024-05-07 12:04:04,373 INFO    SenderThread:137192 [sender.py:send_request_defer():608] handle sender defer: 8
+2024-05-07 12:04:04,373 INFO    SenderThread:137192 [job_builder.py:build():281] Attempting to build job artifact
+2024-05-07 12:04:04,373 INFO    SenderThread:137192 [job_builder.py:_get_source_type():400] is repo sourced job
+2024-05-07 12:04:04,448 INFO    SenderThread:137192 [job_builder.py:build():374] adding wandb-job metadata file
+2024-05-07 12:04:04,485 INFO    SenderThread:137192 [sender.py:transition_state():612] send defer: 9
+2024-05-07 12:04:04,485 DEBUG   SenderThread:137192 [sender.py:send():379] send: artifact
+2024-05-07 12:04:04,485 DEBUG   HandlerThread:137192 [handler.py:handle_request():144] handle_request: defer
+2024-05-07 12:04:04,489 INFO    HandlerThread:137192 [handler.py:handle_request_defer():170] handle defer: 9
+2024-05-07 12:04:05,129 INFO    wandb-upload_0:137192 [upload_job.py:push():86] Skipped uploading C:\Users\marie\AppData\Local\wandb\wandb\artifacts\staging\tmpdfamqsxa
+2024-05-07 12:04:05,229 INFO    Thread-16 :137192 [dir_watcher.py:_on_file_modified():288] file/dir modified: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240507_115416-tfnesxq8\files\output.log
+2024-05-07 12:04:05,332 DEBUG   HandlerThread:137192 [handler.py:handle_request():144] handle_request: poll_exit
+2024-05-07 12:04:05,439 INFO    wandb-upload_1:137192 [upload_job.py:push():89] Uploaded file C:\Users\marie\AppData\Local\wandb\wandb\artifacts\staging\tmpoljf9818
+2024-05-07 12:04:06,385 INFO    SenderThread:137192 [sender.py:send_artifact():1475] sent artifact job-https___github.com_BabaSanfour_MFRS.git_models_models_train.py - {'id': 'QXJ0aWZhY3Q6ODI1NzcyOTY1', 'digest': 'fe2d514b288147da740ab1cd4c5f675f', 'state': 'PENDING', 'aliases': [], 'artifactSequence': {'id': 'QXJ0aWZhY3RDb2xsZWN0aW9uOjE2MjI4OTA0OA==', 'latestArtifact': {'id': 'QXJ0aWZhY3Q6ODIxNjU2MjY1', 'versionIndex': 7}}, 'version': 'latest'}
+2024-05-07 12:04:06,385 DEBUG   SenderThread:137192 [sender.py:send_request():406] send_request: defer
+2024-05-07 12:04:06,385 INFO    SenderThread:137192 [sender.py:send_request_defer():608] handle sender defer: 9
+2024-05-07 12:04:06,385 INFO    SenderThread:137192 [dir_watcher.py:finish():358] shutting down directory watcher
+2024-05-07 12:04:07,239 INFO    SenderThread:137192 [dir_watcher.py:finish():388] scan: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240507_115416-tfnesxq8\files
+2024-05-07 12:04:07,239 INFO    SenderThread:137192 [dir_watcher.py:finish():402] scan save: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240507_115416-tfnesxq8\files\config.yaml config.yaml
+2024-05-07 12:04:07,239 INFO    SenderThread:137192 [dir_watcher.py:finish():402] scan save: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240507_115416-tfnesxq8\files\output.log output.log
+2024-05-07 12:04:07,243 INFO    SenderThread:137192 [dir_watcher.py:finish():402] scan save: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240507_115416-tfnesxq8\files\requirements.txt requirements.txt
+2024-05-07 12:04:07,247 INFO    SenderThread:137192 [dir_watcher.py:finish():402] scan save: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240507_115416-tfnesxq8\files\wandb-metadata.json wandb-metadata.json
+2024-05-07 12:04:07,247 INFO    SenderThread:137192 [dir_watcher.py:finish():402] scan save: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240507_115416-tfnesxq8\files\wandb-summary.json wandb-summary.json
+2024-05-07 12:04:07,250 INFO    SenderThread:137192 [sender.py:transition_state():612] send defer: 10
+2024-05-07 12:04:07,250 DEBUG   SenderThread:137192 [sender.py:send_request():406] send_request: poll_exit
+2024-05-07 12:04:07,250 DEBUG   HandlerThread:137192 [handler.py:handle_request():144] handle_request: defer
+2024-05-07 12:04:07,250 INFO    HandlerThread:137192 [handler.py:handle_request_defer():170] handle defer: 10
+2024-05-07 12:04:07,254 DEBUG   SenderThread:137192 [sender.py:send_request():406] send_request: defer
+2024-05-07 12:04:07,254 INFO    SenderThread:137192 [sender.py:send_request_defer():608] handle sender defer: 10
+2024-05-07 12:04:07,254 INFO    SenderThread:137192 [file_pusher.py:finish():159] shutting down file pusher
+2024-05-07 12:04:07,508 INFO    wandb-upload_1:137192 [upload_job.py:push():131] Uploaded file C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240507_115416-tfnesxq8\files\output.log
+2024-05-07 12:04:07,571 INFO    wandb-upload_0:137192 [upload_job.py:push():131] Uploaded file C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240507_115416-tfnesxq8\files\config.yaml
+2024-05-07 12:04:07,620 INFO    wandb-upload_2:137192 [upload_job.py:push():131] Uploaded file C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240507_115416-tfnesxq8\files\requirements.txt
+2024-05-07 12:04:07,626 INFO    wandb-upload_3:137192 [upload_job.py:push():131] Uploaded file C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240507_115416-tfnesxq8\files\wandb-summary.json
+2024-05-07 12:04:07,834 INFO    Thread-15 :137192 [sender.py:transition_state():612] send defer: 11
+2024-05-07 12:04:07,835 DEBUG   HandlerThread:137192 [handler.py:handle_request():144] handle_request: defer
+2024-05-07 12:04:07,835 INFO    HandlerThread:137192 [handler.py:handle_request_defer():170] handle defer: 11
+2024-05-07 12:04:07,835 DEBUG   SenderThread:137192 [sender.py:send_request():406] send_request: defer
+2024-05-07 12:04:07,835 INFO    SenderThread:137192 [sender.py:send_request_defer():608] handle sender defer: 11
+2024-05-07 12:04:07,835 INFO    SenderThread:137192 [file_pusher.py:join():164] waiting for file pusher
+2024-05-07 12:04:07,835 INFO    SenderThread:137192 [sender.py:transition_state():612] send defer: 12
+2024-05-07 12:04:07,835 DEBUG   HandlerThread:137192 [handler.py:handle_request():144] handle_request: defer
+2024-05-07 12:04:07,835 INFO    HandlerThread:137192 [handler.py:handle_request_defer():170] handle defer: 12
+2024-05-07 12:04:07,835 DEBUG   SenderThread:137192 [sender.py:send_request():406] send_request: defer
+2024-05-07 12:04:07,835 INFO    SenderThread:137192 [sender.py:send_request_defer():608] handle sender defer: 12
+2024-05-07 12:04:07,835 INFO    SenderThread:137192 [file_stream.py:finish():593] file stream finish called
+2024-05-07 12:04:08,232 INFO    SenderThread:137192 [file_stream.py:finish():597] file stream finish is done
+2024-05-07 12:04:08,232 INFO    SenderThread:137192 [sender.py:transition_state():612] send defer: 13
+2024-05-07 12:04:08,232 DEBUG   HandlerThread:137192 [handler.py:handle_request():144] handle_request: defer
+2024-05-07 12:04:08,232 INFO    HandlerThread:137192 [handler.py:handle_request_defer():170] handle defer: 13
+2024-05-07 12:04:08,236 DEBUG   SenderThread:137192 [sender.py:send_request():406] send_request: defer
+2024-05-07 12:04:08,236 INFO    SenderThread:137192 [sender.py:send_request_defer():608] handle sender defer: 13
+2024-05-07 12:04:08,236 INFO    SenderThread:137192 [sender.py:transition_state():612] send defer: 14
+2024-05-07 12:04:08,236 DEBUG   HandlerThread:137192 [handler.py:handle_request():144] handle_request: defer
+2024-05-07 12:04:08,236 DEBUG   SenderThread:137192 [sender.py:send():379] send: final
+2024-05-07 12:04:08,236 INFO    HandlerThread:137192 [handler.py:handle_request_defer():170] handle defer: 14
+2024-05-07 12:04:08,236 DEBUG   SenderThread:137192 [sender.py:send():379] send: footer
+2024-05-07 12:04:08,236 DEBUG   SenderThread:137192 [sender.py:send_request():406] send_request: defer
+2024-05-07 12:04:08,237 INFO    SenderThread:137192 [sender.py:send_request_defer():608] handle sender defer: 14
+2024-05-07 12:04:08,237 DEBUG   HandlerThread:137192 [handler.py:handle_request():144] handle_request: poll_exit
+2024-05-07 12:04:08,237 DEBUG   HandlerThread:137192 [handler.py:handle_request():144] handle_request: server_info
+2024-05-07 12:04:08,237 DEBUG   HandlerThread:137192 [handler.py:handle_request():144] handle_request: get_summary
+2024-05-07 12:04:08,237 DEBUG   SenderThread:137192 [sender.py:send_request():406] send_request: poll_exit
+2024-05-07 12:04:08,237 DEBUG   HandlerThread:137192 [handler.py:handle_request():144] handle_request: sampled_history
+2024-05-07 12:04:08,237 DEBUG   SenderThread:137192 [sender.py:send_request():406] send_request: server_info
+2024-05-07 12:04:08,237 DEBUG   HandlerThread:137192 [handler.py:handle_request():144] handle_request: job_info
+2024-05-07 12:04:08,300 DEBUG   SenderThread:137192 [sender.py:send_request():406] send_request: job_info
+2024-05-07 12:04:08,300 INFO    MainThread:137192 [wandb_run.py:_footer_history_summary_info():3481] rendering history
+2024-05-07 12:04:08,300 INFO    MainThread:137192 [wandb_run.py:_footer_history_summary_info():3513] rendering summary
+2024-05-07 12:04:08,300 INFO    MainThread:137192 [wandb_run.py:_footer_sync_info():3440] logging synced files
+2024-05-07 12:04:08,300 DEBUG   HandlerThread:137192 [handler.py:handle_request():144] handle_request: shutdown
+2024-05-07 12:04:08,305 INFO    HandlerThread:137192 [handler.py:finish():861] shutting down handler
+2024-05-07 12:04:09,250 INFO    WriterThread:137192 [datastore.py:close():294] close: C:\Users\marie\Desktop\Sanfour\MFRS\models\wandb\run-20240507_115416-tfnesxq8\run-tfnesxq8.wandb
+2024-05-07 12:04:09,307 INFO    SenderThread:137192 [sender.py:finish():1552] shutting down sender
+2024-05-07 12:04:09,307 INFO    SenderThread:137192 [file_pusher.py:finish():159] shutting down file pusher
+2024-05-07 12:04:09,307 INFO    SenderThread:137192 [file_pusher.py:join():164] waiting for file pusher

@@ -41,13 +41,13 @@ def init_weights_randomly(model):
         elif isinstance(m, nn.BatchNorm2d):
             nn.init.constant_(m.weight.data, 1)
             nn.init.constant_(m.bias.data, 0)
-def get_loss_function(args):
+def get_loss_function(args, device):
     if args.loss_function == 'center_loss':
         criterion_ce = nn.CrossEntropyLoss()
-        criterion_center = CenterLoss(num_classes=args.num_classes, feat_dim=512)
-        return lambda logits, labels, features: criterion_ce(logits, labels) + args.center_loss_weight * criterion_center(features, labels)
+        criterion_center = CenterLoss(num_classes=args.num_classes, feat_dim=512,device=device)
+        return lambda logits, labels, features: criterion_ce(logits.to(device), labels.to(device)) + args.center_loss_weight * criterion_center(features.to(device), labels.to(device))
     elif args.loss_function in ['cosface', 'arcface', 'sphereface']:
-        return MLoss(in_features=512, out_features=args.num_classes, loss_type=args.loss_function, s=args.s, m=args.m)
+        return MLoss(in_features=512, out_features=args.num_classes, loss_type=args.loss_function, s=args.s, m=args.m,device=device)
     else:
         raise ValueError("Unsupported loss function")
 
@@ -173,7 +173,7 @@ def test_model(model: nn.Module, dataset_loader: Dict[str, DataLoader], dataset_
 
     model.eval()  # Set the model to evaluation mode
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-    
+    model.to(device)
     correct_predictions = 0
     correct_topk_predictions = 0
     test_loss = 0.0
@@ -283,7 +283,7 @@ if __name__ == '__main__':
     init_weights_randomly(model)
     
 
-    loss_func = get_loss_function(args)
+    loss_func = get_loss_function(args,device)
     
 
     # Choose optimizer based on args.optimizer

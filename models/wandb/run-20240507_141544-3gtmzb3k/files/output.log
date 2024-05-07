@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "C:\Users\marie\Desktop\Sanfour\MFRS\models\models_train.py", line 286, in <module>
+    loss_func = get_loss_function(args,device)
+TypeError: get_loss_function() takes 1 positional argument but 2 were given
+Traceback (most recent call last):
+  File "C:\Users\marie\Desktop\Sanfour\MFRS\models\models_train.py", line 286, in <module>
+    loss_func = get_loss_function(args,device)
+TypeError: get_loss_function() takes 1 positional argument but 2 were given

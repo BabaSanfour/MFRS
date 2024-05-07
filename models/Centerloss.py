@@ -3,11 +3,12 @@ import torch.nn as nn
 import torch.nn.functional as F
 
 class CenterLoss(nn.Module):
-    def __init__(self, num_classes=1000, feat_dim=2):
+    def __init__(self, num_classes=1000, feat_dim=2,device=None):
         super(CenterLoss, self).__init__()
         self.num_classes = num_classes
         self.feat_dim = feat_dim
-        self.centers = nn.Parameter(torch.randn(num_classes, feat_dim))
+        self.device = device if device else torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+        self.centers = nn.Parameter(torch.randn(num_classes, feat_dim)).to(self.device)
 
     def forward(self, x, labels):
         """
@@ -15,8 +16,9 @@ class CenterLoss(nn.Module):
             x: Feature matrix with shape (batch_size, feat_dim).
             labels: Ground truth labels with shape (batch_size).
         """
+        x = x.to(self.device)
         distmat = torch.cdist(x, self.centers)  # Compute all pairwise distances
-        labels = labels.unsqueeze(1)  # Reshape for gather
+        labels = labels.unsqueeze(1).to(self.device)  # Reshape for gather
         distances = distmat.gather(1, labels)  # Gather distances of the correct centers
 
         loss = distances.mean()  # Mean over the batch
@@ -25,7 +27,7 @@ class CenterLoss(nn.Module):
  
 class MLoss(nn.Module):
 
-    def __init__(self, in_features, out_features, loss_type='arcface', eps=1e-7, s=None, m=None):
+    def __init__(self, in_features, out_features, loss_type='arcface', eps=1e-7, s=None, m=None,device=None):
         '''
         
 
@@ -37,6 +39,7 @@ class MLoss(nn.Module):
 
         '''
         super(MLoss, self).__init__()
+        self.device = device if device else torch.device('cuda' if torch.cuda.is_available() else 'cpu')
         loss_type = loss_type.lower()
         assert loss_type in  ['arcface', 'sphereface', 'cosface']
         if loss_type == 'arcface':
@@ -51,7 +54,7 @@ class MLoss(nn.Module):
         self.loss_type = loss_type
         self.in_features = in_features
         self.out_features = out_features
-        self.fc = nn.Linear(in_features, out_features, bias=False)
+        self.fc = nn.Linear(in_features, out_features, bias=False).to(self.device)
         self.eps = eps
 
     def forward(self, x, labels):
