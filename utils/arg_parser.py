@@ -263,6 +263,14 @@ def get_similarity_parser():
         default=0,
         help='Region index to compute RDM of brain activity'
     )
+    brain.add_argument(
+        '--freq_band',
+        type=str,
+        default=None,
+        help='Frequency band for source reconstruction'
+    )
+
+
     
     stats = parser.add_argument_group("Stats")
     stats.add_argument(
@@ -327,5 +335,19 @@ def source_rescontruction_parser():
         default="grad",
         help='Type of MEG sensors to use'
     )
+
+    source.add_argument(
+        '--freq_bands',
+        type=dict,
+        default={
+            "theta": (4, 8), 
+            "alpha": (8, 12), 
+            "beta": (12, 30), 
+            "gamma": (30, 55), 
+            "high-gamma": (55, 90)
+        },
+        help='Frequency bands for hilbert transform'
+    )
+
 
     return parser
