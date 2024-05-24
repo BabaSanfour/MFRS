@@ -33,6 +33,8 @@ if __name__ == '__main__':
     }
 
     if args.brain_analysis_type == "avg":
+        if args.freq_band is not None:
+            args.meg_picks = f"{args.meg_picks}_{args.freq_band}"
         if os.path.exists(os.path.join(similarity_folder, f"avg_{args.model_name}_{args.ann_analysis_type}_{args.meg_picks}_rdm_{args.activation_type}_{args.stimuli_file_name}_{args.time_segment}_{args.sliding_window}.npy")):
             logger.info(f"Similarity score for {args.model_name}, {args.stimuli_file_name} {args.ann_analysis_type}, {args.meg_picks}, {args.activation_type}, {args.time_segment}, {args.sliding_window} already exists. Skipping...")
         else:
@@ -69,36 +71,56 @@ if __name__ == '__main__':
         list_of_regions = [label.name for _, label in enumerate(rois)]
         list_of_regions.remove("unknown-lh")
         list_of_regions.remove("unknown-rh")
-        region = list_of_regions[args.region_index]
-        logger.info(f"Calculating brain Similarity Scores movie for region {region}...")
-        brain_rdm = np.zeros((1, 1101, 428, 428), dtype=np.float32)
-        rdm_path = os.path.join(rdms_folder, f"{region}_raw_rdm.npy")
-        if os.path.exists(rdm_path):
-            logger.info(f"RDM for region {region} already exists. Loading...")
-            brain_rdm = rdm_instance.load(rdm_path)
-        else:
-            logger.info(f"RDM for region {region} not found. Computing...")
-            for i in range(1,17):
-                sub_rdm_path = os.path.join(rdms_folder, f"sub-{i:02d}", f"sub-{i:02d}_{region}_raw_rdm.npy")
-                if not os.path.exists(sub_rdm_path):
-                    raise ValueError(f"RDM for subject {i:02d}, region {region} not found. Please compute it first.")
-                brain_rdm += rdm_instance.load(sub_rdm_path)
-                logger.info(f"RDM for subject {i:02d} loaded successfully!")
-            brain_rdm = brain_rdm / 16
-            rdm_instance.save(brain_rdm, rdm_path)
-        brain_rdm = brain_rdm[slicing_indices_meg[args.stimuli_file_name]]
-        logger.info(f"brain rdm loaded successfully!")
-        logger.info(f"loading {args.model_name} model RDM...")
-        model_rdm_path = os.path.join(rdms_folder, f"{args.model_name}_{args.ann_analysis_type}_rdm_{args.activation_type}.npy")
-        model_rdm = rdm_instance.load(model_rdm_path)
-        model_rdm = model_rdm[slicing_indices_model[args.stimuli_file_name]]
-        logger.info(f"{args.model_name} model RDM loaded successfully!")
-        logger.info(f"Computing similarity score...")
-        sim = rsa_instance.score(brain_rdm, model_rdm)
-        if not os.path.isdir(os.path.join(similarity_folder, f"{args.model_name}_{args.ann_analysis_type}_{args.activation_type}_{args.stimuli_file_name}")):
-            os.makedirs(os.path.join(similarity_folder, f"{args.model_name}_{args.ann_analysis_type}_{args.activation_type}_{args.stimuli_file_name}"))
-        rsa_instance.save(sim, os.path.join(similarity_folder, f"{args.model_name}_{args.ann_analysis_type}_{args.activation_type}_{args.stimuli_file_name}",f"raw_{args.model_name}_{args.ann_analysis_type}_{region}_rdm_{args.activation_type}_{args.stimuli_file_name}.npy"))
-        logger.info(f"Similarity score computed and saved successfully!")
+        next_region = False
+        for region_index, region in enumerate(list_of_regions):
+            region = list_of_regions[region_index]
+            logger.info(f"Calculating brain Similarity Scores movie for region {region}...")
+            brain_rdm = np.zeros((1, 1101, 428, 428), dtype=np.float32)
+            if args.freq_band is not None:
+                region = f"{region}_{args.freq_band}"
+
+            rdm_path = os.path.join(rdms_folder, "raw_rdms_sbjct_avg", f"{region}_raw_rdm.npy")
+            if os.path.exists(rdm_path):
+                logger.info(f"RDM for region {region} already exists. Loading...")
+                brain_rdm = rdm_instance.load(rdm_path)
+                logger.info(f"brain rdm loaded successfully!")
+            else:
+                logger.info(f"RDM for region {region} not found. Computing...")
+                for i in range(1,17):
+                    sub_rdm_path = os.path.join(rdms_folder, f"sub-{i:02d}", "raw_rdm", f"sub-{i:02d}_{args.meg_picks}_{region}_raw_rdm.npy")
+                    if not os.path.exists(sub_rdm_path):
+                        raise ValueError(f"RDM for subject {i:02d}, region {region} not found. Please compute it first.")
+                    try:
+                        brain_rdm += rdm_instance.load(sub_rdm_path)
+                        logger.info(f"RDM for subject {i:02d} loaded successfully!")
+                    except:
+                        logger.info(f"RDM for subject {i:02d} not found. Moving to next region...")
+                        next_region = True
+                        break
+                    brain_rdm += rdm_instance.load(sub_rdm_path)
+                brain_rdm = brain_rdm / 16
+                rdm_instance.save(brain_rdm, rdm_path)
+                logger.info(f"brain rdm computed and saved successfully!")
+            if next_region:
+                next_region = False
+                logger.info(f"Skipping region {region}...")
+                continue
+            logger.info(f"loading {args.model_name} model RDM...")
+            model_rdm_path = os.path.join(rdms_folder, "networks_rdms", f"{args.model_name}_{args.ann_analysis_type}_rdm_{args.activation_type}.npy")
+            model_rdm = rdm_instance.load(model_rdm_path)
+            logger.info(f"{args.model_name} model RDM loaded successfully!")
+            for stimuli_file_name in ["fam", "unfamiliar", "scrambled"]:
+                if os.path.exists(os.path.join(similarity_folder, "raw_sim_scores", f"{args.model_name}_{args.ann_analysis_type}_{args.activation_type}_{stimuli_file_name}", f"raw_{args.model_name}_{args.ann_analysis_type}_{region}_rdm_{args.activation_type}_{stimuli_file_name}.npy")):
+                    logger.info(f"Similarity score for {args.model_name}, {args.ann_analysis_type}, {region}, {args.activation_type}, {stimuli_file_name} already exists. Skipping...")
+                    continue
+                brain_rdm_mini = brain_rdm[slicing_indices_meg[stimuli_file_name]]
+                model_rdm_mini = model_rdm[slicing_indices_model[stimuli_file_name]]
+                logger.info(f"Computing similarity score...")
+                sim = rsa_instance.score(brain_rdm_mini, model_rdm_mini)
+                if not os.path.isdir(os.path.join(similarity_folder, "raw_sim_scores", f"{args.model_name}_{args.ann_analysis_type}_{args.activation_type}_{stimuli_file_name}")):
+                    os.makedirs(os.path.join(similarity_folder, "raw_sim_scores", f"{args.model_name}_{args.ann_analysis_type}_{args.activation_type}_{stimuli_file_name}"))
+                rsa_instance.save(sim, os.path.join(similarity_folder, "raw_sim_scores", f"{args.model_name}_{args.ann_analysis_type}_{args.activation_type}_{stimuli_file_name}", f"raw_{args.model_name}_{args.ann_analysis_type}_{region}_rdm_{args.activation_type}_{stimuli_file_name}.npy"))
+                logger.info(f"Similarity score computed and saved successfully!")
 
     else:
         raise ValueError("Modality not recognized. Please choose between 'avg' and 'raw'")
