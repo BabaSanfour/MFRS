@@ -1,4 +1,5 @@
 import os
+import mne
 import numpy as np
 
 import logging
@@ -12,7 +13,7 @@ sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 from src.rdm import RDM
 from src.noise_ceiling import noise_ceiling
 from utils.arg_parser import get_similarity_parser
-from utils.config import rdms_folder, similarity_folder
+from utils.config import rdms_folder, similarity_folder, subjects_dir
 
 
 if __name__ == '__main__':
@@ -27,22 +28,55 @@ if __name__ == '__main__':
         "scrambled": (slice(None), slice(None), slice(None), slice(280, None), slice(280, None))
     }
     for key in slicing_indices_meg.keys():
-        brain_activity = []
-        for subject in range(1, 17):
-            logger.info(f"Loading brain activity for subject {subject:02d}...")
-            sub_rdm_path = os.path.join(rdms_folder, f"sub-{subject:02d}_{args.meg_picks}_{args.brain_analysis_type}_rdm_{args.time_segment}_{args.time_window}.npy")
-            if not os.path.exists(sub_rdm_path):
-                raise ValueError(f"RDM for subject {subject:02d} not found. Please compute it first.")
-            sub_rdm = rdm_instance.load(sub_rdm_path)
-            brain_activity.append(sub_rdm)
-        brain_activity = np.stack(brain_activity, axis=0)
-        logger.info(f"Brain activity loaded successfully!")
-        brain_activity = brain_activity[slicing_indices_meg[key]]
-        noise_ceiling_instance = noise_ceiling(brain_activity)
-        del brain_activity
-        logger.info(f"Computing noise ceiling...")
-        upper_noise_ceiling, lower_noise_ceiling = noise_ceiling_instance[args.noise_ceiling_type]
-        np.save(os.path.join(similarity_folder, f"{args.meg_picks}_{key}_upper_noise_ceiling_{args.time_segment}_{args.time_window}.npy"), upper_noise_ceiling)
-        np.save(os.path.join(similarity_folder, f"{args.meg_picks}_{key}_lower_noise_ceiling_{args.time_segment}_{args.time_window}.npy"), lower_noise_ceiling)
-        del upper_noise_ceiling, lower_noise_ceiling
-    logger.info(f"Noise ceiling computed successfully!")
+        if args.brain_analysis_type == "avg":
+            brain_activity = []
+            for subject in range(1, 17):
+                logger.info(f"Loading brain activity for subject {subject:02d}...")
+                sub_rdm_path = os.path.join(rdms_folder, f"sub-{subject:02d}_{args.meg_picks}_{args.brain_analysis_type}_rdm_{args.time_segment}_{args.time_window}.npy")
+                if not os.path.exists(sub_rdm_path):
+                    raise ValueError(f"RDM for subject {subject:02d} not found. Please compute it first.")
+                sub_rdm = rdm_instance.load(sub_rdm_path)
+                brain_activity.append(sub_rdm)
+            brain_activity = np.stack(brain_activity, axis=0)
+            logger.info(f"Brain activity loaded successfully!")
+            brain_activity = brain_activity[slicing_indices_meg[key]]
+            noise_ceiling_instance = noise_ceiling(brain_activity)
+            del brain_activity
+            logger.info(f"Computing noise ceiling...")
+            upper_noise_ceiling, lower_noise_ceiling = noise_ceiling_instance[args.noise_ceiling_type]
+            np.save(os.path.join(similarity_folder, f"{args.meg_picks}_{key}_upper_noise_ceiling_{args.time_segment}_{args.time_window}.npy"), upper_noise_ceiling)
+            np.save(os.path.join(similarity_folder, f"{args.meg_picks}_{key}_lower_noise_ceiling_{args.time_segment}_{args.time_window}.npy"), lower_noise_ceiling)
+            del upper_noise_ceiling, lower_noise_ceiling
+            logger.info(f"Noise ceiling computed successfully!")
+        elif args.brain_analysis_type == "raw":
+            rois = mne.read_labels_from_annot(parc='aparc_sub', subject='fsaverage', subjects_dir=subjects_dir)
+            list_of_regions = [label.name for _, label in enumerate(rois)]
+            list_of_regions.remove("unknown-lh")
+            list_of_regions.remove("unknown-rh")
+            for region_index in range(len(list_of_regions)):
+                if os.path.exists(os.path.join(similarity_folder, f"{list_of_regions[region_index]}_{key}_upper_noise_ceiling.npy")):
+                    continue
+                region = list_of_regions[region_index]
+                logger.info(f"Computing noise ceiling for region {region}...")
+                brain_activity = []
+                for subject in range(1, 17):
+                    logger.info(f"Loading brain activity for subject {subject:02d}...")
+                    sub_rdm_path = os.path.join(rdms_folder, f"sub-{subject:02d}", f"sub-{subject:02d}_{region}_{args.brain_analysis_type}_rdm.npy")
+                    if not os.path.exists(sub_rdm_path):
+                        logger.info(f"RDM for subject {subject:02d} {region} not found. Please compute it first.")
+                        continue
+                    sub_rdm = rdm_instance.load(sub_rdm_path)
+                    brain_activity.append(sub_rdm)
+                if len(brain_activity) == 0:
+                    continue
+                brain_activity = np.stack(brain_activity, axis=0)
+                logger.info(f"Brain activity loaded successfully!")
+                brain_activity = brain_activity[slicing_indices_meg[key]]
+                noise_ceiling_instance = noise_ceiling(brain_activity)
+                del brain_activity
+                logger.info(f"Computing noise ceiling...")
+                upper_noise_ceiling, lower_noise_ceiling = noise_ceiling_instance[args.noise_ceiling_type]
+                np.save(os.path.join(similarity_folder, f"{region}_{key}_upper_noise_ceiling.npy"), upper_noise_ceiling)
+                np.save(os.path.join(similarity_folder, f"{region}_{key}_lower_noise_ceiling.npy"), lower_noise_ceiling)
+                del upper_noise_ceiling, lower_noise_ceiling
+                logger.info(f"Noise ceiling computed successfully!")
