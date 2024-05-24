@@ -65,7 +65,7 @@ if __name__ == '__main__':
                 del brain_activity
                 if args.freq_band is not None:
                     region = f"{region}_{args.freq_band}"
-                if os.path.exists(os.path.join(rdms_folder, subject, f"{subject}_{region}_{args.brain_analysis_type}_rdm.npy")):
+                if os.path.exists(os.path.join(rdms_folder, subject, f"{subject}_{region}_{args.brain_analysis_type}_rdm.npy")) and not args.overwrite:
                     logger.info(f"RDM movie for {region} already exists. Skipping...")
                 else:
                     logger.info(f"Calculating brain RDM movie for subject {args.subject:02d} for {region}...")

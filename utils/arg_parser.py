@@ -289,6 +289,21 @@ def get_similarity_parser():
         help='Noise ceiling type: bootstrap, loo.'
     )
 
+    overwrite = parser.add_argument_group("Overwrite")
+    overwrite.add_argument(
+        "--overwrite",
+        dest="overwrite", 
+        action="store_true",
+        help="If we want to overwrite existing files.",
+    )
+
+    overwrite.add_argument(
+        "--no-overwrite", 
+        dest="overwrite", 
+        action="store_false",
+        help="Without overwrite."
+    )
+
     return parser
 
 
