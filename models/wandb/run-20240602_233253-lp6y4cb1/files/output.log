@@ -1,0 +1,30 @@
+2024-06-02 23:32:55,459 - INFO - Epoch 1/4
+2024-06-02 23:32:55,459 - INFO - ----------
+2024-06-02 23:39:01,673 - INFO - Epoch 0/3 Train Loss: 101.3510 train_acc: 0.0000%
+2024-06-02 23:41:12,128 - INFO - Validation Loss: 0.0000 Acc: 0.0000%
+2024-06-02 23:41:12,138 - INFO - Epoch 2/4
+2024-06-02 23:41:12,138 - INFO - ----------
+2024-06-02 23:45:47,475 - INFO - Epoch 1/3 Train Loss: 16.8245 train_acc: 0.0000%
+2024-06-02 23:47:48,602 - INFO - Validation Loss: 0.0000 Acc: 0.0000%
+2024-06-02 23:47:48,602 - INFO - Epoch 3/4
+2024-06-02 23:47:48,602 - INFO - ----------
+2024-06-02 23:52:35,443 - INFO - Epoch 2/3 Train Loss: 7.5468 train_acc: 0.0000%
+2024-06-02 23:54:41,197 - INFO - Validation Loss: 0.0000 Acc: 0.0000%
+2024-06-02 23:54:41,197 - INFO - Epoch 4/4
+2024-06-02 23:54:41,197 - INFO - ----------
+2024-06-02 23:59:23,164 - INFO - Epoch 3/3 Train Loss: 5.3267 train_acc: 0.0000%
+2024-06-03 00:01:29,180 - INFO - Validation Loss: 0.0000 Acc: 0.0000%
+2024-06-03 00:01:29,182 - INFO - Training complete in 0.0 h 28.0 m 33.72287678718567 s
+2024-06-03 00:01:29,182 - INFO - Best val Acc: 0.00%
+Traceback (most recent call last):
+  File "C:\Users\marie\Desktop\draft\draft\models\models_train.py", line 394, in <module>
+    acc = test_model(model_ft, dataset_loader, dataset_sizes,loss_func)
+  File "C:\Users\marie\Desktop\draft\draft\models\models_train.py", line 282, in test_model
+    inputs, labels = data
+ValueError: too many values to unpack (expected 2)
+Traceback (most recent call last):
+  File "C:\Users\marie\Desktop\draft\draft\models\models_train.py", line 394, in <module>
+    acc = test_model(model_ft, dataset_loader, dataset_sizes,loss_func)
+  File "C:\Users\marie\Desktop\draft\draft\models\models_train.py", line 282, in test_model
+    inputs, labels = data
+ValueError: too many values to unpack (expected 2)

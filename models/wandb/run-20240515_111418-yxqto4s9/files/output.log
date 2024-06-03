@@ -1,0 +1,30 @@
+2024-05-15 11:14:20,944 - INFO - Epoch 1/2
+2024-05-15 11:14:20,944 - INFO - ----------
+Traceback (most recent call last):
+  File "C:\Users\marie\Desktop\Sanfour\MFRS\models\models_train.py", line 330, in <module>
+    model_ft = train_model(model,optimizer_ft, exp_lr_scheduler, args.num_epochs, loss_func,  dataset_loader, dataset_sizes, wandb)
+  File "C:\Users\marie\Desktop\Sanfour\MFRS\models\models_train.py", line 114, in train_model
+    loss=loss_func(features, labels)
+  File "C:\Users\marie\Desktop\Sanfour\MFRS\models\models_train.py", line 55, in <lambda>
+    return lambda labels, features: CircleLossExp(scale=args.scale, margin=args.margin, similarity=args.similarity)(features, labels)
+  File "C:\Users\marie\AppData\Roaming\Python\Python39\site-packages\torch\nn\modules\module.py", line 1511, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "C:\Users\marie\AppData\Roaming\Python\Python39\site-packages\torch\nn\modules\module.py", line 1520, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "C:\Users\marie\Desktop\Sanfour\MFRS\models\Centerloss.py", line 134, in forward
+    mask = labels.unsqueeze(1).expand(m, m).eq(labels.unsqueeze(0).expand(m, m)).float()
+RuntimeError: expand(torch.FloatTensor{[16, 1, 512]}, size=[16, 16]): the number of sizes provided (2) must be greater or equal to the number of dimensions in the tensor (3)
+Traceback (most recent call last):
+  File "C:\Users\marie\Desktop\Sanfour\MFRS\models\models_train.py", line 330, in <module>
+    model_ft = train_model(model,optimizer_ft, exp_lr_scheduler, args.num_epochs, loss_func,  dataset_loader, dataset_sizes, wandb)
+  File "C:\Users\marie\Desktop\Sanfour\MFRS\models\models_train.py", line 114, in train_model
+    loss=loss_func(features, labels)
+  File "C:\Users\marie\Desktop\Sanfour\MFRS\models\models_train.py", line 55, in <lambda>
+    return lambda labels, features: CircleLossExp(scale=args.scale, margin=args.margin, similarity=args.similarity)(features, labels)
+  File "C:\Users\marie\AppData\Roaming\Python\Python39\site-packages\torch\nn\modules\module.py", line 1511, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "C:\Users\marie\AppData\Roaming\Python\Python39\site-packages\torch\nn\modules\module.py", line 1520, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "C:\Users\marie\Desktop\Sanfour\MFRS\models\Centerloss.py", line 134, in forward
+    mask = labels.unsqueeze(1).expand(m, m).eq(labels.unsqueeze(0).expand(m, m)).float()
+RuntimeError: expand(torch.FloatTensor{[16, 1, 512]}, size=[16, 16]): the number of sizes provided (2) must be greater or equal to the number of dimensions in the tensor (3)

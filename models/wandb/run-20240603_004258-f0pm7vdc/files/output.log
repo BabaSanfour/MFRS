@@ -1,0 +1,16 @@
+2024-06-03 00:43:00,791 - INFO - Epoch 1/2
+2024-06-03 00:43:00,792 - INFO - ----------
+2024-06-03 00:47:33,823 - INFO - Epoch 0/1 Train Loss: 101.3510 train_acc: 0.0000%
+2024-06-03 00:49:40,215 - INFO - Validation Loss: 0.0000 Acc: 0.0000%
+2024-06-03 00:49:40,218 - INFO - Epoch 2/2
+2024-06-03 00:49:40,219 - INFO - ----------
+2024-06-03 00:57:10,817 - INFO - Epoch 1/1 Train Loss: 16.8245 train_acc: 0.0000%
+2024-06-03 01:00:01,115 - INFO - Validation Loss: 0.0000 Acc: 0.0000%
+2024-06-03 01:00:01,115 - INFO - Training complete in 0.0 h 17.0 m 0.32411956787109375 s
+2024-06-03 01:00:01,115 - INFO - Best val Acc: 0.00%
+2024-06-03 01:02:41,617 - INFO - Test Loss: 0.00%
+2024-06-03 01:02:41,618 - INFO - Test Accuracy (Top1): 0.00%
+2024-06-03 01:02:41,618 - INFO - Test Accuracy (Top5): 0.00%
+2024-06-03 01:02:42,447 - INFO - Training complete.
+2024-06-03 01:02:42,449 - INFO - Training ended in 0.0 h 19.0 m 45.73312211036682 s
+2024-06-03 01:02:42,556 - INFO - Model weights saved to None_42.pth

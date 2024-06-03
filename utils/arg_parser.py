@@ -148,39 +148,23 @@ def get_training_config_parser():
 
     loss = parser.add_argument_group("loss")
 
-    loss.add_argument(
-        "--loss_function",
-        choices=["center_loss", "arcface", "cosface", "sphereface"],
-        help="Loss function to use."
+    loss.add_argument( "--loss_function", choices=["center_loss", "arcface", "cosface", "sphereface","circle_softplus","circle_exp","ContrastiveLoss","TripletLoss"],help="Loss function to use."  )
+    triplet_loss_params =parser.add_argument_group("triplet loss param")
+    triplet_loss_params.add_argument('--marginTriplet', type=float, default=0.2, help='Margin for Triplet loss')
+    circle_loss_params = parser.add_argument_group("CircleLossSoftplus Parameters")
+    circle_loss_params.add_argument("--circle_m", type=float, default=0.25, help="Margin parameter for CircleLossSoftplus.")
+    circle_loss_params.add_argument("--circle_gamma", type=float, default=256.0, help="Gamma parameter for CircleLossSoftplus.")
+    
+    angular_loss_params = parser.add_argument_group("Angular Loss Parameters")
+    angular_loss_params.add_argument("--s", type=float, default=30.0, help="Scale parameter for angular losses.")
+    angular_loss_params.add_argument("--m", type=float, default=0.5, help="Margin parameter for angular losses.")
 
-    )
-
-    scaleparam = parser.add_argument_group("scaleparam ")
-
-    scaleparam.add_argument(
-        "--s",
-        type=float,
-        default=30.0,
-        help="Scale parameter for angular losses."
-
-    )
-
-    marginParam = parser.add_argument_group("marginParam")
-
-    marginParam.add_argument(
-
-        "--m",
-        type=float,
-        default=0.5,
-        help="Margin parameter for angular losses."
-
-    )
     center_loss_weight = parser.add_argument_group("center_loss_weight")
-
-    parser.add_argument(
-        "--center_loss_weight",
-          type=float, default=1, help="Weight for center loss if used with cross entropy.")
-
+    center_loss_weight.add_argument( "--center_loss_weight",type=float, default=1, help="Weight for center loss if used with cross entropy.")
+    circle_exp_params=parser.add_argument_group("circle_exp_parameters")
+    circle_exp_params.add_argument( "--scale", type=float,default=32,help="Scale parameter for Circle Loss Exp." )
+    circle_exp_params.add_argument( "--margin", type=float,default=0.25, help="Margin parameter for Circle Loss Exp.")
+    circle_exp_params.add_argument( "--similarity",type=str,default="cos",choices=["cos", "dot"],help="Similarity type for Circle Loss Exp.")
 
 
     return parser

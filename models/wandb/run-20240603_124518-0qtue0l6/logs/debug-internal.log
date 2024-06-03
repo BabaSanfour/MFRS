@@ -1,0 +1,12 @@
+2024-06-03 12:45:18,798 INFO    StreamThr :69348 [internal.py:wandb_internal():86] W&B internal server running at pid: 69348, started at: 2024-06-03 12:45:18.796347
+2024-06-03 12:45:18,798 DEBUG   HandlerThread:69348 [handler.py:handle_request():144] handle_request: status
+2024-06-03 12:45:18,798 INFO    WriterThread:69348 [datastore.py:open_for_write():85] open: C:\Users\marie\Desktop\draft\draft\models\wandb\run-20240603_124518-0qtue0l6\run-0qtue0l6.wandb
+2024-06-03 12:45:18,798 DEBUG   SenderThread:69348 [sender.py:send():379] send: header
+2024-06-03 12:45:18,836 DEBUG   SenderThread:69348 [sender.py:send():379] send: run
+2024-06-03 12:45:19,046 INFO    SenderThread:69348 [dir_watcher.py:__init__():211] watching files in: C:\Users\marie\Desktop\draft\draft\models\wandb\run-20240603_124518-0qtue0l6\files
+2024-06-03 12:45:19,046 INFO    SenderThread:69348 [sender.py:_start_run_threads():1121] run started: 0qtue0l6 with start time 1717433118.798015
+2024-06-03 12:45:19,046 DEBUG   SenderThread:69348 [sender.py:send_request():406] send_request: summary_record
+2024-06-03 12:45:19,046 INFO    SenderThread:69348 [sender.py:_save_file():1375] saving file wandb-summary.json with policy end
+2024-06-03 12:45:19,056 DEBUG   HandlerThread:69348 [handler.py:handle_request():144] handle_request: check_version
+2024-06-03 12:45:19,056 DEBUG   SenderThread:69348 [sender.py:send_request():406] send_request: check_version
+2024-06-03 12:45:19,136 DEBUG   HandlerThread:69348 [handler.py:handle_request():144] handle_request: run_start

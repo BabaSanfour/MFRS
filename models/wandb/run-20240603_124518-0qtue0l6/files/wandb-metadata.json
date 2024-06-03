@@ -1,0 +1,63 @@
+{
+    "os": "Windows-10-10.0.22631-SP0",
+    "python": "3.9.9",
+    "heartbeatAt": "2024-06-03T16:45:20.856198",
+    "startedAt": "2024-06-03T16:45:18.791514",
+    "docker": null,
+    "cuda": null,
+    "args": [
+        "--loss_function",
+        "TripletLoss",
+        "--dataset",
+        "VGGFace",
+        "--model",
+        "FaceNet",
+        "--batch_size",
+        "32",
+        "--lr",
+        "0.01",
+        "--optimizer",
+        "sgd"
+    ],
+    "state": "running",
+    "program": "C:\\Users\\marie\\Desktop\\draft\\draft\\models\\models_train.py",
+    "codePath": "models\\models_train.py",
+    "git": {
+        "remote": "https://github.com/BabaSanfour/MFRS.git",
+        "commit": "901cd235a2e7ded61bfa499e1ef96496b7fafd8a"
+    },
+    "email": "Mariem.Rebaani@esprit.tn",
+    "root": "C:/Users/marie/Desktop/draft/draft",
+    "host": "LAPTOP-CTGDVKVN",
+    "username": "marie",
+    "executable": "C:\\Program Files\\Python39\\python.exe",
+    "cpu_count": 8,
+    "cpu_count_logical": 16,
+    "cpu_freq": {
+        "current": 3040.0,
+        "min": 0.0,
+        "max": 3801.0
+    },
+    "cpu_freq_per_core": [
+        {
+            "current": 3040.0,
+            "min": 0.0,
+            "max": 3801.0
+        }
+    ],
+    "disk": {
+        "total": 474.71581649780273,
+        "used": 355.5922431945801
+    },
+    "gpu": "NVIDIA GeForce RTX 3050 6GB Laptop GPU",
+    "gpu_count": 1,
+    "gpu_devices": [
+        {
+            "name": "NVIDIA GeForce RTX 3050 6GB Laptop GPU",
+            "memory_total": 6442450944
+        }
+    ],
+    "memory": {
+        "total": 15.189807891845703
+    }
+}

@@ -1,0 +1,14 @@
+2024-05-15 11:37:59,049 - INFO - Epoch 1/2
+2024-05-15 11:37:59,049 - INFO - ----------
+Traceback (most recent call last):
+  File "C:\Users\marie\Desktop\Sanfour\MFRS\models\models_train.py", line 330, in <module>
+    model_ft = train_model(model,optimizer_ft, exp_lr_scheduler, args.num_epochs, loss_func,  dataset_loader, dataset_sizes, wandb)
+  File "C:\Users\marie\Desktop\Sanfour\MFRS\models\models_train.py", line 118, in train_model
+    loss.backward()  # Backpropagation
+UnboundLocalError: local variable 'loss' referenced before assignment
+Traceback (most recent call last):
+  File "C:\Users\marie\Desktop\Sanfour\MFRS\models\models_train.py", line 330, in <module>
+    model_ft = train_model(model,optimizer_ft, exp_lr_scheduler, args.num_epochs, loss_func,  dataset_loader, dataset_sizes, wandb)
+  File "C:\Users\marie\Desktop\Sanfour\MFRS\models\models_train.py", line 118, in train_model
+    loss.backward()  # Backpropagation
+UnboundLocalError: local variable 'loss' referenced before assignment

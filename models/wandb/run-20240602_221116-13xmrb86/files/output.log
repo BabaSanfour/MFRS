@@ -1,0 +1,14 @@
+2024-06-02 22:11:19,053 - INFO - Epoch 1/4
+2024-06-02 22:11:19,053 - INFO - ----------
+Traceback (most recent call last):
+  File "C:\Users\marie\Desktop\draft\draft\models\models_train.py", line 351, in <module>
+    model_ft = train_model(model,optimizer_ft, exp_lr_scheduler, args.num_epochs, loss_func,  dataset_loader, dataset_sizes, wandb)
+  File "C:\Users\marie\Desktop\draft\draft\models\models_train.py", line 91, in train_model
+    img_anchor, img_positive, img_negative, labels = data
+ValueError: not enough values to unpack (expected 4, got 2)
+Traceback (most recent call last):
+  File "C:\Users\marie\Desktop\draft\draft\models\models_train.py", line 351, in <module>
+    model_ft = train_model(model,optimizer_ft, exp_lr_scheduler, args.num_epochs, loss_func,  dataset_loader, dataset_sizes, wandb)
+  File "C:\Users\marie\Desktop\draft\draft\models\models_train.py", line 91, in train_model
+    img_anchor, img_positive, img_negative, labels = data
+ValueError: not enough values to unpack (expected 4, got 2)

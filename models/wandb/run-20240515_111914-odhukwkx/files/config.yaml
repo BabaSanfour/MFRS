@@ -1,0 +1,40 @@
+wandb_version: 1
+
+architecture:
+  desc: null
+  value: FaceNet
+dataset:
+  desc: null
+  value: VGGFace
+epochs:
+  desc: null
+  value: 2
+num_classes:
+  desc: null
+  value: 10000
+_wandb:
+  desc: null
+  value:
+    python_version: 3.9.9
+    cli_version: 0.15.9
+    framework: torch
+    is_jupyter_run: false
+    is_kaggle_kernel: false
+    start_time: 1715786354.872661
+    t:
+      1:
+      - 1
+      - 41
+      - 55
+      2:
+      - 1
+      - 41
+      - 55
+      3:
+      - 16
+      - 23
+      4: 3.9.9
+      5: 0.15.9
+      8:
+      - 3
+      - 5
