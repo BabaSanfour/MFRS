@@ -405,6 +405,7 @@ if __name__ == '__main__':
     elif args.optimizer == "adam":
         optimizer_ft = torch.optim.Adam(model.parameters(), lr=args.lr)
     elif args.optimizer == "sgd":
+        # need to add : optimizer_centloss = torch.optim.SGD(criterion_cent.parameters(), lr=args.lr_cent) and when needed in the training script
         optimizer_ft = torch.optim.SGD(model.parameters(), lr=args.lr, weight_decay=args.weight_decay)
     elif args.optimizer == "momentum":
         optimizer_ft = torch.optim.SGD(model.parameters(), lr=args.lr, momentum=args.momentum, weight_decay=args.weight_decay)
