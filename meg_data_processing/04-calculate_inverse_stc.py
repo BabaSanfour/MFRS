@@ -39,7 +39,7 @@ def setup_filenames(subject: str, spacing: str, freq_bands: list, meg_picks: str
     filenames : dict
         Dictionary containing file paths for various related files.
     """
-    if meg_picks==True:
+    if meg_picks:
         meg_picks="meg"
     filenames = {
         'trans': os.path.join(subjects_dir, f'{subject}/{subject}-trans.fif'),
@@ -73,7 +73,7 @@ def main():
     parser = source_rescontruction_parser()
     args = parser.parse_args()
     subject = f"sub-{args.subject:02d}"
-    filenames = setup_filenames(subject, spacing, args.meg_picks, args.freq_bands.keys())
+    filenames = setup_filenames(subject, spacing, args.freq_bands.keys(), args.meg_picks)
 
     if not os.path.isfile(filenames['trans']) or args.overwrite:
         coreg = compute_coregistration(filenames['trans'], subject, args.overwrite)
@@ -126,37 +126,53 @@ def main():
         logger.info("Loading morphed source estimates")
         morph_files = sorted(glob.glob(os.path.join(filenames['mrph'], f'*{args.method}*.h5')))
         morphed = [mne.read_source_estimate(file_path) for file_path in morph_files]
-        morphed = extract_source_estimates_by_ROIs(filenames['avg_stc'], morphed, "mean")
+        extract_source_estimates_by_ROIs(filenames['avg_stc'], morphed, "mean")
+        del morphed
 
     if not os.path.isfile(filenames['trans_avg_stc']) or args.overwrite:
         with open(filenames['avg_stc'], 'rb') as file:
             time_courses_dict = pickle.load(file)
         transform_data(filenames['trans_avg_stc'], time_courses_dict, "mean")
+        del time_courses_dict
 
     if not os.path.isfile(filenames['raw_stc']) or args.overwrite:
         logger.info("Loading morphed source estimates")
         morph_files = sorted(glob.glob(os.path.join(filenames['mrph'], f'*{args.method}*.h5')))
         morphed = [mne.read_source_estimate(file_path) for file_path in morph_files]
-        morphed = extract_source_estimates_by_ROIs(filenames['raw_stc'], morphed, None)
+        extract_source_estimates_by_ROIs(filenames['raw_stc'], morphed, None)
         del morphed
         
     if not os.path.isfile(filenames['trans_raw_stc']) or args.overwrite:
         with open(filenames['raw_stc'], 'rb') as file:
             time_courses_dict = pickle.load(file)
-        transform_data(filenames['trans_raw_stc'], time_courses_dict, "raw")
+        transform_data(filenames['trans_raw_stc'], time_courses_dict, None)
+        del time_courses_dict
 
     for freq_band, (fmin, fmax) in args.freq_bands.items():
-        if not os.path.isfile(filenames['hilbert_avg_stc']) or args.overwrite:
-            logger.info(f"Loading hilbert transformed source estimates for band {freq_band}")
-            hilbert_files = sorted(glob.glob(os.path.join(filenames['hilbert'], freq_band, f'*{freq_band}*.h5')))
+        if not os.path.isfile(filenames[f'hilbert_{freq_band}_avg_stc']) or args.overwrite:
+            logger.info("Loading hilbert transformed source estimates")
+            hilbert_files = sorted(glob.glob(os.path.join(filenames['hilbert'], freq_band,f'*{freq_band}_hilbert*.h5')))
             hilbert_stcs = [mne.read_source_estimate(file_path) for file_path in hilbert_files]
-            hilbert_stcs = extract_source_estimates_by_ROIs(filenames[f'hilbert_{freq_band}_avg_stc'], hilbert_stcs, "mean")
-        
+            extract_source_estimates_by_ROIs(filenames[f'hilbert_{freq_band}_avg_stc'], hilbert_stcs, "mean")
+            del hilbert_stcs
         if not os.path.isfile(filenames[f'hilbert_{freq_band}_trans_avg_stc']) or args.overwrite:
             with open(filenames[f'hilbert_{freq_band}_avg_stc'], 'rb') as file:
                 time_courses_dict = pickle.load(file)
             transform_data(filenames[f'hilbert_{freq_band}_trans_avg_stc'], time_courses_dict, "mean")
-        
+            del time_courses_dict
+
+        if not os.path.isfile(filenames[f'hilbert_{freq_band}_raw_stc']) or args.overwrite:
+            logger.info("Loading hilbert transformed source estimates")
+            hilbert_files = sorted(glob.glob(os.path.join(filenames['hilbert'], freq_band,f'*{freq_band}_hilbert*.h5')))
+            hilbert_stcs = [mne.read_source_estimate(file_path) for file_path in hilbert_files]
+            extract_source_estimates_by_ROIs(filenames[f'hilbert_{freq_band}_raw_stc'], hilbert_stcs, None)
+            del hilbert_stcs
+
+        if not os.path.isfile(filenames[f'hilbert_{freq_band}_trans_raw_stc']) or args.overwrite:
+            with open(filenames[f'hilbert_{freq_band}_raw_stc'], 'rb') as file:
+                time_courses_dict = pickle.load(file)
+            transform_data(filenames[f'hilbert_{freq_band}_trans_raw_stc'], time_courses_dict, None)
+            del time_courses_dict
 
 
 def compute_coregistration(fname_trans: str, subject: str, overwrite: bool = False) -> mne.coreg.Coregistration:
@@ -283,7 +299,7 @@ def compute_forward_solution(fname_fwd: str, fname_src: str, fname_epo: str,
     
     # Compute the forward solution using the specified parameters
     fwd = mne.make_forward_solution(info, fname_trans, fname_src, fname_bem,
-                                    meg=meg_picks, eeg=False, mindist=mindist)
+                                    meg=True, eeg=False, mindist=mindist)
     
     # Save the computed forward solution to a file
     mne.write_forward_solution(fname_fwd, fwd, overwrite=overwrite)
@@ -448,6 +464,7 @@ def apply_hilbert_transform(fname_hilbert: str, morphed: list[mne.SourceEstimate
         hilbert_stc.filter(fmin, fmax, n_jobs=-1, l_trans_bandwidth=1, h_trans_bandwidth=1, fir_design='firwin')
         hilbert_stc.apply_hilbert(envelope=True, n_jobs=-1)
         hilbert_stc.save(filename, ftype='h5', overwrite=overwrite)
+        del hilbert_stc
 
 
 def extract_source_estimates_by_ROIs(fname_avg_time_courses: str, morphed: list, mode: str) -> dict:
@@ -468,7 +485,7 @@ def extract_source_estimates_by_ROIs(fname_avg_time_courses: str, morphed: list,
     Note:
     - The function calculates the average time course within predefined ROIs for each source estimate.
     """
-    logger.info("Averaging source estimates by ROIs")
+    logger.info("Extracting source estimates by ROIs")
     
     # Read label list from fsaverage parcellation
     label_list = mne.read_labels_from_annot("fsaverage", parc="aparc_sub", subjects_dir=subjects_dir)
@@ -489,9 +506,7 @@ def extract_source_estimates_by_ROIs(fname_avg_time_courses: str, morphed: list,
     
     # Save the time courses in pickled format
     with open(fname_avg_time_courses, 'wb') as file:
-        pickle.dump(time_courses_dict, file)
-    
-    return time_courses_dict
+        pickle.dump(time_courses_dict, file)  
 
 
 def transform_data(fname_transformed_time_courses: str, original_data: dict, mode: str) -> None:
@@ -509,8 +524,8 @@ def transform_data(fname_transformed_time_courses: str, original_data: dict, mod
     logger.info("Transforming data")
     transformed_data = {}
 
-    if mode == "raw":
-        # Transform data to 'raw' mode
+    if mode == "None":
+        # No data transformation
         pre_transformed_data = {}
         for _, region_data in original_data.items():
             for region, data in region_data.items():
