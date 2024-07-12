@@ -51,30 +51,30 @@ if __name__ == '__main__':
                 with open(os.path.join(meg_dir, subject, f"{subject}-{args.meg_picks}-ROI-trans-{args.brain_analysis_type}-time-courses.pkl"), 'rb') as pickle_file:
                     brain_activity = pickle.load(pickle_file)
                 logger.info(f"Calculating temporal brain RDMs for subject {args.subject:02d}...")
-                rdm.save(rdm.temp_brain_rdms_parallel(brain_activity, args.time_segment, args.sliding_window, t_start=args.tstart, t_end=args.tend), os.path.join(rdms_folder, f"{subject}_{args.meg_picks}_{args.brain_analysis_type}_rdm_{args.time_segment}_{args.sliding_window}.npy"))
+                rdm.save(rdm.temp_brain_rdms_parallel(brain_activity, args.time_segment, args.sliding_window, t_start=args.tstart, t_end=args.tend), os.path.join(rdms_folder, "avg_rdm", f"{subject}_{args.meg_picks}_{args.brain_analysis_type}_rdm_{args.time_segment}_{args.sliding_window}.npy"))
             elif args.brain_analysis_type == "raw":
-                with open(os.path.join(meg_dir, subject, f"{subject}-{args.meg_picks}-ROI-{args.freq_band}-trans-{args.brain_analysis_type}-hilbert-time-courses.pkl"), 'rb') as pickle_file:
-                    brain_activity = pickle.load(pickle_file)
-                if not os.path.isdir(os.path.join(rdms_folder, subject)):
-                    os.mkdir(os.path.join(rdms_folder, subject))
-                list_of_regions = list(brain_activity.keys())
-                list_of_regions.remove("unknown-lh")
-                list_of_regions.remove("unknown-rh")
-                region = list_of_regions[args.region_index]
-                region_activity = brain_activity[region]
-                del brain_activity
-                if args.freq_band is not None:
-                    region = f"{region}_{args.freq_band}"
-                if os.path.exists(os.path.join(rdms_folder, subject, f"{subject}_{region}_{args.brain_analysis_type}_rdm.npy")) and not args.overwrite:
-                    logger.info(f"RDM movie for {region} already exists. Skipping...")
-                else:
-                    logger.info(f"Calculating brain RDM movie for subject {args.subject:02d} for {region}...")
-                    start_time = time.time()
-                    rdm.save(rdm.brain_rdm_movie_parallel({region: region_activity}), os.path.join(rdms_folder, subject, f"{subject}_{args.meg_picks}_{region}_{args.brain_analysis_type}_rdm.npy"))
-                    end_time = time.time()
-                    time_taken = time.strftime("%H:%M:%S", time.gmtime(end_time - start_time))
-                    logger.info(f"RDM movie for {region} computed and saved successfully!")
-                    logger.info(f"Time taken: {time_taken}")
+                    with open(os.path.join(meg_dir, subject, f"{subject}-{args.meg_picks}-ROI-{args.freq_band}-trans-{args.brain_analysis_type}-hilbert-time-courses.pkl"), 'rb') as pickle_file:
+                        brain_activity = pickle.load(pickle_file)
+                    if not os.path.isdir(os.path.join(rdms_folder, subject)):
+                        os.mkdir(os.path.join(rdms_folder, subject))
+                    list_of_regions = list(brain_activity.keys())
+                    list_of_regions.remove("unknown-lh")
+                    list_of_regions.remove("unknown-rh")
+                    region = list_of_regions[args.region_index]
+                    region_activity = brain_activity[region]
+                    del brain_activity
+                    if args.freq_band is not None:
+                        region = f"{region}_{args.freq_band}"
+                    if os.path.exists(os.path.join(rdms_folder, subject, f"{subject}_{region}_{args.brain_analysis_type}_rdm.npy")) and not args.overwrite:
+                        logger.info(f"RDM movie for {region} already exists. Skipping...")
+                    else:
+                        logger.info(f"Calculating brain RDM movie for subject {args.subject:02d} for {region}...")
+                        start_time = time.time()
+                        rdm.save(rdm.brain_rdm_movie_parallel({region: region_activity}), os.path.join(rdms_folder, subject, "raw_rdm", f"{subject}_{args.meg_picks}_{region}_{args.brain_analysis_type}_rdm.npy"))
+                        end_time = time.time()
+                        time_taken = time.strftime("%H:%M:%S", time.gmtime(end_time - start_time))
+                        logger.info(f"RDM movie for {region} computed and saved successfully!")
+                        logger.info(f"Time taken: {time_taken}")
             else :
                 raise ValueError("Brain analysis type not recognized. Please choose between 'avg' and 'raw'")
         logger.info("RDMs computed and saved successfully!")
