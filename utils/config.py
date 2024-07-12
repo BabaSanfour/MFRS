@@ -5,14 +5,15 @@ import mne
 
 # Set paths
 user = os.path.expanduser('~')
-scratch_folder = os.path.join(user, "scratch")
+scratch_folder = os.path.join(user, "scratch/")
 proj_path = os.path.join(user, "MFRS/")
 study_path = os.path.join(scratch_folder, "data/MFRS_data")
 weights_path = os.path.join(scratch_folder, "net_weights")
 results_path = os.path.join(study_path, "results")
-similarity_folder = os.path.join(study_path, 'similarity_scores')
+similarity_folder = os.path.join(study_path, 'sim_scores')
+noise_ceiling_folder = os.path.join(study_path, 'noise_ceiling')
 activations_folder = os.path.join(study_path, 'activations')
-rdms_folder = os.path.join(study_path, 'networks_rdms')
+rdms_folder = os.path.join(study_path, 'rdms')
 plots_path = os.path.join(scratch_folder, "plots")
 subjects_dir = os.path.join(study_path, 'subjects')
 meg_dir = os.path.join(study_path, 'MEG')
