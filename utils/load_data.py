@@ -6,11 +6,26 @@ import torch
 import torchvision
 from torch.utils.data import Dataset, DataLoader, random_split
 from torchvision.transforms import ToTensor, Normalize, Resize
+import torchvision.transforms as transforms
+from PIL import Image
+
+
 
 import sys
 sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 from utils.config import study_path
-data_path= os.path.join(study_path, 'hdf5/')
+
+# Override study_path if STUDY_PATH environment variable is set
+study_path_env = os.getenv('STUDY_PATH')
+if study_path_env:
+    study_path = study_path_env
+data_path = os.path.join(study_path, 'hdf5/')
+
+
+print(f"Using data path: {data_path}")
+
+print(f"Files in data path: {os.listdir(data_path)}")
+
 
 
 class HDF5Dataset(Dataset):
@@ -24,7 +39,10 @@ class HDF5Dataset(Dataset):
     """
 
     def __init__(self, dir_path, transform=None, has_labels=True):
+ 
         self.file = h5py.File(dir_path, 'r')
+
+
         dataset_shape = self.file['images'].shape
         self.n_images = dataset_shape[0]
         if len(dataset_shape) == 3:
@@ -48,6 +66,8 @@ class HDF5Dataset(Dataset):
 
         sample = np.array(input_h5.astype('uint8'))
 
+        sample = Image.fromarray(sample)
+
         if self.transform:
             sample = self.transform(sample)
 
@@ -57,6 +77,9 @@ class HDF5Dataset(Dataset):
             return sample, label
         else:
             return sample
+
+
+
 
 
 def dataloader(batch_size: int, dataset: str, analysis_type: str) -> (dict, dict):
@@ -76,9 +99,14 @@ def dataloader(batch_size: int, dataset: str, analysis_type: str) -> (dict, dict
     mean, std = [0.485, 0.456, 0.406], [0.229, 0.224, 0.225]
     if dataset == "celebA":
         train_filename = f"train_{analysis_type}_meg_stimuli.h5"
+        print(f"Loading training data from: {os.path.join(data_path, train_filename)}")
         valid_filename = f"valid_{analysis_type}_meg_stimuli.h5"
+        print(f"Loading valid data from: {os.path.join(data_path, valid_filename)}")
         test_filename = f"test_{analysis_type}_meg_stimuli.h5"
+        print(f"Loading test data from: {os.path.join(data_path, test_filename)}")
         mean, std = [0.3612], [0.3056]
+
+
     elif dataset == "VGGFace":
         train_filename = "train.h5"
         valid_filename = "valid.h5"
@@ -105,18 +133,19 @@ def dataloader(batch_size: int, dataset: str, analysis_type: str) -> (dict, dict
     train_loader = DataLoader(HDF5Dataset(os.path.join(data_path, train_filename),
                                             transform=torchvision.transforms.Compose([ToTensor(),
                                                                                     Normalize(mean=mean, std=std)])),
-                                            batch_size=batch_size, num_workers=0, shuffle=True,drop_last=True)
+                                                                        
+                                            batch_size=batch_size, num_workers=2, shuffle=True,drop_last=True)
 
     if dataset != "imagenet":
         valid_loader = DataLoader(HDF5Dataset(os.path.join(data_path, valid_filename),
                                           transform=torchvision.transforms.Compose([ToTensor(),
                                                                                     Normalize(mean=mean, std=std)])),
-                                            batch_size=batch_size, num_workers=0, shuffle=False,drop_last=True)
+                                            batch_size=batch_size, num_workers=2, shuffle=False,drop_last=True)
 
         test_loader = DataLoader(HDF5Dataset(os.path.join(data_path, test_filename),
                                             transform=torchvision.transforms.Compose([ToTensor(),
                                                                                    Normalize(mean=mean, std=std)])),
-                                            batch_size=batch_size, num_workers=0, shuffle=False,drop_last=True)
+                                            batch_size=batch_size, num_workers=2, shuffle=False,drop_last=True)
 
     # Create dictionaries for loaders and sizes
     data_loaders = {'train': train_loader, 'valid': valid_loader, 'test': test_loader}

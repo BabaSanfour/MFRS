@@ -17,8 +17,11 @@ from resnet import resnet50
 from vgg import vgg16_bn
 from FaceNet import FaceNet
 from SphereFace import SphereFace
+import torch.nn.functional as F
 
-from Centerloss import CenterLoss, MLoss, CircleLossSoftplus, CircleLossExp, ContrastiveLoss, TripletLoss
+
+from Centerloss import CenterLoss, MLoss, CircleLossSoftplus, CircleLossExp, ContrastiveLoss, TripletLoss, convert_label_to_similarity
+
 
 import sys
 sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
@@ -26,7 +29,7 @@ from utils.load_data import dataloader
 from utils.arg_parser import get_training_config_parser
 from utils.config import weights_path
 
-# Set up logging
+
 logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
 logger = logging.getLogger(__name__)
 
@@ -58,13 +61,11 @@ def get_loss_function(args, device):
         def combined_loss(logits, labels, features):
             ce_loss = criterion_ce(logits.to(device), labels.to(device))
             center_loss_value = criterion_center(features.to(device), labels.to(device))
-            scaled_center_loss = args.center_loss_weight * center_loss_value  # Scale the center loss
-            
-            combined_loss_value = ce_loss + scaled_center_loss  # Calculate combined loss
-
+            scaled_center_loss = args.center_loss_weight * center_loss_value      
+            combined_loss_value = ce_loss + scaled_center_loss  
             return combined_loss_value, ce_loss, scaled_center_loss
-
         return combined_loss, criterion_center, criterion_ce
+
     elif args.loss_function in ['cosface', 'arcface', 'sphereface']:
         return MLoss(in_features=512, out_features=args.num_classes, loss_type=args.loss_function, s=args.s, m=args.m,device=device)
     elif args.loss_function == 'circle_softplus': 
@@ -92,13 +93,14 @@ def load_dataloader(args):
 
     return dataloader(args.batch_size, args.dataset, args.analysis_type)
 
+
 def train_model(model: nn.Module, optimizer: Optimizer, scheduler: _LRScheduler, num_epochs: int, loss_func,
                 dataset_loader: Dict[str, DataLoader], dataset_sizes: Dict[str, int], wandb: Optional[Any] = None) -> nn.Module:
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     model.to(device)
     if args.loss_function == 'center_loss':
         loss_func, criterion_center, criterion_ce = loss_func
-        center_optimizer = torch.optim.SGD(criterion_center.parameters(), lr=args.center_lr)
+        #center_optimizer = torch.optim.SGD(criterion_center.parameters(), lr=args.center_lr)
 
     best_acc = -1.0
     list_train_loss = []
@@ -110,15 +112,15 @@ def train_model(model: nn.Module, optimizer: Optimizer, scheduler: _LRScheduler,
     for epoch in range(num_epochs):
         logger.info(f'Epoch {epoch + 1}/{num_epochs}')
         logger.info('-' * 10)
-        n_correct = 0  # Correct predictions in the training set
-        running_loss = 0.0  # Training loss
+        n_correct = 0  
+        running_loss = 0.0  
         running_ce_loss = 0.0
         running_center_loss = 0.0
-        model.train()  # Set the model to training mode
+        model.train() 
 
-        #for data in dataset_loader["train"]:
+
         for step, data in enumerate(dataset_loader["train"]): 
-            optimizer.zero_grad()  # Zero the parameter gradients
+            optimizer.zero_grad() 
             if args.loss_function == 'TripletLoss':
                 anchor, positive, negative = data
                 anchor, positive, negative = anchor.to(device), positive.to(device), negative.to(device)
@@ -135,26 +137,38 @@ def train_model(model: nn.Module, optimizer: Optimizer, scheduler: _LRScheduler,
                 neg_dist = torch.norm(anchor_features - negative_features, p=2, dim=1)
                 n_correct += torch.sum(pos_dist < neg_dist).item()
 
-                
+       
             elif args.loss_function == 'ContrastiveLoss':
-                img1, img_pos, label_pos, img_neg, label_neg = data
-                img1, img_pos, img_neg = img1.to(device), img_pos.to(device), img_neg.to(device)
-                label_pos, label_neg = label_pos.to(device), label_neg.to(device)
                 
+                print(f"Length of data: {len(data)}")
+                
+                
+                if len(data) == 3:
+                    img1, img2, label = data
+                else:
+                    raise ValueError("Unexpected number of elements in data for ContrastiveLoss")
+
+                
+                img1, img2, label = img1.to(device), img2.to(device), label.to(device)
+
+                
+                label = label.view(-1)
                 feature1 = model(img1)
-                feature_pos = model(img_pos)
-                feature_neg = model(img_neg)
-                
-                pos_loss = loss_func(feature1, feature_pos, label_pos)
-                neg_loss = loss_func(feature1, feature_neg, label_neg)
-                loss = (pos_loss + neg_loss) / 2
+                feature2 = model(img2)
+                if isinstance(feature1, tuple):
+                    feature1 = feature1[0]
+                if isinstance(feature2, tuple):
+                    feature2 = feature2[0]
+
+                loss = loss_func(feature1, feature2, label)  
 
                 loss.backward()
-                inputs = img1  
+                optimizer.step()
+                dist = torch.norm(feature1 - feature2, p=2, dim=1)
+                
+                n_correct += ((dist < 0.5) == label).sum().item()
 
-                pos_dist = torch.norm(feature1 - feature_pos, dim=1)
-                neg_dist = torch.norm(feature1 - feature_neg, dim=1)
-                n_correct += ((pos_dist < neg_dist).sum().item() + (neg_dist > pos_dist).sum().item())
+
 
             elif args.loss_function in ['circle_softplus', 'circle_exp']:
                 img_anchor, img_positive, img_negative, labels = data
@@ -165,65 +179,73 @@ def train_model(model: nn.Module, optimizer: Optimizer, scheduler: _LRScheduler,
                 features_positive = model(img_positive)
                 features_negative = model(img_negative)
 
+                features_anchor = features_anchor[0] if isinstance(features_anchor, tuple) else features_anchor
+                features_positive = features_positive[0] if isinstance(features_positive, tuple) else features_positive
+                features_negative = features_negative[0] if isinstance(features_negative, tuple) else features_negative
+
+
                 features = torch.cat([features_anchor, features_positive, features_negative], dim=0)
                 labels = torch.cat([labels, labels, labels], dim=0)
+
                 loss = loss_func(features, labels)
-                inputs = img_anchor  # Assign a value to 'inputs' for consistency
-            
-            
+
+                pos_pair_ = loss_func.pos_pair_
+                neg_pair_ = loss_func.neg_pair_
+                n_correct += torch.sum(pos_pair_ > neg_pair_).item()
+
+                running_loss += loss.item() * img_anchor.size(0)
+
+                inputs = img_anchor  
+
             elif args.loss_function =='center_loss':
-                center_optimizer.zero_grad()  # Zero the parameter gradients for center optimizer
+                #center_optimizer.zero_grad()  # Zero the parameter gradients for center optimizer
                 inputs, labels = data
                 inputs = inputs.to(device)
                 labels = labels.to(device)
-                logits, features = model(inputs)
+                logits,features = model(inputs)
                 n_correct += (logits.argmax(dim=1).view(-1) == labels.view(-1)).sum().item()
                 loss, ce_loss, center_loss_value = loss_func(logits, labels, features)
                 loss.backward()
                 # add code
-                for param in criterion_center.parameters():
-                    param.grad.data *= (1.0 / args.center_loss_weight) 
-                center_optimizer.step()  
+                #for param in criterion_center.parameters():
+                    #param.grad.data *= (1.0 / args.center_loss_weight) 
+                #center_optimizer.step()  
 
-                running_ce_loss += ce_loss.item() * inputs.size(0)
-                running_center_loss += center_loss_value.item() * inputs.size(0)
-
-
+           
             else:  
                 inputs, labels = data
                 inputs = inputs.to(device)
                 labels = labels.to(device)
-                logits, features = model(inputs)
-                loss = loss_func(features, labels)
-                loss.backward()  
-                torch.nn.utils.clip_grad_norm_(model.parameters(), max_norm=1.0)  # Gradient clipping      
-                n_correct += (logits.argmax(dim=1).view(-1) == labels.view(-1)).sum().item()
-                
-                
 
+                logits, embeddings = model(inputs)
+                print(f"Logits shape: {logits.shape}, Features shape: {embeddings.shape}, Labels shape: {labels.shape}")
+                assert logits.shape[1] == args.num_classes, f"Expected {args.num_classes} classes, but got {logits.shape[1]}"
+                assert embeddings.shape[1] == 512, f"Expected 512-dimensional embeddings, but got {embeddings.shape[1]}"
+                loss = loss_func(embeddings, labels)  
+                loss.backward()
+                predictions = torch.argmax(logits, dim=1)
+                n_correct += (predictions == labels).sum().item()
             
 
-            optimizer.step()  # Update optimizer learning rate
+            optimizer.step() 
 
             running_loss += loss.item()*inputs.size(0)
 
-        scheduler.step()  # Update learning rate
+        scheduler.step()  
 
         train_acc = 100.0 * n_correct /(dataset_sizes["train"])
         train_loss = running_loss / dataset_sizes["train"]
-        train_ce_loss = running_ce_loss / dataset_sizes["train"]
-        train_center_loss = running_center_loss / dataset_sizes["train"]
-        logger.info(f'Epoch {epoch}/{num_epochs - 1} Train Loss: {train_loss:.4f} train_acc: {train_acc:.4f} train_ce_loss: {train_ce_loss:.4f} train_center_loss: {train_center_loss:.4f} %' )
+       
+        logger.info(f'Epoch {epoch}/{num_epochs - 1} Train Loss: {train_loss:.4f} train_acc: {train_acc:.4f} %' )
         list_train_loss.append(train_loss)
         list_train_acc.append(train_acc)
 
-        # Evaluate performance on the validation set
-        model.eval()  # Set the model to evaluation mode
+
+        model.eval() 
+        n_dev_correct=0
         running_loss = 0.0
-        n_dev_correct = 0
         running_ce_loss = 0.0
         running_center_loss = 0.0
-        n_dev_correct = 0
 
 
         with torch.no_grad():
@@ -231,7 +253,7 @@ def train_model(model: nn.Module, optimizer: Optimizer, scheduler: _LRScheduler,
                 if args.loss_function == 'TripletLoss':
                     anchor, positive, negative = data
                     anchor, positive, negative = anchor.to(device), positive.to(device), negative.to(device)
-                    # Forward pass
+                  
                     anchor_features = model(anchor)
                     positive_features = model(positive)
                     negative_features = model(negative)
@@ -241,31 +263,35 @@ def train_model(model: nn.Module, optimizer: Optimizer, scheduler: _LRScheduler,
                     pos_dist = torch.norm(anchor_features - positive_features, p=2, dim=1)
                     neg_dist = torch.norm(anchor_features- negative_features, p=2, dim=1)
                     n_dev_correct += torch.sum(pos_dist < neg_dist).item()
-                    #_, preds = torch.max(anchor_output, 1)
-                    #n_dev_correct += (preds == anchor).sum().item()
+                    
 
                     inputs = anchor 
                     running_loss += loss.item() * inputs.size(0)
 
                 elif args.loss_function == 'ContrastiveLoss':
+
+
                     img1, img_pos, label_pos, img_neg, label_neg = data
                     img1, img_pos, img_neg = img1.to(device), img_pos.to(device), img_neg.to(device)
                     label_pos, label_neg = label_pos.to(device), label_neg.to(device)
-                    
+
                     feature1 = model(img1)
                     feature_pos = model(img_pos)
                     feature_neg = model(img_neg)
-                    
+
+                   
                     pos_loss = loss_func(feature1, feature_pos, label_pos)
                     neg_loss = loss_func(feature1, feature_neg, label_neg)
-                    loss = (pos_loss + neg_loss) / 2
+                    loss = (pos_loss + neg_loss) / 2  
 
                     pos_dist = torch.norm(feature1 - feature_pos, dim=1)
                     neg_dist = torch.norm(feature1 - feature_neg, dim=1)
-                    n_dev_correct += ((pos_dist < neg_dist).sum().item() + (neg_dist > pos_dist).sum().item())
+                    n_dev_correct += (pos_dist < neg_dist).sum().item()
 
-                    inputs = img1 
+                   
+                    inputs = img1
                     running_loss += loss.item() * inputs.size(0)
+
 
                 elif args.loss_function in ['circle_softplus', 'circle_exp']:
                     img_anchor, img_positive, img_negative, labels = data
@@ -282,11 +308,15 @@ def train_model(model: nn.Module, optimizer: Optimizer, scheduler: _LRScheduler,
                         features_positive = features_positive[0]
                     if isinstance(features_negative, tuple):
                         features_negative = features_negative[0]
-
                     features = torch.cat([features_anchor, features_positive, features_negative], dim=0)
-
                     labels = torch.cat([labels, labels, labels], dim=0)
+
                     loss = loss_func(features, labels)
+
+                    pos_pair_ = loss_func.pos_pair_
+                    neg_pair_ = loss_func.neg_pair_
+
+                    n_dev_correct += torch.sum(pos_pair_ > neg_pair_).item()
 
                     inputs = img_anchor 
                     running_loss += loss.item() * inputs.size(0)
@@ -298,10 +328,8 @@ def train_model(model: nn.Module, optimizer: Optimizer, scheduler: _LRScheduler,
                     labels = labels.to(device)
 
                     logits, features = model(inputs)
-
+                    loss, ce_loss,center_loss_value = loss_func(logits, labels, features)
                     n_dev_correct += (logits.argmax(dim=1).view(-1) == labels.view(-1)).sum().item()
-                    loss, ce_loss, center_loss_value = loss_func(logits, labels, features)
-                    
                     running_ce_loss += ce_loss.item() * inputs.size(0)
                     running_center_loss += center_loss_value.item() * inputs.size(0)
                     running_loss += loss.item() * inputs.size(0)
@@ -311,24 +339,22 @@ def train_model(model: nn.Module, optimizer: Optimizer, scheduler: _LRScheduler,
                     inputs, labels = data
                     inputs = inputs.to(device)
                     labels = labels.to(device)
+      
+                    logits, embeddings = model(inputs)
 
-                    logits, features = model(inputs)
+                    loss = loss_func(embeddings, labels)
 
-                    n_dev_correct += (logits.argmax(dim=1).view(-1) == labels.view(-1)).sum().item()
-                    loss = loss_func(features, labels)
+                    predictions = torch.argmax(logits, dim=1)
+                    n_dev_correct+= (predictions == labels).sum().item()
                     running_loss += loss.item() * inputs.size(0)
+        
 
-                
-
-        valid_acc = 100.0 * n_dev_correct /(dataset_sizes["valid"])
+        valid_acc = 100.0 * n_dev_correct /dataset_sizes["valid"]
         valid_loss = running_loss / dataset_sizes["valid"]
-        valid_ce_loss = running_ce_loss / dataset_sizes["valid"]
-        valid_center_loss = running_center_loss / dataset_sizes["valid"]
-        #valid_combined_loss = valid_ce_loss + valid_center_loss
         list_val_loss.append(valid_loss)
         list_val_acc.append(valid_acc)
 
-        logger.info(f'Validation_Loss: {valid_loss :.4f} Validation_Acc: {valid_acc:.4f} valid_ce_loss:{valid_ce_loss:.4f} valid_center_loss:{valid_center_loss:.4f} %')
+        logger.info(f'Validation_Loss: {valid_loss :.4f} Validation_Acc: {valid_acc:.4f} %')
 
         if valid_acc > best_acc:
             best_acc = valid_acc
@@ -337,19 +363,13 @@ def train_model(model: nn.Module, optimizer: Optimizer, scheduler: _LRScheduler,
         if wandb:
             wandb.log({
                 "Epoch": epoch,
-                #"Train Combined Loss": train_combined_loss,
-                "Train Cross-Entropy Loss": train_ce_loss,
-                "Train Center Loss": train_center_loss,
                 "Train Loss": train_loss,
                 "Train Acc": train_acc,
-                #"Validation Combined Loss": valid_combined_loss,
-                "Validation Cross-Entropy Loss": valid_ce_loss,
-                "Validation Center Loss": valid_center_loss,
                 "Val Loss": valid_loss,
                 "Validation Acc": valid_acc,
             })
          # Save checkpoint after each epoch
-        checkpoint_path = os.path.join(checkpoint_dir, f"checkpoint_epoch_of_center_loss{epoch+1}.pth")
+        checkpoint_path = os.path.join(checkpoint_dir, f"Final_checkpoint_CosFace{epoch+1}.pth")
         torch.save(model.state_dict(), checkpoint_path)
         logger.info(f"Checkpoint saved at {checkpoint_path}")
 
@@ -403,6 +423,7 @@ def test_model(model: nn.Module, dataset_loader: Dict[str, DataLoader], dataset_
 
 
             elif args.loss_function == 'ContrastiveLoss':
+                
                 img1, img_pos, label_pos, img_neg, label_neg = data
                 img1, img_pos, img_neg = img1.to(device), img_pos.to(device), img_neg.to(device)
                 label_pos, label_neg = label_pos.to(device), label_neg.to(device)
@@ -415,11 +436,9 @@ def test_model(model: nn.Module, dataset_loader: Dict[str, DataLoader], dataset_
                 neg_loss = loss_func(feature1, feature_neg, label_neg)
                 loss = (pos_loss + neg_loss) / 2
 
-
-                # Calculate distances and determine correctness
                 pos_dist = torch.norm(feature1 - feature_pos, dim=1)
                 neg_dist = torch.norm(feature1 - feature_neg, dim=1)
-                correct_predictions += ((pos_dist < neg_dist).sum().item() + (neg_dist > pos_dist).sum().item())
+                correct_predictions += (pos_dist < neg_dist).sum().item() 
 
                 inputs = img1  
                 test_loss += loss.item() * inputs.size(0)
@@ -442,38 +461,39 @@ def test_model(model: nn.Module, dataset_loader: Dict[str, DataLoader], dataset_
                     features_negative = features_negative[0]
 
                 features = torch.cat([features_anchor, features_positive, features_negative], dim=0)
-
-                # Assuming labels for positive and negative pairs are the same as the anchor
                 labels = torch.cat([labels, labels, labels], dim=0)
+
                 loss = loss_func(features, labels)
-                inputs = img_anchor
+                pos_pair_ = loss_func.pos_pair_
+                neg_pair_ = loss_func.neg_pair_
+
+                correct_predictions += torch.sum(pos_pair_ > neg_pair_).item()
+
+                inputs = img_anchor 
+                test_loss += loss.item() * inputs.size(0)
+
 
             elif args.loss_function =='center_loss':
                 
                 inputs, labels = data
                 inputs, labels = inputs.to(device), labels.to(device)
                 logits, features = model(inputs)
-
-                # Calculate top-5 accuracy
-                #topk = 5
-                #_, topk_predictions = logits.topk(k=5, dim=1)
-                #topk_predictions = topk_predictions.t()
-                #correct_topk_predictions += correct[:5].reshape(-1).float().sum(0, keepdim=True).item()
-                loss, ce_loss, center_loss_value = loss_func(logits, labels, features)
+                _, topk_predictions = logits.topk(k=1, dim=1)
+                topk_predictions = topk_predictions.t()   
+                loss, ce_loss, center_loss_value = combined_loss(logits, labels, features)
                 correct = topk_predictions.eq(labels.view(1, -1).expand_as(topk_predictions))
                 correct_predictions += correct[:1].reshape(-1).float().sum(0, keepdim=True).item()
                 test_loss += loss.item() * inputs.size(0)
                 ce_test_loss += ce_loss.item() * inputs.size(0)
                 center_test_loss += center_loss_value.item() * inputs.size(0)
-                #loss, ce_loss, center_loss_value = combined_loss(logits, labels, features)
-                #loss = combined_loss(logits, labels, features) Second version 
+
                 
             else:
                 inputs, labels = data
                 inputs, labels = inputs.to(device), labels.to(device)
                 logits, features = model(inputs)
 
-                loss = loss_func(features, labels)
+                loss = loss_func(logits, labels)
 
                 correct = topk_predictions.eq(labels.view(1, -1).expand_as(topk_predictions))
                 correct_predictions += correct[:1].reshape(-1).float().sum(0, keepdim=True).item()   
@@ -483,40 +503,16 @@ def test_model(model: nn.Module, dataset_loader: Dict[str, DataLoader], dataset_
             
     avg_test_accuracy = 100.0 * correct_predictions /(dataset_sizes["test"])
     avg_test_loss = test_loss / dataset_sizes["test"]
-    avg_test_ce_loss = ce_test_loss / dataset_sizes["test"]
-    avg_test_center_loss = center_test_loss / dataset_sizes["test"]
-    
-    #avg_test_accuracy_topk = 100.0 * correct_topk_predictions / dataset_sizes["test"]
+
     logger.info(f'Test Accuracy (Top1): {avg_test_accuracy:.2f}%')
     logger.info(f'Test Loss: {avg_test_loss:.2f}%')
-    logger.info(f'Test Cross-Entropy Loss: {avg_test_ce_loss:.4f}%')
-    logger.info(f'Test Center Loss: {avg_test_center_loss:.4f}%')
     
-    #logger.info(f'Test Accuracy (Top5): {avg_test_accuracy_topk:.2f}%')
-
-    #return avg_test_accuracy
-    #avg_test_accuracy = 100.0 * correct_predictions / dataset_sizes["test"]
-    #avg_test_loss = test_loss / dataset_sizes["test"]
-    #avg_test_ce_loss = ce_test_loss / dataset_sizes["test"]
-    #avg_test_center_loss = center_test_loss / dataset_sizes["test"]
-    #avg_test_combined_loss = avg_test_ce_loss + avg_test_center_loss
-    #avg_test_accuracy_topk = 100.0 * correct_topk_predictions / dataset_sizes["test"]
-
-    #logger.info(f'Test Loss: {avg_test_loss:.4f}%')
-    #logger.info(f'Test Combined Loss: {avg_test_combined_loss:.4f}')
-    #logger.info(f'Test Cross-Entropy Loss: {avg_test_ce_loss:.4f}%')
-    #logger.info(f'Test Center Loss: {avg_test_center_loss:.4f}%')
-    #logger.info(f'Test Accuracy (Top1): {avg_test_accuracy:.4f}%')
-    #logger.info(f'Test Accuracy (Top5): {avg_test_accuracy_topk:.4f}%')
-
     if wandb:
         wandb.log({
-            #"Test Combined Loss": avg_test_combined_loss,
-            "Test Cross-Entropy Loss": avg_test_ce_loss,
-            "Test Center Loss": avg_test_center_loss,
+            
             "Test Loss": avg_test_loss, 
             "Test Accuracy (Top1)": avg_test_accuracy,
-            #"Test Accuracy (Top5)": avg_test_accuracy_topk,
+
         })
 
     return avg_test_accuracy
@@ -530,11 +526,10 @@ def save_network_weights(model: nn.Module, weights_name: str) -> None:
         weights_name (str): The name of the weights file.
     """
     try:
-         # Ensure the output directory exists
+         
         if not os.path.exists(outweights_dir):
             os.makedirs(outweights_dir)
         
-        # Construct the full path for the weights file
         weights_path = os.path.join(outweights_dir, weights_name)
 
         state_dict = model.state_dict()
@@ -565,18 +560,13 @@ if __name__ == '__main__':
 
     dataset_loader, dataset_sizes = load_dataloader(args)
 
-    #for batch in dataset_loader["train"]:
-        
-        #anchor, positive, negative = batch
-        #print(f"Anchor batch shape: {anchor.shape}, Positive batch shape: {positive.shape}, Negative batch shape: {negative.shape}")
-        #break
 
-    # Check if the validation dataset loader is correctly defined
     if "valid" not in dataset_loader:
         raise ValueError("Validation dataset loader is not defined.")
 
     os.environ['WANDB_MODE'] = 'offline'
     os.environ['WANDB__SERVICE_WAIT']='120'
+    
     # Initialize Weights and Biases
     wandb.init(
         project="Modeling the Face Recognition System in the Brain",
@@ -598,8 +588,7 @@ if __name__ == '__main__':
     model = model_cls(args.pretrained, args.num_classes, args.n_input_channels, args.transfer, args.in_weights)
     model.to(device)
     init_weights_randomly(model)
-    
-
+        
     loss_func = get_loss_function(args,device)
     
 
@@ -618,7 +607,7 @@ if __name__ == '__main__':
     experiment_name = f"final_{args.model}_{args.num_classes}_{args.seed}"
     
         
-    model_ft = train_model(model,optimizer_ft, exp_lr_scheduler, args.num_epochs, loss_func,  dataset_loader, dataset_sizes, wandb)
+    model_ft = train_model(model,optimizer_ft, exp_lr_scheduler, args.num_epochs, loss_func, dataset_loader, dataset_sizes, wandb)
     acc = test_model(model_ft, dataset_loader, dataset_sizes,loss_func)
         
     wandb.log({"Test Acc": acc})
@@ -629,7 +618,6 @@ if __name__ == '__main__':
     logger.info('Training ended in %s h %s m %s s' % (time_training // 3600, (time_training % 3600) // 60, time_training % 60))
 
     # Save weights after training
-    #save_network_weights(model_ft, f"{args.out_weights}_{args.seed}.pth")
     if args.out_weights:
         out_weights_path = os.path.join('outweights_dir', f"{args.out_weights}_{args.seed}.pth")
         save_network_weights(model_ft, out_weights_path)
