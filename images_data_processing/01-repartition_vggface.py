@@ -2,12 +2,17 @@ import os
 import glob
 import shutil
 import numpy as np
+import logging
 
 # Importing from the utils folder
 import sys
 sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 from utils.config import study_path
 from utils.utils import split
+
+# Initialize logging
+logging.basicConfig(level=logging.INFO, format='%(levelname)s - %(message)s')
+logger = logging.getLogger(__name__)
 
 # Define paths
 original_folders = os.path.join(study_path, "VGGface2_HQ_cropped/VGGface2_HQ_cropped/*")
@@ -63,21 +68,22 @@ def create_repartitions(src_folder: str, dest_folder: str, class_dic: dict) -> N
     os.makedirs(train_folder, exist_ok=True)
     os.makedirs(test_folder, exist_ok=True)
     os.makedirs(valid_folder, exist_ok=True)
-
+    files_list = os.listdir(src_folder)
     for index, cl in class_dic.items():
-        src_picture = os.path.join(src_folder, str(index))
+        src_picture = os.path.join(src_folder, files_list[index])
         if cl == 0:
-            dest_picture = os.path.join(train_folder, str(index))
+            dest_picture = os.path.join(train_folder, files_list[index])
         elif cl == 1:
-            dest_picture = os.path.join(valid_folder, str(index))
+            dest_picture = os.path.join(valid_folder, files_list[index])
         else:
-            dest_picture = os.path.join(test_folder, str(index))
+            dest_picture = os.path.join(test_folder, files_list[index])
         
         shutil.move(src_picture, dest_picture)
 
 if __name__ == '__main__':
     i = 0
     for folder in glob.glob(original_folders):
+        logging.info(f"Processing folder {folder}")
         picture_list = os.listdir(folder)
         num_files = len(picture_list)
 
@@ -87,4 +93,5 @@ if __name__ == '__main__':
 
         create_repartitions(folder, new_folder_path, class_dic)
         i += 1
+        logging.info(f"Folder {folder} processed successfully!")
 
