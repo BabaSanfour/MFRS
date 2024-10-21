@@ -33,10 +33,6 @@ def setup_filenames(subject: str, spacing: str, freq_bands: list, meg_picks: str
         Defaults to True, which includes all MEG channels.
     freq_bands : list
         List of frequency bands for which to compute Hilbert transformed source estimates.
-        The MEG channels to be used for source reconstruction.
-        Defaults to True, which includes all MEG channels.
-    freq_bands : list
-        List of frequency bands for which to compute Hilbert transformed source estimates.
 
     Returns:
     --------
