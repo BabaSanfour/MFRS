@@ -194,7 +194,7 @@ class InceptionResnetV1(nn.Module):
         n_input_channels {int} -- Number of input channels of the first layer.
         dropout_prob {float} -- Dropout probability. (default: {0.6})
     """
-    def __init__(self, num_classes: int = 1000, n_input_channels: int = 3, dropout_prob: int = 0.6) -> None:
+    def __init__(self, num_classes: int = 2622, n_input_channels: int = 3, dropout_prob: int = 0.6) -> None:
         super().__init__()
 
         # Define layers
@@ -238,9 +238,10 @@ class InceptionResnetV1(nn.Module):
         self.dropout = nn.Dropout(dropout_prob)
         self.last_linear = nn.Linear(1792, 512, bias=False)
         self.last_bn = nn.BatchNorm1d(512, eps=0.001, momentum=0.1, affine=True)
-
         self.logits = nn.Linear(512, num_classes)
+    
 
+        
     def forward(self, x):
         """Calculate embeddings or logits given a batch of input image tensors.
         Arguments:
@@ -263,10 +264,14 @@ class InceptionResnetV1(nn.Module):
         x = self.block8(x)
         x = self.avgpool_1a(x)
         x = self.dropout(x)
-        x = self.last_linear(x.view(x.shape[0], -1))
-        x = self.last_bn(x)
-        x = self.logits(x)
-        return x
+        features = self.last_linear(x.view(x.shape[0], -1))#ena bdalt 
+        x = self.last_bn(features)#ena badalt 
+        logits = self.logits(x)#ena bdalt 
+        return logits, features#ena bdalt 
+        #x = self.last_linear(x.view(x.shape[0], -1))
+        #x = self.last_bn(x)
+        #x = self.logits(x)
+        #return x
 
 def FaceNet(pretrained: bool = False, num_classes: int = 1000, n_input_channels: int = 3, transfer: bool = False, weights: str = None) -> InceptionResnetV1:
     model = InceptionResnetV1(num_classes, n_input_channels)

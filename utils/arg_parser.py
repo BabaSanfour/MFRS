@@ -21,13 +21,13 @@ def get_training_config_parser():
     data.add_argument(
         "--batch_size",
         type=int,
-        default=32,
+        default=4,
         help="Batch size."
     )
     data.add_argument(
         "--num_classes",
         type=int,
-        default=1000,
+        default=10000,
         help="Number of classes."
     )
 
@@ -46,7 +46,7 @@ def get_training_config_parser():
         "--n_input_channels",
         type=int,
         choices=[1, 3],
-        default=1,
+        default=3,
         help="Number of input channels (1 for grayscale, 3 for RGB)."
     )
     model.add_argument(
@@ -96,7 +96,7 @@ def get_training_config_parser():
     optimization.add_argument(
         "--num_epochs",
         type=int,
-        default=50,
+        default=2,
         help="Number of epochs for training."
     )
     optimization.add_argument(
@@ -143,8 +143,29 @@ def get_training_config_parser():
         "--seed",
         type=int,
         default=42,
-        help="Random seed for repeatability."
+        help="Random seed for reproducibility."
     )
+
+    loss = parser.add_argument_group("loss")
+
+    loss.add_argument( "--loss_function", choices=["center_loss", "arcface", "cosface", "sphereface","circle_softplus","circle_exp","ContrastiveLoss","TripletLoss"],help="Loss function to use."  )
+    triplet_loss_params =parser.add_argument_group("triplet loss param")
+    triplet_loss_params.add_argument('--marginTriplet', type=float, default=0.2, help='Margin for Triplet loss')
+    circle_loss_params = parser.add_argument_group("CircleLossSoftplus Parameters")
+    circle_loss_params.add_argument("--circle_m", type=float, default=0.25, help="Margin parameter for CircleLossSoftplus.")
+    circle_loss_params.add_argument("--circle_gamma", type=float, default=256.0, help="Gamma parameter for CircleLossSoftplus.")
+    
+    angular_loss_params = parser.add_argument_group("Angular Loss Parameters")
+    angular_loss_params.add_argument("--s", type=float, default=30.0, help="Scale parameter for angular losses.")
+    angular_loss_params.add_argument("--m", type=float, default=0.5, help="Margin parameter for angular losses.")
+
+    center_loss_weight = parser.add_argument_group("center_loss_weight")
+    center_loss_weight.add_argument( "--center_loss_weight",type=float, default=1, help="Weight for center loss if used with cross entropy.")
+    circle_exp_params=parser.add_argument_group("circle_exp_parameters")
+    circle_exp_params.add_argument( "--scale", type=float,default=32,help="Scale parameter for Circle Loss Exp." )
+    circle_exp_params.add_argument( "--margin", type=float,default=0.25, help="Margin parameter for Circle Loss Exp.")
+    circle_exp_params.add_argument( "--similarity",type=str,default="cos",choices=["cos", "dot"],help="Similarity type for Circle Loss Exp.")
+
 
     return parser
 
@@ -198,6 +219,18 @@ def get_similarity_parser():
         default= "trained",
         help='Activations type: trained, untrained'
     )
+    ann.add_argument(
+        '--seed',
+        type=int,
+        default=42,
+        help='Random seed for reproducibility'
+    )
+    ann.add_argument(
+        '--index',
+        type=int,
+        default=0,
+        help='Index to compute RDMs'
+    )
 
     brain = parser.add_argument_group("Brain Data")
     brain.add_argument(
@@ -244,6 +277,52 @@ def get_similarity_parser():
         type=int,
         default=50,
         help='Sliding window to compute RDM of brain activity'
+    )
+    brain.add_argument(
+        '--region_index',
+        type=int,
+        default=0,
+        help='Region index to compute RDM of brain activity'
+    )
+    brain.add_argument(
+        '--freq_band',
+        type=str,
+        default=None,
+        help='Frequency band for source reconstruction'
+    )
+
+
+    
+    stats = parser.add_argument_group("Stats")
+    stats.add_argument(
+        '--similarity_measure', 
+        type=str, 
+        default="spearman",
+        help='Similarity measure to use'
+    )
+    stats.add_argument(
+        '--noise_ceiling_type',
+        type=str,
+        choices= [
+            "bootstrap", "loo"
+        ],
+        default= "loo",
+        help='Noise ceiling type: bootstrap, loo.'
+    )
+
+    overwrite = parser.add_argument_group("Overwrite")
+    overwrite.add_argument(
+        "--overwrite",
+        dest="overwrite", 
+        action="store_true",
+        help="If we want to overwrite existing files.",
+    )
+
+    overwrite.add_argument(
+        "--no-overwrite", 
+        dest="overwrite", 
+        action="store_false",
+        help="Without overwrite."
     )
 
     return parser
@@ -292,5 +371,19 @@ def source_rescontruction_parser():
         default="grad",
         help='Type of MEG sensors to use'
     )
+
+    source.add_argument(
+        '--freq_bands',
+        type=dict,
+        default={
+            "theta": (4, 8), 
+            "alpha": (8, 12), 
+            "beta": (12, 30), 
+            "gamma": (30, 55), 
+            "high-gamma": (55, 90)
+        },
+        help='Frequency bands for hilbert transform'
+    )
+
 
     return parser

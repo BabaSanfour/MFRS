@@ -5,8 +5,9 @@ import multiprocessing
 from typing import Dict
 
 
-def _calculate_rdm_parallel(layer_id, layer_activation, rdm_calculator):
-    return rdm_calculator.calculate_rdm(layer_activation)
+def _calculate_rdm_parallel(activation_data, rdm_calculator):
+    layer_id, layer_activation = activation_data
+    return layer_id, rdm_calculator(layer_activation)
 
 def _calculate_rdm_parallel_temp_brain_rdms(segment_data, rdm_calculator):
     time_segment_id, t_segment_start, t_segment_end, brain_element_id, brain_element_activity = segment_data
@@ -287,19 +288,22 @@ class RDM:
         
         if num_processes is None:
             num_processes = multiprocessing.cpu_count()
+        
+        activations_list = [(layer_id, layer_activation) for layer_id, layer_activation in enumerate(model_activations.values())]
 
-        with multiprocessing.Pool(processes=num_processes) as pool:
+        with multiprocessing.Pool() as pool:
             results = list(
                 tqdm(
                     pool.starmap(
                         _calculate_rdm_parallel,
-                        [(layer_id, layer_activation, self) for layer_id, (_, layer_activation) in enumerate(model_activations.items())],
+                        [(data, self.calculate_rdm) for data in activations_list],
                     ),
                     total=num_layers,
                     desc="Calculating ANN RDMs in parallel",
                 )
             )
-
-        rdms = np.array(results)
+        
+        for layer_id, rdm in results:
+            rdms[layer_id] = rdm
 
         return rdms

@@ -40,8 +40,8 @@ class noise_ceiling:
             
             for j in range(self.num_brain_elements):
                 for k in range(self.num_rdms):
-                    rdm_vector1 = self.rsa_instance._get_rdm_vector(meg_rdm_selected1[j, k, :, :])
-                    rdm_vector2 = self.rsa_instance._get_rdm_vector(meg_rdm_selected2[j, k, :, :])
+                    rdm_vector1 = self.rsa_instance._get_rdm_vectors(meg_rdm_selected1[j, k, :, :][np.newaxis, :, :])[0]
+                    rdm_vector2 = self.rsa_instance._get_rdm_vectors(meg_rdm_selected2[j, k, :, :][np.newaxis, :, :])[0]
                     noise_ceilings[j, k, i] = self.rsa_instance.calculate_rsa(rdm_vector1, rdm_vector2)[0]
         mean_noise_ceiling = np.mean(noise_ceilings, axis=2)
         std_noise_ceiling = np.std(noise_ceilings, axis=2)
@@ -58,11 +58,11 @@ class noise_ceiling:
             
             for j in range(self.num_brain_elements):
                 for k in range(self.num_rdms):
-                    rdm_vector1 = self.rsa_instance._get_rdm_vector(meg_rdm_selected1[j, k, :, :])
-                    rdm_vector2 = self.rsa_instance._get_rdm_vector(meg_rdm_selected2[j, k, :, :])
-                    upper_noise_ceiling[j, k] += self.rsa_instance.calculate_rsa(rdm_vector1, rdm_vector2)[0]
+                    rdm_vector1 = self.rsa_instance._get_rdm_vectors(meg_rdm_selected1[j, k, :, :][np.newaxis, :, :])[0]
+                    rdm_vector2 = self.rsa_instance._get_rdm_vectors(meg_rdm_selected2[j, k, :, :][np.newaxis, :, :])[0]
+                    upper_noise_ceiling[j, k] += self.rsa_instance.calculate_rsa(rdm_vector1, rdm_vector2, False)[0]
 
-        return upper_noise_ceiling/self.num_subjects, 
+        return upper_noise_ceiling/self.num_subjects
 
 
     def _loo_lower_noise_ceiling(self) -> np.array:
@@ -77,9 +77,9 @@ class noise_ceiling:
             
             for j in range(self.num_brain_elements):
                 for k in range(self.num_rdms):
-                    rdm_vector1 = self.rsa_instance._get_rdm_vector(meg_rdm_selected1[j, k, :, :])
-                    rdm_vector2 = self.rsa_instance._get_rdm_vector(meg_rdm_selected2[j, k, :, :])
-                    lower_noise_ceiling[j, k] += self.rsa_instance.calculate_rsa(rdm_vector1, rdm_vector2)[0]
+                    rdm_vector1 = self.rsa_instance._get_rdm_vectors(meg_rdm_selected1[j, k, :, :][np.newaxis, :, :])[0]
+                    rdm_vector2 = self.rsa_instance._get_rdm_vectors(meg_rdm_selected2[j, k, :, :][np.newaxis, :, :])[0]
+                    lower_noise_ceiling[j, k] += self.rsa_instance.calculate_rsa(rdm_vector1, rdm_vector2, False)[0]
         
         return lower_noise_ceiling/self.num_subjects
 
