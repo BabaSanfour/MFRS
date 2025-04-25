@@ -5,7 +5,7 @@ import mne
 
 # Set paths
 user = os.path.expanduser('~')
-scratch_folder = os.path.join(user, "scratch")
+scratch_folder = os.path.join(user, "Projects")
 proj_path = os.path.join(user, "MFRS/")
 study_path = os.path.join(scratch_folder, "data/MFRS_data")
 weights_path = os.path.join(scratch_folder, "net_weights")

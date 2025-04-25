@@ -193,7 +193,7 @@ def get_similarity_parser():
         '--activation_type', 
         type=str, 
         choices= [
-            "trained", "untrained", "imagenet"
+            "trained", "untrained", "imagenet", "VGGFace"
         ],
         default= "trained",
         help='Activations type: trained, untrained'
