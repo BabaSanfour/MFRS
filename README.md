@@ -62,6 +62,10 @@ Check out the list of papers and presentations associated with this project duri
 - Poster presentation at [Conference on Cognitive Computational Neuroscience 2024](https://2024.ccneuro.org/poster/?id=563)
 - Poster presentation at [From Neuroscience to Artificially Intelligent Systems (NAISys)](https://www.linkedin.com/posts/hamza-abdelhedi_this-past-week-i-had-an-incredible-time-activity-7249084914090807296-oIUR?utm_source=share&utm_medium=member_desktop&rcm=ACoAACeKe8EBot9KjwwdK4rSdjVeOtxumDBb4X8)
 
+## Master thesis
+
+The work done here was for my master thesis, which could be found here [Link](https://umontreal.scholaris.ca/items/77c8c52c-64a7-4b92-bc3b-0bc01c9c43ab), a more cleaner version used for the thesis and paper publications could be found [here](https://github.com/BabaSanfour/CNN-MEG-FaceProcessing)
+
 ## Funding 
 
 This project received funding from the UNIQUE (Unifying AI and Neuroscience) research center, Cerebrum, and CIRCA as well as generous contributions from my supervisor, Karim jerbi, research funds.
