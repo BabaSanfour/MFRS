@@ -1,8 +1,5 @@
 [![GitHub languages](https://img.shields.io/github/languages/count/BabaSanfour/MFRS)](https://github.com/BabaSanfour/MFRS)
 [![GitHub stars](https://img.shields.io/github/stars/BabaSanfour/MFRS)](https://github.com/BabaSanfour/MFRS/stargazers)
-[![GitHub forks](https://img.shields.io/github/forks/BabaSanfour/MFRS)](https://github.com/BabaSanfour/MFRS/network)
-[![GitHub issues](https://img.shields.io/github/issues/BabaSanfour/MFRS)](https://github.com/BabaSanfour/MFRS/issues)
-[![GitHub pull requests](https://img.shields.io/github/issues-pr/BabaSanfour/MFRS)](https://github.com/BabaSanfour/MFRS/pulls)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 [![Last commit](https://img.shields.io/github/last-commit/BabaSanfour/MFRS)](https://github.com/YourUsername/BabaSanfour/MFRS/main)
 [![GitHub contributors](https://img.shields.io/github/contributors/BabaSanfour/MFRS)](https://github.com/BabaSanfour/MFRS/graphs/contributors)
@@ -45,7 +42,7 @@ I extend my gratitude to my esteemed supervisors for their guidance and support 
 
 ## Project Evolution
 
-What began as an End of Study Project during my engineering diploma has evolved into a comprehensive exploration at the intersection of engineering, neuroscience, and artificial intelligence. This repository serves as a journey of learning that I went through for almost three years, starting with random scripts of code to the project current state.
+What began as an End of Study Project during my engineering diploma has evolved into a comprehensive exploration at the intersection of engineering, neuroscience, and artificial intelligence. This repository serves as a journey of learning that I went through for almost three years, starting with random scripts of code to the project current state. In addition to the main goal of the project, we had an intern working on a side idea that involves comparing 1 model trained using different loss functions to the brain.
 
 ## Papers and Presentations
 
@@ -59,7 +56,12 @@ Check out the list of papers and presentations associated with this project duri
 - Poster presentation at [Montreal Neuro-AI workshop](https://www.linkedin.com/posts/hamza-abdelhedi_neuroai-airesearch-aiinnovation-activity-7118736641099202560-VnSE?utm_source=share&utm_medium=member_desktop)
 - Invited talk at [UNIQUE Scientific Retreat](https://www.linkedin.com/posts/hamza-abdelhedi_scientificresearch-neuralnetworks-facerecognition-activity-7125119224963829761-nh5L?utm_source=share&utm_medium=member_desktop)
 - Invited talk at [UNIQUE SAC Get-Together](https://www.linkedin.com/posts/hamza-abdelhedi_thrilled-to-once-again-share-the-latest-findings-activity-7141441804096196609-xBAb?utm_source=share&utm_medium=member_desktop)
+- Poster presentation at [Computational and Systems Neuroscience (COSYNE) 2024](https://www.linkedin.com/posts/hamza-abdelhedi_attending-the-computational-and-systems-activity-7172954483876950016-C-ja?utm_source=share&utm_medium=member_desktop&rcm=ACoAACeKe8EBot9KjwwdK4rSdjVeOtxumDBb4X8)
+- Poster presentation at [Cognitive Neuroscience Society 2024 Annual Meeting](https://www.linkedin.com/posts/hamza-abdelhedi_had-the-honour-to-attend-the-cognitive-activity-7188279599552712704-DHIX?utm_source=share&utm_medium=member_desktop&rcm=ACoAACeKe8EBot9KjwwdK4rSdjVeOtxumDBb4X8)
+- Poster presentation at [the 27th Association of Scientific Studies of Consciousness meeting](https://www.linkedin.com/posts/hamza-abdelhedi_attention-meditation-meg-activity-7214807381703045121-vTkF?utm_source=share&utm_medium=member_desktop&rcm=ACoAACeKe8EBot9KjwwdK4rSdjVeOtxumDBb4X8)
+- Poster presentation at [Conference on Cognitive Computational Neuroscience 2024](https://2024.ccneuro.org/poster/?id=563)
+- Poster presentation at [From Neuroscience to Artificially Intelligent Systems (NAISys)](https://www.linkedin.com/posts/hamza-abdelhedi_this-past-week-i-had-an-incredible-time-activity-7249084914090807296-oIUR?utm_source=share&utm_medium=member_desktop&rcm=ACoAACeKe8EBot9KjwwdK4rSdjVeOtxumDBb4X8)
 
 ## Funding 
 
-This project received funding from the UNIQUE (Unifying AI and Neuroscience) research center, Cerebrum, and CIRCA.
+This project received funding from the UNIQUE (Unifying AI and Neuroscience) research center, Cerebrum, and CIRCA as well as generous contributions from my supervisor, Karim jerbi, research funds.
