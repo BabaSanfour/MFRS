@@ -40,26 +40,6 @@ if __name__ == '__main__':
             logger.info("RDMs computed and saved successfully!")
     elif args.modality == "brain":
         subject = f"sub-{args.subject:02d}"
-<<<<<<< HEAD
-        with open(os.path.join(meg_dir, subject, f"{subject}-{args.meg_picks}-ROI-trans-{args.brain_analysis_type}-time-courses.pkl"), 'rb') as pickle_file:
-            brain_activity = pickle.load(pickle_file)
-        if args.brain_analysis_type == "avg":
-            logger.info(f"Calculating temporal brain RDMs for subject {args.subject:02d}...")
-            rdm.save(rdm.temp_brain_rdms_parallel(brain_activity, args.time_segment, args.sliding_window), os.path.join(rdms_folder, f"{subject}_{args.meg_picks}_{args.brain_analysis_type}_rdm_{args.time_segment}_{args.sliding_window}.npy"))
-        elif args.brain_analysis_type == "raw":
-            if not os.path.isdir(os.path.join(rdms_folder, subject)):
-                os.mkdir(os.path.join(rdms_folder, subject))
-            for region, region_activity in brain_activity.items():
-                logger.info(f"Calculating brain RDM movie for subject {args.subject:02d} for {region}...")
-                if os.path.exists(os.path.join(rdms_folder, subject, f"{subject}_{region}_{args.brain_analysis_type}_rdm.npy")):
-                    logger.info(f"RDM movie for {region} already exists. Skipping...")
-                    continue
-                rdm.save(rdm.brain_rdm_movie_parallel({region: region_activity}), os.path.join(rdms_folder, subject, f"{subject}_{region}_{args.meg_picks}_{args.brain_analysis_type}_rdm_{args.time_segment}_{args.sliding_window}.npy"))
-                logger.info(f"RDM movie for {region} computed and saved successfully!")
-
-        else :
-            raise ValueError("Brain analysis type not recognized. Please choose between 'avg' and 'raw'")
-=======
         if args.freq_band is not None and args.brain_analysis_type == "avg":
             args.meg_picks = f"{args.meg_picks}_{args.freq_band}"
         if os.path.exists(os.path.join(rdms_folder, f"{subject}_{args.meg_picks}_{args.brain_analysis_type}_rdm_{args.time_segment}_{args.sliding_window}.npy")):
@@ -97,7 +77,6 @@ if __name__ == '__main__':
                         logger.info(f"Time taken: {time_taken}")
             else :
                 raise ValueError("Brain analysis type not recognized. Please choose between 'avg' and 'raw'")
->>>>>>> 5e0dc766112f02230e05d92b56a7afbd7dc75827
         logger.info("RDMs computed and saved successfully!")
     else:
         raise ValueError("Modality not recognized. Please choose between 'brain' and 'ANN'")
