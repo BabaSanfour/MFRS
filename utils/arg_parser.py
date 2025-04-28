@@ -1,4 +1,5 @@
 import argparse
+from typing import Union
 
 def get_training_config_parser():
     """
@@ -286,7 +287,7 @@ def get_similarity_parser():
     )
     brain.add_argument(
         '--freq_band',
-        type=str,
+        type=Union[str, bool],
         default=None,
         help='Frequency band for source reconstruction'
     )

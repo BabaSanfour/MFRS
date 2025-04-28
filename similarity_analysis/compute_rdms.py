@@ -44,16 +44,16 @@ if __name__ == '__main__':
             args.meg_picks = f"{args.meg_picks}_{args.freq_band}"
         if os.path.exists(os.path.join(rdms_folder, f"{subject}_{args.meg_picks}_{args.brain_analysis_type}_rdm_{args.time_segment}_{args.sliding_window}.npy")):
             logger.info(f"Temporal RDM for {subject} already exists. Skipping...")
-        else:                
+        else:
+            if args.freq_band is not None:
+                args.meg_picks = f"{args.meg_picks}_{args.freq_band}"             
             if args.brain_analysis_type == "avg":
-                if args.freq_band is not None:
-                    args.meg_picks = f"{args.meg_picks}_{args.freq_band}"
                 with open(os.path.join(meg_dir, subject, f"{subject}-{args.meg_picks}-ROI-trans-{args.brain_analysis_type}-time-courses.pkl"), 'rb') as pickle_file:
                     brain_activity = pickle.load(pickle_file)
                 logger.info(f"Calculating temporal brain RDMs for subject {args.subject:02d}...")
                 rdm.save(rdm.temp_brain_rdms_parallel(brain_activity, args.time_segment, args.sliding_window, t_start=args.tstart, t_end=args.tend), os.path.join(rdms_folder, "avg_rdm", f"{subject}_{args.meg_picks}_{args.brain_analysis_type}_rdm_{args.time_segment}_{args.sliding_window}.npy"))
             elif args.brain_analysis_type == "raw":
-                    with open(os.path.join(meg_dir, subject, f"{subject}-{args.meg_picks}-ROI-{args.freq_band}-trans-{args.brain_analysis_type}-hilbert-time-courses.pkl"), 'rb') as pickle_file:
+                    with open(os.path.join(meg_dir, subject, f"{subject}-{args.meg_picks}-ROI-trans-{args.brain_analysis_type}-time-courses.pkl"), 'rb') as pickle_file:
                         brain_activity = pickle.load(pickle_file)
                     if not os.path.isdir(os.path.join(rdms_folder, subject)):
                         os.mkdir(os.path.join(rdms_folder, subject))
