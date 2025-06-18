@@ -291,9 +291,19 @@ def get_similarity_parser():
         default=None,
         help='Frequency band for source reconstruction'
     )
+    brain.add_argument(
+        "--subject_rdms_folder",
+        type=str,
+        default=None,
+        help="Path to the RDM folder."
+    )
+    parser.add_argument(
+        "--raw_mode",
+        choices=["each", "avg"],
+        default="each",
+        help="In raw mode: 'each' for per‐subject scores, 'avg' to average across subjects first"
+    )
 
-
-    
     stats = parser.add_argument_group("Stats")
     stats.add_argument(
         '--similarity_measure', 

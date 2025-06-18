@@ -4,3 +4,5 @@
 old/
 plotting_notebooks/
 old_scripts/
+.venv_new/
+.vscode
