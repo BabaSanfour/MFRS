@@ -15,7 +15,7 @@ logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(
 logger = logging.getLogger(__name__)
 
 def process_avg(args, rsa_instance, rdm_instance):
-    """Compute similarity using the average‐across‐subjects RDM."""
+    """Compute similarity using the average-across-subjects RDM."""
     # build output filename
     picks = args.meg_picks
     if args.freq_band:
@@ -64,97 +64,118 @@ def process_avg(args, rsa_instance, rdm_instance):
 
 def process_raw(args, rsa_instance, rdm_instance):
     """
-    Compute similarity per‐region:
-      - raw_mode=='each': loop subjects 1–16, one RSA each
+    Compute similarity per-region:
+      - raw_mode=='each': loop subjects 1-16, one RSA each
       - raw_mode=='avg' : average all 16 RDMs, then one RSA per region
     """
-    regions = [r for r in rois_names if not r.startswith("unknown-")]
-    model_path = os.path.join(
-        rdms_folder, "networks_rdms",
-        f"{args.model_name}_{args.ann_analysis_type}_rdm_{args.activation_type}.npy"
-    )
-    model_rdm = rdm_instance.load(model_path)
+    for mod in ["resnet50", "FaceNet", "SphereFace", "vgg16_bn", "mobilenet", "cornet_s", "inception_v3"]:
+        args.model_name = mod
+        for activ, anal in zip(["trained", "untrained", "imagenet", "imagenet"], ["with-meg_pretrained","None", "meg_stimuli_faces", "None"]):
+            args.activation_type = activ
+            args.ann_analysis_type = anal
 
-    out_base = os.path.join(similarity_folder, "raw_subject_sim_scores")
-    os.makedirs(out_base, exist_ok=True)
+            regions = [r for r in rois_names if not r.startswith("unknown-")]
+            model_path = os.path.join(
+                rdms_folder, "networks_rdms",
+                f"{args.model_name}_{args.ann_analysis_type}_rdm_{args.activation_type}.npy"
+            )
+            model_rdm = rdm_instance.load(model_path)
 
-    # If avg across subjects, load all subs once per region
-    if args.raw_mode == "avg":
-        for region in regions:
-            reg_key = f"{region}_{args.freq_band}" if args.freq_band else region
-            # gather all subjects' RDMs
-            subs = []
-            for subj in range(1, 17):
-                path = os.path.join(
-                    args.subject_rdms_folder,
-                    f"sub-{subj:02d}_{reg_key}_raw_rdm.npy"
-                )
-                if os.path.exists(path):
-                    subs.append(rdm_instance.load(path))
-            if not subs:
-                logger.info(f"[raw|avg] No RDMs found for region {reg_key}, skipping.")
-                continue
+            regions = ["pericalcarine_4-rh"]
+            # If avg across subjects, load all subs once per region
+            if args.raw_mode == "avg":
+                out_base = os.path.join(similarity_folder, "raw_sim_scores")
+                os.makedirs(out_base, exist_ok=True)
 
-            brain_rdm = np.mean(np.stack(subs, axis=0), axis=0)
-            for stim in ("fam", "unfamiliar", "scrambled"):
-                out_dir = os.path.join(out_base, "avg", reg_key, stim)
-                os.makedirs(out_dir, exist_ok=True)
-                out_fname = os.path.join(
-                    out_dir,
-                    f"raw_avg_{args.model_name}_{args.ann_analysis_type}_"
-                    f"{args.activation_type}_{stim}.npy"
-                )
-                if os.path.exists(out_fname):
-                    logger.info(f"[raw|avg] {out_fname} exists, skipping.")
-                    continue
-
-                br = brain_rdm[slicing_indices_meg[stim]]
-                mr = model_rdm[slicing_indices_model[stim]]
-                sim = rsa_instance.score(br, mr)
-                rsa_instance.save(sim, out_fname)
-                logger.info(f"[raw|avg] Saved average‐subject similarity for {reg_key}/{stim}")
-
-    # Per‐subject mode
-    else:  # args.raw_mode == "each"
-        for subj in range(1, 17):
-            subj_base = os.path.join(out_base, f"sub-{subj:02d}")
-            os.makedirs(subj_base, exist_ok=True)
-
-            for region in regions:
-                reg_key = f"{region}_{args.freq_band}" if args.freq_band else region
-                brain_path = os.path.join(
-                    args.subject_rdms_folder,
-                    f"sub-{subj:02d}_{reg_key}_raw_rdm.npy"
-                )
-                if not os.path.exists(brain_path):
-                    logger.info(f"[raw|each] No RDM for sub-{subj:02d}, region {reg_key}, skipping.")
-                    continue
-
-                brain_rdm = rdm_instance.load(brain_path)
-                for stim in ("fam", "unfamiliar", "scrambled"):
-                    out_dir = os.path.join(
-                        subj_base,
-                        f"sub-{subj:02d}_{args.model_name}_"
-                        f"{args.ann_analysis_type}_{args.activation_type}_{stim}"
+                for region in regions:
+                    reg_key = f"{region}_{args.freq_band}" if args.freq_band else region
+                    
+                    avg_rdm_path = os.path.join(
+                        args.subject_rdms_folder,
+                        f"{reg_key}_raw_rdm.npy"
                     )
-                    os.makedirs(out_dir, exist_ok=True)
-                    out_fname = os.path.join(
-                        out_dir,
-                        f"raw_{args.model_name}_{args.ann_analysis_type}_"
-                        f"{region}_{args.activation_type}_{stim}.npy"
-                    )
-                    if os.path.exists(out_fname):
-                        logger.info(f"[raw|each] {out_fname} exists, skipping.")
-                        continue
 
-                    br = brain_rdm[slicing_indices_meg[stim]]
-                    mr = model_rdm[slicing_indices_model[stim]]
-                    sim = rsa_instance.score(br, mr)
-                    rsa_instance.save(sim, out_fname)
-                    logger.info(
-                        f"[raw|each] Saved similarity for sub-{subj:02d}, "
-                        f"{region}/{stim}"
-                    )
+                    if os.path.exists(avg_rdm_path):
+                        logger.info(f"[raw|avg] Avg RDM for region {reg_key} found at {avg_rdm_path}. Loading...")
+                        brain_rdm = rdm_instance.load(avg_rdm_path)
+                        logger.info(f"[raw|avg] Avg brain RDM loaded successfully!")
+                    else:
+                        # gather each subject’s raw RDM
+                        subs = []
+                        for subj in range(1, 17):
+                            subj_path = os.path.join(
+                                args.subject_rdms_folder,
+                                f"sub-{subj:02d}_{reg_key}_raw_rdm.npy"
+                            )
+                            if os.path.exists(subj_path):
+                                subs.append(rdm_instance.load(subj_path))
+                            else:
+                                logger.warning(f"[raw|avg] Missing RDM for sub-{subj:02d}, region {reg_key}")
+                        if not subs:
+                            logger.info(f"[raw|avg] No per-subject RDMs found for region {reg_key}, skipping.")
+                            continue
+                        # compute, save, and log
+                        brain_rdm = np.mean(np.stack(subs, axis=0), axis=0)
+                        rdm_instance.save(brain_rdm, avg_rdm_path)
+                        logger.info(f"[raw|avg] Computed and saved avg RDM at {avg_rdm_path}.")
+                    for stim in ("fam", "unfamiliar", "scrambled"):
+                        out_dir = os.path.join(out_base, f"{args.model_name}_{args.ann_analysis_type}_{args.activation_type}_{stim}")
+                        os.makedirs(out_dir, exist_ok=True)
+                        out_fname = os.path.join(
+                            out_dir,
+                            f"raw_{args.model_name}_{args.ann_analysis_type}_{region}_rdm_{args.activation_type}_{stim}.npy"
+                        )
+                        if os.path.exists(out_fname):
+                            logger.info(f"[raw|avg] {out_fname} exists, skipping.")
+                            continue
+
+                        br = brain_rdm[slicing_indices_meg[stim]]
+                        mr = model_rdm[slicing_indices_model[stim]]
+                        sim = rsa_instance.score(br, mr)
+                        rsa_instance.save(sim, out_fname)
+                        logger.info(f"[raw|avg] Saved average-subject similarity for {reg_key}/{stim}")
+
+            # Per-subject mode
+            else:  # args.raw_mode == "each"
+                out_base = os.path.join(similarity_folder, "raw_subject_sim_scores")
+                for subj in range(1, 17):
+                    subj_base = os.path.join(out_base, f"sub-{subj:02d}")
+                    os.makedirs(subj_base, exist_ok=True)
+                    regions = ["pericalcarine_4-rh", "fusiform_2-rh", "lateraloccipital_5-rh"]
+                    for region in regions:
+                        reg_key = f"{region}_{args.freq_band}" if args.freq_band else region
+                        brain_path = os.path.join(
+                            args.subject_rdms_folder, f"sub-{subj:02d}", "raw_rdm",
+                            f"sub-{subj:02d}_{reg_key}_raw_rdm.npy"
+                        )
+                        if not os.path.exists(brain_path):
+                            logger.info(f"[raw|each] No RDM for sub-{subj:02d}, region {reg_key}, skipping.")
+                            continue
+
+                        brain_rdm = rdm_instance.load(brain_path)
+                        out_dir = os.path.join(
+                                subj_base,
+                                f"{args.model_name}_{args.ann_analysis_type}_{args.activation_type}"
+                            )
+                        for stim in ("fam", "unfamiliar", "scrambled"):
+                            os.makedirs(out_dir, exist_ok=True)
+                            out_fname = os.path.join(
+                                out_dir,
+                                f"raw_{args.model_name}_{args.ann_analysis_type}_"
+                                f"{region}_{args.activation_type}_{stim}.npy"
+                            )
+                            if os.path.exists(out_fname):
+                                logger.info(f"[raw|each] {out_fname} exists, skipping.")
+                                continue
+
+                            br = brain_rdm[slicing_indices_meg[stim]]
+                            mr = model_rdm[slicing_indices_model[stim]]
+                            sim = rsa_instance.score(br, mr)
+                            rsa_instance.save(sim, out_fname)
+                            logger.info(
+                                f"[raw|each] Saved similarity for sub-{subj:02d}, "
+                                f"{region}/{stim}"
+                            )
 
 
 if __name__ == "__main__":
